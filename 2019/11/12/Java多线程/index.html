@@ -228,7 +228,7 @@
             
             <div class="markdown-body">
               <p>单线程</p>
-<p><img src="/.com//Snipaste_2019-11-13_17-27-01.png" srcset="/img/loading.gif" alt="1"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/Snipaste_2019-11-13_17-27-01.png" srcset="/img/loading.gif" alt="1"></p>
 <h4 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h4><p>用多线程只有一个目的，那就是更好的利用cpu的资源，因为所有的多线程代码都可以用单线程来实现。</p>
 <p>说这个话其实只有一半对，因为反应“多角色”的程序代码，最起码每个角色要给他一个线程吧，否则连实际场景都无法模拟，当然也没法说能用单线程来实现：比如最常见的“生产者，消费者模型”。</p>
 <p>很多人都对其中的一些概念不够明确，如同步、并发等等，让我们先建立一个数据字典，以免产生误会。</p>
@@ -242,7 +242,7 @@
 </li>
 </ul>
 </blockquote>
-<p><img src="/.com//CAPP.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/CAPP.png" srcset="/img/loading.gif" alt="img"></p>
 <h4 id="并发（Concurrent）与并行（Parallel）"><a href="#并发（Concurrent）与并行（Parallel）" class="headerlink" title="并发（Concurrent）与并行（Parallel）"></a>并发（Concurrent）与并行（Parallel）</h4><blockquote>
 <p><strong>线程安全</strong>：经常用来描绘一段代码</p>
 <p>在同一程序中运行多个线程本身不会导致问题，问题在于多个线程访问了相同的资源。如同一内存区（变量，数组，或对象）、系统（数据库，web services等）或文件。</p>
@@ -298,8 +298,8 @@
 <p>4、假唤醒：由于莫名其妙的原因，线程有可能在没有调用过notify()和notifyAll()的情况下醒来。这就是所谓的假唤醒（spurious wakeups）。为了防止假唤醒，保存信号的成员变量将在一个while循环里接受检查，而不是在if表达式里。这样的一个while循环叫做<code>自旋锁</code>。</p>
 <p>5、不要在字符串常量或全局对象中调用wait()。即上面MonitorObject不能是字符串常量或是全局对象。每一个MyWaitNotify的实例都拥有一个属于自己的监视器对象，而不是在空字符串上调用wait()/notify()。</p>
 </blockquote>
-<p><img src="/.com//status.png" srcset="/img/loading.gif" alt="img"></p>
-<p><img src="/.com//status2.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/status.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/status2.png" srcset="/img/loading.gif" alt="img"></p>
 <p>各种状态一目了然，值得一提的是“Blocked”这个状态：</p>
 <p>线程在Running的过程中可能会遇到阻塞Blocked情况</p>
 <blockquote>
@@ -311,7 +311,7 @@
 </blockquote>
 <p>此外，在Runnable状态的线程是处于被调度的线程，此时的调度顺序是不一定的。Thread类中的yield方法可以让一个Running状态的线程转入Runnable。</p>
 <h4 id="练内功：每个对象都有的方法和机制"><a href="#练内功：每个对象都有的方法和机制" class="headerlink" title="练内功：每个对象都有的方法和机制"></a>练内功：每个对象都有的方法和机制</h4><h5 id="创建多线程"><a href="#创建多线程" class="headerlink" title="创建多线程"></a>创建多线程</h5><p>方法一：实现Runnable接口</p>
-<p><img src="/.com//image-20191113163347390.png" srcset="/img/loading.gif" alt="image-20191113163347390"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/image-20191113163347390.png" srcset="/img/loading.gif" alt="image-20191113163347390"></p>
 <blockquote>
 <p>1、定义类实现Runnable接口。</p>
 <p>2、覆盖接口中的run方法。。</p>
@@ -337,7 +337,7 @@
 
 
 <p>synchronized, wait, notify是任何对象都具有的<code>同步工具</code>。</p>
-<p><img src="/.com//tools.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/tools.png" srcset="/img/loading.gif" alt="img"></p>
 <h5 id="Monitor监视器"><a href="#Monitor监视器" class="headerlink" title="Monitor监视器"></a><strong>Monitor监视器</strong></h5><p>他们是应用于同步问题的人工线程调度工具。讲其本质，实现就要明确Monitor这个概念，Java中的每一个对象都有一个监视器，来检测并发代码的重入。在非多线程编码时该Monitor不发挥作用，反之如果在synchronized范围内，监视器发挥作用。</p>
 <p>wait/notify必须存在于synchronized块中。并且，这三个关键字针对的是同一个监视器（某对象的监视器）。这意味着wait以后，其它线程可以进入同步块执行。</p>
 <p>当某段代码并不持有监视器的使用权时（如图中5的状态，即脱离同步块）去wait或notify，会抛出java.lang.IllegalMonitorStateException。也包括在synchronized块中去调用另一个对象的wait/notify，因为不同对象的监视器不同，同样会抛出此异常。</p>
@@ -357,10 +357,10 @@
 </ul>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 生产者生产出来的产品交给店员</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-keyword">public</span> synchronized void produce()<br>  &#123;<br>      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.product &gt;= MAX_PRODUCT)<br>      &#123;<br>          <span class="hljs-keyword">try</span><br>          &#123;<br>              wait();  <br>              System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">&quot;产品已满,请稍候再生产&quot;</span>);<br>          &#125;<br>          <span class="hljs-keyword">catch</span>(InterruptedException e)<br>          &#123;<br>              e.printStackTrace();<br>          &#125;<br>          <span class="hljs-keyword">return</span>;<span class="hljs-comment">//</span><br>      &#125;<br><br>      <span class="hljs-keyword">this</span>.product++;<br>      System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">&quot;生产者生产第&quot;</span> + <span class="hljs-keyword">this</span>.product + <span class="hljs-string">&quot;个产品.&quot;</span>);<br>      notifyAll();   <span class="hljs-comment">//通知等待区的消费者可以取出产品了</span><br>  &#125;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 消费者从店员取产品</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-keyword">public</span> synchronized void consume()<br>  &#123;<br>      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.product &lt;= MIN_PRODUCT)<br>      &#123;<br>          <span class="hljs-keyword">try</span> <br>          &#123;<br>              wait(); <br>              System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">&quot;缺货,稍候再取&quot;</span>);<br>          &#125; <br>          <span class="hljs-keyword">catch</span> (InterruptedException e) <br>          &#123;<br>              e.printStackTrace();<br>          &#125;<br>          <span class="hljs-keyword">return</span>;<span class="hljs-comment">//</span><br>      &#125;<br><br>      System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">&quot;消费者取走了第&quot;</span> + <span class="hljs-keyword">this</span>.product + <span class="hljs-string">&quot;个产品.&quot;</span>);<br>      <span class="hljs-keyword">this</span>.product--;<br>      notifyAll();   <span class="hljs-comment">//通知等待去的生产者可以生产产品了</span><br>  &#125;<br></code></pre></td></tr></table></figure>
 <h5 id="Volatile关键字"><a href="#Volatile关键字" class="headerlink" title="Volatile关键字"></a><strong>Volatile关键字</strong></h5><p>多线程的内存模型：main memory（主存）、working memory（线程栈），在处理数据时，线程会把值从主存load到本地栈，完成操作后再save回去(volatile关键词的作用：每次针对该变量的操作都激发一次<code>load and save</code>)。</p>
-<p><img src="/.com//volatile.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/volatile.png" srcset="/img/loading.gif" alt="img"></p>
 <p>针对多线程使用的变量如果不是volatile或者final修饰的，很有可能产生不可预知的结果（另一个线程修改了这个值，但是之后在某线程看到的是修改之前的值）。其实道理上讲同一实例的同一属性本身只有一个副本。但是多线程是会缓存值的，本质上，volatile就是不去缓存，直接取值。<code>在线程安全的情况下加volatile会牺牲性能</code>。</p>
 <h4 id="太祖长拳：基本线程类"><a href="#太祖长拳：基本线程类" class="headerlink" title="太祖长拳：基本线程类"></a>太祖长拳：基本线程类</h4><p>基本线程类指的是Thread类，Runnable接口和Callable接口</p>
-<p><img src="/.com//Thread1.png" srcset="/img/loading.gif" alt="t"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/Thread1.png" srcset="/img/loading.gif" alt="t"></p>
 <p>方法摘要：</p>
 <blockquote>
 <p>构造方法：</p>
@@ -390,7 +390,7 @@
 <p>所以说正常运行的程序不去检测状态，就不会终止，而wait等阻塞方法会去检查并抛出异常。</p>
 <p>如果在正常运行的程序中添加while(!Thread.interrupted()) ，则同样可以在中断后离开代码体。</p>
 <h5 id="Thread类最佳实践："><a href="#Thread类最佳实践：" class="headerlink" title="Thread类最佳实践："></a><strong>Thread类最佳实践</strong>：</h5><p>写的时候最好要设置线程名称 Thread.name，并设置线程组 ThreadGroup，目的是方便管理。在出现问题的时候，打印线程栈 (jstack -pid) 一眼就可以看出是哪个线程出的问题，这个线程是干什么的。</p>
-<h5 id="如何获取线程中的异常"><a href="#如何获取线程中的异常" class="headerlink" title="如何获取线程中的异常"></a><strong>如何获取线程中的异常</strong></h5><p><img src="/.com//Thread.png" srcset="/img/loading.gif" alt="img"></p>
+<h5 id="如何获取线程中的异常"><a href="#如何获取线程中的异常" class="headerlink" title="如何获取线程中的异常"></a><strong>如何获取线程中的异常</strong></h5><p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/Thread.png" srcset="/img/loading.gif" alt="img"></p>
 <p>不能用try,catch来获取线程中的异常</p>
 <h5 id="Runnable与Thread类似"><a href="#Runnable与Thread类似" class="headerlink" title="Runnable与Thread类似"></a><strong>Runnable</strong>与Thread类似</h5><h5 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a><strong>Callable</strong></h5><p>future模式：并发模式的一种，可以有两种形式，即<code>无阻塞</code>和<code>阻塞</code>，分别是isDone和get。其中Future对象用来存放该线程的返回值以及状态</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">ExecutorService e = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Executors</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">FixedThreadPool(3)</span>;<br> <span class="hljs-comment">//submit方法有多重参数版本，及支持callable也能够支持runnable接口类型.</span><br>Future future = e.submit(<span class="hljs-keyword">new</span> my<span class="hljs-constructor">Callable()</span>);<br>future.is<span class="hljs-constructor">Done()</span> <span class="hljs-comment">//return true,false 无阻塞</span><br>future.get<span class="hljs-literal">()</span> <span class="hljs-comment">// return 返回值，阻塞直到该线程运行结束</span><br></code></pre></td></tr></table></figure>
@@ -408,7 +408,7 @@
 <p>区别如下：</p>
 <blockquote>
 <p>lock更灵活，可以自由定义多把锁的加锁解锁顺序（synchronized要按照先加的后解顺序） 提供多种加锁方案，<code>lock 阻塞式</code>,<code> trylock 无阻塞式</code>, <code>lockInterruptily 可打断式</code>， 还有<code>trylock的带超时时间版本</code>。 本质上和监视器锁（即synchronized是一样的） 能力越大，责任越大，必须控制好加锁和解锁，否则会导致灾难。 和Condition类的结合。 性能更高，对比如下图：(Throughput吞吐量)</p>
-<p><img src="/.com//thre.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/thre.png" srcset="/img/loading.gif" alt="img"></p>
 <p>synchronized和Lock性能对比</p>
 </blockquote>
 <h6 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a><strong>ReentrantLock</strong></h6><p>可重入的意义在于持有锁的线程可以继续持有，并且要释放对等的次数后才真正释放该锁。<br>使用方法是：</p>
@@ -433,7 +433,7 @@
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">BlockingQueue</span><br><span class="hljs-attribute">ConcurrentHashMap</span><br></code></pre></td></tr></table></figure>
 <h6 id="BlockingQueue"><a href="#BlockingQueue" class="headerlink" title="BlockingQueue"></a><strong>BlockingQueue</strong></h6><p>阻塞队列。该类是java.util.concurrent包下的重要类，通过对Queue的学习可以得知，这个queue是单向队列，可以在队列头添加元素和在队尾删除或取出元素。类似于一个管道，特别适用于先进先出策略的一些应用场景。普通的queue接口主要实现有PriorityQueue（优先队列），有兴趣可以研究</p>
 <p>BlockingQueue在队列的基础上添加了多线程协作的功能：</p>
-<p><img src="/.com//contain.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/contain.png" srcset="/img/loading.gif" alt="img"></p>
 <p>BlockingQueue<br>除了传统的queue功能（表格左边的两列）之外，还提供了阻塞接口put和take，带超时功能的阻塞接口offer和poll。put会在队列满的时候阻塞，直到有空间时被唤醒；take在队列空的时候阻塞，直到有东西拿的时候才被唤醒。用于生产者-消费者模型尤其好用，堪称神器。</p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BlockingQueue</span> &#123;</span><br>    <span class="hljs-keyword">private</span> List <span class="hljs-built_in">queue</span> = <span class="hljs-keyword">new</span> LinkedList();<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> limit = <span class="hljs-number">10</span>;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">BlockingQueue</span><span class="hljs-params">(<span class="hljs-keyword">int</span> limit)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.limit = limit;<br>    &#125;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> synchronized <span class="hljs-keyword">void</span> <span class="hljs-title">enqueue</span><span class="hljs-params">(Object item)</span> throws InterruptedException </span>&#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-keyword">this</span>.<span class="hljs-built_in">queue</span>.<span class="hljs-built_in">size</span>() == <span class="hljs-keyword">this</span>.limit) &#123;<br>            wait();<br>        &#125;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.<span class="hljs-built_in">queue</span>.<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>) &#123;<br>            notifyAll();<br>        &#125;<br>        <span class="hljs-keyword">this</span>.<span class="hljs-built_in">queue</span>.add(item);<br>    &#125;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> synchronized Object <span class="hljs-title">dequeue</span><span class="hljs-params">()</span> throws InterruptedException </span>&#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-keyword">this</span>.<span class="hljs-built_in">queue</span>.<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>) &#123;<br>            wait();<br>        &#125;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.<span class="hljs-built_in">queue</span>.<span class="hljs-built_in">size</span>() == <span class="hljs-keyword">this</span>.limit) &#123;<br>            notifyAll();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.<span class="hljs-built_in">queue</span>.<span class="hljs-built_in">remove</span>(<span class="hljs-number">0</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>常见的阻塞队列有：</p>
@@ -443,7 +443,7 @@
 <h5 id="6-管理类"><a href="#6-管理类" class="headerlink" title="6.管理类"></a><strong>6.管理类</strong></h5><p>管理类的概念比较泛，用于管理线程，本身不是多线程的，但提供了一些机制来利用上述的工具做一些封装。<br>了解到的值得一提的管理类：ThreadPoolExecutor和 JMX框架下的系统级管理类 ThreadMXBean<br><strong>ThreadPoolExecutor</strong><br>如果不了解这个类，应该了解前面提到的ExecutorService，开一个自己的线程池非常方便：</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">ExecutorService e = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Executors</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">CachedThreadPool()</span>;<br>ExecutorService e = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Executors</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">SingleThreadExecutor()</span>;<br>ExecutorService e = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Executors</span>.</span></span><span class="hljs-keyword">new</span><span class="hljs-constructor">FixedThreadPool(3)</span>;<br><span class="hljs-comment">// 第一种是可变大小线程池，按照任务数来分配线程，</span><br><span class="hljs-comment">// 第二种是单线程池，相当于FixedThreadPool(1)</span><br><span class="hljs-comment">// 第三种是固定大小线程池。</span><br><span class="hljs-comment">// 然后运行</span><br>e.execute(<span class="hljs-keyword">new</span> <span class="hljs-constructor">MyRunnableImpl()</span>);<br></code></pre></td></tr></table></figure>
 <p>该类内部是通过ThreadPoolExecutor实现的，掌握该类有助于理解线程池的管理，本质上，他们都是ThreadPoolExecutor类的各种实现版本。请参见javadoc：</p>
-<p><img src="/.com//javadoc.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/javadoc.png" srcset="/img/loading.gif" alt="img"></p>
 <p>ThreadPoolExecutor参数解释</p>
 <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">corePoolSize:</span>池内线程初始值与最小值，就算是空闲状态，也会保持该数量线程。<br><span class="hljs-symbol">maximumPoolSize:</span>线程最大值，线程的增长始终不会超过该值。<br>keepAliveTime：当池内线程数高于corePoolSize时，经过多少时间多余的空闲线程才会被回收。回收前处于wait状态<br>unit：<br>时间单位，可以使用TimeUnit的实例，如TimeUnit.MILLISECONDS　<br><span class="hljs-symbol">workQueue:</span>待入任务（Runnable）的等待场所，该参数主要影响调度策略，如公平与否，是否产生饿死(starving)<br><span class="hljs-symbol">threadFactory:</span>线程工厂类，有默认实现，如果有自定义的需要则需要自己实现ThreadFactory接口并作为参数传入。<br></code></pre></td></tr></table></figure>
 <p>Java通过Executors提供四种线程池，分别为：</p>
@@ -457,7 +457,7 @@
 <p>newSingleThreadExecutor</p>
 <p>创建一个单线程的线程池。此线程池支持定时以及周期性执行任务。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行。</p>
 </blockquote>
-<p><img src="/.com//Snipaste_2019-11-13_09-26-28.png" srcset="/img/loading.gif" alt="i"></p>
+<p><img src="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/Snipaste_2019-11-13_09-26-28.png" srcset="/img/loading.gif" alt="i"></p>
 
             </div>
             <hr>

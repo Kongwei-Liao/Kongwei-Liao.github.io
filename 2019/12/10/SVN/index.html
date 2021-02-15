@@ -266,26 +266,26 @@
 <p>（8）Hackability</p>
 <p>Subversion没有任何的历史包袱; 它主要是一群共用的 C 程序库, 具有定义完善的API。这使得 Subversion 便于维护, 并且可被其它应用程序与程序语言使用。</p>
 <h4 id="1-3、安装SVN仓库"><a href="#1-3、安装SVN仓库" class="headerlink" title="1.3、安装SVN仓库"></a>1.3、安装SVN仓库</h4><h5 id="1-3-1、安装SVN服务器"><a href="#1-3-1、安装SVN服务器" class="headerlink" title="1.3.1、安装SVN服务器"></a>1.3.1、安装SVN服务器</h5><p>安装VisualSVN Server<a target="_blank" rel="noopener" href="https://www.visualsvn.com/server/download/">下载地址</a></p>
-<p><img src="/.com//image-20191210163958278.png" srcset="/img/loading.gif" alt="image-20191210163958278"></p>
+<p><img src="/2019/12/10/SVN/image-20191210163958278.png" srcset="/img/loading.gif" alt="image-20191210163958278"></p>
 <p>下载完毕后点击安装，同意用户协议</p>
-<p><img src="/.com//image-20191210164356133.png" srcset="/img/loading.gif" alt="image-20191210164356133"></p>
-<p><img src="/.com//image-20191210164554790.png" srcset="/img/loading.gif" alt="image-20191210164554790"></p>
-<p><img src="/.com//image-20191210164635265.png" srcset="/img/loading.gif" alt="image-20191210164635265"></p>
+<p><img src="/2019/12/10/SVN/image-20191210164356133.png" srcset="/img/loading.gif" alt="image-20191210164356133"></p>
+<p><img src="/2019/12/10/SVN/image-20191210164554790.png" srcset="/img/loading.gif" alt="image-20191210164554790"></p>
+<p><img src="/2019/12/10/SVN/image-20191210164635265.png" srcset="/img/loading.gif" alt="image-20191210164635265"></p>
 <p>点击下一步可能出现如下状况，原因是：由于各种原因导致HTTPS协议默认使用的443端口被占用，可以换用其它端口、解决443端口的争用或者换用其它如HTTP协议等。这里直接使用HTTPS协议换用8443端口。</p>
-<p><img src="/.com//image-20191210165143514.png" srcset="/img/loading.gif" alt="image-20191210165143514"></p>
-<p><img src="/.com//image-20191210165416069.png" srcset="/img/loading.gif" alt="image-20191210165416069"></p>
-<p><img src="/.com//image-20191210165507110.png" srcset="/img/loading.gif" alt="image-20191210165507110"></p>
-<p><img src="/.com//image-20191210165547214.png" srcset="/img/loading.gif" alt="image-20191210165547214"></p>
+<p><img src="/2019/12/10/SVN/image-20191210165143514.png" srcset="/img/loading.gif" alt="image-20191210165143514"></p>
+<p><img src="/2019/12/10/SVN/image-20191210165416069.png" srcset="/img/loading.gif" alt="image-20191210165416069"></p>
+<p><img src="/2019/12/10/SVN/image-20191210165507110.png" srcset="/img/loading.gif" alt="image-20191210165507110"></p>
+<p><img src="/2019/12/10/SVN/image-20191210165547214.png" srcset="/img/loading.gif" alt="image-20191210165547214"></p>
 <h5 id="1-3-2、新建仓库"><a href="#1-3-2、新建仓库" class="headerlink" title="1.3.2、新建仓库"></a>1.3.2、新建仓库</h5><p><code>Trunk：</code> 存放开发的主线，团队成员在开发的时候一直要用这个库中的内容</p>
 <p><code>Branches：</code>存放支线副本：当项目稳定以后，先发布到tags下，如果发现了bug，再从tags下检出到branches下。在该版本下进行bug的修复，把修复完毕的稳定的版本重新发布到tags下。</p>
 <p><code>Tags：</code>存放标签副本，也就是存放稳定版本</p>
-<p><img src="/.com//image-20191210091559139.png" srcset="/img/loading.gif" alt="image-20191210091559139"></p>
-<h5 id="1-3-3、新建用户-amp-组"><a href="#1-3-3、新建用户-amp-组" class="headerlink" title="1.3.3、新建用户&amp;组"></a>1.3.3、新建用户&amp;组</h5><p><img src="/.com//image-20191210165818343.png" srcset="/img/loading.gif" alt="image-20191210165818343"></p>
-<p><img src="/.com//image-20191210165916450.png" srcset="/img/loading.gif" alt="image-20191210165916450"></p>
-<h5 id="1-3-4、配置权限"><a href="#1-3-4、配置权限" class="headerlink" title="1.3.4、配置权限"></a>1.3.4、配置权限</h5><p><img src="/.com//image-20191210170115155.png" srcset="/img/loading.gif" alt="image-20191210170115155"></p>
-<h5 id="1-3-5、访问仓库简单测试"><a href="#1-3-5、访问仓库简单测试" class="headerlink" title="1.3.5、访问仓库简单测试"></a>1.3.5、访问仓库简单测试</h5><p><img src="/.com//image-20191210170602059.png" srcset="/img/loading.gif" alt="image-20191210170602059"></p>
+<p><img src="/2019/12/10/SVN/image-20191210091559139.png" srcset="/img/loading.gif" alt="image-20191210091559139"></p>
+<h5 id="1-3-3、新建用户-amp-组"><a href="#1-3-3、新建用户-amp-组" class="headerlink" title="1.3.3、新建用户&amp;组"></a>1.3.3、新建用户&amp;组</h5><p><img src="/2019/12/10/SVN/image-20191210165818343.png" srcset="/img/loading.gif" alt="image-20191210165818343"></p>
+<p><img src="/2019/12/10/SVN/image-20191210165916450.png" srcset="/img/loading.gif" alt="image-20191210165916450"></p>
+<h5 id="1-3-4、配置权限"><a href="#1-3-4、配置权限" class="headerlink" title="1.3.4、配置权限"></a>1.3.4、配置权限</h5><p><img src="/2019/12/10/SVN/image-20191210170115155.png" srcset="/img/loading.gif" alt="image-20191210170115155"></p>
+<h5 id="1-3-5、访问仓库简单测试"><a href="#1-3-5、访问仓库简单测试" class="headerlink" title="1.3.5、访问仓库简单测试"></a>1.3.5、访问仓库简单测试</h5><p><img src="/2019/12/10/SVN/image-20191210170602059.png" srcset="/img/loading.gif" alt="image-20191210170602059"></p>
 <p>访问结果如下：</p>
-<p><img src="/.com//image-20191210170652117.png" srcset="/img/loading.gif" alt="image-20191210170652117"></p>
+<p><img src="/2019/12/10/SVN/image-20191210170652117.png" srcset="/img/loading.gif" alt="image-20191210170652117"></p>
 <h5 id="1-3-6、Linux系统版本安装配置"><a href="#1-3-6、Linux系统版本安装配置" class="headerlink" title="1.3.6、Linux系统版本安装配置"></a><a target="_blank" rel="noopener" href="https://www.runoob.com/svn/svn-tutorial.html">1.3.6、Linux系统版本安装配置</a></h5><p>大多数 GNU/Linux 发行版系统自带了Subversion ，所以它很有可能已经安装在你的系统上了。可以使用下面命令检查是否安装了。</p>
 <figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">svn <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure>
 <p>如果 Subversion 客户端没有安装，命令将报告svn命令找不到的错误。</p>
@@ -332,129 +332,129 @@
 <p><code>update</code>—&gt;在你写代码的过程中，同事很可能已经提交过代码到SVN服务器，而你本地项目显然没有同事新提交的代码，你可以通过update SVN获得SVN最新的代码。即更新本地代码与SVN服务器上最新的版本一致，只要在需要更新的文件夹上点击右键或者在文件下空白处点击右键，选择”SVN Update” (获取指定版本中的内容，点击右键执行SVN菜单中的“Update to reversion“)，就可以了。</p>
 <p><code>commit</code>—&gt;当你完成一部分开发后，你可以通过commit提交代码到SVN服务器，这样别人就可以获得你写的代码，记得先update再commit。</p>
 <h5 id="1-4-1、安装svn客户端"><a href="#1-4-1、安装svn客户端" class="headerlink" title="1.4.1、安装svn客户端"></a>1.4.1、安装svn客户端</h5><p><a target="_blank" rel="noopener" href="https://tortoisesvn.net/downloads.zh.html">TortoiseSVN及其中文语言包的下载路径</a></p>
-<p><img src="/.com//image-20191210171050514.png" srcset="/img/loading.gif" alt="image-20191210171050514"></p>
+<p><img src="/2019/12/10/SVN/image-20191210171050514.png" srcset="/img/loading.gif" alt="image-20191210171050514"></p>
 <p>TortoiseSVN 是通过右键菜单与 Windows 资源管理器集成，没有自己的窗口界面</p>
 <h5 id="1-4-2、安装TortoiseSVN中文语言包"><a href="#1-4-2、安装TortoiseSVN中文语言包" class="headerlink" title="1.4.2、安装TortoiseSVN中文语言包"></a>1.4.2、安装TortoiseSVN中文语言包</h5><p>运行LanguagePack_1.6.16.21511-x64-zh_CN.msi汉化</p>
 <p>桌面空白的地方点击右键，svn，设置</p>
-<p><img src="/.com//image-20191210092535433.png" srcset="/img/loading.gif" alt="image-20191210092535433"></p>
+<p><img src="/2019/12/10/SVN/image-20191210092535433.png" srcset="/img/loading.gif" alt="image-20191210092535433"></p>
 <h5 id="1-4-3、文件导入"><a href="#1-4-3、文件导入" class="headerlink" title="1.4.3、文件导入"></a>1.4.3、文件导入</h5><p>进入欲导入文件的文件夹右键</p>
-<p><img src="/.com//image-20191210200520012.png" srcset="/img/loading.gif" alt="image-20191210200520012"></p>
+<p><img src="/2019/12/10/SVN/image-20191210200520012.png" srcset="/img/loading.gif" alt="image-20191210200520012"></p>
 <p>键入要访问的仓库地址：</p>
-<p><img src="/.com//image-20191210200656780.png" srcset="/img/loading.gif" alt="image-20191210200656780"></p>
+<p><img src="/2019/12/10/SVN/image-20191210200656780.png" srcset="/img/loading.gif" alt="image-20191210200656780"></p>
 <p>把文件添加到SVN库中进行管理：</p>
-<p><img src="/.com//image-20191210200827528.png" srcset="/img/loading.gif" alt="image-20191210200827528"></p>
+<p><img src="/2019/12/10/SVN/image-20191210200827528.png" srcset="/img/loading.gif" alt="image-20191210200827528"></p>
 <h5 id="1-4-4、检出文件"><a href="#1-4-4、检出文件" class="headerlink" title="1.4.4、检出文件"></a>1.4.4、检出文件</h5><p><code>checkout</code>—&gt;将SVN仓库的代码拷贝到本地，比如你现在参与一个团队项目，项目代码在你之前肯定已经写了很多了，你可以通过checkout项目代码，获得整个项目。</p>
 <p>在某个文件夹位置，直接右键检出</p>
-<p><img src="/.com//image-20191210173332323.png" srcset="/img/loading.gif" alt="image-20191210173332323"></p>
-<p><img src="/.com//image-20191210173447183.png" srcset="/img/loading.gif" alt="image-20191210173447183"></p>
-<p><img src="/.com//image-20191210093213531.png" srcset="/img/loading.gif" alt="image-20191210173537683"></p>
+<p><img src="/2019/12/10/SVN/image-20191210173332323.png" srcset="/img/loading.gif" alt="image-20191210173332323"></p>
+<p><img src="/2019/12/10/SVN/image-20191210173447183.png" srcset="/img/loading.gif" alt="image-20191210173447183"></p>
+<p><img src="/2019/12/10/SVN/image-20191210093213531.png" srcset="/img/loading.gif" alt="image-20191210173537683"></p>
 <p>执行完上述操作以后demo仓库里的内容就被下载到了user1中。</p>
 <p>注意：**.svn**这个隐藏目录记录着两项关键的信息: 工作文件的基准版本和一个本地副本最后更新的时间戳。千万不要手工修改或删除这个 .svn隐藏目录和里面的文件！！！ </p>
 <p>否则将会导致你本地的工作拷贝 （静态视图）被破坏，无法再进行操作。</p>
 <h5 id="1-4-5、创建新文件"><a href="#1-4-5、创建新文件" class="headerlink" title="1.4.5、创建新文件"></a>1.4.5、创建新文件</h5><p>新建一个txt文件，“新建文本文档.txt”</p>
 <p>我们利用svn把 ”新建文本文档.txt “ 添加到版本控制</p>
 <p>先要标记文件状态：</p>
-<p><img src="/.com//image-20191210174443095.png" srcset="/img/loading.gif" alt="image-20191210174443095"></p>
+<p><img src="/2019/12/10/SVN/image-20191210174443095.png" srcset="/img/loading.gif" alt="image-20191210174443095"></p>
 <p>添加完毕后</p>
-<p><img src="/.com//image-20191210192304365.png" srcset="/img/loading.gif" alt="image-20191210192304365"></p>
+<p><img src="/2019/12/10/SVN/image-20191210192304365.png" srcset="/img/loading.gif" alt="image-20191210192304365"></p>
 <p>利用svn Commit上传到服务器</p>
-<p><img src="/.com//image-20191210192450630.png" srcset="/img/loading.gif" alt="image-20191210192450630"></p>
-<p><img src="/.com//image-20191210192622829.png" srcset="/img/loading.gif" alt="image-20191210192622829"></p>
+<p><img src="/2019/12/10/SVN/image-20191210192450630.png" srcset="/img/loading.gif" alt="image-20191210192450630"></p>
+<p><img src="/2019/12/10/SVN/image-20191210192622829.png" srcset="/img/loading.gif" alt="image-20191210192622829"></p>
 <h5 id="1-4-6、修改-“新建文本文档-txt文件”"><a href="#1-4-6、修改-“新建文本文档-txt文件”" class="headerlink" title="1.4.6、修改  “新建文本文档.txt文件”"></a>1.4.6、修改  “新建文本文档.txt文件”</h5><p>在user2中利用上面的知识，创建仓库检出文件。这样，user2的本地仓库中也有 “新建文本文档.txt文件”了。</p>
-<p><img src="/.com//image-20191210193009385.png" srcset="/img/loading.gif" alt="image-20191210193009385"></p>
+<p><img src="/2019/12/10/SVN/image-20191210193009385.png" srcset="/img/loading.gif" alt="image-20191210193009385"></p>
 <p>我们在User2中修改 “新建文本文档.txt文件”</p>
 <p>这时我们发现 user2中的a.txt 文件的图标发生了变化：</p>
-<p><img src="/.com//image-20191210193217711.png" srcset="/img/loading.gif" alt="image-20191210193217711"></p>
+<p><img src="/2019/12/10/SVN/image-20191210193217711.png" srcset="/img/loading.gif" alt="image-20191210193217711"></p>
 <p>我们在user2再执行commit操作：</p>
-<p><img src="/.com//image-20191210193442560.png" srcset="/img/loading.gif" alt="image-20191210193442560"></p>
+<p><img src="/2019/12/10/SVN/image-20191210193442560.png" srcset="/img/loading.gif" alt="image-20191210193442560"></p>
 <p>我们在user1执行update操作：</p>
-<p><img src="/.com//image-20191210193730368.png" srcset="/img/loading.gif" alt="image-20191210193730368"></p>
+<p><img src="/2019/12/10/SVN/image-20191210193730368.png" srcset="/img/loading.gif" alt="image-20191210193730368"></p>
 <p>我们可以在user1文件夹看到修改后的   ”新建文本文档.txt“   文件了。</p>
-<p><img src="/.com//image-20191210193848021.png" srcset="/img/loading.gif" alt="image-20191210193848021"></p>
+<p><img src="/2019/12/10/SVN/image-20191210193848021.png" srcset="/img/loading.gif" alt="image-20191210193848021"></p>
 <h5 id="1-4-7、删除文件"><a href="#1-4-7、删除文件" class="headerlink" title="1.4.7、删除文件"></a>1.4.7、删除文件</h5><p>不仅仅是本地删除文件，而是让服务器上的文件同步删除。</p>
 <p>我们先把user1 中的   ”新建文本文档.txt“   删除，然后执行commit操作。</p>
-<p><img src="/.com//image-20191210194238244.png" srcset="/img/loading.gif" alt="image-20191210194238244"></p>
+<p><img src="/2019/12/10/SVN/image-20191210194238244.png" srcset="/img/loading.gif" alt="image-20191210194238244"></p>
 <p>注意操作状态是<strong>missing</strong>，和新增一样我们需要<strong>修改它的状态</strong></p>
-<p><img src="/.com//image-20191210194426104.png" srcset="/img/loading.gif" alt="image-20191210194426104"></p>
-<p><img src="/.com//image-20191210194714364.png" srcset="/img/loading.gif" alt="image-20191210194714364"></p>
+<p><img src="/2019/12/10/SVN/image-20191210194426104.png" srcset="/img/loading.gif" alt="image-20191210194426104"></p>
+<p><img src="/2019/12/10/SVN/image-20191210194714364.png" srcset="/img/loading.gif" alt="image-20191210194714364"></p>
 <p>然后再进行确认提交。</p>
 <p>此时我们在回到user2中更新项目：</p>
-<p><img src="/.com//image-20191210194946765.png" srcset="/img/loading.gif" alt="image-20191210194946765"></p>
+<p><img src="/2019/12/10/SVN/image-20191210194946765.png" srcset="/img/loading.gif" alt="image-20191210194946765"></p>
 <p>”新建文本文档.txt“    文件一同被删除。</p>
 <h5 id="1-4-8、恢复被删除的文件"><a href="#1-4-8、恢复被删除的文件" class="headerlink" title="1.4.8、恢复被删除的文件"></a>1.4.8、恢复被删除的文件</h5><p>使用版本控制工具，我们可以轻易的恢复被误删的文件</p>
 <p>在User1 中选择<strong>更新至版本</strong>…</p>
-<p><img src="/.com//image-20191210195258450.png" srcset="/img/loading.gif" alt="image-20191210195258450"></p>
+<p><img src="/2019/12/10/SVN/image-20191210195258450.png" srcset="/img/loading.gif" alt="image-20191210195258450"></p>
 <p>如果我们记不清版本，可以通过<strong>日志进行查询</strong>，找到需要恢复历史版本：</p>
-<p><img src="/.com//image-20191210195513070.png" srcset="/img/loading.gif" alt="image-20191210195513070"></p>
-<p><img src="/.com//image-20191210195723374.png" srcset="/img/loading.gif" alt="image-20191210195723374"></p>
+<p><img src="/2019/12/10/SVN/image-20191210195513070.png" srcset="/img/loading.gif" alt="image-20191210195513070"></p>
+<p><img src="/2019/12/10/SVN/image-20191210195723374.png" srcset="/img/loading.gif" alt="image-20191210195723374"></p>
 <h5 id="1-4-9、分支"><a href="#1-4-9、分支" class="headerlink" title="1.4.9、分支"></a>1.4.9、分支</h5><p>项目中为何要创建分支，及合并？</p>
 <p>比如我现在项目所有的文件放在主干上(trunk)中，由于需求的变更，需要增加新的需求，但是我们主干上还要继续往下开发，在此我们可以新建一个分支，来做增加新的需求那一块，主干上继续开发，等分支上代码没有问题的时候，再合并到主干上来。</p>
 <p>创建分支的最大的目的就是跟主线进行并行开发时候不影响主线的开发。</p>
 <p><strong>如何操作？</strong></p>
 <p>假如我本地新建一个文件夹SVNDemo下有2个文件夹trunk(存放主干上的代码)和branch(存放分支上的代码)，如下所示：</p>
-<p><img src="/.com//image-20191210210727941.png" srcset="/img/loading.gif" alt="image-20191210210727941"></p>
+<p><img src="/2019/12/10/SVN/image-20191210210727941.png" srcset="/img/loading.gif" alt="image-20191210210727941"></p>
 <p><strong>1、先提取主干代码到trunk文件夹</strong></p>
-<p><img src="/.com//image-20191210211058403.png" srcset="/img/loading.gif" alt="image-20191210211058403"></p>
-<p><img src="/.com//image-20191210211203767.png" srcset="/img/loading.gif" alt="image-20191210211203767"></p>
+<p><img src="/2019/12/10/SVN/image-20191210211058403.png" srcset="/img/loading.gif" alt="image-20191210211058403"></p>
+<p><img src="/2019/12/10/SVN/image-20191210211203767.png" srcset="/img/loading.gif" alt="image-20191210211203767"></p>
 <p><strong>2、新建分支</strong></p>
 <p> 从trunk（主干上）创建分支(branch)步骤如下：</p>
 <p>右键trunk –&gt; branch/Tag 如下图：</p>
-<p><img src="/.com//image-20191210211522739.png" srcset="/img/loading.gif" alt="image-20191210211522739"></p>
+<p><img src="/2019/12/10/SVN/image-20191210211522739.png" srcset="/img/loading.gif" alt="image-20191210211522739"></p>
 <p>弹出对话框，填入新分支路径：</p>
-<p><img src="/.com//image-20191210211712652.png" srcset="/img/loading.gif" alt="image-20191210211712652"></p>
+<p><img src="/2019/12/10/SVN/image-20191210211712652.png" srcset="/img/loading.gif" alt="image-20191210211712652"></p>
 <p>确认：</p>
-<p><img src="/.com//image-20191210211828529.png" srcset="/img/loading.gif" alt="image-20191210211828529"></p>
+<p><img src="/2019/12/10/SVN/image-20191210211828529.png" srcset="/img/loading.gif" alt="image-20191210211828529"></p>
 <p>查看：</p>
 <p>在VisualSVN Serval服务器上新增NewBranch，是从如上服务器Ant_Nest上的文件拷贝一份的</p>
-<p><img src="/.com//image-20191210212044298.png" srcset="/img/loading.gif" alt="image-20191210212044298"></p>
+<p><img src="/2019/12/10/SVN/image-20191210212044298.png" srcset="/img/loading.gif" alt="image-20191210212044298"></p>
 <p><strong>3、现在我们可以再来看看本地branch文件夹了，我现在直接进入branch文件下</strong></p>
 <p>右键 –&gt; Chenckout下，就可以把NewBranch下的所有文件提取出来了，如下所示：</p>
-<p><img src="/.com//image-20191210212502331.png" srcset="/img/loading.gif" alt="image-20191210212502331"></p>
-<p><img src="/.com//image-20191210212635660.png" srcset="/img/loading.gif" alt="image-20191210212635660"></p>
+<p><img src="/2019/12/10/SVN/image-20191210212502331.png" srcset="/img/loading.gif" alt="image-20191210212502331"></p>
+<p><img src="/2019/12/10/SVN/image-20191210212635660.png" srcset="/img/loading.gif" alt="image-20191210212635660"></p>
 <p>对本地branch文件夹 右键–&gt; update即可，就可以更新到分支代码</p>
 <p><strong>4、合并分支到主干</strong></p>
 <p>比如我现在对branch分支上新增    “新建文本文档.txt”   文件，然后提交上去，如下所示：</p>
-<p><img src="/.com//image-20191210213302464.png" srcset="/img/loading.gif" alt="image-20191210213302464"></p>
+<p><img src="/2019/12/10/SVN/image-20191210213302464.png" srcset="/img/loading.gif" alt="image-20191210213302464"></p>
 <p>我现在想把分支上的代码   “新建文本文档.txt”   合并到主干上trunk，现在要怎么合并呢？步骤如下：</p>
 <p>回到我们刚刚的主干（trunk）文件夹下，鼠标右键该文件夹 –&gt; TortoiseSVN –&gt; Merge 如下图所示：</p>
-<p><img src="/.com//image-20191210213501736.png" srcset="/img/loading.gif" alt="image-20191210213501736"></p>
+<p><img src="/2019/12/10/SVN/image-20191210213501736.png" srcset="/img/loading.gif" alt="image-20191210213501736"></p>
 <p>弹窗：</p>
-<p><img src="/.com//image-20191210213814603.png" srcset="/img/loading.gif" alt="image-20191210213814603"></p>
-<p><img src="/.com//image-20191210214037444.png" srcset="/img/loading.gif" alt="image-20191210214037444"></p>
-<p><img src="/.com//image-20191210214129993.png" srcset="/img/loading.gif" alt="image-20191210214129993"></p>
+<p><img src="/2019/12/10/SVN/image-20191210213814603.png" srcset="/img/loading.gif" alt="image-20191210213814603"></p>
+<p><img src="/2019/12/10/SVN/image-20191210214037444.png" srcset="/img/loading.gif" alt="image-20191210214037444"></p>
+<p><img src="/2019/12/10/SVN/image-20191210214129993.png" srcset="/img/loading.gif" alt="image-20191210214129993"></p>
 <p>因为服务端的<strong>历史创建主干和分支不当，二者产生上下级关系</strong>，在修改分支内容并提交后，如果没有更新主干就进行合并操作就会产生如下的树冲突：</p>
-<p><img src="/.com//image-20191210214902189.png" srcset="/img/loading.gif" alt="image-20191210214902189"></p>
-<p><img src="/.com//image-20191210215345663.png" srcset="/img/loading.gif" alt="image-20191210215345663"></p>
+<p><img src="/2019/12/10/SVN/image-20191210214902189.png" srcset="/img/loading.gif" alt="image-20191210214902189"></p>
+<p><img src="/2019/12/10/SVN/image-20191210215345663.png" srcset="/img/loading.gif" alt="image-20191210215345663"></p>
 <p><strong>6、合并主干到分支</strong></p>
 <p>如果主干上有一些更新，比如说jar包更新等等，那么这些要更新到分支上去，如何操作呢？比如我现在在主干上新建一个  ”新建文本文档(2).txt“  文件，比如如下：</p>
 <p>trunk添加并提交文件    ”新建文本文档(2).txt“  </p>
-<p><img src="/.com//image-20191210215614630.png" srcset="/img/loading.gif" alt="image-20191210215614630"></p>
+<p><img src="/2019/12/10/SVN/image-20191210215614630.png" srcset="/img/loading.gif" alt="image-20191210215614630"></p>
 <p>当前分支目录内容如下：</p>
-<p><img src="/.com//image-20191210215853622.png" srcset="/img/loading.gif" alt="image-20191210215853622"></p>
+<p><img src="/2019/12/10/SVN/image-20191210215853622.png" srcset="/img/loading.gif" alt="image-20191210215853622"></p>
 <p>在分支点击branch –&gt; 右键TortoiseSVN –&gt; Merge 如下图所示：</p>
-<p><img src="/.com//image-20191210220049308.png" srcset="/img/loading.gif" alt="image-20191210220049308"></p>
-<p><img src="/.com//image-20191210220527393.png" srcset="/img/loading.gif" alt="image-20191210220527393"></p>
+<p><img src="/2019/12/10/SVN/image-20191210220049308.png" srcset="/img/loading.gif" alt="image-20191210220049308"></p>
+<p><img src="/2019/12/10/SVN/image-20191210220527393.png" srcset="/img/loading.gif" alt="image-20191210220527393"></p>
 <h5 id="1-4-10、解决冲突"><a href="#1-4-10、解决冲突" class="headerlink" title="1.4.10、解决冲突"></a>1.4.10、解决冲突</h5><p>为什么会产生冲突代码呢？原因很简单就是因为不同的人，同时修改了同一个文件的同一个地方，这时候，他提交了，我没有提交，我就提交不了，这个时候我们要进行先更新，然后在进行提交即可，那如果产生冲突，会生成如上3个文件。 </p>
 <p>案例：</p>
 <p>产生冲突SVNDemo文件夹下创建user1和user2文件夹，两个文件夹<strong>检出（checkout）</strong>同一项目，各自修改同一文件的内容，各自提交前都不更新内容：</p>
-<p><img src="/.com//image-20191210223120590.png" srcset="/img/loading.gif" alt="image-20191210223120590"></p>
+<p><img src="/2019/12/10/SVN/image-20191210223120590.png" srcset="/img/loading.gif" alt="image-20191210223120590"></p>
 <p>user1先提交：</p>
-<p><img src="/.com//image-20191210223416362.png" srcset="/img/loading.gif" alt="image-20191210223416362"></p>
+<p><img src="/2019/12/10/SVN/image-20191210223416362.png" srcset="/img/loading.gif" alt="image-20191210223416362"></p>
 <p>user2在提交：产生冲突</p>
-<p><img src="/.com//image-20191210223513139.png" srcset="/img/loading.gif" alt="image-20191210223513139"></p>
-<p><img src="/.com//image-20191210224145486.png" srcset="/img/loading.gif" alt="image-20191210224145486"></p>
-<p><img src="/.com//image-20191210224550424.png" srcset="/img/loading.gif" alt="image-20191210224550424"></p>
+<p><img src="/2019/12/10/SVN/image-20191210223513139.png" srcset="/img/loading.gif" alt="image-20191210223513139"></p>
+<p><img src="/2019/12/10/SVN/image-20191210224145486.png" srcset="/img/loading.gif" alt="image-20191210224145486"></p>
+<p><img src="/2019/12/10/SVN/image-20191210224550424.png" srcset="/img/loading.gif" alt="image-20191210224550424"></p>
 <p>对于每个冲突的文件Subversion在你的目录下放置了三个文件内容如下：<strong>（后缀.r14和.r15为版本区别）</strong></p>
-<p><img src="/.com//image-20191210225655087.png" srcset="/img/loading.gif" alt="image-20191210225655087"></p>
+<p><img src="/2019/12/10/SVN/image-20191210225655087.png" srcset="/img/loading.gif" alt="image-20191210225655087"></p>
 <p>解决方案：</p>
 <p>1、使用revert(回滚)操作，该操作表示用户放弃自己的更新代码，然后直接提交，这个时候你的代码就会使服务器上最新的代码，即A用户提交的新代码，你的代码不会被提交，如下所示：</p>
-<p><img src="/.com//image-20191210230932749.png" srcset="/img/loading.gif" alt="image-20191210230932749"></p>
-<p><img src="/.com//image-20191210231033429.png" srcset="/img/loading.gif" alt="image-20191210231033429"></p>
+<p><img src="/2019/12/10/SVN/image-20191210230932749.png" srcset="/img/loading.gif" alt="image-20191210230932749"></p>
+<p><img src="/2019/12/10/SVN/image-20191210231033429.png" srcset="/img/loading.gif" alt="image-20191210231033429"></p>
 <p>2、选择文件-&gt;右键Editconficts：这种方法需要<strong>冲突双方经过协商</strong>之后将代码更改统一之后再提交。不仅解决了冲突而且还保证了代码是正确的，因为只有一方的代码被提交：</p>
-<p><img src="/.com//image-20191210232141891.png" srcset="/img/loading.gif" alt="image-20191210232141891"></p>
-<p><img src="/.com//image-20191210232352963.png" srcset="/img/loading.gif" alt="image-20191210232352963"></p>
+<p><img src="/2019/12/10/SVN/image-20191210232141891.png" srcset="/img/loading.gif" alt="image-20191210232141891"></p>
+<p><img src="/2019/12/10/SVN/image-20191210232352963.png" srcset="/img/loading.gif" alt="image-20191210232352963"></p>
 <p>状态由<strong>冲突</strong>变成<strong>修改：</strong></p>
-<p><img src="/.com//image-20191210232538468.png" srcset="/img/loading.gif" alt="image-20191210232538468"></p>
+<p><img src="/2019/12/10/SVN/image-20191210232538468.png" srcset="/img/loading.gif" alt="image-20191210232538468"></p>
 <h5 id="1-4-11、小结"><a href="#1-4-11、小结" class="headerlink" title="1.4.11、小结"></a>1.4.11、小结</h5><p>SVN简单使用: SVN基本操作</p>
 <p>工作中最常用的 SVN 操作</p>
 <ul>
@@ -467,46 +467,46 @@
 <h3 id="2、Eclipse中使用SVN"><a href="#2、Eclipse中使用SVN" class="headerlink" title="2、Eclipse中使用SVN"></a>2、Eclipse中使用SVN</h3><p>在Eclipse中通过插件使用SVN</p>
 <p><strong>插件安装：</strong></p>
 <p>把文件添加到Eclipse的dropins文件夹中，重启Eclipse即可</p>
-<p><img src="/.com//image-20191210095204957.png" srcset="/img/loading.gif" alt="image-20191210095204957"></p>
+<p><img src="/2019/12/10/SVN/image-20191210095204957.png" srcset="/img/loading.gif" alt="image-20191210095204957"></p>
 <p><strong>在线安装：</strong></p>
 <p>也可使用在线安装的方式为Eclipse添加SVN插件</p>
 <p>打开Eclipse-&gt;Help-&gt;Install New Software…</p>
-<p><img src="/.com//image-20191210095441246.png" srcset="/img/loading.gif" alt="image-20191210095441246"></p>
+<p><img src="/2019/12/10/SVN/image-20191210095441246.png" srcset="/img/loading.gif" alt="image-20191210095441246"></p>
 <p>其中<strong><a target="_blank" rel="noopener" href="http://subclipse.tigris.org/update_1.10.x">http://subclipse.tigris.org/update_1.10.x</a></strong>是最新版本的SVN插件的下载站点【subclipse是Eclipse的SVN插件】。</p>
-<p><img src="/.com//image-20191210095540977.png" srcset="/img/loading.gif" alt="image-20191210095540977"></p>
+<p><img src="/2019/12/10/SVN/image-20191210095540977.png" srcset="/img/loading.gif" alt="image-20191210095540977"></p>
 <p>下一步</p>
-<p><img src="/.com//image-20191210095618932.png" srcset="/img/loading.gif" alt="image-20191210095618932"></p>
+<p><img src="/2019/12/10/SVN/image-20191210095618932.png" srcset="/img/loading.gif" alt="image-20191210095618932"></p>
 <p>下一步 选择同意安装</p>
-<p><img src="/.com//image-20191210095746998.png" srcset="/img/loading.gif" alt="image-20191210095746998"></p>
+<p><img src="/2019/12/10/SVN/image-20191210095746998.png" srcset="/img/loading.gif" alt="image-20191210095746998"></p>
 <p>点击【Finish】按钮开始安装SVN插件</p>
 <p>安装过程中弹出警告框，不用理会，直接点击【OK】按钮继续安装</p>
 <p>安装完成之后需要重启Eclipse，点击【Yes】按钮重启Eclipse即可。</p>
 <p><strong>查看安装好的SVN插件</strong></p>
-<p><img src="/.com//image-20191210100828986.png" srcset="/img/loading.gif" alt="image-20191210100828986"></p>
-<h4 id="2-1、项目添加到SVN中"><a href="#2-1、项目添加到SVN中" class="headerlink" title="2.1、项目添加到SVN中"></a>2.1、项目添加到SVN中</h4><h5 id="2-1-1、新建项目，如下操作："><a href="#2-1-1、新建项目，如下操作：" class="headerlink" title="2.1.1、新建项目，如下操作："></a>2.1.1、新建项目，如下操作：</h5><p><img src="/.com//image-20191210101011113.png" srcset="/img/loading.gif" alt="image-20191210101011113"></p>
-<h5 id="2-1-2、选择SVN"><a href="#2-1-2、选择SVN" class="headerlink" title="2.1.2、选择SVN"></a>2.1.2、选择SVN</h5><p><img src="/.com//image-20191210101134344.png" srcset="/img/loading.gif" alt="image-20191210101134344"></p>
-<h5 id="2-1-3、选择SVN仓库地址的位置："><a href="#2-1-3、选择SVN仓库地址的位置：" class="headerlink" title="2.1.3、选择SVN仓库地址的位置："></a>2.1.3、选择SVN仓库地址的位置：</h5><p><img src="/.com//image-20191210101228328.png" srcset="/img/loading.gif" alt="image-20191210101228328"></p>
-<p><img src="/.com//image-20191210101303735.png" srcset="/img/loading.gif" alt="image-20191210101303735"></p>
-<p><img src="/.com//image-20191210101339503.png" srcset="/img/loading.gif" alt="image-20191210101339503"></p>
+<p><img src="/2019/12/10/SVN/image-20191210100828986.png" srcset="/img/loading.gif" alt="image-20191210100828986"></p>
+<h4 id="2-1、项目添加到SVN中"><a href="#2-1、项目添加到SVN中" class="headerlink" title="2.1、项目添加到SVN中"></a>2.1、项目添加到SVN中</h4><h5 id="2-1-1、新建项目，如下操作："><a href="#2-1-1、新建项目，如下操作：" class="headerlink" title="2.1.1、新建项目，如下操作："></a>2.1.1、新建项目，如下操作：</h5><p><img src="/2019/12/10/SVN/image-20191210101011113.png" srcset="/img/loading.gif" alt="image-20191210101011113"></p>
+<h5 id="2-1-2、选择SVN"><a href="#2-1-2、选择SVN" class="headerlink" title="2.1.2、选择SVN"></a>2.1.2、选择SVN</h5><p><img src="/2019/12/10/SVN/image-20191210101134344.png" srcset="/img/loading.gif" alt="image-20191210101134344"></p>
+<h5 id="2-1-3、选择SVN仓库地址的位置："><a href="#2-1-3、选择SVN仓库地址的位置：" class="headerlink" title="2.1.3、选择SVN仓库地址的位置："></a>2.1.3、选择SVN仓库地址的位置：</h5><p><img src="/2019/12/10/SVN/image-20191210101228328.png" srcset="/img/loading.gif" alt="image-20191210101228328"></p>
+<p><img src="/2019/12/10/SVN/image-20191210101303735.png" srcset="/img/loading.gif" alt="image-20191210101303735"></p>
+<p><img src="/2019/12/10/SVN/image-20191210101339503.png" srcset="/img/loading.gif" alt="image-20191210101339503"></p>
 <p>输入用户名密码，确定导入完成。</p>
 <h4 id="2-2、提交代码到SVN项目"><a href="#2-2、提交代码到SVN项目" class="headerlink" title="2.2、提交代码到SVN项目"></a>2.2、提交代码到SVN项目</h4><p>现在我们只是把项目和SVN进行了关联，所有的项目文件并没有上传到服务器。</p>
-<p><img src="/.com//image-20191210101503691.png" srcset="/img/loading.gif" alt="image-20191210101503691"></p>
+<p><img src="/2019/12/10/SVN/image-20191210101503691.png" srcset="/img/loading.gif" alt="image-20191210101503691"></p>
 <p>忽略.class文件和classes文件夹不提交</p>
-<p><img src="/.com//image-20191210101537605.png" srcset="/img/loading.gif" alt="image-20191210101537605"></p>
+<p><img src="/2019/12/10/SVN/image-20191210101537605.png" srcset="/img/loading.gif" alt="image-20191210101537605"></p>
 <p>提交项目，可以看到classes文件并不在其</p>
-<p><img src="/.com//image-20191210101634177.png" srcset="/img/loading.gif" alt="image-20191210101634177"></p>
+<p><img src="/2019/12/10/SVN/image-20191210101634177.png" srcset="/img/loading.gif" alt="image-20191210101634177"></p>
 <p>提交之后，可以到项目图标已经发生了变化</p>
-<p><img src="/.com//image-20191210101739951.png" srcset="/img/loading.gif" alt="image-20191210101739951"></p>
+<p><img src="/2019/12/10/SVN/image-20191210101739951.png" srcset="/img/loading.gif" alt="image-20191210101739951"></p>
 <h4 id="2-3、把SVN项目检出到Eclipse"><a href="#2-3、把SVN项目检出到Eclipse" class="headerlink" title="2.3、把SVN项目检出到Eclipse"></a>2.3、把SVN项目检出到Eclipse</h4><p>我们新到公司，往往已经有开发好了的项目，我们要加入，就需要用<strong>项目的检出的方式来新建项目</strong>。<br>操作如下：在创建项目的时候，选择从svn上检出项目</p>
-<p><img src="/.com//image-20191210102113334.png" srcset="/img/loading.gif" alt="image-20191210102113334"></p>
+<p><img src="/2019/12/10/SVN/image-20191210102113334.png" srcset="/img/loading.gif" alt="image-20191210102113334"></p>
 <p>现有资源库的位置</p>
-<p><img src="/.com//image-20191210102145794.png" srcset="/img/loading.gif" alt="image-20191210102145794"></p>
+<p><img src="/2019/12/10/SVN/image-20191210102145794.png" srcset="/img/loading.gif" alt="image-20191210102145794"></p>
 <p>选择之前提交的项目路径</p>
-<p><img src="/.com//image-20191210102230164.png" srcset="/img/loading.gif" alt="image-20191210102230164"></p>
+<p><img src="/2019/12/10/SVN/image-20191210102230164.png" srcset="/img/loading.gif" alt="image-20191210102230164"></p>
 <p>指定项目名：</p>
-<p><img src="/.com//image-20191210102303893.png" srcset="/img/loading.gif" alt="image-20191210102303893"></p>
+<p><img src="/2019/12/10/SVN/image-20191210102303893.png" srcset="/img/loading.gif" alt="image-20191210102303893"></p>
 <p>检出项目到Eclipse中</p>
-<p><img src="/.com//image-20191210102340569.png" srcset="/img/loading.gif" alt="image-20191210102340569"></p>
+<p><img src="/2019/12/10/SVN/image-20191210102340569.png" srcset="/img/loading.gif" alt="image-20191210102340569"></p>
 <h4 id="2-4、小结"><a href="#2-4、小结" class="headerlink" title="2.4、小结"></a>2.4、小结</h4><p>了解项目管理项目构建和版本控制这些工程软件</p>
 <p>理解 SVN 的基本功能, 掌握 Tortoise SVN 的使用，掌握Eclipse的SVN插件使用</p>
 <p>在企业中应用：项目经理会发一个word文档</p>
@@ -516,7 +516,7 @@
 <p>​    4、 做自己的模块，把自己写的东西上传到svn上</p>
 <p>​    5、 版本的对比，合并版本</p>
 <h3 id="3、IDEA中使用SVN"><a href="#3、IDEA中使用SVN" class="headerlink" title="3、IDEA中使用SVN"></a>3、IDEA中使用SVN</h3><p>确保已经建立了SVN服务和安装了SVN客户端，然后做如下配置：</p>
-<p><img src="/.com//image-20191210205848204.png" srcset="/img/loading.gif" alt="image-20191210205848204"></p>
+<p><img src="/2019/12/10/SVN/image-20191210205848204.png" srcset="/img/loading.gif" alt="image-20191210205848204"></p>
 
             </div>
             <hr>
