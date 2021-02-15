@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>FTP服务搭建 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FTP服务搭建">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-15 16:26" pubdate>
+        2019年11月15日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      112
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FTP服务搭建</h1>
+            
+            <div class="markdown-body">
+              <h2 id="FTP服务搭建"><a href="#FTP服务搭建" class="headerlink" title="FTP服务搭建"></a>FTP服务搭建</h2><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/FTP%E5%8D%8F%E8%AE%AE">FTP协议</a>（File Transfer Protocol，文件传输协议） 是 TCP/IP 协议组中的协议之一。</p>
+<p>FTP协议两部分组成，<code>FTP服务器</code>和<code>FTP客户端</code>。其中FTP服务器用来存储文件，用户可以使用FTP客户端通过FTP协议访问位于FTP服务器上的资源。</p>
+<p>在开发网站的时候，通常利用FTP协议把网页或程序传到Web服务器上。此外，由于FTP传输效率非常高，在网络上传输大的文件时，一般也采用该协议。</p>
+<p>默认情况下FTP协议使用TCP端口中的 <code>20[传输数据]</code>和<code>21[传输控制信息]</code>这两个端口。<strong>但是，是否使用20作为传输数据的端口与FTP使用的传输模式有关</strong>。</p>
+<p>FTP支持两种传输模式，如果采用<code>主动模式（Standard也就是 PORT方式）</code>，那么数据传输端口就是20；如果采用<code>被动模式 （Passive也就是PASV方式）</code>，则具体最终使用哪个端口要<code>服务器端和客户端协商决定</code>。</p>
+<blockquote>
+<p><strong>Standard模式：</strong>FTP 客户端首先和FTP服务器的TCP 21端口建立连接，通过这个通道发送命令，客户端需要接收数据的时候在这个通道上发送PORT命令。 PORT命令包含了<code>客户端用什么端口接收数据</code>，在传送数据的时候，<code>服务器端通过自己的TCP 20端口</code>连接至客户端的指定端口发送数据， FTP server必须和客户端建立这样一个新的连接用来传送数据。</p>
+<p><strong>Passive模式：</strong>在建立控制通道的时候和Standard模式类似，但建立连接后发送的不是Port命令，而是Pasv命令。FTP服务器收到Pasv命令后，随机打开一个高端端口（<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%AB%AF%E5%8F%A3%E5%8F%B7">端口号</a>大于1024）并且通知客户端在这个端口上传送数据，客户端通过<code>三次握手</code>与FTP服务器指定的这个端口<code>建立数据通道</code>，FTP服务器将通过这个端口进行数据的传送。</p>
+<p>很多<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%98%B2%E7%81%AB%E5%A2%99">防火墙</a>在设置的时候都是不允许接受外部发起的连接的，所以许多位于防火墙后或内网的FTP服务器不支持PASV模式，因为客户端无法穿过防火墙打开FTP服务器的高端端口；而许多内网的客户端不能用PORT模式登陆FTP服务器，因为从服务器的TCP 20无法和内部网络的客户端建立一个新的连接，造成无法工作。</p>
+</blockquote>
+<p>同大多数Internet服务一样，FTP也是一个客户/服务器系统。依照 FTP 协议提供服务，进行文件传送的计算机就是 FTP服务器，而连接FTP服务器，遵循FTP协议与服务器传送文件的电脑就是FTP客户端。用户要连上FTP 服务器，就要用到 FTP 的客户端软件，通常 Windows自带“ftp”命令，这是一个命令行的 FTP客户程序，另外常用的 FTP 客户程序还有FileZilla、 CuteFTP、Ws_FTP、Flashfxp、LeapFTP等。</p>
+<p>互联网中有很大一部分 FTP 服务器被称为<code>“匿名”（Anonymous）FTP 服务器</code>。这类服务器的目的是向公众提供文件拷贝服务，不要求用户事先在该服务器进行登记注册，也不用取得FTP服务器的授权。虽然目前使用WWW环境已取代匿名FTP成为最主要的信息查询方式，但是匿名FTP仍是 Internet上传输分发软件的一种基本方法。如red hat 、autodesk等公司的匿名站点。</p>
+<p>FTP协议的任务是从一台计算机将文件传送到另一台计算机，它与这两台计算机所处的位置、联接的方式、甚至是是否使用相同的操作系统无关。假设两台计算机通过ftp协议对话，并且能访问Internet，你可以用ftp命令来传输文件。尽管每种操作系统使用上有某一些细微差别，但是每种协议基本的命令结构是相同的。</p>
+<p>FTP的传输数据有两种方式：<code>ASCII传输模式</code>和<code>二进制数据传输模式</code>。注意传输二进制文件和文本文件所用的数据传输模式。 在大多数计算机上，ASCII方式一般假设每一字符的第一有效位无意义，因为ASCII字符组合不使用它。如果你传输二进制文件，所有的位都是重要的。 </p>
+<h3 id="1、在CentOS上安装FTP服务"><a href="#1、在CentOS上安装FTP服务" class="headerlink" title="1、在CentOS上安装FTP服务"></a>1、在CentOS上安装FTP服务</h3><p>vsftpd(very secure FTP daemon),是一个UNIX类操作系统上运行FTP协议的服务器。</p>
+<p>检测系统是否已安装过vsftpd：        <strong>rpm -q vsftpd</strong>或<strong>vsftpd -v</strong><br>安装：        <strong>yum -y install vsftpd</strong><br>查看安装位置：    <strong>whereis vsftpd</strong><br>开机自启动：    <strong>systemctl enable vsftpd.service</strong></p>
+<blockquote>
+<p>Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service to /usr/lib/systemd/system/vsftpd.service.<br>如果想让一个进程开机自启动，使用 systemctl enable XXXX.service 命令就是了<br>让这个程序自己的启动配置创建一个链接到系统的启动配置文件下，系统开机的时候就能运行 /usr/lib/systemd/system/ 文件下的配置文件对应的程序。</p>
+</blockquote>
+<p>服务启动/重启/停止：    <strong>systemctl start/restart/stop vsftpd</strong><br>查看服务状态：    <strong>systemctl status vsftpd</strong></p>
+<h3 id="2、配置文件"><a href="#2、配置文件" class="headerlink" title="2、配置文件"></a>2、配置文件</h3><p>vim /etc/vsftpd/vsftpd.conf</p>
+<p>vim编辑器:set number显示行号</p>
+<p>注意：vsftpd 配置文件如果修改，需要重新启动 vsftpd ：systemctl restart vsftpd.service</p>
+<h4 id="2-1、匿名权限控制"><a href="#2-1、匿名权限控制" class="headerlink" title="2.1、匿名权限控制"></a>2.1、匿名权限控制</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">anonymous_enable</span>=<span class="hljs-literal">NO</span>					<span class="hljs-comment">#是否允许匿名访问，NO禁用匿名登录</span><br><span class="hljs-attr">no_anon_password</span>=<span class="hljs-literal">YES</span>				<span class="hljs-comment">#匿名用户login时不询问口令</span><br></code></pre></td></tr></table></figure>
+<p>下面这四个主要语句控制这文件和文件夹的上传、下载、创建、删除和重命名</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">anon_upload_enable</span>=<span class="hljs-literal">yes</span>|<span class="hljs-literal">no</span>			<span class="hljs-comment">#控制匿名用户对文件（非目录）上传权限。</span><br><span class="hljs-attr">anon_world_readable_only</span>=<span class="hljs-literal">yes</span>|<span class="hljs-literal">no</span> 	<span class="hljs-comment">#控制匿名用户对文件的下载权限</span><br><span class="hljs-attr">anon_mkdir_write_enable</span>=<span class="hljs-literal">yes</span>|<span class="hljs-literal">no</span> 		<span class="hljs-comment">#控制匿名用户对文件夹的创建权限</span><br><span class="hljs-attr">anon_other_write_enable</span>=<span class="hljs-literal">yes</span>|<span class="hljs-literal">no</span> 		<span class="hljs-comment">#控制匿名用户对文件和文件夹的删除和重命名</span><br></code></pre></td></tr></table></figure>
+<p>注：匿名用户下载是使用的是nobody这个用户，所以相应的o这个位置要有r权限才能被下载。若想让匿名用户能上传和删除权限，必需设置。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs makefile">write_enable=YES	<span class="hljs-comment">#全局设置，是否容许写入（无论是匿名还是本地用户，若要写入的话，就要开启）</span><br>anon_root=&#x27;dir&#x27;		<span class="hljs-comment">#匿名用户主目录，默认/var/ftp/</span><br>anon_max_rate＝		<span class="hljs-comment">#匿名用户速度限制，单位b/s</span><br>anon_umask＝077		<span class="hljs-comment">#匿名用户上传文件的掩码(若使匿名用户上传的文件能直接被匿名下载，就设置这里为073)</span><br>chown_uploads=YES	<span class="hljs-comment">#所有匿名上传的文件的所属用户将会被更改成chown_username</span><br>chown_username=whoever <span class="hljs-comment">#上传文件所属的用户</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-2、本地用户权限控制"><a href="#2-2、本地用户权限控制" class="headerlink" title="2.2、本地用户权限控制"></a>2.2、本地用户权限控制</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs makefile">write_enable=YES 	<span class="hljs-comment">#可以上传(全局控制) 删除，重命名</span><br>local_umask=022  	<span class="hljs-comment">#设置本地用户上传文件默认文件掩码022</span><br><span class="hljs-comment">#FTP上本地的文件权限，默认是077，不过vsftpd安装后的配置文件里默认是022</span><br><br>local_root=  		<span class="hljs-comment">#设置一个本地用户登录后进入到的目录</span><br>download_enable=  	<span class="hljs-comment">#限制用户的下载权限</span><br><br>userlist_enable=YES <span class="hljs-comment">#限制了这里的用户不能访问</span><br>userlist_file=/etc/vsftpd/user_list <span class="hljs-comment">#在文件中指定限制的用户</span><br><span class="hljs-comment"># vsftpd userlist</span><br><span class="hljs-comment"># If userlist_deny=NO, only allow users in this file</span><br><span class="hljs-comment"># If userlist_deny=YES (default), never allow users in this file, and</span><br><span class="hljs-comment"># do not even prompt for a password.</span><br><span class="hljs-comment"># Note that the default vsftpd pam config also checks /etc/vsftpd/ftpusers</span><br><span class="hljs-comment"># for users that are denied.</span><br></code></pre></td></tr></table></figure>
+<p>可以通过以下配置项来控制用户切换目录。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">chroot_list_enable</span>=<span class="hljs-literal">YES</span>　<span class="hljs-comment">#如果启动这项功能，则所有列在chroot_list_file之中的使用者不能更改根目录</span><br><span class="hljs-attr">chroot_list_file</span>=/etc/vsftpd/chroot_list <span class="hljs-comment">#指定限制的用户文件，指出被锁定在自家目录中的用户</span><br></code></pre></td></tr></table></figure>
+<p>通过与chroot_local_user=YES|NO搭配能实现以下几种效果：<br>1、当chroot_list_enable=YES，chroot_local_user=YES时，在/etc/vsftpd.chroot_list文件中列出的用户，可以切换到其他目录；未在文件中列出的用户，不能切换到其他目录。<br>2、当chroot_list_enable=YES，chroot_local_user=NO时，在/etc/vsftpd.chroot_list文件中列出的用户，不能切换到其他目录；未在文件中列出的用户，可以切换到其他目录。<br>3、当chroot_list_enable=NO，chroot_local_user=YES时，所有的用户均不能切换到其他目录。<br>4、当chroot_list_enable=NO，chroot_local_user=NO时，所有的用户均可以切换到其他目录。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-attr">user_config_dir=</span> <span class="hljs-comment">#后面跟存放配置文件的目录</span><br><span class="hljs-comment">#在这个目录中，创建用户的单独配置文件，用哪个帐户登陆就用哪个帐户命名，用来实现不同用户不同权限。</span><br><br><span class="hljs-comment">#在每个用户单独的配置文件中，用下边的配置各用户的命令执行权限</span><br>cmds_allowed＝[ABOR,ACCT,APPE,CWD,CDUP,DELE,HELP,LIST,MODE,MDTM,MKD,NOOP,NLST,PASS,PASV,PORT,PWD,QUIT,REIN,RETR,RMD,RNFR,RNTO,SITE,SIZE,STOR,STAT,STOU,STRU,SYST,<span class="hljs-keyword">TYPE</span>,USER]	<span class="hljs-comment">#指令权限设置</span><br></code></pre></td></tr></table></figure>
+<p>1、不能下载、删除、重命名，只能上传</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata">cmds_allowed＝FEAT,REST,CWD,<span class="hljs-keyword">LIST</span>,MDTM,MKD,NLST,PASS,PASV,PORT,<span class="hljs-keyword">PWD</span>,QUIT,RMD,SIZE,STOR,<span class="hljs-keyword">TYPE</span>,USER,ACCT,<span class="hljs-keyword">APPE</span>,CDUP,<span class="hljs-keyword">HELP</span>,MODE,NOOP,REIN,STAT,STOU,STRU,SYST<br></code></pre></td></tr></table></figure>
+<p>2、不能上传、删除、重命名，只能下载</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">write_enable</span>=<span class="hljs-literal">NO</span><br></code></pre></td></tr></table></figure>
+<p>3、只能上传、删除和重命名，不能下载</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams">download_enable＝<span class="hljs-keyword">NO</span><br></code></pre></td></tr></table></figure>
+<p>4、只能下载、删除和重命名，不能上传</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata">cmds_allowed=FEAT,REST,CWD,<span class="hljs-keyword">LIST</span>,MDTM,MKD,NLST,PASS,PASV,PORT,<span class="hljs-keyword">PWD</span>,QUIT,RMD,RNFR,RNTO,RETR,DELE,SIZE,<span class="hljs-keyword">TYPE</span>,USER,ACCT,<span class="hljs-keyword">APPE</span>,CDUP,<span class="hljs-keyword">HELP</span>,MODE,NOOP,REIN,STAT,STOU,STRU,SYST<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参数的详细解释：<br>ABOR - abort a file transfer 取消文件传输<br>CWD - change working directory 更改目录<br>DELE - delete a remote file 删除文件<br>LIST - list remote files 列目录<br>MDTM - return the modification time of a file 返回文件的更新时间<br>MKD - make a remote directory 新建文件夹<br>NLST - name list of remote directory<br>PASS - send password<br>PASV - enter passive mode<br>PORT - open a data port 打开一个传输端口<br>PWD - print working directory 显示当前工作目录<br>QUIT - terminate the connection 退出<br>RETR - retrieve a remote file 下载文件<br>RMD - remove a remote directory<br>RNFR - rename from<br>RNTO - rename to<br>SITE - site-specific commands<br>SIZE - return the size of a file 返回文件大小<br>STOR - store a file on the remote host 上传文件<br>TYPE - set transfer type<br>USER - send username<br> less common commands:<br>ACCT - send account information<br>APPE - append to a remote file<br>CDUP - CWD to the parent of the current directory<br>HELP - return help on using the server<br>MODE - set transfer mode<br>NOOP - do nothing<br>REIN - reinitialize the connection<br>STAT - return server status<br>STOU - store a file uniquely<br>STRU - set file transfer structure<br>SYST - return system type</p>
+</blockquote>
+<h4 id="2-3、虚拟用户设置"><a href="#2-3、虚拟用户设置" class="headerlink" title="2.3、虚拟用户设置"></a>2.3、虚拟用户设置</h4><p>虚拟用户使用PAM认证方式</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">pam_service_name</span>=vsftpd		<span class="hljs-comment">#设置PAM使用的名称，默认值为/etc/pam.d/vsftpd</span><br><span class="hljs-attr">check_shell</span>=<span class="hljs-literal">YES</span>   			<span class="hljs-comment">#注意：仅在没有pam验证版本时有用,是否检查用户有一个有效的shell来登录</span><br><span class="hljs-attr">guest_enable</span>= <span class="hljs-literal">YES</span>|<span class="hljs-literal">NO</span>  		<span class="hljs-comment">#启用虚拟用户，默认值为NO</span><br><span class="hljs-attr">guest_username</span>=ftp  		<span class="hljs-comment">#映射虚拟用户，默认值为ftp；把虚拟用户映射到本地用户，虚拟用户=本地用户</span><br><br><span class="hljs-attr">virtual_use_local_privs</span>=<span class="hljs-literal">YES</span>|<span class="hljs-literal">NO</span> <br><span class="hljs-comment">#当该参数激活YES时，虚拟用户使用与本地用户相同的权限，当此参数关闭NO时，虚拟用户使用与匿名用户相同的权限，默认情况下此参数是关闭的（NO）。</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-4、访问控制设置"><a href="#2-4、访问控制设置" class="headerlink" title="2.4、访问控制设置"></a>2.4、访问控制设置</h4><p>两种控制方式：一种控制主机访问，另一种控制用户访问</p>
+<h5 id="2-4-1、控制主机访问："><a href="#2-4-1、控制主机访问：" class="headerlink" title="2.4.1、控制主机访问："></a>2.4.1、控制主机访问：</h5><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">tcp_wrappers</span>=<span class="hljs-literal">YES</span>|<span class="hljs-literal">NO</span><br></code></pre></td></tr></table></figure>
+<p>设置vsftpd是否与tcp wrapper相结合来进行主机的访问控制。默认值为YES。如果启用，则vsftpd服务器会检查/etc/hosts.allow 和/etc/hosts.deny 中的设置，来决定请求连接的主机，是否允许访问该FTP服务器。这两个文件可以起到简易的防火墙功能。</p>
+<p>比如：若要仅允许192.168.10.1—192.168.10.254的用户可以连接FTP服务器，则在<br>/etc/hosts.allow<br>/etc/hosts.deny<br>文件中添加以下内容：</p>
+<p>其格式: 限制的服务：ip(网段)<br>vsftpd:192.168.1.<br>vsftpd:192.168.1.12<br>vsftpd:192.168.1.0/255.255.255.0    #这里不能写成192.168.1.0/24</p>
+<h5 id="2-4-2、控制用户访问："><a href="#2-4-2、控制用户访问：" class="headerlink" title="2.4.2、控制用户访问："></a>2.4.2、控制用户访问：</h5><p>/etc/vsftpd/下ftpusers和user_list文件    #用于保存不允许进行FTP登录的本地用户帐号，就是vsftp用户的黑名单</p>
+<p>1、设置禁止user_list文件中的用户登录：要在主配置文件vsftpd.conf中修改如下两项，</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">userlist_enable</span>=<span class="hljs-literal">yes</span><br><span class="hljs-attr">userlist_deny</span>=<span class="hljs-literal">yes</span><br></code></pre></td></tr></table></figure>
+<p>说明：配置完以后，除了ftpusers文件和user_list文件中记录的ftp用户不能登录vsftp服务以外，其他的ftp用户都可以登录。</p>
+<p>2、设置只允许user_list文件中的用户登录：同样的道理要把主配置文件vsftpd.conf 中的语句修改如下两项： </p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">userlist_enable</span>=<span class="hljs-literal">yes</span><br><span class="hljs-attr">userlist_deny</span>=<span class="hljs-literal">no</span><br></code></pre></td></tr></table></figure>
+<p>说明：配置完以后，只允许vsftpd.user_list文件中记录的ftp用户能登录vsftp服务，其他的ftp用户都不可以登录。</p>
+<h4 id="2-5、超时设置"><a href="#2-5、超时设置" class="headerlink" title="2.5、超时设置"></a>2.5、超时设置</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">idle_session_timeout</span>=<span class="hljs-number">600</span> <span class="hljs-comment">#空闲连接超时</span><br><span class="hljs-attr">data_connection_timeout</span>=<span class="hljs-number">120</span> <span class="hljs-comment">#数据传输超时</span><br><span class="hljs-attr">ACCEPT_TIMEOUT</span>=<span class="hljs-number">60</span>  <span class="hljs-comment">#PAVS请求超时</span><br><span class="hljs-attr">connect_timeout</span>=<span class="hljs-number">60</span>  <span class="hljs-comment">#PROT模式连接超时</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-6、服务器功能选项"><a href="#2-6、服务器功能选项" class="headerlink" title="2.6、服务器功能选项"></a>2.6、服务器功能选项</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs makefile">xferlog_enable=YES		<span class="hljs-comment">#开启日记功能</span><br>xferlog_std_format=YES	<span class="hljs-comment">#使用标准格式</span><br>log_ftp_protocol=NO		<span class="hljs-comment">#当xferlog_std_format关闭且本选项开启时,记录所有ftp请求和回复,常作调试用</span><br>pasv_enable=YES			<span class="hljs-comment">#允许使用pasv模式</span><br>pasv_promiscuous=NO		<span class="hljs-comment">#关闭安全检查，请慎重考虑</span><br>port_enable=YES			<span class="hljs-comment">#允许使用port模式</span><br>tcp_wrappers=YES		<span class="hljs-comment">#开启tcp_wrappers支持</span><br>pam_service_name=vsftpd	<span class="hljs-comment">#定义PAM 所使用的名称，预设为vsftpd</span><br>nopriv_user=nobody		<span class="hljs-comment">#当服务器运行于最底层时使用的用户名</span><br>pasv_address=			<span class="hljs-comment">#使vsftpd在pasv命令回复时跳转到指定的IP地址。【服务器联接跳转？？？】</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-7、服务器性能选项"><a href="#2-7、服务器性能选项" class="headerlink" title="2.7、服务器性能选项"></a>2.7、服务器性能选项</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs makefile">ls_recurse_enable=YES	<span class="hljs-comment">#是否能使用ls -R命令以防止浪费大量的服务器资源</span><br>one_process_model		<span class="hljs-comment">#是否使用单进程模式</span><br>listen=YES				<span class="hljs-comment">#绑定到listen_port指定的端口,暨端口常都开,亦即standalone模式</span><br><br>text_userdb_names=NO	<br><span class="hljs-comment">#当使用者登入后使用ls -al 之类的指令查询该档案的管理权时，预设会出现拥有者的UID，而不是该档案拥有者的名   #称。若是希望出现拥有者的名称，则将此功能开启。</span><br><br>use_localtime=NO		<span class="hljs-comment">#显示目录清单时是用本地时间还是GMT时间,可以通过mdtm命令来达到一样的效果</span><br>use_sendfile=YES		<span class="hljs-comment">#测试平台优化</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-8、信息类设置"><a href="#2-8、信息类设置" class="headerlink" title="2.8、信息类设置"></a>2.8、信息类设置</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">ftpd_banner</span>=welcome to FTP	<span class="hljs-comment">#login时显示欢迎信息.如果设置了banner_file则此设置无效</span><br><span class="hljs-attr">dirmessage_enable</span>=<span class="hljs-literal">YES</span>		<span class="hljs-comment">#允许为目录配置显示信息,显示每个目录下面的message_file文件的内容</span><br><span class="hljs-attr">setproctitle_enable</span>=<span class="hljs-literal">YES</span>		<span class="hljs-comment">#显示会话状态信息,默认关</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-9、文件定义"><a href="#2-9、文件定义" class="headerlink" title="2.9、文件定义"></a>2.9、文件定义</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">chroot_list_file</span>=/etc/vsftpd/vsftpd.chroot_list	<span class="hljs-comment">#定义不能更改用户主目录的文件</span><br><span class="hljs-attr">userlist_file</span>=/etc/vsftpd/vsftpd.user_list		<span class="hljs-comment">#定义限制/允许用户登录的文件</span><br><span class="hljs-attr">banner_file</span>=/etc/vsftpd/banner					<span class="hljs-comment">#定义登录信息文件的位置</span><br><span class="hljs-attr">banned_email_file</span>=/etc/vsftpd.banned_emails		<span class="hljs-comment">#禁止使用的匿名用户登陆时作为密码的电子邮件地址</span><br><span class="hljs-attr">xferlog_file</span>=/var/log/vsftpd.log				<span class="hljs-comment">#日志文件位置</span><br><span class="hljs-attr">message_file</span>=.message							<span class="hljs-comment">#目录信息文件</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-10、目录定义"><a href="#2-10、目录定义" class="headerlink" title="2.10、目录定义"></a>2.10、目录定义</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">user_config_dir=<span class="hljs-regexp">/etc/</span>vsftpd/userconf	<span class="hljs-comment">#定义用户配置文件的目录</span><br>local_root=								<span class="hljs-comment">#此项设置每个用户登陆后的根目录</span><br><span class="hljs-comment">#定义本地用户登陆的根目录，注意定义根目录可以是相对路径也可以是绝对路径，相对路径是针对用户家目录来说的</span><br>anon_root=<span class="hljs-regexp">/var/</span>ftp						<span class="hljs-comment">#匿名用户登陆后的根目录，默认/var/ftp</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-11、用户连接选项"><a href="#2-11、用户连接选项" class="headerlink" title="2.11、用户连接选项"></a>2.11、用户连接选项</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">max_clients</span>=<span class="hljs-number">100</span>				<span class="hljs-comment">#可接受的最大client数目</span><br><span class="hljs-attr">max_per_ip</span>=<span class="hljs-number">5</span>				<span class="hljs-comment">#每个ip的最大client数目</span><br><span class="hljs-attr">connect_from_port_20</span>=<span class="hljs-literal">YES</span>	<span class="hljs-comment">#使用标准的20端口来连接ftp</span><br><span class="hljs-attr">listen_address</span>=<span class="hljs-number">192.168</span>.<span class="hljs-number">0.2</span>	<span class="hljs-comment">#绑定到某个IP,其它IP不能访问</span><br><span class="hljs-attr">listen_port</span>=<span class="hljs-number">2121</span>			<span class="hljs-comment">#绑定到某个端口</span><br><span class="hljs-attr">ftp_data_port</span>=<span class="hljs-number">2020</span>			<span class="hljs-comment">#数据传输端口</span><br><span class="hljs-attr">pasv_max_port</span>=<span class="hljs-number">0</span>				<span class="hljs-comment">#pasv连接模式时可以使用port 范围的上界，默认值0表示任意</span><br><span class="hljs-attr">pasv_min_port</span>=<span class="hljs-number">0</span>				<span class="hljs-comment">#pasv连接模式时可以使用port 范围的下界，默认值0表示任意</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-12、数据传输选项"><a href="#2-12、数据传输选项" class="headerlink" title="2.12、数据传输选项"></a>2.12、数据传输选项</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">anon_max_rate</span>=<span class="hljs-number">51200</span>  <span class="hljs-comment">#匿名用户的传输比率(b/s)</span><br><span class="hljs-attr">local_max_rate</span>=<span class="hljs-number">5120000</span>  <span class="hljs-comment">#本地用户的传输比率(b/s)</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-13、安全选项"><a href="#2-13、安全选项" class="headerlink" title="2.13、安全选项"></a>2.13、安全选项</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">idle_session_timeout</span>=<span class="hljs-number">600</span> <span class="hljs-comment">#用户会话空闲后10分钟</span><br><span class="hljs-attr">data_connection_timeout</span>=<span class="hljs-number">120</span> <span class="hljs-comment">#将数据连接空闲2分钟断</span><br><span class="hljs-attr">accept_timeout</span>=<span class="hljs-number">60</span>  <span class="hljs-comment">#将客户端空闲1分钟后断</span><br><span class="hljs-attr">connect_timeout</span>=<span class="hljs-number">60</span>  <span class="hljs-comment">#中断1分钟后又重新连接</span><br><span class="hljs-attr">local_max_rate</span>=<span class="hljs-number">50000</span>  <span class="hljs-comment">#本地用户传输率50K</span><br><span class="hljs-attr">anon_max_rate</span>=<span class="hljs-number">30000</span>  <span class="hljs-comment">#匿名用户传输率30K</span><br><span class="hljs-attr">pasv_min_port</span>=<span class="hljs-number">50000</span>  <span class="hljs-comment">#将客户端的数据连接端口改在</span><br><span class="hljs-attr">pasv_max_port</span>=<span class="hljs-number">60000</span>  <span class="hljs-comment">#50000—60000之间</span><br><span class="hljs-attr">max_clients</span>=<span class="hljs-number">200</span>   <span class="hljs-comment">#FTP的最大连接数</span><br><span class="hljs-attr">max_per_ip</span>=<span class="hljs-number">4</span>   <span class="hljs-comment">#每IP的最大连接数</span><br><span class="hljs-attr">listen_port</span>=<span class="hljs-number">5555</span>  <span class="hljs-comment">#从5555端口进行数据连接</span><br><span class="hljs-attr">local_enable</span>=<span class="hljs-literal">YES</span>      <span class="hljs-comment"># 允许使用本地帐户进行FTP用户登录验证</span><br><span class="hljs-attr">allow_writeable_chroot</span>=<span class="hljs-literal">YES</span> <span class="hljs-comment"># 如果启用了限定用户在其主目录下需要添加这个配置，解决报错 500 OOPS: vsftpd: refusing to run with writable root inside chroot()</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-14、“不安全的服务，不支持FTP-over-TLS”"><a href="#2-14、“不安全的服务，不支持FTP-over-TLS”" class="headerlink" title="2.14、“不安全的服务，不支持FTP over TLS”"></a>2.14、“不安全的服务，不支持FTP over TLS”</h4><p>配置vsftpd在centos上使用SSL/TLS</p>
+<h5 id="2-14-1、建立vsftpd使用的凭证数据，CentOS建立凭证的地方-etc-pki-tls-certs"><a href="#2-14-1、建立vsftpd使用的凭证数据，CentOS建立凭证的地方-etc-pki-tls-certs" class="headerlink" title="2.14.1、建立vsftpd使用的凭证数据，CentOS建立凭证的地方/etc/pki/tls/certs/"></a>2.14.1、建立vsftpd使用的凭证数据，CentOS建立凭证的地方/etc/pki/tls/certs/</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/etc/</span>pki<span class="hljs-regexp">/tls/</span>certs/<br><br>make vsftpd.pem	<span class="hljs-comment">#建立证书解析配置</span><br>Country Name:	CN<br>State or Province Name:	CHINA<br>Locality Name:<br>Organization Name: <br>...<br>Common Name:	kongweiliao<br>Email Address []:	lia*****ei@outlook.com<br><br>cp -a vsftpd.pem <span class="hljs-regexp">/etc/</span>vsftpsd/<br>ll <span class="hljs-regexp">/etc/</span>vsftpd/vsftpd.pem<br></code></pre></td></tr></table></figure>
+<h5 id="2-14-2、修改vsftpd-conf"><a href="#2-14-2、修改vsftpd-conf" class="headerlink" title="2.14.2、修改vsftpd.conf"></a>2.14.2、修改vsftpd.conf</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros">+<br><span class="hljs-attribute">ssl_enable</span>=<span class="hljs-literal">YES</span><br><span class="hljs-attribute">force_anon_data_ssl</span>=<span class="hljs-literal">YES</span><br><span class="hljs-attribute">force_anon_logins_ssl</span>=<span class="hljs-literal">YES</span><br><span class="hljs-attribute">force_local_data_ssl</span>=<span class="hljs-literal">YES</span><br><span class="hljs-attribute">force_local_logins_ssl</span>=<span class="hljs-literal">YES</span><br><span class="hljs-attribute">ssl_tlsv1</span>=<span class="hljs-literal">YES</span>	#tlsv1,tlsv2,tlsv3; 首选tlsv1,默认<span class="hljs-literal">YES</span>；次选tlsv2,tlsv3，默认<span class="hljs-literal">NO</span><br><span class="hljs-attribute">rsa_cert_file</span>=/etc/vsftpd/vsftpd.pem<br></code></pre></td></tr></table></figure>
+<p><img src="/FTP%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/filezillaFTPoverSTL.png" srcset="/img/loading.gif" alt="1"></p>
+<h3 id="3、防火墙设置"><a href="#3、防火墙设置" class="headerlink" title="3、防火墙设置"></a>3、防火墙设置</h3><p>查看防火墙状态：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># systemctl status firewalld.service</span><br></code></pre></td></tr></table></figure>
+<p>一般情况下，如果外部无法链接 vsftp ，排除网络的问题，很有可能是防火墙在作祟。</p>
+<p>开启防火墙：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># systemctl start firewalld.service</span><br></code></pre></td></tr></table></figure>
+<p>关闭防火墙：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># systemctl stop firewalld.service</span><br></code></pre></td></tr></table></figure>
+<p>重启防火墙：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># systemctl restart firewalld.service</span><br></code></pre></td></tr></table></figure>
+<p>禁止开机启动：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># systemctl disable firewalld.service</span><br></code></pre></td></tr></table></figure>
+<p>开启开机启动：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># systemctl enable firewalld.service</span><br></code></pre></td></tr></table></figure>
+<p>说明：如果你不愿意关闭防火墙，需要防火墙添加FTP服务。</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">firewall</span><span class="hljs-literal">-</span><span class="hljs-comment">cmd</span> --<span class="hljs-comment">permanent</span> --<span class="hljs-comment">zone=public</span> --<span class="hljs-comment">add</span><span class="hljs-literal">-</span><span class="hljs-comment">service=ftp</span><br><span class="hljs-comment">firewall</span><span class="hljs-literal">-</span><span class="hljs-comment">cmd</span> --<span class="hljs-comment">reload</span> <br></code></pre></td></tr></table></figure>
+
+
+<h3 id="4、检测能否连接成功"><a href="#4、检测能否连接成功" class="headerlink" title="4、检测能否连接成功"></a>4、检测能否连接成功</h3><p>先在 linux 系统上进行检测：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># ftp localhost（本主机名称）</span><br></code></pre></td></tr></table></figure>
+<p>出现提示登录用户名，使用匿名用户登录 anonymous（密码未设置，所以为空），输入 ls 命令可显示信息，效果如图：</p>
+<p>在Windows上访问：</p>
+<p>使用 windows ping 一下 linux 服务器，检查是否能联网</p>
+<p>从下图可以看出，windows 能与 linux 网络联通，当可以正常联通网络再进行 ftp 链接测试，</p>
+<p>也可使用 root 帐号进行登录，root 帐号登录之后可以操作系统内任意文件。以下章节列出可以链接之后通过 ftp 软件链接后出现的一些常见问题解决方案。</p>
+<h3 id="5、SELinux状态"><a href="#5、SELinux状态" class="headerlink" title="5、SELinux状态"></a>5、SELinux状态</h3><p>链接 ftp 的时候如果出现无法访问目录列表问题：<br>查看ftp的Selinux状态：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@localhost</span> ~]<span class="hljs-meta"># sestatus -b | grep ftp</span><br></code></pre></td></tr></table></figure>
+<p>将状态改为on：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-attr">[root@localhost ~]</span># setsebool -<span class="hljs-selector-tag">P</span> tftp_home_dir on （注意：<span class="hljs-selector-tag">P</span>为大写）<br><span class="hljs-selector-attr">[root@localhost ~]</span># setsebool -<span class="hljs-selector-tag">P</span> ftpd_full_access on （注意：<span class="hljs-selector-tag">P</span>为大写） <br></code></pre></td></tr></table></figure>
+<h3 id="6、FTP连接常见错误代码"><a href="#6、FTP连接常见错误代码" class="headerlink" title="6、FTP连接常见错误代码"></a>6、FTP连接常见错误代码</h3><p>说明： 配置的ftp无法连接，会返回错误代码。具体错误代码又代表了什么呢？</p>
+<h4 id="6-1、Connect-连接被拒绝："><a href="#6-1、Connect-连接被拒绝：" class="headerlink" title="6.1、Connect 连接被拒绝："></a>6.1、Connect 连接被拒绝：</h4><blockquote>
+<p>可能原因是vsftpd服务没被启动</p>
+</blockquote>
+<h4 id="6-2、500-OOPS"><a href="#6-2、500-OOPS" class="headerlink" title="6.2、500 OOPS:"></a>6.2、500 OOPS:</h4><h5 id="6-2-1、cannot-open-user-list-file："><a href="#6-2-1、cannot-open-user-list-file：" class="headerlink" title="6.2.1、cannot open user list file："></a>6.2.1、cannot open user list file：</h5><blockquote>
+<p>可能原因是不存在文件“/etc/vsftpd/user_list”或文件中不存在该帐户，解决：解决: cho username &gt;&gt; /etc/vsftpd/user_list</p>
+</blockquote>
+<h5 id="6-2-2、cannot-open-chroot-user-list-file-500-OOPS-could-not-read-chroot-list-file-etc-vsftpd-chroot-list："><a href="#6-2-2、cannot-open-chroot-user-list-file-500-OOPS-could-not-read-chroot-list-file-etc-vsftpd-chroot-list：" class="headerlink" title="6.2.2、cannot open chroot() user list file | 500 OOPS: could not read chroot() list file:/etc/vsftpd/chroot_list："></a>6.2.2、cannot open chroot() user list file | 500 OOPS: could not read chroot() list file:/etc/vsftpd/chroot_list：</h5><blockquote>
+<p>可能原因是不存在文件“/etc/vsftpd/chroot_list”</p>
+</blockquote>
+<h5 id="6-2-3、missing-value-in-config-file"><a href="#6-2-3、missing-value-in-config-file" class="headerlink" title="6.2.3、missing value in config file:"></a>6.2.3、missing value in config file:</h5><blockquote>
+<p>可能原因是配置文件“=”等号前值有问题，或只有一个空格</p>
+</blockquote>
+<h5 id="6-2-4、bad-bool-value-in-config-file"><a href="#6-2-4、bad-bool-value-in-config-file" class="headerlink" title="6.2.4、bad bool value in config file:"></a>6.2.4、bad bool value in config file:</h5><blockquote>
+<p>可能原因是配置文件=”等号后值有问题</p>
+</blockquote>
+<h5 id="6-2-5、unrecognised-variable-in-config-file"><a href="#6-2-5、unrecognised-variable-in-config-file" class="headerlink" title="6.2.5、unrecognised variable in config file:"></a>6.2.5、unrecognised variable in config file:</h5><blockquote>
+<p>可能原因是参数前有空格</p>
+</blockquote>
+<h5 id="6-2-6、chdir，child-died-chroot："><a href="#6-2-6、chdir，child-died-chroot：" class="headerlink" title="6.2.6、chdir，child died, chroot："></a>6.2.6、chdir，child died, chroot：</h5><blockquote>
+<p>可能原因是用户主目录没有权限或没有主目录，或者还是selinux影响的</p>
+</blockquote>
+<h5 id="6-2-7、vsftpd-both-local-and-anonymous-access-disabled"><a href="#6-2-7、vsftpd-both-local-and-anonymous-access-disabled" class="headerlink" title="6.2.7、vsftpd: both local and anonymous access disabled!"></a>6.2.7、vsftpd: both local and anonymous access disabled!</h5><blockquote>
+<p>匿名用户和本地用户登录都被禁用</p>
+</blockquote>
+<h5 id="6-2-8、vsftpd-refusing-to-run-with-writable-root-inside-chroot-："><a href="#6-2-8、vsftpd-refusing-to-run-with-writable-root-inside-chroot-：" class="headerlink" title="6.2.8、vsftpd: refusing to run with writable root inside chroot() ："></a>6.2.8、vsftpd: refusing to run with writable root inside chroot() ：</h5><blockquote>
+<p>如果启用了限定用户在其主目录下需要添加这个配置，解决报错  allow_writeable_chroot=YES </p>
+</blockquote>
+<h4 id="6-3、522"><a href="#6-3、522" class="headerlink" title="6.3、522"></a>6.3、522</h4><p>522 SSL connection failed; session reuse required: see require_ssl_reuse option in vsftpd.conf man page。原来是FTP的require_ssl_reuse=YES导致的，当选项<strong>require_ssl_reuse</strong>设置为<code>YES</code>时，所有SSL数据连接都需要显示SSL会话重用;证明他们知道与控制信道相同的主秘钥。 </p>
+<p>这个问题可能导致客户端到服务器能够正常连接，但是客户端看不到服务器上的任何内容。</p>
+<h4 id="6-3、530-："><a href="#6-3、530-：" class="headerlink" title="6.3、530 ："></a>6.3、530 ：</h4><h5 id="6-3-1、Permission-denied："><a href="#6-3-1、Permission-denied：" class="headerlink" title="6.3.1、Permission denied："></a>6.3.1、Permission denied：</h5><blockquote>
+<p>可能原因是userlist_enable=YES并且/etc/vsftpd/user_list中包含要登录的ftp用户名，即user_list禁止了该用户的登录、或者可能是没有指定userlist_file=/etc/vsftpd/user_list</p>
+</blockquote>
+<h5 id="6-3-2、Login-incorrect："><a href="#6-3-2、Login-incorrect：" class="headerlink" title="6.3.2、Login incorrect："></a>6.3.2、Login incorrect：</h5><blockquote>
+<p>要确保用户名、密码是正确的；</p>
+<p>可能原因是登录的ftp用户名被包含在禁止登录列表/etc/vsftpd/ftpusers中  ；</p>
+<p>也可能是配置文件中少了一行pam_service_name=vsftpd ；</p>
+</blockquote>
+<p>Linux-PAM（即linux可插入认证模块）</p>
+<blockquote>
+<p>检查/etc/pam.d/vsftpd 文件里面lib的路径；</p>
+<p>检查/etc/pam.d/vsftpd 文件内容是否导致local用户和虚拟用户登录冲突（具体的见之后配置虚拟用户的案例7.1.3）；</p>
+<p>编辑/etc/pam.d/vsftp文件，注释掉auth required pam_shells.so（这个语句的意思是只有包含shell的用户才能登录）；</p>
+</blockquote>
+<h5 id="6-3-3、Non-anonymous-sessions-must-use-encryption："><a href="#6-3-3、Non-anonymous-sessions-must-use-encryption：" class="headerlink" title="6.3.3、Non-anonymous sessions must use encryption："></a>6.3.3、Non-anonymous sessions must use encryption：</h5><blockquote>
+<p>服务器的强制，非匿名用户必须使用加密连接</p>
+</blockquote>
+<h4 id="6-4、GnuTLS-error-12-A-TLS-fatal-alert-has-been-received："><a href="#6-4、GnuTLS-error-12-A-TLS-fatal-alert-has-been-received：" class="headerlink" title="6.4、GnuTLS error -12: A TLS fatal alert has been received："></a>6.4、GnuTLS error -12: A TLS fatal alert has been received：</h4><blockquote>
+<p>Filezilla最新版本认为vsftpd默认的加密算法”DES-CBC3-SHA”不够安全而拒绝连接导致的。有两种办法解决该问题，一是降级你的Filezilla客户端版本到3.5.3以下，二是更改服务器端vsftpd的配置,增加参数：ssl_ciphers=HIGH</p>
+</blockquote>
+<h4 id="6-5、ECONNREFUSED-–-Connection-refused-by-server："><a href="#6-5、ECONNREFUSED-–-Connection-refused-by-server：" class="headerlink" title="6.5、ECONNREFUSED – Connection refused by server："></a>6.5、ECONNREFUSED – Connection refused by server：</h4><blockquote>
+<p>当启用隐式ssl连接，用filezilla、winscp客户端连接时报错，因为vsftpd此时服务器端的端口还是21，但是客户端确以990来连接。修改客户端连接时使用的参数或者服务器的通过参数listen_port设置端口为990，问题解决</p>
+</blockquote>
+<h3 id="7、案例"><a href="#7、案例" class="headerlink" title="7、案例"></a>7、案例</h3><h4 id="7-1、案例一、建立基于虚拟用户的FTP服务器，并根据以下要求配置FTP服务器。"><a href="#7-1、案例一、建立基于虚拟用户的FTP服务器，并根据以下要求配置FTP服务器。" class="headerlink" title="7.1、案例一、建立基于虚拟用户的FTP服务器，并根据以下要求配置FTP服务器。"></a>7.1、案例一、建立基于虚拟用户的FTP服务器，并根据以下要求配置FTP服务器。</h4><blockquote>
+<p>配置FTP匿名用户的主目录为/var/ftp/anon；下载带宽限制为100kB/s ；建立一个名为abc，口令为xyz的FTP账户；下载带宽限制为500kB/s；设置FTP服务器同时登录到FTP服务器的最大链接数为100；每个IP最大链接数为3；用户空闲时间超过限值为5分钟。</p>
+</blockquote>
+<h5 id="7-1-1、创建目录-var-fpt-anon"><a href="#7-1-1、创建目录-var-fpt-anon" class="headerlink" title="7.1.1、创建目录/var/fpt/anon"></a>7.1.1、创建目录/var/fpt/anon</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-built_in">mkdir</span> /var/fpt/anon <br>建立一个名为<span class="hljs-keyword">abc</span>，口令为xyz的FTP账户<br>useradd <span class="hljs-keyword">abc</span><br>passwd <span class="hljs-keyword">abc</span> <br></code></pre></td></tr></table></figure>
+<h5 id="7-1-2、本地的Local用户配置"><a href="#7-1-2、本地的Local用户配置" class="headerlink" title="7.1.2、本地的Local用户配置"></a>7.1.2、本地的Local用户配置</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs routeros">vim /etc/vsftpd/vsftpd.conf<br>-&gt;<br><span class="hljs-attribute">anonymous_enable</span>=<span class="hljs-literal">YES</span>				#允许匿名登录<br><span class="hljs-attribute">anon_root</span>=/var/ftp/anon				#配置FTP匿名用户的主目录为/var/ftp/anon<br><span class="hljs-attribute">anon_max_rate</span>=100					#下载带宽限制为100kB/s<br><span class="hljs-attribute">local_enable</span>=<span class="hljs-literal">YES</span>					#允许本地用户登录<br><span class="hljs-attribute">local_max_rate</span>=500					下载带宽限制为500kB/s<br><span class="hljs-attribute">max_clients</span>=100						#设置FTP服务器同时登录到FTP服务器的最大链接数为100<br><span class="hljs-attribute">max_per_ip</span>=3						#每个IP最大链接数为3<br><span class="hljs-attribute">connect_timeout</span>=300					#用户空闲时间超过限值为5分钟<br></code></pre></td></tr></table></figure>
+<h5 id="7-1-3、下面是虚拟用户配置"><a href="#7-1-3、下面是虚拟用户配置" class="headerlink" title="7.1.3、下面是虚拟用户配置"></a>7.1.3、下面是虚拟用户配置</h5><p>添加虚拟用户口令文件</p>
+<p>添加虚拟用户名和密码，一行用户名，一行密码，以此类推。奇数行为用户名，偶数行为密码。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">vim <span class="hljs-regexp">/etc/</span>vsftpd/virtuser<br>-&gt;<br>tom<br><span class="hljs-number">123</span><br></code></pre></td></tr></table></figure>
+<p>将virtuser文件的其他用户访问权限改成0，防止其他用户轻易的得到密码。<br>修改之前：-rw-r–r– 1 root root    47 Nov 15 16:14 virtusers 其它用户对此文件可读。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">chmod <span class="hljs-number">640</span> <span class="hljs-regexp">/etc/</span>vsftpd/virtuser<br></code></pre></td></tr></table></figure>
+<p>生成数据库文件</p>
+<p>使用db_load命令生成虚拟用户口令认证文件，如果不能使用db_load命令请先安装db4_utils</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rpm</span> –qa |grep db<span class="hljs-number">4</span>-utils	#查看是否安装<br><span class="hljs-attribute">rpm</span> –ivh db<span class="hljs-number">4</span>-utils-<span class="hljs-number">4</span>.<span class="hljs-number">3</span>.<span class="hljs-number">29</span>-<span class="hljs-number">9</span>.fc<span class="hljs-number">6</span>.i<span class="hljs-number">386</span>.rpm	#安装<br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">db_load -T -t hash -f <span class="hljs-regexp">/etc/</span>vsftpd<span class="hljs-regexp">/virtuser /</span>etc<span class="hljs-regexp">/vsftpd/</span>virtuser.db<br>chmod <span class="hljs-number">600</span> <span class="hljs-regexp">/etc/</span>vsftpd/vuser.db<br></code></pre></td></tr></table></figure>
+<p>编辑/etc/pam.d/vsftpd</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">vim <span class="hljs-regexp">/etc/</span>pam.d/vsftpd<br>-&gt;<br>auth      sufficient   pam_userdb.so  db=<span class="hljs-regexp">/etc/</span>vsftpd/virtuser<br>account   sufficient   pam_userdb.so  db=<span class="hljs-regexp">/etc/</span>vsftpd/virtuser<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>误区：网上查阅过许多配置虚拟用户的资料，大多都是说将/etc/pam.d/vsftpd中的原来的auth和account内容注释掉，但是这样做的话会导致local用户无法访问ftp服务。<br>加入以下：<br>auth      required   pam_userdb.so  db=/etc/vsftpd/virtuser<br>account   required   pam_userdb.so  db=/etc/vsftpd/virtuser</p>
+<p>若要虚拟和本地用户都能够访问ftp服务<br>加入以下：<br>auth      sufficient   pam_userdb.so  db=/etc/vsftpd/virtuser<br>account   sufficient   pam_userdb.so  db=/etc/vsftpd/virtuser<br>除此之外，还应该注意新添加的这两行在文件中的位置</p>
+</blockquote>
+<p>编辑vsftpd.conf映射虚拟用户</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">vim /etc/vsftpd/vsftpd.conf<br>-&gt;<br><span class="hljs-attribute">guest_enable</span>=<span class="hljs-literal">YES</span><br><span class="hljs-attribute">guest_username</span>=abc<br></code></pre></td></tr></table></figure>
+<p><img src="/FTP%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/ftp.png" srcset="/img/loading.gif" alt="1"></p>
+<h4 id="7-2、案例二、一个简单的公司部门FTP服务"><a href="#7-2、案例二、一个简单的公司部门FTP服务" class="headerlink" title="7.2、案例二、一个简单的公司部门FTP服务"></a>7.2、案例二、一个简单的公司部门FTP服务</h4><p>1、新建一分区，10G空间，ext3 文件系统，挂在到 /ftp下，作为 ftp服务器数据存放地方。<br>2、四个部门：dep1，dep2， dep3， dep4，分别对应目录 /ftp/dep1，/ftp/dep2，/ftp/dep3，/ftp/dep4。另外设定一个公共目录 /ftp/public。<br>3、五个用户：admin，user1，user2，user3，user4。其中：user 1/2/3/4分别对应部门dep 1/2/3/4，他们只能访问自己所属部门的目录和public目录。如：user1只能访问dep1和public目录，不能访问其它目录。admin为管理员用户，可以访问 ftp 服务器上的任何目录。<br>4、用户访问权限限制：user1/2/3/4在所能访问的目录，具有上传文件、下载文件的功能，但是不能够删除文件、更改文件权限等功能。admin管理员用户对所有目录具有文件上传、下载、删除、权限更改等功能。<br>5、对每个部门定制一个 quota，设置该账户的文件配额为1000个；磁盘配额为2G。<br>6、匿名用户不能访问。</p>
+<h5 id="7-2-1、增加一块硬盘，然后分区，把分区挂载情况写入-etc-fstab"><a href="#7-2-1、增加一块硬盘，然后分区，把分区挂载情况写入-etc-fstab" class="headerlink" title="7.2.1、增加一块硬盘，然后分区，把分区挂载情况写入/etc/fstab"></a>7.2.1、增加一块硬盘，然后分区，把分区挂载情况写入/etc/fstab</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk">fdisk <span class="hljs-regexp">/dev/</span>hdb<br>mkfs ext3 <span class="hljs-regexp">/dev/</span>hdb1<br>mkidr /ftp<br>mount <span class="hljs-regexp">/dev/</span>hdb1 /ftp -o usrquota,grpquota <br>vim <span class="hljs-regexp">/etc/</span>fstab<br>	加入下面一句:<br><span class="hljs-regexp">/dev/</span>hdb1       /ftp      ext3     defaults,usrquota,grpquota      <span class="hljs-number">0</span>      <span class="hljs-number">0</span> <br></code></pre></td></tr></table></figure>
+<h5 id="7-2-2、建立用户组和用户和相应的文件夹并更改权限，达到题目要求"><a href="#7-2-2、建立用户组和用户和相应的文件夹并更改权限，达到题目要求" class="headerlink" title="7.2.2、建立用户组和用户和相应的文件夹并更改权限，达到题目要求"></a>7.2.2、建立用户组和用户和相应的文件夹并更改权限，达到题目要求</h5><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">groupadd</span> dep<span class="hljs-number">1</span><br><span class="hljs-attribute">groupadd</span> dep<span class="hljs-number">2</span><br><span class="hljs-attribute">groupadd</span> dep<span class="hljs-number">3</span><br><span class="hljs-attribute">groupadd</span> dep<span class="hljs-number">4</span><br><span class="hljs-attribute">groupadd</span> **e <br><span class="hljs-attribute">usradd</span>  -G dep<span class="hljs-number">1</span>,**e user<span class="hljs-number">1</span><br><span class="hljs-attribute">usradd</span>  -G dep<span class="hljs-number">2</span>,**e user<span class="hljs-number">2</span><br><span class="hljs-attribute">usradd</span>  -G dep<span class="hljs-number">3</span>,**e user<span class="hljs-number">3</span><br><span class="hljs-attribute">usradd</span>  -G dep<span class="hljs-number">4</span>,**e user<span class="hljs-number">4</span><br><span class="hljs-attribute">usradd</span>  -G dep<span class="hljs-number">1</span>,dep<span class="hljs-number">2</span>,dep<span class="hljs-number">3</span>,dep<span class="hljs-number">4</span>,**e admin <br><span class="hljs-attribute">passwd</span> user<span class="hljs-number">1</span><br><span class="hljs-attribute">passwd</span> user<span class="hljs-number">2</span><br><span class="hljs-attribute">passwd</span> user<span class="hljs-number">3</span><br><span class="hljs-attribute">passwd</span> user<span class="hljs-number">4</span><br><span class="hljs-attribute">passwd</span> admin <br><span class="hljs-attribute">mkdir</span> /ftp/dep<span class="hljs-number">1</span><br><span class="hljs-attribute">mkdir</span> /ftp/dep<span class="hljs-number">2</span><br><span class="hljs-attribute">mkdir</span> /ftp/dep<span class="hljs-number">3</span><br><span class="hljs-attribute">mkdir</span> /ftp/dep<span class="hljs-number">4</span><br><span class="hljs-attribute">mkdir</span> /ftp/public <br><span class="hljs-attribute">chmod</span> uesr<span class="hljs-number">1</span>:dep<span class="hljs-number">1</span> /ftp/dep<span class="hljs-number">1</span><br><span class="hljs-attribute">chmod</span> uesr<span class="hljs-number">2</span>:dep<span class="hljs-number">2</span> /ftp/dep<span class="hljs-number">2</span><br><span class="hljs-attribute">chmod</span> uesr<span class="hljs-number">3</span>:dep<span class="hljs-number">3</span> /ftp/dep<span class="hljs-number">3</span><br><span class="hljs-attribute">chmod</span> uesr<span class="hljs-number">4</span>:dep<span class="hljs-number">4</span> /ftp/dep<span class="hljs-number">4</span><br><span class="hljs-attribute">chmod</span> admin:**e /ftp/public <br><span class="hljs-attribute">chmod</span> <span class="hljs-number">770</span> /ftp/dep<span class="hljs-number">1</span><br><span class="hljs-attribute">chmod</span> <span class="hljs-number">770</span> /ftp/dep<span class="hljs-number">2</span><br><span class="hljs-attribute">chmod</span> <span class="hljs-number">770</span> /ftp/dep<span class="hljs-number">3</span><br><span class="hljs-attribute">chmod</span> <span class="hljs-number">770</span> /ftp/dep<span class="hljs-number">4</span><br><span class="hljs-attribute">chmod</span> <span class="hljs-number">770</span> /ftp/pubic <br></code></pre></td></tr></table></figure>
+<p>最终结果如下 :</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs tap">-rw-------<span class="hljs-number"> 1 </span>root  root     <span class="hljs-number"> 8192 </span>Jul<span class="hljs-number"> 26 </span>11:46 aquota.group<br>-rw-------<span class="hljs-number"> 1 </span>root  root     <span class="hljs-number"> 7168 </span>Jul<span class="hljs-number"> 26 </span>11:46 aquota.user<br>drwxrwx---<span class="hljs-number"> 2 </span>user1 dep1     <span class="hljs-number"> 4096 </span>Jul<span class="hljs-number"> 25 </span>20:47 dep1<br>drwxrwx---<span class="hljs-number"> 2 </span>user2 dep2     <span class="hljs-number"> 4096 </span>Jul<span class="hljs-number"> 25 </span>20:47 dep2<br>drwxrwx---<span class="hljs-number"> 2 </span>user3 dep3     <span class="hljs-number"> 4096 </span>Jul<span class="hljs-number"> 25 </span>20:47 dep3<br>drwxrwx---<span class="hljs-number"> 2 </span>user4 dep4     <span class="hljs-number"> 4096 </span>Jul<span class="hljs-number"> 25 </span>20:47 dep4<br>drwx------<span class="hljs-number"> 2 </span>root  root    <span class="hljs-number"> 16384 </span>Jul<span class="hljs-number"> 25 </span>20:44 lost+found<br>drwxrwx---<span class="hljs-number"> 2 </span>admin **e <span class="hljs-number"> 4096 </span>Jul<span class="hljs-number"> 25 </span>20:48 public <br></code></pre></td></tr></table></figure>
+<h5 id="7-2-3、创建quota，配置磁盘配额"><a href="#7-2-3、创建quota，配置磁盘配额" class="headerlink" title="7.2.3、创建quota，配置磁盘配额"></a>7.2.3、创建quota，配置磁盘配额</h5><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gradle">mount <span class="hljs-regexp">/dev/</span>hdb1 /ftp -o usrquota,grpquota<br>quotacheck -cuvg <span class="hljs-regexp">/dev/</span>sdb1<br>quotaon -a<br>edquota -g dep1 <br>-&gt;Disk quotas <span class="hljs-keyword">for</span> <span class="hljs-keyword">group</span> dep1 (gid <span class="hljs-number">503</span>):<br>  Filesystem                   blocks       soft       hard     inodes     soft     hard<br>  <span class="hljs-regexp">/dev/</span>hdb1                         <span class="hljs-number">0</span>    <span class="hljs-number">1024000</span>    <span class="hljs-number">2048000</span>          <span class="hljs-number">0</span>      <span class="hljs-number">500</span>     <span class="hljs-number">1000</span> <br>edquota -g -p dep1 dep2 dep3 dep4(-u -g将源用户组和群组的quota设置套用至其他用户或群组。) <br></code></pre></td></tr></table></figure>
+<h5 id="7-2-4、编辑vsftpd配置文件"><a href="#7-2-4、编辑vsftpd配置文件" class="headerlink" title="7.2.4、编辑vsftpd配置文件"></a>7.2.4、编辑vsftpd配置文件</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># vim /etc/vsftpd/vsftpd.conf </span><br><span class="hljs-attribute">anonymous_enable</span>=<span class="hljs-literal">NO</span> <br>加入<br><span class="hljs-attribute">local_root</span>=/ftp<br><span class="hljs-attribute">user_config_dir</span>=/etc/vsftpd/ftp_config_dir  <br><br>开启chroot <br><span class="hljs-attribute">chroot_list_enable</span>=<span class="hljs-literal">YES</span><br><span class="hljs-attribute">chroot_list_file</span>=/etc/vsftpd/chroot_list <br></code></pre></td></tr></table></figure>
+<h5 id="7-2-5、建立用户的独立配置文件"><a href="#7-2-5、建立用户的独立配置文件" class="headerlink" title="7.2.5、建立用户的独立配置文件"></a>7.2.5、建立用户的独立配置文件</h5><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gradle">mkdir <span class="hljs-regexp">/etc/</span>vsftpd/ftp_config_dir<br>vim <span class="hljs-regexp">/etc/</span>vsftpd<span class="hljs-regexp">/ftp_config_dir/u</span>ser1 <br><br>-&gt;cmds_allowed=ABOR,ACCT,APPE,CWD,CDUP,HELP,LIST,MODE,MDTM,NOOP,NLST,PASS,PASV,PORT,PWD,QUIT,REIN,RETR,SITE,<span class="hljs-keyword">SIZE</span>,STOR,STAT,STOU,STRU,SYST,TYPE,USER <br><br>cp <span class="hljs-regexp">/etc/</span>vsftpd<span class="hljs-regexp">/ftp_config_dir/u</span>ser1 <span class="hljs-regexp">/etc/</span>vsftpd<span class="hljs-regexp">/ftp_config_dir/u</span>ser2<br>cp <span class="hljs-regexp">/etc/</span>vsftpd<span class="hljs-regexp">/ftp_config_dir/u</span>ser1 <span class="hljs-regexp">/etc/</span>vsftpd<span class="hljs-regexp">/ftp_config_dir/u</span>ser3<br>cp <span class="hljs-regexp">/etc/</span>vsftpd<span class="hljs-regexp">/ftp_config_dir/u</span>ser1 <span class="hljs-regexp">/etc/</span>vsftpd<span class="hljs-regexp">/ftp_config_dir/u</span>ser4<br></code></pre></td></tr></table></figure>
+<h4 id="7-3、案例三、userlist-enable和userlist-deny配置项"><a href="#7-3、案例三、userlist-enable和userlist-deny配置项" class="headerlink" title="7.3、案例三、userlist_enable和userlist_deny配置项"></a>7.3、案例三、userlist_enable和userlist_deny配置项</h4><p>建立三个用户chkin1 、chkin2、 chkin3，将chkin1添加到/etc/vsftpd/ftpusers文件中，将chkin2添加到/etc/vsftpd/user_list文件中，chkin3不添加到这两个文件中。</p>
+<p>1、当userlist_enable=NO时，ftpusers文件中的用户将被禁止访问ftp服务。此时只有chkin2和chkin3能够访问ftp服务。</p>
+<p>2、当userlist_enable=YES，userlist_deny=NO时,FTP服务器只允许user_list中的用户访问。此时只有chkin2能够访问ftp服务。</p>
+<p>3、当userlist_enable=YES，userlist_deny=YES时，user_list和ftpusers中的用户均不能访问FTP服务。此时仅chkin3能访问FTP服务。</p>
+<h3 id="8、补充内容"><a href="#8、补充内容" class="headerlink" title="8、补充内容"></a>8、补充内容</h3><h4 id="8-1、如何对磁盘限额"><a href="#8-1、如何对磁盘限额" class="headerlink" title="8.1、如何对磁盘限额"></a>8.1、如何对磁盘限额</h4><p>用quota对/etc/fstab进行限制，然后对特定用户进行限制</p>
+<h4 id="8-2、如何让绑定IP到vsFTP？"><a href="#8-2、如何让绑定IP到vsFTP？" class="headerlink" title="8.2、如何让绑定IP到vsFTP？"></a>8.2、如何让绑定IP到vsFTP？</h4><p>也就是说，如何让用户只能通过某个IP来访问FTP。其实这个功能很有意思。如果绑定的是内网的IP，外部是没有办法访问的。如果绑定的是对外服务的IP，内网也只能通过对外服务的IP来访问FTP 。</p>
+<p>在/etc/vsftpd/vsftpd.conf中加一行，以我的局域网为例，请看第一帖中的操作环境，这样外网就不能访问我的FTP了，内网也可能通过192.168.0.2来访问FTP<br>listen_address=192.168.0.2 </p>
+<p>加完后，要重启vsFTP服务器 </p>
+<h4 id="8-3、Linux-PAM"><a href="#8-3、Linux-PAM" class="headerlink" title="8.3、Linux-PAM"></a>8.3、Linux-PAM</h4><p>Linux-PAM（即linux可插入认证模块）是一套共享库,使本地系统管理员可以随意选择程序的认证方式。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kevingrace/p/8671964.html">Linux下PAM模块学习总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/linux/l-pam/">了解和配置PAM</a></p>
+<p><strong>虚拟用户和本地用户不能共存的错误排除过程</strong></p>
+<p>网上大部分教程教建立虚拟用户，将/etc/pam.d/vsftpd中的原来的auth和account内容注释掉，加入以下内容：</p>
+<blockquote>
+<p>auth      required   pam_userdb.so  db=/etc/vsftpd/virtuser<br>account   required   pam_userdb.so  db=/etc/vsftpd/virtuser</p>
+</blockquote>
+<p>1、在配置vsftpd的过程中，听信了网上的妖言，把vsftpd配了一遍，发现配完，虚拟用户和本地用户不能共存，即虚拟用户可以登录ftp，但是本地用户不能登录的ftp。</p>
+<p>2、上网找过很多内容都找不到解决方法，大家貌似都没有这样的问题，或者找不到解决办法。</p>
+<p>3、在看众多教程中有看到过和本方法一样的配置，但是那份内容里面完全没有提到/etc/pam.d/vsftpd里面为什么要这样写</p>
+<p>4、本地用户无法登录，那应该是pam验证的时候就没有给本地用户过</p>
+<p>如果把**/etc/pam.d/vsftpd** 中的<strong>auth required pam_userdb.so db=/etc/vsftpd/vuser_passwd</strong>和<strong>account required pam_userdb.so db=/etc/vsftpd/vuser_passwd</strong>注释掉，然后把里面其它的内容都打开注释。</p>
+<p>这时候再尝试，发现本地用户能登录</p>
+<p>5、这也证明了是pam模块认证配置冲突的问题让虚拟用户和本地用户不能共存</p>
+<p><strong>required：</strong>堆栈中的所有 Required 模块必须看作一个成功的结果。如果一个或多个 Required 模块失败，则实现堆栈中的所有 Required 模块，但是将返回第一个错误。</p>
+<p>也就意味着，required需要所有内容都满足才行，当我们前两条配置虚拟用户登录验证通过后，继续向下面的配置条目进行验证，验证是否是本地用户时结果发现不是，又因为，验证本地用户的control_flag也为required，所以这时候，就会返回错误，也即验证不成功。</p>
+<p>6、所以我们不能同时设置虚拟用户和本地用户的control_flag为required。按照上面的网址所说：</p>
+<p><strong>sufficient：</strong>如果标记为 sufficient 的模块成功并且先前没有 Required 或 sufficient 模块失败，则忽略堆栈中的所有其余模块并返回成功。</p>
+<p>7、我们可以把虚拟用户的验证配置放在最前面，且把control_flag设为sufficient。这样的话，如果遇到是虚拟用户，那么可以通过验证，如果是本地用户，忽略掉sufficient的两条配置规则，只要满足required就行，所以也能通过验证。</p>
+<p><img src="/FTP%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/ftp.png" srcset="/img/loading.gif" alt="2"></p>
+<h4 id="8-4、MySql数据库中创建用户口令数据库"><a href="#8-4、MySql数据库中创建用户口令数据库" class="headerlink" title="8.4、MySql数据库中创建用户口令数据库"></a>8.4、MySql数据库中创建用户口令数据库</h4><h5 id="8-4-1、安装MySql"><a href="#8-4-1、安装MySql" class="headerlink" title="8.4.1、安装MySql"></a>8.4.1、安装MySql</h5><h5 id="8-4-2、建立本地映射用户并设置宿主目录权限"><a href="#8-4-2、建立本地映射用户并设置宿主目录权限" class="headerlink" title="8.4.2、建立本地映射用户并设置宿主目录权限"></a>8.4.2、建立本地映射用户并设置宿主目录权限</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">[root@CentOS <span class="hljs-regexp">/]#useradd –d /</span>home<span class="hljs-regexp">/vftpsite –s /</span>sbin/nologin vftpuser<br>[root@CentOS <span class="hljs-regexp">/]#chmod 700 /</span>home/vftpsite<br></code></pre></td></tr></table></figure>
+<h5 id="8-4-3、配置vsftpd-conf（设置虚拟用户配置项）"><a href="#8-4-3、配置vsftpd-conf（设置虚拟用户配置项）" class="headerlink" title="8.4.3、配置vsftpd.conf（设置虚拟用户配置项）"></a>8.4.3、配置vsftpd.conf（设置虚拟用户配置项）</h5><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[root@CentOS /]</span><span class="hljs-comment">#vi /etc/vsftpd/vsftpd.conf</span><br><span class="hljs-attr">guest_enable</span>=<span class="hljs-literal">YES</span> <span class="hljs-comment">#开启虚拟用户</span><br><span class="hljs-attr">guest_username</span>=vftpuser <span class="hljs-comment">#FTP虚拟用户对应的系统用户</span><br><span class="hljs-attr">pam_service_name</span>=vsftpd <span class="hljs-comment">#PAM认证文件</span><br></code></pre></td></tr></table></figure>
+<h5 id="8-4-4、建立虚拟用户数据库，数据库名如vftpusers"><a href="#8-4-4、建立虚拟用户数据库，数据库名如vftpusers" class="headerlink" title="8.4.4、建立虚拟用户数据库，数据库名如vftpusers"></a>8.4.4、建立虚拟用户数据库，数据库名如vftpusers</h5><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs csharp">[<span class="hljs-meta">root@CentOS /</span>]<span class="hljs-meta">#mysql –u root –p</span><br>mysql&gt; create database vftpuser;   <span class="hljs-meta">#建立虚拟用户数据库，库名vftpuser</span><br>mysql&gt; use vftpuser;  <span class="hljs-meta">#进入vftpuser数据库</span><br><br><span class="hljs-meta">#建立虚拟用户口令表，表名users</span><br>mysql&gt; <span class="hljs-function">create table <span class="hljs-title">users</span>(<span class="hljs-params">name <span class="hljs-built_in">char</span>(<span class="hljs-number">16</span></span>) binary,passwd <span class="hljs-title">char</span>(<span class="hljs-params"><span class="hljs-number">16</span></span>) binary)</span>;  <br><br><span class="hljs-meta">#建立两个虚拟用户，bobyuan和markwang</span><br>mysql&gt; <span class="hljs-function">insert <span class="hljs-keyword">into</span> <span class="hljs-title">users</span> (<span class="hljs-params">name,passwd</span>) <span class="hljs-title">values</span> (<span class="hljs-params"><span class="hljs-string">&#x27;bobyuan&#x27;</span>,password(<span class="hljs-string">&#x27;111&#x27;</span></span>))</span>; <br>mysql&gt; <span class="hljs-function">insert <span class="hljs-keyword">into</span> <span class="hljs-title">users</span> (<span class="hljs-params">name,passwd</span>) <span class="hljs-title">values</span> (<span class="hljs-params"><span class="hljs-string">&#x27;markwang&#x27;</span>,password(<span class="hljs-string">&#x27;111&#x27;</span></span>))</span>;<br><span class="hljs-meta">#注：在这里我用这种方法添加的虚拟用户密码都是经过MySQL加密的，加密后的密码pam-mysql不能识</span><br><span class="hljs-meta">#别（MySQL和pam-mysql兼容性有些问题），因此本次实验使用明文保存密码。</span><br><br><span class="hljs-meta">#逐个添加用户</span><br>mysql&gt; <span class="hljs-function">insert <span class="hljs-keyword">into</span> <span class="hljs-title">users</span> (<span class="hljs-params">name,passwd</span>) <span class="hljs-title">values</span> (<span class="hljs-params"><span class="hljs-string">&#x27;bobyuan&#x27;</span>, <span class="hljs-string">&#x27;111&#x27;</span></span>)</span>;<br>mysql&gt; <span class="hljs-function">insert <span class="hljs-keyword">into</span> <span class="hljs-title">users</span> (<span class="hljs-params">name,passwd</span>) <span class="hljs-title">values</span> (<span class="hljs-params"><span class="hljs-string">&#x27;markwang&#x27;</span>,‘<span class="hljs-number">111&#x27;</span></span>)</span>;<br><br><span class="hljs-meta">#批量添加用户</span><br>[<span class="hljs-meta">root@CentOS /</span>]<span class="hljs-meta">#vim vftpuser.txt</span><br><span class="hljs-meta">#添加用户名和密码，注意字段数据之间要用Tab键隔开。</span><br>bobyuan  <span class="hljs-number">111</span><br>markwang <span class="hljs-number">111</span><br><br>mysql&gt;use vftpuser;<br>mysql&gt;load data local infile <span class="hljs-string">&quot;/vftpuser.txt&quot;</span> <span class="hljs-keyword">into</span> table users;<br>mysql&gt;flush privileges;<br><br>mysql&gt; grant <span class="hljs-keyword">select</span> <span class="hljs-keyword">on</span> vftpuser.users to vftpuser@localhost identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;111111&#x27;</span>;  <span class="hljs-meta">#授权vftpuser这个账号可以读取vftpuser数据库的user表</span><br><br></code></pre></td></tr></table></figure>
+<h5 id="8-4-5、验证设置是否成功"><a href="#8-4-5、验证设置是否成功" class="headerlink" title="8.4.5、验证设置是否成功"></a>8.4.5、验证设置是否成功</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">[root@CentOS /]#mysql –u vftpuser –p<br>mysql&gt;<span class="hljs-keyword">show</span> databases;<br>mysql&gt;use vftpuser;<br>mysql&gt;<span class="hljs-keyword">show</span> <span class="hljs-keyword">tables</span>;<br>mysql&gt;<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> users;<br>mysql&gt;quit<br></code></pre></td></tr></table></figure>
+<h5 id="8-4-6、编译MySql的PAM认证模块"><a href="#8-4-6、编译MySql的PAM认证模块" class="headerlink" title="8.4.6、编译MySql的PAM认证模块"></a>8.4.6、编译MySql的PAM认证模块</h5><p>查看/usr/lib64/security目录下有没有MySQL对应的PAM模块pam-mysql。</p>
+<p>如果没有则下载pam-mysql安装（<a target="_blank" rel="noopener" href="http://sourceforge.net/projects/pam-mysql%EF%BC%89%EF%BC%8C">http://sourceforge.net/projects/pam-mysql），</a></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget http:<span class="hljs-regexp">//</span>prdownloads.sourceforge.net<span class="hljs-regexp">/pam-mysql/</span>pam_mysql-<span class="hljs-number">0.7</span>RC1.tar.gz<br></code></pre></td></tr></table></figure>
+<p>我下载的是pam_mysql-0.7RC1.tar.gz。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@CentOS</span> /]<span class="hljs-meta">#cd /usr/local/src</span><br>[root<span class="hljs-symbol">@CentOS</span> src]<span class="hljs-meta">#tar –zxvf pam_mysql-0.7RC1.tar.gz</span><br>[root<span class="hljs-symbol">@CentOS</span> src]<span class="hljs-meta">#cd pam_mysql-0.7RC1</span><br>[root<span class="hljs-symbol">@CentOS</span> pam_mysql<span class="hljs-number">-0.7</span>RC1]<span class="hljs-meta"># ./configure --with-pam=/usr --with-mysql=/usr --with-pam-mods-dir=/usr/lib64/security</span><br>[root<span class="hljs-symbol">@CentOS</span> pam_mysql<span class="hljs-number">-0.7</span>RC1]<span class="hljs-meta">#make</span><br>[root<span class="hljs-symbol">@CentOS</span> pam_mysql<span class="hljs-number">-0.7</span>RC1]<span class="hljs-meta">#make install</span><br></code></pre></td></tr></table></figure>
+<h5 id="8-4-7、编辑vsftpd的PAM认证文件"><a href="#8-4-7、编辑vsftpd的PAM认证文件" class="headerlink" title="8.4.7、编辑vsftpd的PAM认证文件"></a>8.4.7、编辑vsftpd的PAM认证文件</h5><p><strong>方法一、在现有的vsftpd文件中</strong></p>
+<p>在/etc/pam.d目录下，编辑vsftpd文件，将里面其他的都注释掉（又是这？不用理它看前面的），添加下面这两行：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">auth required pam_mysql.so <span class="hljs-attribute">user</span>=vftpuser <span class="hljs-attribute">passwd</span>=111111 <span class="hljs-attribute">host</span>=localhost <span class="hljs-attribute">db</span>=vftpuser <span class="hljs-attribute">table</span>=users <span class="hljs-attribute">usercolumn</span>=name <span class="hljs-attribute">passwdcolumn</span>=passwd <span class="hljs-attribute">crypt</span>=0<br><br>account required pam_mysql.so <span class="hljs-attribute">user</span>=vftpuser <span class="hljs-attribute">passwd</span>=111111 <span class="hljs-attribute">host</span>=localhost <span class="hljs-attribute">db</span>=vftpuser <span class="hljs-attribute">table</span>=users <span class="hljs-attribute">usercolumn</span>=name <span class="hljs-attribute">passwdcolumn</span>=passwd <span class="hljs-attribute">crypt</span>=0<br></code></pre></td></tr></table></figure>
+<p>crypt=0：表示口令使用明文方式保存在数据库中<br>crypt=1：表示口令使用UNIX的DES加密方式加密后保存在数据库中<br>crypt=2：表示口令使用MySQL的password()函数加密后保存在数据库中<br>crypt=3：表示口令使用MD5散列值的方式保存在数据库中</p>
+<p><strong>方法二、新建用于认证的配置文件/etc/pam.d/vsftpd.vusers</strong></p>
+<p>/usr/local/src/pam_mysql-0.7RC1/README  这个文件有详细解释</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">auth required /usr/lib64/security/pam_mysql.so <span class="hljs-attribute">user</span>=vsftpd <span class="hljs-attribute">passwd</span>=vsftpd  <span class="hljs-attribute">host</span>=127.0.0.1 <span class="hljs-attribute">db</span>=vsftpd <span class="hljs-attribute">table</span>=users <span class="hljs-attribute">usercolumn</span>=name <span class="hljs-attribute">passwdcolumn</span>=password <span class="hljs-attribute">crypt</span>=2<br>account required /usr/lib64/security/pam_mysql.so <span class="hljs-attribute">user</span>=vsftpd <span class="hljs-attribute">passwd</span>=vsftpd <span class="hljs-attribute">host</span>=127.0.0.1 <span class="hljs-attribute">db</span>=vsftpd <span class="hljs-attribute">table</span>=users <span class="hljs-attribute">usercolumn</span>=name <span class="hljs-attribute">passwdcolumn</span>=password <span class="hljs-attribute">crypt</span>=2<br></code></pre></td></tr></table></figure>
+<p>修改主配置文件/etc/vsftpd/vsftpd.conf</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">pam_service_name</span>=vsftpd.vusers  <span class="hljs-comment">##这个是上一步我们创建的文件的文件名</span><br></code></pre></td></tr></table></figure>
+<h5 id="8-4-8、重启vsftpd服务"><a href="#8-4-8、重启vsftpd服务" class="headerlink" title="8.4.8、重启vsftpd服务"></a>8.4.8、重启vsftpd服务</h5><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@CentOS</span> /]<span class="hljs-meta">#systemctl restart vsftpd</span><br></code></pre></td></tr></table></figure>
+<h5 id="8-4-9、测试虚拟用户登录FTP"><a href="#8-4-9、测试虚拟用户登录FTP" class="headerlink" title="8.4.9、测试虚拟用户登录FTP"></a>8.4.9、测试虚拟用户登录FTP</h5><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">C:\User\Administrator&gt;<span class="hljs-keyword">ftp</span> <span class="hljs-number">192.168</span><span class="hljs-number">.120</span><span class="hljs-number">.240</span><br>Connected <span class="hljs-built_in">to</span> <span class="hljs-number">192.168</span><span class="hljs-number">.120</span><span class="hljs-number">.240</span>.<br><span class="hljs-number">220</span> Welcome <span class="hljs-built_in">to</span> BOB FTP server<br>User (<span class="hljs-number">192.168</span><span class="hljs-number">.120</span><span class="hljs-number">.240</span>:(<span class="hljs-literal">none</span>)): bobyuan<br><span class="hljs-number">331</span> Please specify <span class="hljs-keyword">the</span> password.<br>Password:<br><span class="hljs-number">230</span> Login successful.<br><span class="hljs-keyword">ftp</span>&gt; quit<br><span class="hljs-number">221</span> Goodbye.<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/116970u/p/10788285.html">解决服务器发回了不可路由的地址。使用服务器地址代替的问题</a>             </p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Linux/">Linux</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/FTP/">FTP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Linux/">Linux</a>
+                    
+                      <a class="hover-with-bg" href="/tags/vsftpd/">vsftpd</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/16/MySQL/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/14/Maven/">
+                        <span class="hidden-mobile">Maven</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

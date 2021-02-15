@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>Java泛型 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java泛型">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-12 10:55" pubdate>
+        2019年11月12日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java泛型</h1>
+            
+            <div class="markdown-body">
+              <h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><h4 id="啥是泛型？"><a href="#啥是泛型？" class="headerlink" title="啥是泛型？"></a>啥是泛型？</h4><p>泛型是Java SE 1.5的新特性，泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。这种参数类型可以用在类、接口和方法的创建中，分别称为泛型类、泛型接口、泛型方法。 Java语言引入泛型的好处是安全简单。</p>
+<p>简单的理解：就是在设计类（接口等）的时候，没有给规定具体是什么类型的参数，在实例化或调用的时候再传入具体的类型，告诉编译器这是什么类型。</p>
+<p>注意：</p>
+<ol>
+<li><p>泛型不会影响程序的运行的速度，因为在编译期就会直接编译成具体的类型。</p>
+</li>
+<li><p>使用泛型的方法或实例化泛型的类，只能用传入引用数据类型，不能传入基本数据类型</p>
+</li>
+</ol>
+<h4 id="规则限制："><a href="#规则限制：" class="headerlink" title="规则限制："></a>规则限制：</h4><p>1、泛型的类型参数只能是类类型（包括自定义类），不能是简单类型。<br>2、同一种泛型可以对应多个版本（因为参数类型是不确定的），不同版本的泛型类实例是不兼容的。<br>3、泛型的类型参数可以有多个。<br>4、泛型的参数类型可以使用extends语句，例如<T extends superclass>。习惯上称为“有界类型”。<br>5、泛型的参数类型还可以是通配符类型。例如Class&lt;?&gt; classType = Class.forName(“java.lang.String”);</p>
+<p>泛型作用</p>
+<p>泛型的作用：在编译的时候检查<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8/7308285">类型安全</a>，并且所有的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2/4463315">强制转换</a>都是自动和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%9A%90%E5%BC%8F/957024">隐式</a>的，以提高代码的重用率。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs processing"><span class="hljs-comment">// 准备一个List用来存储公司员工对象  假设有一个类 Employee</span><br>List  emp = <span class="hljs-keyword">new</span> ArrayList();<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">&quot;张三&quot;</span>));<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">&quot;李三&quot;</span>));<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">&quot;王三&quot;</span>));<br>由于List中可以存储任意类型的数据，因此可以这样<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-string">&quot;王麻子&quot;</span>);<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-keyword">new</span> Dog(<span class="hljs-string">&quot;旺财&quot;</span>));<br><br><br><span class="hljs-comment">// 写一个发工资的方法</span><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">Object</span> o : emp)&#123;<br>syso(<span class="hljs-string">&quot;给&quot;</span>+o.getName() + <span class="hljs-number">50000</span>);<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">上面代码可能引发的问题： 当我们获得一个字符串  或者一条狗的时候可能就调用不出来getName()方法</span><br><span class="hljs-comment">结果： 从业务上来讲，emp集合中只应该放Employee类型的数据，但是List可以放任意的类型的数据，在编译的时候我们无法阻止</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">如何解决？使用泛型  ---》限定我们上面的emp中只能够放Employee</span><br><span class="hljs-comment">List&lt;Employee&gt;  emp = new ArrayList&lt;Employee&gt;();</span><br><span class="hljs-comment">*/</span><br><br></code></pre></td></tr></table></figure>
+<h4 id="泛型类（接口）的设计"><a href="#泛型类（接口）的设计" class="headerlink" title="泛型类（接口）的设计"></a>泛型类（接口）的设计</h4><p>需求：设计一个点类Point,其中设计字段 x y;</p>
+<p>问题：里面的字段x y 使用什么类型好呢？ double  int  。。。</p>
+<p>效果：需要设计上面的类，满足不同的人的需求，有些希望使用double  int..</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">class</span> <span class="hljs-symbol">Point</span>&#123;<br>  <span class="hljs-built_in">double</span> x;<br>  <span class="hljs-built_in">double</span> y;<br>&#125;  <br><span class="hljs-keyword">class</span> <span class="hljs-symbol">Point</span>&#123;<br>  <span class="hljs-built_in">int</span> x;<br>  <span class="hljs-built_in">int</span> y;<br>&#125; <br><span class="hljs-comment">//一个类本质看成是一个模板，然后希望是一个通用的模板：</span><br><span class="hljs-keyword">class</span> <span class="hljs-symbol">Point</span>&#123;<br>  数据类型 x;<br>  数据类型 y;<br>&#125; <br></code></pre></td></tr></table></figure>
+<p>希望在设计类的时候，其中的数据类型我们就写一个符号，泛指所有的类型，但是不指具体的某种类型</p>
+<p>当有人使用我们上面的模板来创建一个对象的时候他们自己可以指定自己的类型</p>
+<p>怎么做：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">class</span> <span class="hljs-symbol">Point</span>&lt;数据类型&gt;&#123;  <span class="hljs-comment">// 表示在类声明了一个符号 数据类型，是一种泛指</span><br>  数据类型 x;<br>  数据类型 y;<br>&#125; <br></code></pre></td></tr></table></figure>
+<p>规范的写法应该是使用一些字母（常见的字母）：</p>
+<p>E  Element 元素</p>
+<p>T  Type  类型</p>
+<p>K     Key   键</p>
+<p>V  Value  值</p>
+<p>也可以支持多个泛型参数例如Map&lt;K,V&gt;</p>
+<h4 id="泛型的具体使用案例"><a href="#泛型的具体使用案例" class="headerlink" title="泛型的具体使用案例"></a>泛型的具体使用案例</h4><p>1、把学生对象存入TreeSet中，自然排序 或者 比较器</p>
+<p>2、统计字符串中字母个数的示例</p>
+<p><img src="/Java%E6%B3%9B%E5%9E%8B/clip_image002.jpg" srcset="/img/loading.gif" alt="im"></p>
+<p>泛型的上、下限</p>
+<p><img src="/Java%E6%B3%9B%E5%9E%8B/clip_im002.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/Java%E6%B3%9B%E5%9E%8B/clip_im02.jpg" srcset="/img/loading.gif" alt="img"></p>
+<h4 id="泛型方法的设计和使用"><a href="#泛型方法的设计和使用" class="headerlink" title="泛型方法的设计和使用"></a>泛型方法的设计和使用</h4><p><img src="/Java%E6%B3%9B%E5%9E%8B/clip_im01.png" srcset="/img/loading.gif" alt="img"></p>
+<p>错误原因： 在类设计上面。因为被static修饰的方法，是在类加载的时候就加载的到静态区中，而这时候加载到jvm中的T类型，JVM根本就不知道是什么类型。</p>
+<p>解决方法：在方法上加一个泛型</p>
+<p><img src="/Java%E6%B3%9B%E5%9E%8B/ge001.png" srcset="/img/loading.gif" alt="img"></p>
+<p>什么是泛型方法</p>
+<p>1、就是把泛型类型的声明放在某个方法上面，只需将泛型参数列表置于返回值前；只能够本方法上或者内部可以使用这个符号；</p>
+<p>2、泛型类，声明的泛型类型可以使用到整个类的</p>
+<p>3、泛型方法来说，是再调用方法的时候传入的实际参数为真实的类型</p>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p>限制泛型</p>
+<blockquote>
+<p>1）<T extends Collection>这里的限定使用关键字extends，后面可以是类也可以是接口。但这里的extends已经不是继承的含义了，应该理解为T类型是实现Collection接口的类型，或者T是继承了XX类的类型。<br>2）&lt;T extends SomeClass &amp; interface1 &amp; interface2 &amp; interface3&gt;</p>
+</blockquote>
+<p>通配符泛型</p>
+<blockquote>
+<p>1、如果只指定了&lt;?&gt;，而没有extends，则默认是允许Object及其下的任何Java类了。也就是任意类。<br>2、通配符泛型不单可以向上限制，如&lt;? extends Collection&gt;，还可以向下限制，如&lt;? super Double&gt;，表示类型只能接受Double及其上层父类类型，如Number、Object类型的实例。<br>3、泛型类定义可以有多个泛型参数，中间用逗号隔开，还可以定义泛型接口，泛型方法。这些都与泛型类中泛型的使用规则类似。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B3%9B%E5%9E%8B/">泛型</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/12/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java多线程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/11/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%89%EF%BC%89/">
+                        <span class="hidden-mobile">Java常见类及其继承关系（三）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

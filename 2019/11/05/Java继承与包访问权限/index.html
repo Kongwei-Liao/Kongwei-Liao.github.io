@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>Java继承与包访问权限 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java继承与包访问权限">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-05 15:05" pubdate>
+        2019年11月5日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      41
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java继承与包访问权限</h1>
+            
+            <div class="markdown-body">
+              <h3 id="Java继承与包访问权限"><a href="#Java继承与包访问权限" class="headerlink" title="Java继承与包访问权限"></a>Java继承与包访问权限</h3><p><img src="/Java%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%8C%85%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90/jicheng.png" srcset="/img/loading.gif" alt="jicheng"></p>
+<p><img src="/Java%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%8C%85%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90/override.png" srcset="/img/loading.gif" alt="override"></p>
+<p><img src="/Java%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%8C%85%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90/cp.png" srcset="/img/loading.gif" alt="java"></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><code class="hljs typescript">package cn.kongwei_liao.Inheritance;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father</span> </span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> pubstr=<span class="hljs-string">&quot;Public Father String!\n&quot;</span>;<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> pristr=<span class="hljs-string">&quot;private Father String!\n&quot;</span>;<br>	<span class="hljs-keyword">protected</span> <span class="hljs-built_in">String</span> prostr=<span class="hljs-string">&quot;protected Father String!&quot;</span>;<br>	<br>	<span class="hljs-keyword">protected</span> Father_innerClass fif=<span class="hljs-keyword">new</span> Father_innerClass();<br>	<br>	&#123;<br>		System.out.println(<span class="hljs-string">&quot;什么时候执行？Father类加载到内存的时候&quot;</span>);<br>	&#125;<br>	<br>	<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">getPubstr</span>(<span class="hljs-params"></span>)</span> &#123;<br>		<span class="hljs-keyword">return</span> pubstr;<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">setPubstr</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> pubstr</span>)</span> &#123;<br>		<span class="hljs-built_in">this</span>.pubstr = pubstr;<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">getPristr</span>(<span class="hljs-params"></span>)</span> &#123;<br>		<span class="hljs-keyword">return</span> pristr;<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">setPristr</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> pristr</span>)</span> &#123;<br>		<span class="hljs-built_in">this</span>.pristr = pristr;<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">getProstr</span>(<span class="hljs-params"></span>)</span> &#123;<br>		<span class="hljs-keyword">return</span> prostr;<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">setProstr</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> prostr</span>)</span> &#123;<br>		<span class="hljs-built_in">this</span>.prostr = prostr;<br>	&#125;<br>	<span class="hljs-keyword">public</span> Father_innerClass <span class="hljs-function"><span class="hljs-title">getFif</span>(<span class="hljs-params"></span>)</span> &#123;<br>		<span class="hljs-keyword">return</span> fif;<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">setFif</span>(<span class="hljs-params">Father_innerClass fif</span>)</span> &#123;<br>		<span class="hljs-built_in">this</span>.fif = fif;<br>	&#125;<br>	<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func1</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;private Father function 1!\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">public</span> long <span class="hljs-function"><span class="hljs-title">func2</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;public Father function 2!\n&quot;</span>);<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	&#125;<br>	<span class="hljs-keyword">protected</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func3</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;protected Father function 3!\n&quot;</span>);<br>	&#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father_innerClass</span></span>&#123;		<span class="hljs-comment">//Inner Class</span><br>	<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> pubstr=<span class="hljs-string">&quot;Public String!&quot;</span>;<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> pristr=<span class="hljs-string">&quot;private String!&quot;</span>;<br>	<span class="hljs-keyword">protected</span> <span class="hljs-built_in">String</span> prostr=<span class="hljs-string">&quot;protected String!&quot;</span>;<br>	<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func1</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;private Father_innerClass_function 1!\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func2</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;public Father_innerClass_function 2!\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">protected</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func3</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;protected Father_innerClass_function 3!\n&quot;</span>);<br>	&#125;<br>&#125;<br><br><span class="hljs-comment">//public class Father_fake&#123;</span><br><span class="hljs-comment">//	//Error:The public type Father_fake must be defined in its own file</span><br><span class="hljs-comment">//&#125;</span><br><br><span class="hljs-comment">//private class Father_infile&#123;</span><br><span class="hljs-comment">//	//Error:Illegal modifier for the class Father_infile; only public, abstract &amp; final are permitted</span><br><span class="hljs-comment">//&#125;</span><br><span class="hljs-comment">//protected class Father_protected_infile() &#123;</span><br><span class="hljs-comment">//	//Error:Illegal modifier for the class Father_protected_infile; only public, abstract &amp; final are permitted</span><br><span class="hljs-comment">//&#125;</span><br><br><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father_abstract_inOfile</span></span>&#123;<br>	<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> pubstr=<span class="hljs-string">&quot;Public String!&quot;</span>;<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> pristr=<span class="hljs-string">&quot;private String!&quot;</span>;<br>	<span class="hljs-keyword">protected</span> <span class="hljs-built_in">String</span> prostr=<span class="hljs-string">&quot;protected String!&quot;</span>;<br>	<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func1</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;private function 1!&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func2</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;public function 2!&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">protected</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func3</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;protected function 3!&quot;</span>);<br>	&#125;<br>	<span class="hljs-comment">//private abstract void func4();//Error:The abstract method func5 in type Father_abstract_inOfile can only set a visibility modifier, one of public or protected</span><br>	<span class="hljs-comment">//public final abstract void func4();//Error:The abstract method func5 in type Father_abstract_inOfile can only set a visibility modifier, one of public or protected</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">void</span> func4();<br>&#125;<br><br>final <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father_final_inOfile</span></span>&#123;<br>	<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> pubstr=<span class="hljs-string">&quot;Public String!&quot;</span>;<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> pristr=<span class="hljs-string">&quot;private String!&quot;</span>;<br>	<span class="hljs-keyword">protected</span> <span class="hljs-built_in">String</span> prostr=<span class="hljs-string">&quot;protected String!&quot;</span>;<br>	<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func1</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;private function 1!&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func2</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;public function 2!&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">protected</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">func3</span>(<span class="hljs-params"></span>)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;protected function 3!&quot;</span>);<br>	&#125;<br>	<span class="hljs-comment">//public abstract void func4();//The abstract method func4 in type Father_final_inOfile can only be defined by an abstract class</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><code class="hljs awk">package cn.kongwei_liao.Inheritance;<br><br>public class Son extends Father&#123;<br><span class="hljs-regexp">//</span>	public String pubstr = <span class="hljs-string">&quot;public Son String!\n&quot;</span>;<br><span class="hljs-regexp">//</span>	private String pristr = <span class="hljs-string">&quot;private Son String!\n&quot;</span>;<br><span class="hljs-regexp">//</span>	protected String prostr = <span class="hljs-string">&quot;protected Son String!\n&quot;</span>;<br>	<br>	public String pubSonstr;<br>	private String priSonstr;<span class="hljs-regexp">//</span>属性不赋初值null<br>	protected String proSonstr;<br>	<br>	public Son() &#123;<br>		<span class="hljs-regexp">//</span>super();<br>		System.out.println(<span class="hljs-string">&quot;new创建对象的时候执行&quot;</span>);<br>		pubstr=<span class="hljs-string">&quot;从父类继承来public的pubstr!\n&quot;</span>;<br>		prostr=<span class="hljs-string">&quot;从父类继承来protected的prostr!\n&quot;</span>;<br>		<span class="hljs-regexp">//</span>pristr=<span class="hljs-string">&quot;从父类继承不来private的pristr!\n&quot;</span>;<span class="hljs-regexp">//</span>Error:The field Father.pristr is not visible<br>		<br>		pubSonstr=super.pubstr;<br>		<span class="hljs-regexp">//</span>priSonstr=super.pristr;<span class="hljs-regexp">//</span>Error:The field Father.pristr is not visible<br>		proSonstr=super.prostr;<br>		<br>		System.out.println(<span class="hljs-string">&quot;priSonstr初始化：&quot;</span> + priSonstr);<br>	&#125;<br>	public Son(String str)&#123;<br>		this();<br>		<span class="hljs-regexp">//</span>super();<span class="hljs-regexp">//</span>ErrorConstructor call must be the first statement <span class="hljs-keyword">in</span> a constructor<br>		<span class="hljs-regexp">//</span>从上面两行代码看出this和super调用构造方法同时只能存在一个<br>	&#125;<br>	&#123;<br>		<br>		<span class="hljs-regexp">//</span>this();<span class="hljs-regexp">//</span>Error:Constructor call must be the first statement <span class="hljs-keyword">in</span> a constructor<br>		System.out.println(<span class="hljs-string">&quot;什么时候执行？Son类加载到内存的时候&quot;</span>);<br>	&#125;<br>	<br>	@Override<br>	public long func2() &#123;<br>		System.out.println(<span class="hljs-string">&quot;重写父类继承来的public的func2()方法！\n&quot;</span>);<br>		return <span class="hljs-number">0</span>;<br>	&#125;<br><span class="hljs-regexp">//</span>	@Override<br><span class="hljs-regexp">//</span>	public int func2() &#123;<span class="hljs-regexp">//</span>Error:The return type is incompatible with Father.func2()<br><span class="hljs-regexp">//</span>		System.out.println(<span class="hljs-string">&quot;重写父类继承来的public的func2()方法！\n&quot;</span>);<br><span class="hljs-regexp">//</span>		return <span class="hljs-number">0</span>;<br><span class="hljs-regexp">//</span>	&#125;<br>	<span class="hljs-regexp">//</span>在JAVA中，可以在同一个类中存在多个函数，函数名称相同但参数列表不同（参数的数量不同、或数量相同而类型和次序不同，以方便JVM区分到底调用哪个函数）。这就是函数的重载（overlording）。这是类的多态性表现之一。<br><br>	<br>	<span class="hljs-regexp">//</span>	“重载”不同于“重写”<br>	<span class="hljs-regexp">//</span>	“重写（覆盖）”概念存在于继承关系中，子类可继承父类中的方法而不需要单独编辑，这提供便捷化。但有的时侯，子类不想原封不动地继承父类的方法，而是想作一定的修改，这就需要采用方法的重写。<br>	<span class="hljs-regexp">//</span>	父类中存在一个函数，子类中也存在一个同名函数，在了类中对函数重新编辑，做得更具体化。<br>	<span class="hljs-regexp">//</span>	重写的规则：<br>	<span class="hljs-regexp">//</span>	<span class="hljs-number">1</span>、在子类中可以根据需要对从父类中继承来的方法进行重写。<br>	<span class="hljs-regexp">//</span>	<span class="hljs-number">2</span>、重写的方法和被重写的方法必须具有相同方法名称、参数列表和返回类型。<br>	<span class="hljs-regexp">//</span>	<span class="hljs-number">3</span>、重写方法不能使用比被重写的方法更严格的访问权限。<br>	public void func2(String str) &#123;<br>		System.out.println(<span class="hljs-string">&quot;重写父类继承来的public的func2()方法！\n&quot;</span>);<br>	&#125;<br>	<br>	<br>	public static void main(String[]args) &#123;<br>		<br>		Son son=new Son();<span class="hljs-regexp">//</span>Father和Son类先后加载进内存，然后创建Son实例<br>		Default dft=new Default();<br>		<br>		System.out.print(son.pubstr);<br>		<span class="hljs-regexp">//</span>System.out.print(son.pristr);<span class="hljs-regexp">//</span>Error:The field Father.pristr is not visible<br>		System.out.print(son.prostr);<br>		<br>		<span class="hljs-regexp">//</span>son.func1();<span class="hljs-regexp">//</span>Error:The method func1() from the type Father is not visible<br>		son.func2();<br>		son.func3();<br>		<br>		<span class="hljs-regexp">//</span>son.fif.func1();<span class="hljs-regexp">//</span>Error:The method func1() from the type Father_innerClass is not visible<br>		son.fif.func2();<br>		son.fif.func3();<br>		<br>		System.out.println(son.getProstr());<span class="hljs-regexp">//</span>打印：从父类继承来protected的prostr!<br><br>	&#125;<br>&#125;<br><br><br>class InhDefault extends Default&#123;<br>	<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">package</span> cn.kongwei_liao.Inheritance;<br><br><span class="hljs-keyword">class</span> <span class="hljs-keyword">Default</span> &#123;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk">package cn.kongwei_liao.InhDef;<br><span class="hljs-regexp">//im</span>port cn.kongwei_liao.Inheritance.*;<br><br><span class="hljs-regexp">//</span>public class InhDef extends cn.kongwei_liao.Inheritance.Default&#123;<span class="hljs-regexp">//</span>Error:The type cn.kongwei_liao.Inheritance.Default is not visible<br><span class="hljs-regexp">//</span><br><span class="hljs-regexp">//</span>&#125;<br><br><span class="hljs-regexp">//</span>public class InhDef extends cn.kongwei_liao.Inheritance.Father&#123;<br><span class="hljs-regexp">//</span>	<span class="hljs-regexp">//</span>OK<br><span class="hljs-regexp">//</span>&#125;<br>public class InhDef extends cn.kongwei_liao.Inheritance.Son&#123;<br>	<span class="hljs-regexp">//</span>Ok<br>&#125;<br><br><span class="hljs-regexp">//</span>public class InhDef extends cn.kongwei_liao.Inheritance.InhDefault&#123;<br><span class="hljs-regexp">//</span>	<span class="hljs-regexp">//</span>The type cn.kongwei_liao.Inheritance.InhDefault is not visible，类InhDefault是在Son.java中编写的default类<br><span class="hljs-regexp">//</span>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="继承的注意事项："><a href="#继承的注意事项：" class="headerlink" title="继承的注意事项："></a>继承的注意事项：</h3><p>可以重复利用代码</p>
+<p>非私有的字段（非private字段）和方法可以被继承到  </p>
+<p>广义上来说,私有的字段… 是可以被继承到的，同过get、set方法</p>
+<p>Java中类的继承只能够是单继承(一个类只能够有一个直接父类) 一个人只能够有一个亲爹  </p>
+<p>可以支持多重继承(多层级的继承), 一个类可以有子类,子类还可以子类… 子子孙孙无穷尽也…</p>
+<p>每一个类都有一个直接父类,如果没有看到显示的继承代码,那么就隐式继承就Object</p>
+<p>子类覆写了父类的方法,子类中还有(还可以调用)父类中的方法吗?        <strong>super</strong></p>
+<blockquote>
+<p>@Override注解：</p>
+<p>当注释用，方便阅读；<br>    提高可读性；<br>    让编译器执行检查方法的正确性，要求该类必须重写父类的方法，即@Override下面的方法名是否是父类中所有的，如果没有则报错；</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs scala">public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father</span> </span>&#123;<br>	public void test()&#123;<br>		<span class="hljs-type">System</span>.out.println(<span class="hljs-string">&quot;test&quot;</span>);	<br>	&#125;	<br>	<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">child</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Father</span></span>&#123;	<br>		<span class="hljs-meta">@Override</span>	<br>		public void test()&#123;&#125;	<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>说明：将@Override注释去掉的话，编译器会默认创建了新的方法</p>
+</blockquote>
+<p>阿里的Java开发手册中将加@Override 注解规定为强制，其相应说明如下：getObject()与 get0bject()的问题。一个是字母的O，一个是数字的 0，加@Override可以准确判断是否覆盖成功。另外，如果在抽象类中对方法签名进行修改，其实现类会马上编译报错</p>
+<pre><code>子类与父类有符合覆写规定的方法时，不加@Override 注解，也是能够覆写的，但是在实际使用时可能会产生一些疑问，到底是调用父类的方法还是子类覆写后的方法呢。而加上注解能增加代码的可读性，看到标签就知道这是从父类重写的方法，在调用时也将调用重写后的方法。并且使用@Override可以准确判断是否覆盖成功。
+</code></pre>
+<p>子类要想覆写父类的方法，除了方法名和参数列表一样之外，还有以下的注意事项：</p>
+<pre><code>1.被覆盖方法的访问控制级别可以不一样。 
+    例如上例父类的show方法的访问级别为protected的，而子类覆盖的show方法访问级别则为public的。
+    但子类的访问级别必须要高于父类被覆盖方法的访问级别，如果父类是public的而子类是protected的则是错误的。private &lt; default &lt; public
+2.方法被定义为private或static或final的则不能被覆盖。
+3.方法的返回类型。
+    覆写的方法名称，返回类型，参数及类型必须一致。这里，返回类型其实可以不一样，但类型有限制。
+    基本数据类型做返回值时，重写方法返回值必须一致。
+    子类的返回类型可以是更具体的对象，例如可以将Employee类的返回类型改为Object也正确。而倒过来则错误。
+4.在方法调用时先会在子类中找覆写的方法，如果子类中没有则会在父类中去找。
+5.方法主体:方法覆写,子类方法和父类方法主体是否可以一样, 可以! 但是没有什么用!
+</code></pre>
+<p><strong>Static静态变量</strong></p>
+<p>变量分类：</p>
+<ul>
+<li>成员变量 ： 直接定义在类中</li>
+<li>局部变量 ： 除了成员变量之外的都是局部变量（方法内部，形参，代码块中…）</li>
+</ul>
+<p>-————————-</p>
+<p>另一种分类方式：是否有static</p>
+<p>​                    是否有static修饰     生命周期（开始）      生命周期（开始）</p>
+<ul>
+<li>局部变量        没有               方法被调用的时候       方法执行完了</li>
+<li>实例变量        没有                 创建对象的时候          对象被销毁</li>
+<li>类变量              有                  类被加载的时候            类被卸载</li>
+</ul>
+<p>备注：</p>
+<p>1、实例变量和类变量都是属于成员变量</p>
+<p>2、类成员（一般指的是有static修饰的字段或者方法）</p>
+<p>类中的成员（字段，方法，构造方法，内部类。。。）</p>
+<p><strong>访问权限修饰符</strong></p>
+<p>访问权限修饰符的作用</p>
+<p>① 成员 ： private          默认不写（default）          protected             public </p>
+<p>② 作用 ： 主要是控制类以及<strong>类中成员</strong>的访问权限</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>同类</th>
+<th>同包</th>
+<th>子类</th>
+<th>公共</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>private(私有)</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>默认不写</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>protected(受保护)</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>public(公共)</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>主要是修饰类中的成员（字段、方法、构造方法、及内部类）;</p>
+<p>public  (默认default)  可以修饰类；</p>
+<p>private   protedted   不能够修饰类（外部类）；</p>
+<p>所有访问权限修饰符都不能够修饰局部变量。</p>
+</blockquote>
+<p><img src="/Java%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%8C%85%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90/%E8%AE%BF%E6%9D%83.png" srcset="/img/loading.gif" alt="fq"></p>
+<p>访问权限的总结</p>
+<p>① 外部类只能够使用public 或者默认不写； 一般都是public</p>
+<p>② 类中的成员（字段，构造方法，方法）以及内部类是可以使用任何一个</p>
+<p>③ 理论上讲，我们在个成员设置权限的使用应该有小到大逐步放开（实际开发中很多是使用private 或者public）</p>
+<p>④ 访问方式和访问权限不是同一个东西</p>
+<p><strong>this</strong></p>
+<p>① this 表示当前对象(当前对象的地址);</p>
+<p>② 如何判断当前对象时谁? 看this所在的方法正在被谁调用;</p>
+<p>③ 使用场景-1 : 通过this访问当前对象中的成员(字段,方法);</p>
+<p>④ 使用场景-2 :本类中构造方法之间的相互调用;</p>
+<p>this(); 调用本类中无参数的构造方法;</p>
+<p>this(123); 调用本类中具有一个int参数的构造方法;</p>
+<p>必须放在构造器  中的  第一句;</p>
+<p>⑤ 把this(当前对象)看成是一个数据, 就可以作为值返回,作为参数传递…</p>
+<p><strong>什么是super</strong></p>
+<p>何时会用到super? </p>
+<p>在子类中访问父类中的成员（字段 方法 构造方法）。</p>
+<p>①super 表示父类对象;</p>
+<p>②使用场景-1 : 通过super访问父类对象中的成员(非私有字段和方法);</p>
+<p>③使用场景-2 :在子类的构造方法里面访问父类的构造方法; 最常用的!!!!!!!!!!!!</p>
+<p>super(); 调用父类无参数的构造方法;</p>
+<p>super(123); 调用父类中具有一个int参数的构造方法;</p>
+<p>必须是子类的构造方法中的第一句;</p>
+<p>④ 上面的所有访问方式都必须是在有访问权限的条件之下;</p>
+<p>⑤ 一般都会给一个类提供一个公共的无参数的构造方法便于拓展（继承）</p>
+<p>super特殊使用场景 </p>
+<p>在子类中的构造方法里面存在默认(隐式)的调用父类的无参数构造方法(默认只会调用无参数的构造方法);</p>
+<p>如果有显示调用父类的构造方法,那么默认调用就不存在了;</p>
+<p>需要测试的点: </p>
+<p>子类中多个有参数的,默认是否调用父类=无参数的</p>
+<p>父类中有多个构造方法</p>
+<p>父类中只有一个有参数的,没有无参数的</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">interface</span>  <span class="hljs-symbol">A</span>&#123;<br>   		<span class="hljs-built_in">int</span> x = <span class="hljs-number">0</span>;   <br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-symbol">B</span>&#123;<br>   		<span class="hljs-built_in">int</span> x =<span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-symbol">Test</span> <span class="hljs-symbol">extends</span> <span class="hljs-symbol">B</span> <span class="hljs-symbol">implements</span> <span class="hljs-symbol">A</span> &#123;<br>  		 <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> pX()&#123;<br>     		 <span class="hljs-comment">//System.out.println(x);//Error:The field x is ambiguous</span><br>  			System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">super</span>.x);<br>  			System.<span class="hljs-keyword">out</span>.println(A.x);<br>   		&#125;<br>  		 <span class="hljs-keyword">public</span> static <span class="hljs-built_in">void</span> main(String[] args) &#123;<br>     		 new Test().pX();<br>   		&#125;<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">打印输出：</span><br><span class="hljs-comment">1</span><br><span class="hljs-comment">0</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BB%A7%E6%89%BF/">继承</a>
+                    
+                      <a class="hover-with-bg" href="/tags/static/">static</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%EF%BC%88private%E3%80%81%E9%BB%98%E8%AE%A4%E3%80%81protected%E5%92%8Cpublic%EF%BC%89/">访问权限（private、默认、protected和public）</a>
+                    
+                      <a class="hover-with-bg" href="/tags/this/">this</a>
+                    
+                      <a class="hover-with-bg" href="/tags/super/">super</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E9%87%8D%E5%86%99/">方法重载与重写</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/05/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java常见类及其继承关系(一)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/05/Java%E5%8F%8D%E5%B0%84%E4%B9%8BgetInterfaces-%E6%96%B9%E6%B3%95/">
+                        <span class="hidden-mobile">Java反射之getInterfaces()方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

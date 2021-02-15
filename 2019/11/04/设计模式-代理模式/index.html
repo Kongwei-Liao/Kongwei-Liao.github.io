@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>设计模式:代理模式 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="设计模式:代理模式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-04 16:09" pubdate>
+        2019年11月4日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">设计模式:代理模式</h1>
+            
+            <div class="markdown-body">
+              <h3 id="设计模式-代理模式"><a href="#设计模式-代理模式" class="headerlink" title="设计模式:代理模式"></a>设计模式:代理模式</h3><p>分别用静态代理模式和动态代理模式实现模拟车站售票，代理车站售票。</p>
+<p><img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/dail.png" srcset="/img/loading.gif" alt="dail"></p>
+<p>1、代理模式理解</p>
+<ul>
+<li><p>现实示例理解：当我们需要买火车票时，可以直接到火车站购买，可能不太便利，也可以去找附近的火车票代售点，让代售点帮我们去火车站购买。</p>
+</li>
+<li><p>Java中的解释：</p>
+<ul>
+<li>我们在调用一个类中的方法时，此时，可能需要对此方法的功能有所推展，但是并不想改变原有的封装。</li>
+<li>此时，就是代理类进行对此方法进行功能的扩展，之后由代理类去调用目标方法。</li>
+<li>如果不需要拓展功能，不使用代理类就可以了。</li>
+</ul>
+</li>
+<li><p>代理模式涉及到四个要素：</p>
+<ul>
+<li>调用者：歌迷、合作商等；</li>
+<li>代理对象：歌星助理；</li>
+<li>目标对象（被代理对象）：歌星；</li>
+<li>抽象对象：代理对象和目标对象都共有接口，保证代理对象和真实对象都有相应的功能，对应例子中歌星唱歌前可能需要和其他人谈合作，还要布置场地，唱歌后还要收钱等等由助理负责的事情。</li>
+</ul>
+</li>
+</ul>
+<p>2、静态代理实现：</p>
+<ul>
+<li>创建接口Subject，接口中创建sell()方法；</li>
+<li>创建被代理类Station，实现Subject接口，实现sell方法；</li>
+<li>创建代理类Proxy，实现Subject接口，属性为Station对象，实现sell方法；</li>
+<li>创建购票者类User，创建buy()方法，调用Proxy对象的sell方法实现购票。</li>
+</ul>
+<p><img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/proxy.png" srcset="/img/loading.gif" alt="pr"></p>
+<p>3、动态代理实现：</p>
+<ul>
+<li>创建ProsyHandler代理处理类，实现由Java提供的对动态代理的支持的InvocationHandler接口，实现invoke()方法；（功能是在被代理类Station的sell()方法执行前后添加一些其它功能）</li>
+<li>购票者类User中创建buy_dynamic()方法：<ul>
+<li>创建Station对象station</li>
+<li>创建ProxyHandler对象handler，调用构造方法时传入station对象作为参数；</li>
+<li>调用<code>Java提供的Proxy类的静态方法</code>newProxyInstance()，生成代理对象proxy</li>
+<li>调用proxy的sell()方法完成购票。</li>
+</ul>
+</li>
+</ul>
+<p>4、动态代理的特点：</p>
+<ul>
+<li>代理对象的生成是利用JDK的API，动态的在内存中构建代理对象（需要我们指定创建代理对象/目标对象实现的接口的类型）</li>
+<li>于是，这里原有的方法在没有改变的情况下，对原来的方法进行了二次封装。有时候多个对象调用同一对象时，有着共同的需求，但是在共同需求里又有自己独特的需求，这时候这一部分独特的需求让代理类去处理。</li>
+</ul>
+<p><img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/dproxy.png" srcset="/img/loading.gif" alt="dp"></p>
+<p>技术分析</p>
+<p>代理模式定义</p>
+<p>静态代理模式</p>
+<p>动态代理机制以及使用场景</p>
+<p>代理模式实现售票功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.Pattern;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Subject</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sell</span><span class="hljs-params">()</span></span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.Pattern;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Station</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Subject</span> </span>&#123;<br>	<br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> tickets=<span class="hljs-number">10</span>;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sell</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// TODO Auto-generated method stub</span><br>		<span class="hljs-keyword">if</span>(tickets&gt;<span class="hljs-number">0</span>) &#123;<br>			tickets--;<br>			System.out.println(<span class="hljs-string">&quot;购票成功，剩余车票&quot;</span>+tickets);<br>		&#125;<span class="hljs-keyword">else</span> &#123;<br>			System.out.println(<span class="hljs-string">&quot;购票失败&quot;</span>);<br>		&#125;<br>	&#125;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.Pattern;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyProxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Subject</span> </span>&#123;<br>	<span class="hljs-keyword">private</span> Subject station;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyProxy</span><span class="hljs-params">(Subject station)</span> </span>&#123;<br>		<span class="hljs-keyword">this</span>.station=station;<br>	&#125;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sell</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// TODO Auto-generated method stub</span><br>		System.out.println(<span class="hljs-string">&quot;静态代理&quot;</span>);<br>		station.sell();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.Pattern;<br><br><span class="hljs-keyword">import</span> java.lang.reflect.InvocationHandler;<br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProxyHandler</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">InvocationHandler</span> </span>&#123;<br><br>	<span class="hljs-keyword">private</span> Object subject;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ProxyHandler</span><span class="hljs-params">(Object subject)</span> </span>&#123;<br>		<span class="hljs-keyword">this</span>.subject=subject;<br>	&#125;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(Object proxy,Method method,Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>		<span class="hljs-comment">// TODO Auto-generated method stub</span><br>		System.out.println(<span class="hljs-string">&quot;动态代理&quot;</span>);<br>		method.invoke(subject, args);<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs awk">package cn.kongwei_liao.Pattern;<br><br>import java.lang.reflect.Proxy;								<span class="hljs-regexp">//</span>Java提供Proxy类<br><br>public class User &#123;<br>	<br>	<span class="hljs-regexp">//</span>目标对象<br>	Subject station=new Station();						<span class="hljs-regexp">//</span>Subject是Station实现的接口<br>	<br>	public void buy() &#123;<br>		<span class="hljs-regexp">//</span>目标对象<br>		<span class="hljs-regexp">//</span>Subject station=new Station();						<span class="hljs-regexp">//</span>Subject是Station实现的接口<br>		<br>		<span class="hljs-regexp">//</span>代理对象<br>		Subject proxy=new MyProxy(station);					<span class="hljs-regexp">//</span>MyProxy也实现了Subject接口<br>		<br>		proxy.sell();<br>	&#125;<br>	public void buy_dynamic() &#123;<br>		<span class="hljs-regexp">//</span>目标对象<br>		<span class="hljs-regexp">//</span>Subject station=new Station();<br>		<br>		<span class="hljs-regexp">//</span>代理处理器对象<br>		ProxyHandler handler=new ProxyHandler(station);		<span class="hljs-regexp">//</span>ProxyHandler实现了InvocationHandler接口的invoke方法<br>		<br>		<span class="hljs-regexp">//</span>代理对象，代理Subject station对象<br>		<span class="hljs-regexp">//</span>Object java.lang.reflect.Proxy.newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces, InvocationHandler h) throws IllegalArgumentException<br>		<span class="hljs-regexp">//</span>station.getClass()								<span class="hljs-regexp">//g</span>etClass() 返回此 Object 的运行时Class类对象<br>		<span class="hljs-regexp">//</span>station.getClass().getClassLoader()				<span class="hljs-regexp">//</span>ClassLoader主要对类的请求提供服务，当JVM需要某类时，它根据名称向ClassLoader要求这个类，然后由ClassLoader返回 这个类的class对象。<br>		<span class="hljs-regexp">//</span>station.getClass().getInterfaces()				<span class="hljs-regexp">//</span>获得这个对象所实现的接口<br>		Subject proxy=(Subject)Proxy.newProxyInstance(station.getClass().getClassLoader(),station.getClass().getInterfaces(),handler);<br>		proxy.sell();<br>	&#125;<br>	public static void main(String[] args) &#123;<br>		User user=new User();<br>		user.buy();<br>		user.buy();<br>		user.buy_dynamic();<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+<p><img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/pattern.png" srcset="/img/loading.gif" alt="pattern"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/05/Java%E5%8F%8D%E5%B0%84%E4%B9%8BgetInterfaces-%E6%96%B9%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java反射之getInterfaces()方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/04/Java-%E7%94%A8dom4j%E8%A7%A3%E6%9E%90RSS%E6%96%87%E4%BB%B6/">
+                        <span class="hidden-mobile">Java:用dom4j解析RSS文件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

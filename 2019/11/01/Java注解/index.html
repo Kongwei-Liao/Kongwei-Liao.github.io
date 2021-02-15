@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>Java注解 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java注解">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-01 14:31" pubdate>
+        2019年11月1日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      57
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java注解</h1>
+            
+            <div class="markdown-body">
+              <h3 id="Java注解"><a href="#Java注解" class="headerlink" title="Java注解"></a>Java注解</h3><h4 id="一、认识注解"><a href="#一、认识注解" class="headerlink" title="一、认识注解"></a>一、认识注解</h4><p>　　注解(Annotation)很重要，未来的开发模式都是基于注解的，JPA是基于注解的，Spring2.5以上都是基于注解的，Hibernate3.x以后也是基于注解的，现在的Struts2有一部分也是基于注解的了，注解是一种趋势，现在已经有不少的人开始用注解了，注解是JDK1.5之后才有的新特性</p>
+<p>​    JDK1.5之后内部提供的三个注解：</p>
+<p>​        @Deprecated 意思是“<strong>废弃的，过时的</strong>”</p>
+<p>​        @Override 意思是“<strong>重写、覆盖</strong>”</p>
+<p>​        @SuppressWarnings 意思是“<strong>压缩警告</strong></p>
+<blockquote>
+<p>JDK内置注解：Override指“重写，覆盖”/Deprecated指“过时的，废弃的”/SuppressWarnings“镇压警告”</p>
+<p>元注解：Documented/Inherited/Retention/Target/Constraint</p>
+<p>自定义注解</p>
+<p>解析注解</p>
+<p>自定义注解生成SQL语句</p>
+</blockquote>
+<p>注解范例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs typescript">package cn.kongwei_liao.annotation;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 此类是用来演示注解(Annotation)的应用的，注解也是JDK1.5新增加的特性之一</span><br><span class="hljs-comment"> * JDK1.5内部提供的三种注解是：<span class="hljs-doctag">@SuppressWarnings</span>(&quot;:deprecation&quot;)、<span class="hljs-doctag">@Deprecated</span>、<span class="hljs-doctag">@Override</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author <span class="hljs-variable">Kongwei_Liao</span></span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 类名的命名是有讲究的，类名、属性名、变量名一般是名词，或者是形容词+名词，方法一般是动词，或者是动词+名词，</span><br><span class="hljs-comment"> * 以AnnotationTest作为类名和以TestAnnotation作为类名是有区别的，</span><br><span class="hljs-comment"> * 前者是注解的测试，符合名词的特征，后者是测试注解，听起来就是一个动作名称，是方法的命名特征</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AnnotationTest</span> </span>&#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param <span class="hljs-variable">args</span></span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@SuppressWarnings</span>(<span class="hljs-string">&quot;:deprecation&quot;</span>)<br>    <span class="hljs-comment">//这里就是注解，称为压缩警告，这是JDK内部自带的一个注解，`一个注解就是一个类`，在这里使用了这个注解就是创建了SuppressWarnings类的一个实例对象</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">main</span>(<span class="hljs-params"><span class="hljs-built_in">String</span>[] args</span>)</span> &#123;<br>        System.runFinalizersOnExit(<span class="hljs-literal">true</span>);<br>        <span class="hljs-comment">//The method runFinalizersOnExit(boolean) from the type System is deprecated(过时的，废弃的)</span><br>        <span class="hljs-comment">//这里的runFinalizersOnExit()方法画了一条横线表示此方法已经过时了，不建议使用了</span><br>    &#125;<br>    <span class="hljs-meta">@Deprecated</span> <span class="hljs-comment">//这也是JDK内部自带的一个注解，意思就是说这个方法已经废弃了，不建议使用了</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">sayHello</span>(<span class="hljs-params"></span>)</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;hi,Kongwei_Liao&quot;</span>);<br>    &#125;<br>    <span class="hljs-meta">@Override</span> <span class="hljs-comment">//这也是JDK1.5之后内部提供的一个注解，意思就是要重写(覆盖)JDK内部的toString()方法</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">toString</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Kongwei_Liao&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>​    总结：<strong>注解(Annotation)相当于一种标记，在程序中加入注解就等于为程序打上某种标记</strong>，没有加，则等于没有任何标记，以后，<strong>javac编译器、开发工具和其他程序可以<code>通过反射</code>**来了解你的类及各种元素上有无何种标记，看你的程序有什么标记，就去干相应的事，</strong>标记可以加在包、类，属性、方法，方法的参数以及局部变量上**。</p>
+<p><img src="/Java%E6%B3%A8%E8%A7%A3/AnnoStruct.jpg" srcset="/img/loading.gif" alt="注解结构"></p>
+<p>注解就相当于一个你的源程序要调用的一个类，在源程序中应用某个注解，得事先准备好这个注解类。就像你要调用某个类，得事先开发好这个类。 </p>
+<h3 id="二、自定义注解及其应用"><a href="#二、自定义注解及其应用" class="headerlink" title="二、自定义注解及其应用"></a>二、自定义注解及其应用</h3><p><strong>自定义一个最简单的注解：</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">public</span> @<span class="hljs-keyword">interface</span> <span class="hljs-symbol">MyAnnotation</span>&#123;&#125;<span class="hljs-comment">//自定义一个最简单的注解</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.annotation;<br><span class="hljs-keyword">import</span> java.lang.annotation.ElementType;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.annotation.RetentionPolicy;<br><span class="hljs-keyword">import</span> java.lang.annotation.Target;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 这是一个自定义的注解(Annotation)类 在定义注解(Annotation)类时使用了另一个注解类Retention</span><br><span class="hljs-comment"> * 在注解类上使用另一个注解类，那么被使用的注解类就称为元注解</span><br><span class="hljs-comment"> * </span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> kongwei_liao</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><span class="hljs-comment">//Retention注解决定MyAnnotation注解的生命周期</span><br><span class="hljs-meta">@Target( &#123; ElementType.METHOD, ElementType.TYPE &#125;)</span><span class="hljs-comment">//Target注解决定MyAnnotation注解可以加在哪些成分上，如加在类身上，或者属性身上，或者方法身上等成分</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * @Retention(RetentionPolicy.SOURCE)</span><br><span class="hljs-comment"> * 这个注解的意思是让MyAnnotation注解只在java源文件中存在，编译成.class文件后注解就不存在了</span><br><span class="hljs-comment"> * @Retention(RetentionPolicy.CLASS)</span><br><span class="hljs-comment"> * 这个注解的意思是让MyAnnotation注解在java源文件(.java文件)中存在，编译成.class文件后注解也还存在，</span><br><span class="hljs-comment"> * 被MyAnnotation注解类标识的类被类加载器加载到内存中后MyAnnotation注解就不存在了</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * 这里是在注解类MyAnnotation上使用另一个注解类，这里的Retention称为元注解。</span><br><span class="hljs-comment"> * Retention注解括号中的&quot;RetentionPolicy.RUNTIME&quot;意思是让MyAnnotation这个注解的生命周期一直程序运行时都存在</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> MyAnnotation &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p> <strong>把自定义的注解加到某个类上：</strong> </p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">@ MyAnnotation <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-symbol">AnnotationUse</span>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p> <strong>用反射测试进行测试AnnotationUse的定义上是否有@MyAnnotation</strong></p>
+<p><img src="/Java%E6%B3%A8%E8%A7%A3/%E5%8F%8D%E5%B0%84API.png" srcset="/img/loading.gif" alt="反射"></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">package</span> cn.kongwei_liao.<span class="hljs-keyword">annotation</span>;<br><br><span class="hljs-meta">@MyAnnotation</span><span class="hljs-comment">//这里是将新创建好的注解类MyAnnotation标记到AnnotaionTest类上</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AnnotationUse</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> static void main(String[] args) &#123;<br>        <span class="hljs-comment">// 这里是检查Annotation类是否有注解，这里需要使用反射才能完成对Annotation类的检查</span><br>        <span class="hljs-keyword">if</span> (AnnotationUse.<span class="hljs-keyword">class</span>.isAnnotationPresent(MyAnnotation.<span class="hljs-keyword">class</span>)) &#123;<br>            <span class="hljs-comment">/*</span><br><span class="hljs-comment">             * MyAnnotation是一个类，这个类的实例对象annotation是通过反射得到的，这个实例对象是如何创建的呢？</span><br><span class="hljs-comment">             * 一旦在某个类上使用了@MyAnnotation，那么这个MyAnnotation类的实例对象annotation就会被创建出来了</span><br><span class="hljs-comment">             * 假设很多人考驾照，教练在有些学员身上贴一些绿牌子、黄牌子，贴绿牌子的表示送礼送得比较多的，</span><br><span class="hljs-comment">             * 贴黄牌子的学员表示送礼送得比较少的，不贴牌子的学员表示没有送过礼的，通过这个牌子就可以标识出不同的学员</span><br><span class="hljs-comment">             * 教官在考核时一看，哦，这个学员是有牌子的，是送过礼给他的，优先让有牌子的学员过，此时这个牌子就是一个注解</span><br><span class="hljs-comment">             * 一个牌子就是一个注解的实例对象，实实在在存在的牌子就是一个实实在在的注解对象，把牌子拿下来(去掉注解)注解对象就不存在了</span><br><span class="hljs-comment">             */</span><br>            MyAnnotation <span class="hljs-keyword">annotation</span> = (MyAnnotation) AnnotationUse.<span class="hljs-keyword">class</span><br>                    .getAnnotation(MyAnnotation.<span class="hljs-keyword">class</span>);<br>            System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>);<span class="hljs-comment">// 打印MyAnnotation对象，这里输出的结果为：@cn.kongwei_liao.annotation.MyAnnotation()</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="三、-Retention元注解"><a href="#三、-Retention元注解" class="headerlink" title="三、@Retention元注解"></a>三、@Retention元注解</h3><p>根据反射的测试的问题，引出@Retention元注解的讲解：</p>
+<p>其三种取值：<strong>RetentionPolicy.SOURCE</strong>、<strong>RetentionPolicy.CLASS</strong>、<strong>RetentionPolicy.RUNTIME</strong></p>
+<p>分别对应：Java源文件(.java文件)—-&gt;.class文件—-&gt;内存中的字节码 </p>
+<h3 id="四、-Retention注解说明"><a href="#四、-Retention注解说明" class="headerlink" title="四、 Retention注解说明"></a>四、 Retention注解说明</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Documented</span><br><span class="hljs-variable">@Retention</span>(RetentionPolicy.RUNTIME)<br><span class="hljs-variable">@Target</span>(ElementType.ANNOTATION_TYPE)<br>public <span class="hljs-variable">@interface</span> Retention &#123;<br><br>    <span class="hljs-selector-tag">RetentionPolicy</span> <span class="hljs-selector-tag">value</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs applescript">public enum RetentionPolicy &#123;<br>    /**<br>     * Annotations are <span class="hljs-keyword">to</span> be discarded <span class="hljs-keyword">by</span> <span class="hljs-keyword">the</span> compiler.<br>     * （注解将被编译器忽略掉）<br>     */<br>    SOURCE,<br><br>    /**<br>     * Annotations are <span class="hljs-keyword">to</span> be recorded <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">class</span> <span class="hljs-built_in">file</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">the</span> compiler<br>     * <span class="hljs-keyword">but</span> need <span class="hljs-keyword">not</span> be retained <span class="hljs-keyword">by</span> <span class="hljs-keyword">the</span> VM <span class="hljs-keyword">at</span> <span class="hljs-built_in">run</span> <span class="hljs-built_in">time</span>.  This <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> default<br>     * behavior.<br>     * （注解将被编译器记录在<span class="hljs-built_in">class</span>文件中，但在运行时不会被虚拟机保留，这是一个默认的行为）<br>     */<br>    CLASS,<br><br>    /**<br>     * Annotations are <span class="hljs-keyword">to</span> be recorded <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">class</span> <span class="hljs-built_in">file</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">the</span> compiler <span class="hljs-keyword">and</span><br>     * retained <span class="hljs-keyword">by</span> <span class="hljs-keyword">the</span> VM <span class="hljs-keyword">at</span> <span class="hljs-built_in">run</span> <span class="hljs-built_in">time</span>, so they may be <span class="hljs-built_in">read</span> reflectively.<br>     * （注解将被编译器记录在<span class="hljs-built_in">class</span>文件中，而且在运行时会被虚拟机保留，因此它们能通过反射被读取到）<br>     * @see java.lang.reflect.AnnotatedElement<br>     */<br>    RUNTIME<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​        当在Java源程序上加了一个注解，这个Java源程序要由javac去编译，javac把java源文件编译成.class文件，</p>
+<p>​        在编译成class时可能会把Java源程序上的一些注解给去掉，java编译器(javac)在处理java源程序时，可能会认为这个注解没有用了，于是就把这个注解去掉了，那么此时在编译好的class中就找不到注解了， 这是编译器编译java源程序时对注解进行处理的第一种可能情况，</p>
+<p>​        假设java编译器在把java源程序编译成class时，没有把java源程序中的注解去掉，那么此时在编译好的class中就可以找到注解，当程序使用编译好的class文件时，需要用类加载器把class文件加载到内存中，class文件中的东西不是字节码，class文件里面的东西由类加载器加载到内存中去，</p>
+<p>​        类加载器在加载class文件时，会对class文件里面的东西进行处理，如安全检查，处理完以后得到的最终在内存中的二进制的东西才是字节码，类加载器在把class文件加载到内存中时也有转换，转换时是否把class文件中的注解保留下来，这也有说法，</p>
+<p>​        所以说<strong>一个注解的生命周期有三个阶段：java源文件是一个阶段，class文件是一个阶段，内存中的字节码是一个阶段</strong>,</p>
+<p>​        javac把java源文件编译成.class文件时，有可能去掉里面的注解，类加载器把.class文件加载到内存时也有可能去掉里面的注解，</p>
+<p>​        因此**在自定义注解时就可以使用Retention注解指明自定义注解的生命周期，自定义注解的生命周期是在RetentionPolicy.SOURCE阶段(java源文件阶段)，还是在RetentionPolicy.CLASS阶段(class文件阶段)，或者是在RetentionPolicy.RUNTIME阶段(内存中的字节码运行时阶段)**，</p>
+<p>​        根据<strong>JDK提供的API可以知道默认是在RetentionPolicy.CLASS阶段 (JDK的API写到：the retention policy defaults to RetentionPolicy.CLASS.)</strong></p>
+<blockquote>
+<p><strong>下面看看@Deprecated、@Override、@SuppressWarnings这三个注解的@Retention注解的属性值分别是什么吧</strong></p>
+</blockquote>
+<h4 id="4-1、-Deprecated"><a href="#4-1、-Deprecated" class="headerlink" title="4.1、@Deprecated"></a><strong>4.1、@Deprecated</strong></h4><p>　　Java API中是这样定义的@Deprecated的</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Documented</span><br><span class="hljs-variable">@Retention</span>(value=RUNTIME)<br>public <span class="hljs-variable">@interface</span> Deprecated<br></code></pre></td></tr></table></figure>
+<h4 id="4-2、-Override"><a href="#4-2、-Override" class="headerlink" title="4.2、@Override"></a><strong>4.2、@Override</strong></h4><p>　　Java API中是这样定义的@Override的</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Target</span>(value=METHOD)<br><span class="hljs-variable">@Retention</span>(value=SOURCE)<br>public <span class="hljs-variable">@interface</span> Override<br></code></pre></td></tr></table></figure>
+<p>　　@Override是给javac(java编译器)看的，编译完以后就@Override注解就没有价值了，@Override注解在源代码中有用，编译成.class文件后@Override注解就没有用了，因此@Override的Retention的属性值是RetentionPolicy.SOURCE</p>
+<h4 id="4-3、-SuppressWarnings"><a href="#4-3、-SuppressWarnings" class="headerlink" title="4.3、@SuppressWarnings"></a><strong>4.3、@SuppressWarnings</strong></h4><p>　　Java API中是这样定义的@SuppressWarnings的</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Target</span>(value=&#123;TYPE,FIELD,METHOD,PARAMETER,CONSTRUCTOR,LOCAL_VARIABLE&#125;)<br><span class="hljs-variable">@Retention</span>(value=SOURCE)<br>public <span class="hljs-variable">@interface</span> SuppressWarnings<br></code></pre></td></tr></table></figure>
+<p>　　@SuppressWarnings是给javac(java编译器)看的，编译器编译完java文件后，@SuppressWarnings注解就没有用了，所以@SuppressWarnings的Retention的属性值是RetentionPolicy.SOURCE</p>
+<h3 id="五、-Target元注解"><a href="#五、-Target元注解" class="headerlink" title="五、@Target元注解"></a>五、@Target元注解</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Documented</span><br><span class="hljs-variable">@Retention</span>(RetentionPolicy.RUNTIME)<br><span class="hljs-variable">@Target</span>(ElementType.ANNOTATION_TYPE)<br>public <span class="hljs-variable">@interface</span> Target &#123;<br>    <span class="hljs-selector-tag">ElementType</span><span class="hljs-selector-attr">[]</span> <span class="hljs-selector-tag">value</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">public enum ElementType &#123;<br>    <span class="hljs-comment">/** 类，接口（包括注解类型）或enum声明  */</span><br><span class="hljs-built_in">    TYPE,</span><br>    <span class="hljs-comment">/** 域声明（包括 enum 实例） */</span><br><span class="hljs-built_in">    FIELD,</span><br>    <span class="hljs-comment">/** 方法声明 */</span><br><span class="hljs-built_in">    METHOD,</span><br>    <span class="hljs-comment">/** 参数声明 */</span><br><span class="hljs-built_in">    PARAMETER,</span><br>    <span class="hljs-comment">/** 构造器声明 */</span><br><span class="hljs-built_in">    CONSTRUCTOR,</span><br>    <span class="hljs-comment">/** 局部变量声明  */</span><br><span class="hljs-built_in">    LOCAL_VARIABLE,</span><br>    <span class="hljs-comment">/** Annotation type declaration */</span><br><span class="hljs-built_in">    ANNOTATION_TYPE,</span><br>    <span class="hljs-comment">/**  包声明  */</span><br><span class="hljs-built_in">    PACKAGE,</span><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 类型参数声明</span><br><span class="hljs-comment">     * @since 1.8</span><br><span class="hljs-comment">     */</span><br><span class="hljs-built_in">    TYPE_PARAMETER,</span><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 类型的使用</span><br><span class="hljs-comment">     * @since 1.8</span><br><span class="hljs-comment">     */</span><br>    TYPE_USE<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>　　<code>@Target元注解决定了一个注解可以标识到哪些成分上</code>，如标识在在类，或者属性，或者方法等成分身上，@Target默认值为任何元素(成分)</p>
+<p>例如：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span>@Target(value=&#123;TYPE,<span class="hljs-keyword">FIELD</span>,METHOD,PARAMETER,CONSTRUCTOR,LOCAL_VARIABLE&#125;)<br><span class="hljs-symbol">2 </span>@Retention(value=SOURCE)<br><span class="hljs-symbol">3 </span>public @interface SuppressWarnings<br></code></pre></td></tr></table></figure>
+<h3 id="六、-Documented元注解"><a href="#六、-Documented元注解" class="headerlink" title="六、 @Documented元注解"></a>六、 @Documented元注解</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Documented</span><br><span class="hljs-variable">@Retention</span>(RetentionPolicy.RUNTIME)<br><span class="hljs-variable">@Target</span>(ElementType.ANNOTATION_TYPE)<br>public <span class="hljs-variable">@interface</span> Documented &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p> 即拥有这个注解的元素可以被javadoc此类的工具文档化。它代表着此注解会被javadoc工具提取成文档。在doc文档中的内容会因为此注解的信息内容不同而不同。相当与@return,@param 等。  </p>
+<h3 id="七、-Inherited-元注解"><a href="#七、-Inherited-元注解" class="headerlink" title="七、@Inherited 元注解"></a>七、@Inherited 元注解</h3><p> @Inherited注解标记其他的注解用于指明标记的注解是可以被自动继承的。 </p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Documented</span><br><span class="hljs-variable">@Retention</span>(RetentionPolicy.RUNTIME)<br><span class="hljs-variable">@Target</span>(ElementType.ANNOTATION_TYPE)<br>public <span class="hljs-variable">@interface</span> Inherited &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p> 允许子类继承父类中的注解。即拥有此注解的元素其子类可以继承父类的注解。 </p>
+<h3 id="八、为注解增加属性"><a href="#八、为注解增加属性" class="headerlink" title="八、为注解增加属性"></a>八、为注解增加属性</h3><p>　　注解可以看成是一种<code>特殊的类</code>，既然是类，那自然可以为类添加属性</p>
+<h4 id="8-1-添加属性"><a href="#8-1-添加属性" class="headerlink" title="8.1.添加属性"></a>8.<strong>1.添加属性</strong></h4><p>　<strong>语法：类型 属性名();</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.annotation;<br> <br><span class="hljs-keyword">import</span> java.lang.annotation.ElementType;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.annotation.RetentionPolicy;<br><span class="hljs-keyword">import</span> java.lang.annotation.Target;<br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-comment">//Retention注解决定MyAnnotation注解的生命周期</span><br><span class="hljs-meta">@Target( &#123; ElementType.METHOD, ElementType.TYPE &#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> MyAnnotation &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 定义基本属性</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function">String <span class="hljs-title">color</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//这不是声明的方法吗，为什么在在注解中称为属性	**Q1**</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>　　其实从代码的写法上来看，注解更像是一种<code>特殊的接口</code>，注解的属性定义方式就和接口中定义方法的方式一样，而<code>应用了注解的类可以认为是实现了这个特殊的接口</code></p>
+<h4 id="8-2-应用属性"><a href="#8-2-应用属性" class="headerlink" title="8.2.应用属性"></a>8.<strong>2.应用属性</strong></h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">package</span> cn.kongwei_liao.<span class="hljs-keyword">annotation</span>;<br><br><span class="hljs-meta">@MyAnnotation(color=<span class="hljs-meta-string">&quot;red&quot;</span>)</span><span class="hljs-comment">//应用MyAnnotation注解的color属性   **Q1 without A**</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAnnotationTest</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> static void main(String[] args) &#123;<br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">         * 用反射方式获得注解对应的实例对象后，在通过该对象调用属性对应的方法</span><br><span class="hljs-comment">        */</span><br>        MyAnnotation <span class="hljs-keyword">annotation</span> = (MyAnnotation) MyAnnotationTest.<span class="hljs-keyword">class</span>.getAnnotation(MyAnnotation.<span class="hljs-keyword">class</span>);<br>        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>.color());<span class="hljs-comment">//输出red</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="8-3-为属性指定缺省值-默认值"><a href="#8-3-为属性指定缺省值-默认值" class="headerlink" title="8.3.为属性指定缺省值(默认值)"></a>8.3.<strong>为属性指定缺省值(默认值)</strong></h4><p>　　<strong>语法：类型 属性名() default 默认值;</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.annotation;<br><br><span class="hljs-keyword">import</span> java.lang.annotation.ElementType;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.annotation.RetentionPolicy;<br><span class="hljs-keyword">import</span> java.lang.annotation.Target;<br><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><span class="hljs-comment">//Retention注解决定MyAnnotation注解的生命周期</span><br><span class="hljs-meta">@Target( &#123; ElementType.METHOD, ElementType.TYPE &#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> MyAnnotation &#123;<br>    <span class="hljs-function">String <span class="hljs-title">color</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> &quot;blue&quot;</span>;<span class="hljs-comment">//为属性指定缺省值   **Q1**</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs d"><span class="hljs-keyword">package</span> cn.kongwei_liao.annotation;<br><br><span class="hljs-keyword">@MyAnnotation</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> MyAnnotationTest &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> main(String[] args) &#123;<br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">         * 用反射方式获得注解对应的实例对象后，在通过该对象调用属性对应的方法</span><br><span class="hljs-comment">         */</span><br>         MyAnnotation annotation = (MyAnnotation) MyAnnotationTest.<span class="hljs-keyword">class</span>.getAnnotation(MyAnnotation.<span class="hljs-keyword">class</span>);<br>         System.<span class="hljs-keyword">out</span>.println(annotation.color());<span class="hljs-comment">//输出color属性的默认值：blue</span><br>        <br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="8-4-value属性"><a href="#8-4-value属性" class="headerlink" title="8.4.value属性"></a><strong>8.4.value属性</strong></h4><p>　　如果一个<code>注解中有一个名称为value的属性</code>，且你只想设置value属性(即其他属性都采用默认值或者你只有一个value属性)，那么可以省略掉“value=”部分。</p>
+<p>　　例如：@SuppressWarnings(“deprecation”)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.annotation;<br><br><span class="hljs-keyword">import</span> java.lang.annotation.ElementType;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.annotation.RetentionPolicy;<br><span class="hljs-keyword">import</span> java.lang.annotation.Target;<br><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-comment">//Retention注解决定MyAnnotation注解的生命周期</span><br><span class="hljs-meta">@Target( &#123; ElementType.METHOD, ElementType.TYPE &#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> MyAnnotation &#123;<br>    <span class="hljs-function">String <span class="hljs-title">color</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> &quot;blue&quot;</span>;<span class="hljs-comment">//为属性指定缺省值</span><br>    <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//定义一个名称为value的属性    **Q2一定是叫value属性名吗**</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">package</span> cn.kongwei_liao.<span class="hljs-keyword">annotation</span>;<br><br><span class="hljs-meta">@MyAnnotation(<span class="hljs-meta-string">&quot;kongwei_liao&quot;</span>)</span><span class="hljs-comment">//等价于@MyAnnotation(value=&quot;kongwei_liao&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAnnotationTest</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> static void main(String[] args) &#123;<br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">         * 用反射方式获得注解对应的实例对象后，在通过该对象调用属性对应的方法</span><br><span class="hljs-comment">         */</span><br>        MyAnnotation <span class="hljs-keyword">annotation</span> = (MyAnnotation) MyAnnotationTest.<span class="hljs-keyword">class</span>.getAnnotation(MyAnnotation.<span class="hljs-keyword">class</span>);<br>        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>.color());<span class="hljs-comment">//输出color属性的默认值：blue</span><br>        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>.value());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="九、为注解增加高级属性"><a href="#九、为注解增加高级属性" class="headerlink" title="九、为注解增加高级属性"></a>九、为注解增加高级属性</h3><h4 id="9-1、-数组类型的属性"><a href="#9-1、-数组类型的属性" class="headerlink" title="9.1、**数组类型的属性**"></a>9.1、**<code>数组类型</code>的属性**</h4><ul>
+<li>增加数组类型的属性：int[] arrayAttr() default {1,2,4};</li>
+<li>应用数组类型的属性：@MyAnnotation(arrayAttr={2,4,5})</li>
+<li>如果数组属性只有一个值，这时候属性值部分可以省略大括号，如：@MyAnnotation(arrayAttr=2)，这就表示数组属性只有一个值，值为2</li>
+</ul>
+<h4 id="9-2-、-枚举类型的属性"><a href="#9-2-、-枚举类型的属性" class="headerlink" title="9.2.、**枚举类型的属性**"></a>9.2.、**<code>枚举类型</code>的属性**</h4><ul>
+<li>增加枚举类型的属性：EumTrafficLamp lamp() default EumTrafficLamp.RED;</li>
+<li>应用枚举类型的属性：@MyAnnotation(lamp=EumTrafficLamp.GREEN)</li>
+</ul>
+<h4 id="9-3、-注解类型的属性"><a href="#9-3、-注解类型的属性" class="headerlink" title="9.3、**注解类型的属性**"></a>9.3、**<code>注解类型</code>的属性**</h4><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * MetaAnnotation注解类为元注解</span><br><span class="hljs-comment"> * @author kongwei_liao</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> @<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">MetaAnnotation</span> </span>&#123;<br>    <span class="hljs-keyword">String</span> value();<span class="hljs-comment">//元注解MetaAnnotation设置有一个唯一的属性value</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>　　为注解添加一个注解类型的属性,并指定注解属性的缺省值：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss">MetaAnnotation annotationAttr() default <span class="hljs-keyword">@MetaAnnotation</span>(<span class="hljs-string">&quot;xdp&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="十、注解综合测试"><a href="#十、注解综合测试" class="headerlink" title="十、注解综合测试"></a>十、注解综合测试</h3><p>EumTrafficLamp.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.annotation;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 交通信号灯颜色枚举</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> kongwei_liao</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">EumTrafficLamp</span> </span>&#123;<br>    RED,<span class="hljs-comment">//红</span><br>    YELLOW,<span class="hljs-comment">//黄</span><br>    GREEN<span class="hljs-comment">//绿</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>MetaAnnotation.java</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * MetaAnnotation注解类为元注解</span><br><span class="hljs-comment"> * @author kongwei_liao</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> @<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">MetaAnnotation</span> </span>&#123;<br>    <span class="hljs-keyword">String</span> value();<span class="hljs-comment">//元注解MetaAnnotation设置有一个唯一的属性value</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>MyAnnotation.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.kongwei_liao.annotation;<br><br><span class="hljs-keyword">import</span> java.lang.annotation.ElementType;<br><span class="hljs-keyword">import</span> java.lang.annotation.Retention;<br><span class="hljs-keyword">import</span> java.lang.annotation.RetentionPolicy;<br><span class="hljs-keyword">import</span> java.lang.annotation.Target;<br><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-comment">//Retention注解决定MyAnnotation注解的生命周期</span><br><span class="hljs-meta">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> MyAnnotation &#123;<br>    <span class="hljs-function">String <span class="hljs-title">color</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> &quot;blue&quot;</span>;<span class="hljs-comment">//为属性指定缺省值</span><br>   <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 为注解添加value属性，这个value属性很特殊，如果一个注解中只有一个value属性要设置，</span><br><span class="hljs-comment">     * 那么在设置注解的属性值时，可以省略属性名和等号不写， 直接写属性值，如<span class="hljs-doctag">@SuppressWarnings</span>(&quot;deprecation&quot;)，</span><br><span class="hljs-comment">     * 这里的MyAnnotation注解设置了两个String类型的属性，color和value，</span><br><span class="hljs-comment">     * 因为color属性指定有缺省值，value属性又是属于特殊的属性，因此使用MyAnnotation注解时</span><br><span class="hljs-comment">     * 可以这样使用MyAnnotation注解：&quot;<span class="hljs-doctag">@MyAnnotation</span>(color=&quot;red&quot;,value=&quot;xdp&quot;)&quot;</span><br><span class="hljs-comment">     * 也可以这样使用：&quot;<span class="hljs-doctag">@MyAnnotation</span>(&quot;kongwei_liao&quot;)&quot;，这样写就表示MyAnnotation注解只有一个value属性要设置，color属性采用缺省值</span><br><span class="hljs-comment">     * 当一个注解只有一个value属性要设置时，是可以省略&quot;value=&quot;的</span><br><span class="hljs-comment">     */</span><br>     <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//定义一个名称为value的属性</span><br>     <span class="hljs-comment">//添加一个int类型数组的属性</span><br>     <span class="hljs-keyword">int</span>[] arrayAttr() <span class="hljs-keyword">default</span> &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>&#125;;<br>     <span class="hljs-comment">//添加一个枚举类型的属性，并指定枚举属性的缺省值，缺省值只能从枚举类EumTrafficLamp中定义的枚举对象中取出任意一个作为缺省值</span><br>     <span class="hljs-function">EumTrafficLamp <span class="hljs-title">lamp</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> EumTrafficLamp.RED</span>;<br>     <span class="hljs-comment">//为注解添加一个注解类型的属性,并指定注解属性的缺省值</span><br>     <span class="hljs-function">MetaAnnotation <span class="hljs-title">annotationAttr</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> @<span class="hljs-title">MetaAnnotation</span><span class="hljs-params">(<span class="hljs-string">&quot;xdp&quot;</span>)</span></span>;<br> <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>MyAnnotationTest.java</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">package</span> cn.kongwei_liao.<span class="hljs-keyword">annotation</span>;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 这里是将新创建好的注解类MyAnnotation标记到AnnotaionTest类上，</span><br><span class="hljs-comment"> * 并应用了注解类MyAnnotation中定义各种不同类型的的属性</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@MyAnnotation(</span><br><span class="hljs-meta">        color=<span class="hljs-meta-string">&quot;red&quot;</span>,</span><br><span class="hljs-meta">        value=<span class="hljs-meta-string">&quot;kongwei_liao&quot;</span>,</span><br><span class="hljs-meta">        arrayAttr=&#123;3,5,6&#125;,</span><br><span class="hljs-meta">       lamp=EumTrafficLamp.GREEN,</span><br><span class="hljs-meta">       annotationAttr=@MetaAnnotation(<span class="hljs-meta-string">&quot;gacl&quot;</span>)</span><br>        )<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAnnotationTest</span> </span>&#123;<br>    <span class="hljs-meta">@MyAnnotation(<span class="hljs-meta-string">&quot;将MyAnnotation注解标注到main方法上&quot;</span>)</span><br>    <span class="hljs-keyword">public</span> static void main(String[] args) &#123;<br>       <span class="hljs-comment">/**</span><br><span class="hljs-comment">         * 这里是检查Annotation类是否有注解，这里需要使用反射才能完成对Annotation类的检查</span><br><span class="hljs-comment">         */</span><br>        <span class="hljs-keyword">if</span>(MyAnnotationTest.<span class="hljs-keyword">class</span>.isAnnotationPresent(MyAnnotation.<span class="hljs-keyword">class</span>)) &#123;<br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 用反射方式获得注解对应的实例对象后，在通过该对象调用属性对应的方法</span><br><span class="hljs-comment">             * MyAnnotation是一个类，这个类的实例对象annotation是通过反射得到的，这个实例对象是如何创建的呢？</span><br><span class="hljs-comment">             * 一旦在某个类上使用了<span class="hljs-doctag">@MyAnnotation</span>，那么这个MyAnnotation类的实例对象annotation就会被创建出来了</span><br><span class="hljs-comment">             */</span><br>            MyAnnotation <span class="hljs-keyword">annotation</span> = (MyAnnotation) MyAnnotationTest.<span class="hljs-keyword">class</span>.getAnnotation(MyAnnotation.<span class="hljs-keyword">class</span>);<br>            System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>.color());<span class="hljs-comment">//输出color属性的默认值：red</span><br>            System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>.value());<span class="hljs-comment">//输出value属性的默认值：kongwei_liao</span><br>            System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>.arrayAttr().length);<span class="hljs-comment">//这里输出的数组属性的长度的结果为：3，数组属性有三个元素，因此数组的长度为3</span><br>            System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>.lamp());<span class="hljs-comment">//这里输出的枚举属性值为：GREEN</span><br>						System.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">annotation</span>.annotationAttr().value());<span class="hljs-comment">//这里输出的注解属性值:gacl</span><br>            <br>            MetaAnnotation ma = <span class="hljs-keyword">annotation</span>.annotationAttr();<span class="hljs-comment">//annotation是MyAnnotation类的一个实例对象</span><br>            System.<span class="hljs-keyword">out</span>.println(ma.value());<span class="hljs-comment">//输出的结果为：gacl</span><br><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>通过引入自定义HTML生成器的注解类，在类中标注出字段以及字段的名称（标签），在运行时动态读取类中的注解信息，直接生成HTML页面，如此可省去大量的JSP页面编写工作。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B3%A8%E8%A7%A3-Annotation/">注解(Annotation)</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Retention%E5%85%83%E6%B3%A8%E8%A7%A3/">Retention元注解</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Target%E5%85%83%E6%B3%A8%E8%A7%A3/">Target元注解</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/01/Java%E6%91%98%E8%A6%81/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java细节摘要</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/10/31/Vue-js-I/">
+                        <span class="hidden-mobile">Vue.js-I</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

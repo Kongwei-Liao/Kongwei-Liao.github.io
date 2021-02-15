@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>JavaBean&amp;EL&amp;JSTL - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="JavaBean&EL&JSTL">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-21 16:11" pubdate>
+        2019年11月21日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      68
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JavaBean&amp;EL&amp;JSTL</h1>
+            
+            <div class="markdown-body">
+              <h3 id="1、JavaBean"><a href="#1、JavaBean" class="headerlink" title="1、JavaBean"></a>1、JavaBean</h3><h4 id="1-1、什么是JavaBean"><a href="#1-1、什么是JavaBean" class="headerlink" title="1.1、什么是JavaBean"></a>1.1、什么是JavaBean</h4><p>JavaBean 是一种Java语言遵守JavaBean API规范写成的<code>可重用组件</code>。</p>
+<p>JavaBean 与其它 Java 类相比而言独一无二的特征：</p>
+<ul>
+<li><pre><code> 提供一个默认的无参构造函数。
+</code></pre>
+</li>
+<li><pre><code> 需要被序列化并且实现了 Serializable 接口。
+</code></pre>
+</li>
+<li><pre><code> 可能有一系列可读写属性。
+</code></pre>
+</li>
+<li><pre><code> 可能有一系列的 getter 或 **setter** 方法。
+</code></pre>
+</li>
+</ul>
+<p>简单一点：建一个类,给一个无参的构造方法. 它就是JavaBean</p>
+<h4 id="1-2、JavaBean的规范"><a href="#1-2、JavaBean的规范" class="headerlink" title="1.2、JavaBean的规范"></a>1.2、JavaBean的规范</h4><p>JavaBean分两种：</p>
+<blockquote>
+<p>①、复杂的，组件性的（GUI），比如事件监听器；</p>
+<p>②、简单的JavaBean：有属性和方法。</p>
+</blockquote>
+<p>JavaBean是一个特殊的Java类，它遵守了一定的规范（有一个公共的无参构造器，可能还有get和set方法）</p>
+<p>注意：以Java来说get/set属于方法，但是以JavaBean来说get/set相当于属性。</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>方法</strong></th>
+<th align="left"><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">get<strong>PropertyName</strong>()</td>
+<td align="left">举例来说，如果属性的名称为 myName，那么这个方法的名字就要写成 getMyName() 来读取这个属性。这个方法也称为访问器。</td>
+</tr>
+<tr>
+<td align="left">set<strong>PropertyName</strong>()</td>
+<td align="left">举例来说，如果属性的名称为 myName，那么这个方法的名字就要写成  setMyName()来写入这个属性。这个方法也称为写入器。</td>
+</tr>
+</tbody></table>
+<p><img src="/JavaBean&EL&JSTL/getset.png" srcset="/img/loading.gif"></p>
+<p>一个 JavaBean 对象的属性应该是可访问的。这个属性可以是任意合法的 Java 数据类型，包括自定义 Java 类。一个 JavaBean 对象的属性可以是可读写，或只读，或只写。</p>
+<p>JavaBean的属性与普通类的属性不一样，属性以方法的形式出现（getter，setter）</p>
+<p>写法：getXxx，setXxx            注：xxx未在JavaBean的字段中，不代表xxx不是它属性</p>
+<p>特殊：</p>
+<p>  ①getBbs 这里的bbs也是JavaBean的属性，即使bbs未在字段中定义</p>
+<p>  ②如果是boolean 使用is判断JavaBean属性</p>
+<p>注意：以后我们使用JavaBean，<strong>全用包装类型</strong>（后面要用），JavaBean是一个可重用的组件（反复使用，可以少些代码），今天使用JavaBean主要是要与后面的EL相结合使用。</p>
+<h4 id="1-2、jsp-useBean"><a href="#1-2、jsp-useBean" class="headerlink" title="1.2、jsp:useBean"></a>1.2、jsp:useBean</h4><h5 id="1-2-1、-lt-jsp-useBean-gt-标签可以在-JSP-中声明一个-JavaBean，然后使用。"><a href="#1-2-1、-lt-jsp-useBean-gt-标签可以在-JSP-中声明一个-JavaBean，然后使用。" class="headerlink" title="1.2.1、&lt;jsp:useBean&gt; 标签可以在 JSP 中声明一个 JavaBean，然后使用。"></a>1.2.1、&lt;jsp:useBean&gt; 标签可以在 JSP 中声明一个 JavaBean，然后使用。</h5><p>声明后，JavaBean 对象就成了脚本变量，可以通过脚本元素或其他自定义标签来访问。&lt;jsp:useBean&gt; 标签的语法格式如下： </p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;jsp:useBean <span class="hljs-attribute">id</span>=<span class="hljs-string">&quot;bean 的名字&quot;</span> <span class="hljs-attribute">scope</span>=<span class="hljs-string">&quot;bean 的作用域&quot;</span> typeSpec/&gt;<br></code></pre></td></tr></table></figure>
+<p> 其中，根据具体情况，scope 的值可以是 <code>page</code>，<code>request</code>，<code>session</code> 或 <code>application</code>。id值可任意只要不和同一 JSP 文件中其它 &lt;jsp:useBean&gt; 中 id 值一样就行了。</p>
+<p> 接下来给出的是 &lt;jsp:useBean&gt; 标签的一个简单的用法：</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs erb"><span class="xml">&lt;%</span><span class="ruby">@ page language=<span class="hljs-string">&quot;java&quot;</span> contentType=<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="ruby">    pageEncoding=<span class="hljs-string">&quot;UTF-8&quot;</span></span><span class="xml">%&gt;</span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>useBean 实例<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">jsp:useBean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;date&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;java.util.Date&quot;</span> /&gt;</span> </span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>日期为：&lt;%=</span><span class="ruby"> date </span><span class="xml">%&gt;</span><br><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p> 它将会产生如下结果：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dns">日期为：Tue Jun <span class="hljs-number">28 15:22:24</span> CST <span class="hljs-number">2016</span><br></code></pre></td></tr></table></figure>
+<h5 id="1-2-2、-lt-jsp-getProperty-gt-和-lt-jsp-getProperty-gt"><a href="#1-2-2、-lt-jsp-getProperty-gt-和-lt-jsp-getProperty-gt" class="headerlink" title="1.2.2、&lt;jsp:getProperty/&gt;和&lt;jsp:getProperty/&gt;"></a>1.2.2、&lt;jsp:getProperty/&gt;和&lt;jsp:getProperty/&gt;</h5><p>在&lt;jsp:useBean&gt;标签主体中使用&lt;jsp:getProperty/&gt;标签来调用 <strong>getter</strong> 方法，使用&lt;jsp:getProperty/&gt;标签来调用 <strong>setter</strong> 方法，语法格式如下：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs applescript">&lt;jsp:useBean <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">&quot;bean 编译的类&quot;</span> scope=<span class="hljs-string">&quot;bean 作用域&quot;</span>&gt;<br>   &lt;jsp:setProperty <span class="hljs-built_in">name</span>=<span class="hljs-string">&quot;bean 的 id&quot;</span> <span class="hljs-keyword">property</span>=<span class="hljs-string">&quot;属性名&quot;</span>  <br>                    value=<span class="hljs-string">&quot;value&quot;</span>/&gt;<br>   &lt;jsp:getProperty <span class="hljs-built_in">name</span>=<span class="hljs-string">&quot;bean 的 id&quot;</span> <span class="hljs-keyword">property</span>=<span class="hljs-string">&quot;属性名&quot;</span>/&gt;<br>   ...........<br>&lt;/jsp:useBean&gt;<br></code></pre></td></tr></table></figure>
+<p> name属性指的是Bean的id属性。property属性指的是想要调用的getter或setter方法。</p>
+<p> 接下来给出使用以上语法进行属性访问的一个简单例子：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">&lt;%@ page language=<span class="hljs-string">&quot;java&quot;</span> contentType=<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span><br>    pageEncoding=<span class="hljs-string">&quot;UTF-8&quot;</span>%&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;title&gt;<span class="hljs-keyword">get</span> 和 <span class="hljs-keyword">set</span> 属性实例&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br><br>&lt;jsp:useBean id=<span class="hljs-string">&quot;students&quot;</span> <br>                    <span class="hljs-keyword">class</span>=&quot;<span class="hljs-symbol">StudentsBean</span>&quot;&gt; <br>   &lt;<span class="hljs-symbol">jsp:<span class="hljs-symbol">setProperty</span></span> <span class="hljs-symbol">name</span>=&quot;<span class="hljs-symbol">students</span>&quot; <span class="hljs-symbol">property</span>=&quot;<span class="hljs-symbol">firstName</span>&quot;<br>                    <span class="hljs-symbol">value</span>=&quot;小强&quot;/&gt;<br>   &lt;<span class="hljs-symbol">jsp:<span class="hljs-symbol">setProperty</span></span> <span class="hljs-symbol">name</span>=&quot;<span class="hljs-symbol">students</span>&quot; <span class="hljs-symbol">property</span>=&quot;<span class="hljs-symbol">lastName</span>&quot; <br>                    <span class="hljs-symbol">value</span>=&quot;王&quot;/&gt;<br>   &lt;<span class="hljs-symbol">jsp:<span class="hljs-symbol">setProperty</span></span> <span class="hljs-symbol">name</span>=&quot;<span class="hljs-symbol">students</span>&quot; <span class="hljs-symbol">property</span>=&quot;<span class="hljs-symbol">age</span>&quot;<br>                    <span class="hljs-symbol">value</span>=&quot;<span class="hljs-symbol">10</span>&quot;/&gt;<br>&lt;/<span class="hljs-symbol">jsp:<span class="hljs-symbol">useBean</span></span>&gt;<br><br>&lt;<span class="hljs-symbol">p</span>&gt;学生名字: <br>   &lt;<span class="hljs-symbol">jsp:<span class="hljs-symbol">getProperty</span></span> <span class="hljs-symbol">name</span>=&quot;<span class="hljs-symbol">students</span>&quot; <span class="hljs-symbol">property</span>=&quot;<span class="hljs-symbol">firstName</span>&quot;/&gt;<br>&lt;/<span class="hljs-symbol">p</span>&gt;<br>&lt;<span class="hljs-symbol">p</span>&gt;学生姓氏: <br>   &lt;<span class="hljs-symbol">jsp:<span class="hljs-symbol">getProperty</span></span> <span class="hljs-symbol">name</span>=&quot;<span class="hljs-symbol">students</span>&quot; <span class="hljs-symbol">property</span>=&quot;<span class="hljs-symbol">lastName</span>&quot;/&gt;<br>&lt;/<span class="hljs-symbol">p</span>&gt;<br>&lt;<span class="hljs-symbol">p</span>&gt;学生年龄: <br>   &lt;<span class="hljs-symbol">jsp:<span class="hljs-symbol">getProperty</span></span> <span class="hljs-symbol">name</span>=&quot;<span class="hljs-symbol">students</span>&quot; <span class="hljs-symbol">property</span>=&quot;<span class="hljs-symbol">age</span>&quot;/&gt;<br>&lt;/<span class="hljs-symbol">p</span>&gt;<br><br>&lt;/<span class="hljs-symbol">body</span>&gt;<br>&lt;/<span class="hljs-symbol">html</span>&gt;<br></code></pre></td></tr></table></figure>
+<p> 访问以上 JSP，运行结果如下：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">学生名字: 小强</span><br><span class="hljs-section">学生姓氏: 王</span><br><span class="hljs-section">学生年龄: 10</span><br></code></pre></td></tr></table></figure>
+
+
+<h4 id="1-3、JavaBean的反（自）省机制"><a href="#1-3、JavaBean的反（自）省机制" class="headerlink" title="1.3、JavaBean的反（自）省机制"></a>1.3、JavaBean的反（自）省机制</h4><p>什么是JavaBean自省机制？</p>
+<p>​    我们拿到一个JavaBean，就可以拿到它的可读和可写的属性 或者属性名，字段；</p>
+<p>一般来说我们需要拿到可读可写属性；有个这些属性，可以通过反射去完成读写功能；</p>
+<p>使用JavaBean的API：<code>Introspector</code>（通过它拿到JavaBean）</p>
+<p><img src="/JavaBean&EL&JSTL/getBeanInfo.png" srcset="/img/loading.gif"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">BeanInfo beanInfo= <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Introspector</span>.</span></span>get<span class="hljs-constructor">BeanInfo(JavaBeanDemo.<span class="hljs-params">class</span>,Object.<span class="hljs-params">class</span>)</span>;<br>PropertyDescriptor<span class="hljs-literal">[]</span> pds=beanInfo.get<span class="hljs-constructor">PropertyDescriptors()</span>;<br></code></pre></td></tr></table></figure>
+<p><strong>BeanInfo</strong>(就是一个JavaBean对象，也可以称为Javabean的描述器)  </p>
+<p><strong>getBeanInfo</strong>(JavaBeanDemo.class)：得到<code>JavaBeanDemo</code>以及它的<code>父类Object的属性</code></p>
+<h5 id="1-3-1、getBeanInfo-JavaBeanDemo-class-：得到StuJavaBeanDemodent的属性-包含它父类Object的属性"><a href="#1-3-1、getBeanInfo-JavaBeanDemo-class-：得到StuJavaBeanDemodent的属性-包含它父类Object的属性" class="headerlink" title="1.3.1、getBeanInfo(JavaBeanDemo.class)：得到StuJavaBeanDemodent的属性,包含它父类Object的属性"></a>1.3.1、getBeanInfo(JavaBeanDemo.class)：得到StuJavaBeanDemodent的属性,包含它父类Object的属性</h5><p><img src="/JavaBean&EL&JSTL/getBeanInfo1.png" srcset="/img/loading.gif"></p>
+<p><img src="/JavaBean&EL&JSTL/shuchu.png" srcset="/img/loading.gif"></p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-comment">//输出分析</span><br>java.beans.PropertyDescriptor[<br>	<span class="hljs-keyword">name</span>=<span class="hljs-keyword">class</span>; <br>	propertyType=<span class="hljs-keyword">class</span> java.lang.<span class="hljs-keyword">Class</span>; <br>	readMethod=<span class="hljs-keyword">public</span> final native java.lang.<span class="hljs-keyword">Class</span> java.lang.<span class="hljs-keyword">Object</span>.getClass()<br>]<br>java.beans.PropertyDescriptor[<br>	<span class="hljs-keyword">name</span>=<span class="hljs-keyword">name</span>; <br>	propertyType=<span class="hljs-keyword">class</span> java.lang.<span class="hljs-keyword">String</span>; <br>	readMethod=<span class="hljs-keyword">public</span> java.lang.<span class="hljs-keyword">String</span> cn.ant_nest.JavaBean.JavaBeanDemo.getName(); <br>	writeMethod=<span class="hljs-keyword">public</span> void cn.ant_nest.JavaBean.JavaBeanDemo.setName(java.lang.<span class="hljs-keyword">String</span>)<br>]<br><span class="hljs-comment">//id不会被输出</span><br></code></pre></td></tr></table></figure>
+<h5 id="1-3-2、getBeanInfo-JavaBeanDemo-class-Object-class-：得到StuJavaBeanDemodent的属性-不包含它父类Object的属性"><a href="#1-3-2、getBeanInfo-JavaBeanDemo-class-Object-class-：得到StuJavaBeanDemodent的属性-不包含它父类Object的属性" class="headerlink" title="1.3.2、getBeanInfo(JavaBeanDemo.class,Object.class)：得到StuJavaBeanDemodent的属性,不包含它父类Object的属性"></a>1.3.2、getBeanInfo(JavaBeanDemo.class,Object.class)：得到StuJavaBeanDemodent的属性,不包含它父类Object的属性</h5><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">public <span class="hljs-keyword">class</span> testBeanInfo &#123;<br>    @Test<br>    public void test<span class="hljs-constructor">Bean()</span> throws IntrospectionException &#123;<br>        <span class="hljs-comment">//获取一个BeanInfo，就是一个JavaBean的描述器，从Student开始（含），到Object结束（不含）</span><br>        BeanInfo beanInfo= <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Introspector</span>.</span></span>get<span class="hljs-constructor">BeanInfo(JavaBeanDemo.<span class="hljs-params">class</span>,Object.<span class="hljs-params">class</span>)</span>;<br>        <span class="hljs-comment">//拿到这个JavaBean的属性描述器</span><br>        PropertyDescriptor<span class="hljs-literal">[]</span> pds=beanInfo.get<span class="hljs-constructor">PropertyDescriptors()</span>;<br>        <span class="hljs-keyword">for</span>(PropertyDescriptor pd:pds)&#123;<br>            <span class="hljs-comment">//获取JavaBean的字段名</span><br>            <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(pd.get<span class="hljs-constructor">Name()</span>);<br>            <span class="hljs-comment">//得到可读写方法</span><br>            <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(pd.get<span class="hljs-constructor">ReadMethod()</span>);<br>            <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(pd.get<span class="hljs-constructor">WriteMethod()</span>);<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-comment">/*打印输出</span><br><span class="hljs-comment">name</span><br><span class="hljs-comment">public java.lang.String cn.ant_nest.JavaBean.JavaBeanDemo.getName()</span><br><span class="hljs-comment">public void cn.ant_nest.JavaBean.JavaBeanDemo.setName(java.lang.String)</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//id不会被输出</span><br></code></pre></td></tr></table></figure>
+<h4 id="1-4、BeanUtils的使用（主要进行属性的拷贝）"><a href="#1-4、BeanUtils的使用（主要进行属性的拷贝）" class="headerlink" title="1.4、BeanUtils的使用（主要进行属性的拷贝）"></a>1.4、BeanUtils的使用（主要进行属性的拷贝）</h4><p>引入：</p>
+<p>​    有人对JavaBean做了一整套的解决实施方案，我们学习一个属性的拷贝，很多框架都是在用这个属性的拷贝的功能，在用这个的还是，需要导入对应的jar包:</p>
+<p>先进行导包:</p>
+<p><strong>①同一个类之间的属性拷贝</strong></p>
+<p><img src="/JavaBean&EL&JSTL/copy.png" srcset="/img/loading.gif"></p>
+<p><strong>②不同类之间属性拷贝</strong></p>
+<p><img src="/JavaBean&EL&JSTL/copy2.png" srcset="/img/loading.gif"></p>
+<p><strong>③把Map里面的元素拷贝到对象中去（但是不能把对象的元素拷贝到map）</strong></p>
+<p><img src="/JavaBean&EL&JSTL/copy3.png" srcset="/img/loading.gif"></p>
+<h3 id="2、EL表达式语言"><a href="#2、EL表达式语言" class="headerlink" title="2、EL表达式语言"></a>2、EL表达式语言</h3><p>JSP表达式语言（EL）使得访问存储在JavaBean中的数据变得非常简单。JSP EL既可以用来创建算术表达式也可以用来创建逻辑表达式。在JSP EL表达式内可以使用整型数，浮点数，字符串，常量true、false，还有null。</p>
+<h4 id="2-1、EL是啥？"><a href="#2-1、EL是啥？" class="headerlink" title="2.1、EL是啥？"></a>2.1、EL是啥？</h4><p>EL就表达式语言,可以获取<code>作用域</code>里的共享数据</p>
+<p>作用域：pageContext,request,session,application</p>
+<h4 id="2-2、EL的使用"><a href="#2-2、EL的使用" class="headerlink" title="2.2、EL的使用"></a>2.2、EL的使用</h4><p>想要停用对EL表达式的评估的话，需要使用page指令将isELIgnored属性值设为true：</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">&lt;%@ page isELIgnored =<span class="hljs-string">&quot;true|false&quot;</span> %&gt;<br></code></pre></td></tr></table></figure>
+<p>这样，EL表达式就会被忽略。若设为false，则容器将会计算EL表达式。</p>
+<p><strong>以下是EL的使用举例：</strong></p>
+<p><strong>1、User.java</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs typescript">package cn.ant_nest.JavaBean;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> name;<br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> pwd;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">getName</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">setName</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> name</span>)</span> &#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">getPwd</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-keyword">return</span> pwd;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">setPwd</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> pwd</span>)</span> &#123;<br>        <span class="hljs-built_in">this</span>.pwd = pwd;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>2、LoginServlet.java</strong></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">package</span> cn.ant_nest.<span class="hljs-type">JavaBean</span>;<br><br><span class="hljs-keyword">import</span> cn.ant_nest.<span class="hljs-type">JavaBean</span>.<span class="hljs-type">User</span>;<br><br><span class="hljs-keyword">import</span> javax.servlet.<span class="hljs-type">ServletException</span>;<br><span class="hljs-keyword">import</span> javax.servlet.annotation.<span class="hljs-type">WebServlet</span>;<br><span class="hljs-keyword">import</span> javax.servlet.http.<span class="hljs-type">HttpServlet</span>;<br><span class="hljs-keyword">import</span> javax.servlet.http.<span class="hljs-type">HttpServletRequest</span>;<br><span class="hljs-keyword">import</span> javax.servlet.http.<span class="hljs-type">HttpServletResponse</span>;<br><span class="hljs-keyword">import</span> java.io.<span class="hljs-type">IOException</span>;<br><span class="hljs-keyword">import</span> java.io.<span class="hljs-type">UnsupportedEncodingException</span>;<br><br><span class="hljs-meta">@WebServlet</span>(<span class="hljs-string">&quot;/LoginServlet&quot;</span>)<br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoginServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> void service(<span class="hljs-type">HttpServletRequest</span> req, <span class="hljs-type">HttpServletResponse</span> resp) <span class="hljs-keyword">throws</span> <span class="hljs-type">IOException</span>, <span class="hljs-type">ServletException</span> &#123;<br>        <span class="hljs-comment">//设置编码</span><br>        req.setCharacterEncoding(<span class="hljs-string">&quot;UTF-8&quot;</span>);<br>        <span class="hljs-comment">//接收参数</span><br>        <span class="hljs-type">String</span> name=req.getParameter(<span class="hljs-string">&quot;name&quot;</span>);<br>        <span class="hljs-type">String</span> pwd=req.getParameter(<span class="hljs-string">&quot;pwd&quot;</span>);<br><br>        <span class="hljs-type">User</span> user=<span class="hljs-keyword">new</span> <span class="hljs-type">User</span>();<br>        user.setName(name);<br>        user.setPwd(pwd);<br><br>        <span class="hljs-keyword">if</span>(<span class="hljs-string">&quot;admin&quot;</span>.equals(name)&amp;&amp;<span class="hljs-string">&quot;123&quot;</span>.equals(pwd))&#123;<br>            <span class="hljs-comment">//登录成功</span><br>            req.getSession().setAttribute(<span class="hljs-string">&quot;user&quot;</span>,user);<br>            <span class="hljs-comment">//登陆成功调整main.jsp</span><br>            resp.sendRedirect(<span class="hljs-string">&quot;main.jsp&quot;</span>);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-comment">//如果用户不存在</span><br>        req.setAttribute(<span class="hljs-string">&quot;error&quot;</span>,<span class="hljs-string">&quot;登录失败&quot;</span>);<br>        req.getRequestDispatcher(<span class="hljs-string">&quot;login.jsp&quot;</span>).forward(req,resp);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>在Servlet中可以用上面代码中的方法设置和访问作用域的属性，在JSP中：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">&lt;jsp:useBean id=&quot;box&quot; scope=&quot;page&quot; <span class="hljs-keyword">class</span>=&quot;cn.ant_nest.JavaBean.User&quot;&gt;<br>	&lt;jsp:setProperty <span class="hljs-type">name</span>=&quot;box&quot; property=&quot;name&quot; <span class="hljs-keyword">value</span>=&quot;Kongwei-Liao&quot;/&gt;<br>&lt;/jsp:useBean&gt;<br><br>$&#123;<span class="hljs-type">box</span>.name&#125;<br><br>&lt;%<br>    <span class="hljs-keyword">out</span>.println(pageContext.getAttribute(&quot;box&quot;));//&quot;box.name&quot;这里行不通，显示出来的是<span class="hljs-keyword">null</span><br>%&gt;<br><br>&lt;%<span class="hljs-comment">--浏览器页面显示的是：</span><br>	Kongwei-Liao<br>	cn.ant_nest.JavaBean.<span class="hljs-keyword">User</span>@<span class="hljs-number">1584</span>c339<br><span class="hljs-comment">--%&gt;</span><br></code></pre></td></tr></table></figure>
+<p><strong>3、login.jsp</strong></p>
+</blockquote>
+<figure class="highlight vbscript-html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs vbscript-html"><span class="vbscript">&lt;%@ page contentType=<span class="hljs-string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="hljs-string">&quot;java&quot;</span> %&gt;</span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="vbscript">&lt;%--&lt;%=<span class="hljs-built_in">request</span>.getAttribute(<span class="hljs-string">&quot;error&quot;</span>)==<span class="hljs-literal">null</span>?<span class="hljs-string">&quot;&quot;</span>:<span class="hljs-built_in">request</span>.getAttribute(<span class="hljs-string">&quot;error&quot;</span>)%&gt;</span><span class="xml">--%&gt;</span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>$&#123;error&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;LoginServlet&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span></span><br><span class="xml">    用户名：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="xml">    密码：<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;pwd&quot;</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;登录&quot;</span>/&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p><strong>4、main.jsp</strong></p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xquery">&lt;%@ page contentType=<span class="hljs-string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="hljs-string">&quot;java&quot;</span> %&gt;<br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml">    </span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml">欢迎您$</span><span class="xquery">&#123;user<span class="hljs-built_in">.name</span>&#125;</span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p> <img src="/JavaBean&EL&JSTL/el.png" srcset="/img/loading.gif"></p>
+<p><strong>注：</strong>如果浏览器上直接显示的是EL表达式，而不是表达式的值，将web.xml的内容替换成以下内容。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">web-app</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee</span></span><br><span class="hljs-tag"><span class="hljs-string">                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;3.0&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">metadata-complete</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">web-app</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-3、EL在四大作用域的取值"><a href="#2-3、EL在四大作用域的取值" class="headerlink" title="2.3、EL在四大作用域的取值"></a>2.3、EL在四大作用域的取值</h4><figure class="highlight vbscript-html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs vbscript-html"><span class="vbscript">&lt;%@ page contentType=<span class="hljs-string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="hljs-string">&quot;java&quot;</span> %&gt;</span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="vbscript">&lt;%</span><br><span class="vbscript">    pageContext.setAttribute(<span class="hljs-string">&quot;pageInfo&quot;</span>,<span class="hljs-string">&quot;page中的值&quot;</span>);</span><br><span class="vbscript">    <span class="hljs-built_in">request</span>.setAttribute(<span class="hljs-string">&quot;requestInfo&quot;</span>,<span class="hljs-string">&quot;request中的值&quot;</span>);</span><br><span class="vbscript">    session.setAttribute(<span class="hljs-string">&quot;sessionInfo&quot;</span>,<span class="hljs-string">&quot;session中的值&quot;</span>);</span><br><span class="vbscript">    application.setAttribute(<span class="hljs-string">&quot;applicationInfo&quot;</span>,<span class="hljs-string">&quot;application中的值&quot;</span>);</span><br><span class="vbscript">%&gt;</span><br><span class="xml">$&#123;pageInfo&#125;<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="xml">$&#123;requestInfo&#125;<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="xml">$&#123;sessionInfo&#125;<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><span class="xml">$&#123;applicationInfo&#125;<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span></span><br><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p><img src="/JavaBean&EL&JSTL/el1.png" srcset="/img/loading.gif"></p>
+<h5 id="2-3-1、EL取值的顺序："><a href="#2-3-1、EL取值的顺序：" class="headerlink" title="2.3.1、EL取值的顺序："></a>2.3.1、EL取值的顺序：</h5><p>在作用域范围我们的名字取成一样了,怎么去找到特定的一个作用域中的值呢?</p>
+<p><img src="/JavaBean&EL&JSTL/el2.png" srcset="/img/loading.gif"></p>
+<p>结论：它查询找的顺序：从小至大，先取小的范围的值，小的没有，在取到大的范围的值</p>
+<p>pageContext–&gt;request–&gt;session–&gt;application</p>
+<h5 id="2-3-2、不同作用域间属性名冲突解决"><a href="#2-3-2、不同作用域间属性名冲突解决" class="headerlink" title="2.3.2、不同作用域间属性名冲突解决"></a>2.3.2、不同作用域间属性名冲突解决</h5><p>以后我们常用的是request和session，有时候，如果没有一个规范的时候，我们取的名字会重复，使用下面的第一种解决方案。</p>
+<p><strong>第一种解决方案：</strong>前面添加一个前缀，确定到哪个作用域拿，比如</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$&#123;pageScope.Info&#125;</span><br><span class="hljs-variable">$&#123;requestScope.Info&#125;</span><br><span class="hljs-variable">$&#123;sessionScope.Info&#125;</span><br><span class="hljs-variable">$&#123;applicationScope.Info&#125;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/JavaBean&EL&JSTL/el3.png" srcset="/img/loading.gif"></p>
+<p><strong>第二种解决方案：</strong>名字规范 比如：XXX_IN_SESSION  </p>
+<h4 id="2-4、EL的注意事项"><a href="#2-4、EL的注意事项" class="headerlink" title="2.4、EL的注意事项"></a>2.4、EL的注意事项</h4><p>1、</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby">session.setAttribute(<span class="hljs-string">&quot;KEY.IN.SESSION&quot;</span>, <span class="hljs-string">&quot;你是session&quot;</span>);<br><span class="hljs-variable">$&#123;</span>KEY.IN.SESSION&#125;&lt;<span class="hljs-string">%--</span>取不到值--%&gt;<br><span class="hljs-variable">$&#123;</span>sessionScope.KEY.IN.SESSION&#125;&lt;<span class="hljs-string">%--</span>取不到值--%&gt;<br><span class="hljs-variable">$&#123;</span>sessionScope[<span class="hljs-string">&quot;KEY.IN.SESSION&quot;</span>]&#125;&lt;<span class="hljs-string">%--</span>OK哒！取的到值--%&gt;<br></code></pre></td></tr></table></figure>
+<p>2、</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml">$</span><span class="hljs-template-variable">&#123;pageContext.request.contextPath&#125;</span><span class="xml">&lt;%--拿到上下文路径--%&gt;</span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;$</span></span></span><span class="hljs-template-variable">&#123;pageContext.request.contextPath&#125;</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">/***&quot;</span>&gt;</span>XXX<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p>3、Tomcat7之后EL表达式可以调用方法：</p>
+<p>之前2.2节中给session对象传了一个User类对象user，我们这里调用里面的getName方法</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$&#123;user.getName()&#125;</span><br></code></pre></td></tr></table></figure>
+<p>4、JavaBean的取值方式</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pf">$&#123;<span class="hljs-keyword">user</span>.<span class="hljs-keyword">user</span>Info&#125;								<span class="hljs-variable">&lt;%--相当于调用getUserInfo()--%&gt;</span><br></code></pre></td></tr></table></figure>
+<p><img src="/JavaBean&EL&JSTL/huoqu.png" srcset="/img/loading.gif"></p>
+<h4 id="2-5、EL的其它特性"><a href="#2-5、EL的其它特性" class="headerlink" title="2.5、EL的其它特性"></a>2.5、EL的其它特性</h4><h5 id="2-5-1、EL算术运算符"><a href="#2-5-1、EL算术运算符" class="headerlink" title="2.5.1、EL算术运算符"></a>2.5.1、EL算术运算符</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$&#123;1+2&#125;</span> <span class="hljs-variable">$&#123;2-1&#125;</span> <span class="hljs-variable">$&#123;2*3&#125;</span> <span class="hljs-variable">$&#123;16/5&#125;</span> <span class="hljs-variable">$&#123;16%5&#125;</span><br></code></pre></td></tr></table></figure>
+<h5 id="2-5-2、EL-关系运算符"><a href="#2-5-2、EL-关系运算符" class="headerlink" title="2.5.2、EL 关系运算符"></a>2.5.2、EL 关系运算符</h5><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-symbol">$</span>&#123;<span class="hljs-number">16</span>&gt;<span class="hljs-number">5</span>&#125; 	或	<span class="hljs-symbol">$</span>&#123;<span class="hljs-number">16</span> <span class="hljs-keyword">gt</span> <span class="hljs-number">5</span>&#125;<br><span class="hljs-symbol">$</span>&#123;<span class="hljs-number">16</span>&lt;<span class="hljs-number">5</span>&#125; 	或	<span class="hljs-symbol">$</span>&#123;<span class="hljs-number">16</span> <span class="hljs-keyword">lt</span> <span class="hljs-number">5</span>&#125;<br><span class="hljs-symbol">$</span>&#123;<span class="hljs-number">16</span>&gt;=<span class="hljs-number">5</span>&#125; 	或	<span class="hljs-symbol">$</span>&#123;<span class="hljs-number">16</span> <span class="hljs-keyword">ge</span> <span class="hljs-number">5</span>&#125;<br><span class="hljs-symbol">$</span>&#123;<span class="hljs-number">16</span>&lt;=<span class="hljs-number">5</span>&#125; 	或	<span class="hljs-symbol">$</span>&#123;<span class="hljs-number">16</span> <span class="hljs-keyword">le</span> <span class="hljs-number">5</span>&#125;<br><span class="hljs-symbol">$</span>&#123;<span class="hljs-number">1</span>=<span class="hljs-number">2</span>&#125; 		或	<span class="hljs-symbol">$</span>&#123;<span class="hljs-number">1</span> <span class="hljs-keyword">eq</span> <span class="hljs-number">2</span>&#125;<br><span class="hljs-symbol">$</span>&#123;<span class="hljs-number">2</span>!=<span class="hljs-number">1</span>&#125; 	或	<span class="hljs-symbol">$</span>&#123;<span class="hljs-number">2</span> <span class="hljs-keyword">ne</span> <span class="hljs-number">1</span>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="2-5-3、EL-逻辑运算符"><a href="#2-5-3、EL-逻辑运算符" class="headerlink" title="2.5.3、EL 逻辑运算符"></a>2.5.3、EL 逻辑运算符</h5><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$&#123;</span><span class="hljs-keyword">true</span> &amp;&amp; <span class="hljs-keyword">true</span>&#125;		结果 <span class="hljs-keyword">true</span><br><span class="hljs-variable">$&#123;</span><span class="hljs-keyword">true</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">true</span>&#125; 	结果<span class="hljs-keyword">true</span><br><br><span class="hljs-variable">$&#123;</span><span class="hljs-keyword">true</span> || <span class="hljs-keyword">false</span>&#125; 	结果 <span class="hljs-keyword">true</span><br><span class="hljs-variable">$&#123;</span><span class="hljs-keyword">true</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">false</span>&#125; 	结果 <span class="hljs-keyword">true</span><br><br><span class="hljs-variable">$&#123;</span>!<span class="hljs-keyword">true</span>&#125; 			结果<span class="hljs-keyword">false</span><br><span class="hljs-variable">$&#123;</span><span class="hljs-keyword">not</span> <span class="hljs-keyword">true</span>&#125; 		结果<span class="hljs-keyword">false</span><br></code></pre></td></tr></table></figure>
+<h5 id="2-5-4、EL-其他运算符"><a href="#2-5-4、EL-其他运算符" class="headerlink" title="2.5.4、EL 其他运算符"></a>2.5.4、EL 其他运算符</h5><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf">$&#123;empty <span class="hljs-built_in">param</span>.<span class="hljs-built_in">name</span>&#125; 如果<span class="hljs-built_in">param</span>.<span class="hljs-built_in">name</span> 为空 返回<span class="hljs-literal">true</span> 否则<span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<h5 id="2-5-5、EL-三目运算符"><a href="#2-5-5、EL-三目运算符" class="headerlink" title="2.5.5、EL 三目运算符"></a>2.5.5、EL 三目运算符</h5><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$&#123;</span>A?<span class="hljs-symbol">B:</span>C&#125; 比如 <span class="hljs-variable">$&#123;</span>user.sex?<span class="hljs-string">&quot;男&quot;</span><span class="hljs-symbol">:<span class="hljs-string">&quot;女&quot;</span></span>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-6、EL隐含对象"><a href="#2-6、EL隐含对象" class="headerlink" title="2.6、EL隐含对象"></a>2.6、EL隐含对象</h4><p>JSP EL支持下表列出的隐含对象：</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>隐含对象</strong></th>
+<th align="left"><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">pageScope</td>
+<td align="left">page 作用域</td>
+</tr>
+<tr>
+<td align="left">requestScope</td>
+<td align="left">request 作用域</td>
+</tr>
+<tr>
+<td align="left">sessionScope</td>
+<td align="left">session 作用域</td>
+</tr>
+<tr>
+<td align="left">applicationScope</td>
+<td align="left">application 作用域</td>
+</tr>
+<tr>
+<td align="left">param</td>
+<td align="left"><code>Request 对象</code>的参数，字符串</td>
+</tr>
+<tr>
+<td align="left">paramValues</td>
+<td align="left"><code>Request对象</code>的参数，字符串集合</td>
+</tr>
+<tr>
+<td align="left">header</td>
+<td align="left">HTTP 信息头，字符串</td>
+</tr>
+<tr>
+<td align="left">headerValues</td>
+<td align="left">HTTP 信息头，字符串集合</td>
+</tr>
+<tr>
+<td align="left">initParam</td>
+<td align="left">上下文初始化参数</td>
+</tr>
+<tr>
+<td align="left">cookie</td>
+<td align="left">Cookie值</td>
+</tr>
+<tr>
+<td align="left">pageContext</td>
+<td align="left">当前页面的pageContext</td>
+</tr>
+</tbody></table>
+<h5 id="2-6-1、pageContext对象"><a href="#2-6-1、pageContext对象" class="headerlink" title="2.6.1、pageContext对象"></a>2.6.1、pageContext对象</h5><p>pageContext对象是JSP中pageContext对象的引用。通过pageContext对象，您可以访问request对象。比如，访问request对象传入的查询字符串，就像这样：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-variable">$&#123;pageContext.request.queryString&#125;</span><br></code></pre></td></tr></table></figure>
+<h5 id="2-6-2、Scope对象"><a href="#2-6-2、Scope对象" class="headerlink" title="2.6.2、Scope对象"></a>2.6.2、Scope对象</h5><p>pageScope，requestScope，sessionScope，applicationScope变量用来访问存储在各个作用域层次的变量。<br>举例来说，如果您需要显式访问在applicationScope层的box变量，可以这样来访问：applicationScope.box。</p>
+<h5 id="2-6-3、param和paramValues对象"><a href="#2-6-3、param和paramValues对象" class="headerlink" title="2.6.3、param和paramValues对象"></a>2.6.3、param和paramValues对象</h5><p>param和paramValues对象用来访问参数值，通过使用request.getParameter方法和request.getParameterValues方法。<br>接下来的例子表明了如何访问<code>request对象</code>中的username参数：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-params">&lt;%@ page import=&quot;java.io.*,java.util.*&quot; %&gt;</span><br><span class="hljs-params">&lt;%</span><br><span class="hljs-params">    String title = &quot;Accessing Request Param&quot;;</span><br><span class="hljs-params">%&gt;</span><br><span class="hljs-params">&lt;html&gt;</span><br><br><span class="hljs-params">&lt;head&gt;</span><br><span class="hljs-params">&lt;title&gt;</span><span class="hljs-params">&lt;% out.print(title); %&gt;</span><span class="hljs-params">&lt;/title&gt;</span><br><span class="hljs-params">&lt;/head&gt;</span><br><br><span class="hljs-params">&lt;body&gt;</span><br><br><span class="hljs-params">&lt;center&gt;</span><br><span class="hljs-params">&lt;h1&gt;</span><span class="hljs-params">&lt;% out.print(title); %&gt;</span><span class="hljs-params">&lt;/h1&gt;</span><br><span class="hljs-params">&lt;/center&gt;</span><br><span class="hljs-params">&lt;div align=&quot;center&quot;&gt;</span><br><span class="hljs-params">&lt;p&gt;</span>$&#123;param[<span class="hljs-string">&quot;username&quot;</span>]&#125;<span class="hljs-params">&lt;/p&gt;</span><br><span class="hljs-params">&lt;/div&gt;</span><br><br><span class="hljs-params">&lt;/body&gt;</span><br><span class="hljs-params">&lt;/html&gt;</span><br></code></pre></td></tr></table></figure>
+<p>param对象返回单一的字符串，而paramValues对象则返回一个字符串数组。</p>
+<h5 id="2-6-4、header和headerValues对象"><a href="#2-6-4、header和headerValues对象" class="headerlink" title="2.6.4、header和headerValues对象"></a>2.6.4、header和headerValues对象</h5><p>header和headerValues对象用来访问信息头，通过使用 request.getHeader方法和request.getHeaders方法。<br>举例来说，要访问一个名为user-agent的信息头，可以这样使用表达式：${header.user-agent}，或者${header[“user-agent”]}。<br>接下来的例子表明了如何访问user-agent信息头：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-params">&lt;%@ page import=&quot;java.io.*,java.util.*&quot; %&gt;</span><br><span class="hljs-params">&lt;%</span><br><span class="hljs-params">    String title = &quot;User Agent Example&quot;;</span><br><span class="hljs-params">%&gt;</span><br><span class="hljs-params">&lt;html&gt;</span><br><br><span class="hljs-params">&lt;head&gt;</span><br><span class="hljs-params">&lt;title&gt;</span><span class="hljs-params">&lt;% out.print(title); %&gt;</span><span class="hljs-params">&lt;/title&gt;</span><br><span class="hljs-params">&lt;/head&gt;</span><br><br><span class="hljs-params">&lt;body&gt;</span><br><br><span class="hljs-params">&lt;center&gt;</span><br><span class="hljs-params">&lt;h1&gt;</span><span class="hljs-params">&lt;% out.print(title); %&gt;</span><span class="hljs-params">&lt;/h1&gt;</span><br><span class="hljs-params">&lt;/center&gt;</span><br><span class="hljs-params">&lt;div align=&quot;center&quot;&gt;</span><br><span class="hljs-params">&lt;p&gt;</span>$&#123;header[<span class="hljs-string">&quot;user-agent&quot;</span>]&#125;<span class="hljs-params">&lt;/p&gt;</span><br><span class="hljs-params">&lt;/div&gt;</span><br><br><span class="hljs-params">&lt;/body&gt;</span><br><span class="hljs-params">&lt;/html&gt;</span><br></code></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<p><img src="/JavaBean&EL&JSTL/res.png" srcset="/img/loading.gif"></p>
+<h3 id="3、JSTL"><a href="#3、JSTL" class="headerlink" title="3、JSTL"></a><a target="_blank" rel="noopener" href="https://www.runoob.com/jsp/jsp-jstl.html">3、JSTL</a></h3><p>使用JSTL帮助我们我们去消除Java代码，比如可以消除 &lt;% … %&gt;这里面的内容</p>
+<p>JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。</p>
+<p>JSTL支持通用的、结构化的任务，比如迭代，条件判断，XML文档操作，国际化标签，SQL标签。 除了这些，它还提供了一个框架来使用集成JSTL的自定义标签。</p>
+<p>根据JSTL标签所提供的功能，可以将其分为5个类别。</p>
+<blockquote>
+<ul>
+<li>核心标签 </li>
+<li>格式化标签</li>
+<li>SQL 标签 </li>
+<li>XML 标签 </li>
+<li>JSTL 函数</li>
+</ul>
+</blockquote>
+<h4 id="3-1、JSTL是啥？"><a href="#3-1、JSTL是啥？" class="headerlink" title="3.1、JSTL是啥？"></a>3.1、JSTL是啥？</h4><p>JSTL: 标准标签库, 由<code>标签库</code>和<code>EL表达式语言</code>两个部分组成，可用来消除JAVA代码；</p>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs erlang-repl">&lt;<span class="hljs-comment">%</span><br>	int age = <span class="hljs-number">23</span>;<br>	if(age&gt;<span class="hljs-number">18</span>)&#123;<br><span class="hljs-comment">%&gt;</span><br>		你真棒！<br>&lt;<span class="hljs-comment">%</span><br>	&#125;<br><span class="hljs-comment">%&gt;</span><br></code></pre></td></tr></table></figure>
+<p>可以将上面的代码变成标签：</p>
+<figure class="highlight bnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bnf"><span class="hljs-attribute">&lt;c:if test=&quot;age&gt;</span>18&quot;&gt;<br>	你真棒！<br><span class="hljs-attribute">&lt;/c:if&gt;</span><br>或<br><span class="hljs-attribute">&lt;如果 表达式=&quot;age&gt;</span>18&quot;&gt;<br>	你真棒！<br><span class="hljs-attribute">&lt;/如果&gt;</span><br></code></pre></td></tr></table></figure>
+<p>但是这个标签不能随便写，Java已经帮我们统一了一套标签，叫做JSTL；</p>
+<p>所以要使用JSTL，必须使用标签，所以也必须导入Java提供好的标签库</p>
+<h4 id="3-2、使用JSTL标签库"><a href="#3-2、使用JSTL标签库" class="headerlink" title="3.2、使用JSTL标签库"></a>3.2、使用JSTL标签库</h4><p>第一步：导Maven依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet.jsp.jstl<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jstl-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>servlet-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet.jsp<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jsp-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>taglibs<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>standard<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>第二步：引用JSTL标签库</p>
+<p><img src="/JavaBean&EL&JSTL/JSTL.png" srcset="/img/loading.gif"></p>
+<p>我们学习的是core标签库:需在进行导入:</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">&lt;<span class="hljs-meta">%</span>@ taglib uri=<span class="hljs-string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="hljs-string">&quot;c&quot;</span> <span class="hljs-meta">%</span>&gt;<br></code></pre></td></tr></table></figure>
+<p><img src="/JavaBean&EL&JSTL/jstl1.png" srcset="/img/loading.gif"></p>
+<h4 id="3-3、核心标签库"><a href="#3-3、核心标签库" class="headerlink" title="3.3、核心标签库"></a>3.3、核心标签库</h4><p><img src="/JavaBean&EL&JSTL/bao.png" srcset="/img/loading.gif"></p>
+<h5 id="3-3-1、if标签（判断）"><a href="#3-3-1、if标签（判断）" class="headerlink" title="3.3.1、if标签（判断）"></a>3.3.1、if标签（判断）</h5><p><img src="/JavaBean&EL&JSTL/jstl1.png" srcset="/img/loading.gif"></p>
+<h5 id="3-3-2、choose标签（选择）"><a href="#3-3-2、choose标签（选择）" class="headerlink" title="3.3.2、choose标签（选择）"></a>3.3.2、choose标签（选择）</h5><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:choose</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">c:when</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;$</span></span></span><span class="hljs-template-variable">&#123;age&lt;=18&#125;</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span></span><br><span class="xml">        </span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">c:when</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">c:when</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;$</span></span></span><span class="hljs-template-variable">&#123;age&gt;18&amp;&amp;age&lt;60&#125;</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span></span><br><span class="xml">        </span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">c:when</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">c:otherwise</span>&gt;</span></span><br><span class="xml">        </span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">c:otherwise</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">c:choose</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<h5 id="3-3-3、c-set、c-out和c-remove标签"><a href="#3-3-3、c-set、c-out和c-remove标签" class="headerlink" title="3.3.3、c:set、c:out和c:remove标签"></a>3.3.3、c:set、c:out和c:remove标签</h5><p>scope取值：[session,page,request,application]</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;c:<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">var</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attribute">scope</span>=<span class="hljs-string">&quot;session&quot;</span> <span class="hljs-attribute">value</span>=<span class="hljs-string">&quot;ZhangSan&quot;</span>/&gt;<br>&lt;c:out <span class="hljs-attribute">value</span>=<span class="hljs-string">&quot;<span class="hljs-variable">$&#123;name&#125;</span>&quot;</span>/&gt;<br>&lt;c:<span class="hljs-builtin-name">remove</span> <span class="hljs-attribute">var</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attribute">scope</span>=<span class="hljs-string">&quot;session&quot;</span>/&gt;<br></code></pre></td></tr></table></figure>
+<h5 id="3-3-4、c-url标签"><a href="#3-3-4、c-url标签" class="headerlink" title="3.3.4、c:url标签"></a>3.3.4、c:url标签</h5><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">c:url</span> <span class="hljs-attr">var</span>=<span class="hljs-string">&quot;login&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;/login&quot;</span>&gt;</span></span><br><span class="xml">	<span class="hljs-tag">&lt;<span class="hljs-name">c:param</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;cm&quot;</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">c:url</span>&gt;</span></span><br><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;$</span></span></span><span class="hljs-template-variable">&#123;login&#125;</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">&quot;</span>&gt;</span>login1<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<h5 id="3-3-5、forEach标签（循环）"><a href="#3-3-5、forEach标签（循环）" class="headerlink" title="3.3.5、forEach标签（循环）"></a>3.3.5、forEach标签（循环）</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell">&lt;c:<span class="hljs-keyword">forEach</span> <span class="hljs-keyword">begin</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-keyword">end</span>=<span class="hljs-string">&quot;10&quot;</span> var=<span class="hljs-string">&quot;s&quot;</span>&gt;<br>	<span class="hljs-variable">$</span>&#123;s&#125;<br>&lt;/c:<span class="hljs-keyword">forEach</span>&gt;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>begin:从哪里开始、end：到哪里结束、var：取了名字，放到作用域里面</p>
+<p>forEach的常用用法是从数据库拿数据，展示到页面：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stata">&lt;c:<span class="hljs-keyword">forEach</span> items=<span class="hljs-string">&quot;$&#123;emails&#125;&quot;</span> <span class="hljs-keyword">var</span>=<span class="hljs-string">&quot;e&quot;</span> varStatus=<span class="hljs-string">&quot;s&quot;</span>&gt;<br>	<span class="hljs-variable">$&#123;s</span>.<span class="hljs-keyword">count</span>&#125;||<span class="hljs-variable">$&#123;e</span>.id&#125;-<span class="hljs-variable">$&#123;e</span>.title&#125;-<span class="hljs-variable">$&#123;e</span>.intro&#125;&lt;<span class="hljs-keyword">br</span>&gt;<br>&lt;/c:<span class="hljs-keyword">forEach</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>items : 要循环的集合(数组)、var :每一个数据的名称</p>
+<p>varStatus: 当前循环的状态（s它是个javabean，里面有属性 index(循环索引，从0开始),count（计数））</p>
+</blockquote>
+<h4 id="lt-frameset-gt-Deprecated-HTML-tag"><a href="#lt-frameset-gt-Deprecated-HTML-tag" class="headerlink" title="&lt;frameset&gt;:Deprecated HTML tag"></a>&lt;frameset&gt;:Deprecated HTML tag</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">frameset</span> <span class="hljs-attr">rows</span>=<span class="hljs-string">&quot;20%,80%&quot;</span>&gt;</span><br>		<span class="hljs-comment">&lt;!-- 头部页面 --&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">frame</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/xxx/top.jsp&quot;</span>&gt;</span><br>		<span class="hljs-comment">&lt;!-- 中间区域 --&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">frameset</span> <span class="hljs-attr">cols</span>=<span class="hljs-string">&quot;25%,75%&quot;</span>&gt;</span><br>		     <span class="hljs-tag">&lt;<span class="hljs-name">frame</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/xxx/menu.jsp&quot;</span>&gt;</span><br>		     <span class="hljs-tag">&lt;<span class="hljs-name">frame</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;frame_main&quot;</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">frameset</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">frameset</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaBean/">JavaBean</a>
+                    
+                      <a class="hover-with-bg" href="/tags/JSP/">JSP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/EL/">EL</a>
+                    
+                      <a class="hover-with-bg" href="/tags/JSTL/">JSTL</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/25/Ajax/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Ajax</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/21/Servlet%E4%BA%A4%E4%BA%92%E4%B8%8EJSP/">
+                        <span class="hidden-mobile">Servlet交互与JSP</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

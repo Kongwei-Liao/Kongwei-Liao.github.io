@@ -1,0 +1,619 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>Java常见类及其继承关系(二) - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java常见类及其继承关系(二)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-10 09:27" pubdate>
+        2019年11月10日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      36
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java常见类及其继承关系(二)</h1>
+            
+            <div class="markdown-body">
+              <p>数学相关类Math/BigInteger/BigDecimal</p>
+<p>Math</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">System</span>.out.println(Math.<span class="hljs-built_in">PI</span>);<span class="hljs-comment">//java.lang.Math</span><br></code></pre></td></tr></table></figure>
+<p>1、类包含用于执行基本数学运算的方法，如初等指数、对数、平方根和三角函数<br>2、记住一点： 以后遇到1中的情况知道这里来Math类中找。</p>
+<p>（BI）BigInteger</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.math.BigInteger;<br></code></pre></td></tr></table></figure>
+<p>1、能够表示比long更大的整数</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-keyword">long</span> <span class="hljs-keyword">a</span>=<span class="hljs-number">12333333333</span>L<span class="hljs-comment">;//没有超过大小</span><br><span class="hljs-keyword">long</span> <span class="hljs-keyword">a</span>=<span class="hljs-number">1233333333333333333333333333333</span>L<span class="hljs-comment">;//超过大小了</span><br></code></pre></td></tr></table></figure>
+<p>2、它是如何处理存储更大的值？BigInteger是一个类</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">BigInteger b=<span class="hljs-number">123456</span>;<span class="hljs-regexp">//</span>Type mismatch: cannot convert from int to BigInteger<br><span class="hljs-regexp">//</span>因为BigInteger是一个类，值太大，不能让其直接赋值，需要构造方法创建<br>BigInteger b=new BigInteger(<span class="hljs-string">&quot;9223372036854775807&quot;</span>);<span class="hljs-regexp">//</span><span class="hljs-number">9223372036854775807</span>是Long的最大值，new一个比它大<span class="hljs-number">1</span>的数<br></code></pre></td></tr></table></figure>
+<p><img src="/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB-%E4%BA%8C/Integer1.png" srcset="/img/loading.gif" alt="1"></p>
+<p>3、如何去操作</p>
+<p>两个BigInteger相加</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">BigInteger b1=<span class="hljs-built_in">new</span> BigInteger(&quot;9223372036854775807&quot;);<br>BigInteger b2=<span class="hljs-built_in">new</span> BigInteger(&quot;9223372036854775807&quot;);<br>//<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(b1+b2);//The <span class="hljs-keyword">operator</span> + <span class="hljs-keyword">is</span> undefined <span class="hljs-keyword">for</span> the argument <span class="hljs-keyword">type</span>(s) java.math.BigInteger, java.math.BigInteger<br><span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(b1.<span class="hljs-keyword">add</span>(b2));//结果：<span class="hljs-number">18446744073709551614</span><br></code></pre></td></tr></table></figure>
+<p>注意：在BigInteger中，不能直接使用+-等运算符，用已经写成的BI成员方法，具体查看API文档</p>
+<p><img src="/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB-%E4%BA%8C/BigInteger2.png" srcset="/img/loading.gif" alt="2"></p>
+<p>4、int、Integer和BigInteger之间的关系</p>
+<p>Integer 是int 的包装类，他们之间存在自动装箱拆箱，而和BigInteger没有任何关系  </p>
+<p><img src="/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB-%E4%BA%8C/BI3.png" srcset="/img/loading.gif" alt="3"></p>
+<p>BigDecimal</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.math.BigDecimal;<br></code></pre></td></tr></table></figure>
+<p>1、可以精确的表示小数</p>
+<p>double、float浮点小数，无线接近于结果，不精确。这个要看使用于什么场景，是否要求精确？</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">double</span> d<span class="hljs-number">1</span>=<span class="hljs-number">0</span>.<span class="hljs-number">02</span>;<br><span class="hljs-attribute">double</span> d<span class="hljs-number">2</span>=<span class="hljs-number">0</span>.<span class="hljs-number">00002</span>;<br><span class="hljs-attribute">System</span>.out.println(d<span class="hljs-number">1</span>+d<span class="hljs-number">2</span>);//<span class="hljs-number">0</span>.<span class="hljs-number">02002</span><br><span class="hljs-attribute">System</span>.out.println(d<span class="hljs-number">1</span>-d<span class="hljs-number">2</span>);//<span class="hljs-number">0</span>.<span class="hljs-number">01998</span><br><span class="hljs-attribute">System</span>.out.println(d<span class="hljs-number">1</span>*d<span class="hljs-number">2</span>);//<span class="hljs-number">4</span>.<span class="hljs-number">0000000000000003</span>E-<span class="hljs-number">7</span><br><span class="hljs-attribute">System</span>.out.println(d<span class="hljs-number">1</span>/d<span class="hljs-number">2</span>);//<span class="hljs-number">999</span>.<span class="hljs-number">9999999999999</span>  不精确<br></code></pre></td></tr></table></figure>
+<p>2、创建使用BigDecimal</p>
+<p>BigDecimal是一个类（非包装类），也不是基本数据类型，需要使用new创建对象。</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-comment">//BigDecimal bd=0.2;//Type mismatch: cannot convert from double to BigDecimal</span><br>BigDecimal bd1=<span class="hljs-keyword">new</span> <span class="hljs-type">BigDecimal</span>(<span class="hljs-number">0.02</span>);<br>BigDecimal bd2=<span class="hljs-keyword">new</span> <span class="hljs-type">BigDecimal</span>(<span class="hljs-number">0.00002</span>);<br><br>BigDecimal bd3=<span class="hljs-keyword">new</span> <span class="hljs-type">BigDecimal</span>(<span class="hljs-string">&quot;0.02&quot;</span>);<br>BigDecimal bd4=<span class="hljs-keyword">new</span> <span class="hljs-type">BigDecimal</span>(<span class="hljs-string">&quot;0.00002&quot;</span>);<br></code></pre></td></tr></table></figure>
+<p><img src="/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB-%E4%BA%8C/%E6%9C%AC%E5%9C%B0.png" srcset="/img/loading.gif" alt="4"></p>
+<p>3、BD运算</p>
+<p>和BigInteger一样，不能直接使用+-，已经定义成方法，详见API。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">//		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(bd1+bd2);//The <span class="hljs-keyword">operator</span> - <span class="hljs-keyword">is</span> undefined <span class="hljs-keyword">for</span> the argument <span class="hljs-keyword">type</span>(s) java.math.BigDecimal, java.math.BigDecimal<br>//		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(bd1-bd2);<br>//		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(bd1*bd2);<br>//		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(bd1/bd2);<br>		<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(bd1.<span class="hljs-keyword">add</span>(bd2));<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(bd1.subtract(bd2));<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(bd1.multiply(bd2));<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(bd1.divide(bd2));<br></code></pre></td></tr></table></figure>
+<p>注意：</p>
+<p><img src="/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB-%E4%BA%8C/BD2.png" srcset="/img/loading.gif" alt="BD2"></p>
+<p>我们看到运算出来的结果也是不准确的，甚至直接出错了。为什么还是不精确的呢？怎么处理呢？</p>
+<p>因为我们构造d1和d2的时候，就是传入的一个不精确的double值，结果肯定不精确。</p>
+<p>我们可以采用传入精确的值：查看API构造方法，发现可以以字符串的形式传入：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">BigDecimal</span> d<span class="hljs-number">1</span>=new BigDecimal(<span class="hljs-string">&quot;0.02&quot;</span>);<br><span class="hljs-attribute">BigDecimal</span> d<span class="hljs-number">2</span>=new BigDecimal(<span class="hljs-string">&quot;0.00002&quot;</span>);<br><span class="hljs-attribute">System</span>.out.println(d<span class="hljs-number">1</span>.add(d<span class="hljs-number">2</span>));//<span class="hljs-number">0</span>.<span class="hljs-number">02002</span><br><span class="hljs-attribute">System</span>.out.println(d<span class="hljs-number">1</span>.subtract(d<span class="hljs-number">2</span>));//<span class="hljs-number">0</span>.<span class="hljs-number">01998</span><br><span class="hljs-attribute">System</span>.out.println(d<span class="hljs-number">1</span>.multiply(d<span class="hljs-number">2</span>));//<span class="hljs-number">4</span>E-<span class="hljs-number">7</span><br><span class="hljs-attribute">System</span>.out.println(d<span class="hljs-number">1</span>.divide(d<span class="hljs-number">2</span>));//<span class="hljs-number">1</span>E+<span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>数学常用类小结(一)</p>
+<p>1、基本数学运算的方法，如初等指数、对数、平方根和三角函数在哪里去找方法？<code>Math</code></p>
+<p>2、BigInteger 和BigDecimal怎么运算？</p>
+<ul>
+<li>是什么?能干什么?<ul>
+<li>BigInteger –》比long更大的数；</li>
+<li>BigDecimal–》表示更精确的小数</li>
+</ul>
+</li>
+<li>怎么创建一个对象?<ul>
+<li>都是通过构造函数；</li>
+<li>BigDecimal–》想要结果精确，那么初始值就要精确–》new　BigDecimal(String val)</li>
+</ul>
+</li>
+<li>怎么干?<ul>
+<li> 基本的+ - * /，要使用他们自身的方法</li>
+</ul>
+</li>
+</ul>
+<p>随机数</p>
+<p>随机数的使用？</p>
+<p>验证码，摇号，彩票，随机名字，随机播放，贪吃蛇的食物，打地鼠</p>
+<p>Java获得随机数</p>
+<p>1、Math类中的一个方法random，该方法返回正号介于<code>[0.0, 1.0)</code>的double值。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Math</span>.</span></span>random<span class="hljs-literal">()</span>);<span class="hljs-comment">//0.9468330747092099</span><br><span class="hljs-comment">//如果要用这个方法，获取100以内的整数？乘以100得到0---100的小数，再取整。</span><br></code></pre></td></tr></table></figure>
+<p>2、Random类（有很多方法）</p>
+<p>boolean、double、int…                [ 0, n )</p>
+<p>构造方法：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Random() 创建一个新的随机数生成器。</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Random<code>(long seed)</code>  使用单个 <code>long</code> 种子创建一个新的随机数生成器。</strong></td>
+</tr>
+</tbody></table>
+<p>演示发现，如果使用了一个seed构造方法，每次得到的随机数是一样的。因为种子一样的嘛。那怎么办呢？我们是不是可以将种子搞成一个随机的呢？System.currentTimeMillis().</p>
+<p>其实看源码，发现无参的构造方法也是搞了一个随机的种子的。但是，即使这样，也可能会产生相同的值，计算机够快。  </p>
+<p>其他方法也可以得到：nextInt(n) -&gt; [ 0,  n )</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">//现在要获取x—y直接的int怎么办？我们关键是要确定这个n的值。n=y-x;</span><br><span class="hljs-comment">//获取3-7之间的随机整数</span><br>		Random r=<span class="hljs-keyword">new</span> <span class="hljs-constructor">Random()</span>;<br>		<span class="hljs-comment">//n=7-3=4</span><br>		<span class="hljs-built_in">int</span> m=r.next<span class="hljs-constructor">Int(4)</span>;<span class="hljs-comment">//得到m为0到n直接的值，最后再加上n-1</span><br>		<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(m+<span class="hljs-number">4</span>-<span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure>
+<p>从1.7开始Random的子类：ThreadLocalRandom</p>
+<p>ThreadLocalRandom:nextInt( int least, int bound )</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">ThreadLocalRandom</span>.</span></span>current<span class="hljs-literal">()</span>.next<span class="hljs-constructor">Int(3, 7)</span>);<br></code></pre></td></tr></table></figure>
+<p>UUID经常用来做唯一的标识ID（根据当前时间+机器码）</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">//UUID:128位的值</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UUID</span>.</span></span>random<span class="hljs-constructor">UUID()</span>);<span class="hljs-comment">//31db0a4d-4fcb-44e7-b607-fc358c28e828</span><br></code></pre></td></tr></table></figure>
+
+
+<p>写一个方法：生成验证码</p>
+<p>问题：调用这个方法可以获得一个指定位数的随机字符串；其内容可以是 数字 大小写字母组成</p>
+<p> 4位随机数</p>
+<p>分析思路：</p>
+<blockquote>
+<p>①准备字符串：把所有数字和大小写字母放在一个字符串或者数组中</p>
+<p>②在①中随机获取一个值 </p>
+<p>③遍历步骤②len次 ④返回结果</p>
+</blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">String</span>[] args)</span> </span>&#123;<br>		<span class="hljs-keyword">String</span> <span class="hljs-built_in">random</span> = getRandom(<span class="hljs-number">4</span>);<br>		System.out.<span class="hljs-built_in">println</span>(<span class="hljs-built_in">random</span>);<br>	&#125;<br><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> <span class="hljs-title">getRandom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> len)</span> </span>&#123;<br>		<span class="hljs-keyword">String</span> s = <span class="hljs-string">&quot;&quot;</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) &#123;<br>			s += getOne();<br>		&#125;<br>		<span class="hljs-keyword">return</span> s;<br><br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> <span class="hljs-title">getOne</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// ①准备字符串：把所有数字和大小写字母放在一个字符串或者数组中</span><br>		<span class="hljs-keyword">String</span> str=<span class="hljs-string">&quot;0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm&quot;</span>;<br>		<span class="hljs-comment">// ②在①中随机获取一个值  </span><br>		<span class="hljs-comment">//int r=ThreadLocalRandom.current().nextInt(0,str.length());</span><br>		Random <span class="hljs-built_in">random</span> = <span class="hljs-keyword">new</span> Random();<br>		<span class="hljs-keyword">int</span> r=<span class="hljs-built_in">random</span>.nextInt(str.length());<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">String</span>.valueOf(str.charAt(r));<br>	&#125;<br></code></pre></td></tr></table></figure>
+<p>日期（时间）相关类</p>
+<p>应用场景（使用的一些软件中使用到的地方）</p>
+<p>闹钟，按照时间段来统计一些东西，支付订单上也用到时间，操作日志记录时间</p>
+<p>Date类</p>
+<p>类 Date 表示特定的瞬间，精确到毫秒。在 JDK 1.1 之前，类 Date 有两个其他的函数。它允许把日期解释为年、月、日、小时、分钟和秒值。它也允许格式化和解析日期字符串。不过，这些函数的 API 不易于实现国际化. 闰秒. 格林威治标</p>
+<p>构造方法：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-constructor">Date()</span>;   			<span class="hljs-comment">//就表示当前系统时间对象</span><br><span class="hljs-constructor">Date(<span class="hljs-params">long</span> <span class="hljs-params">date</span>)</span>   	<span class="hljs-comment">//根据指定的毫秒值创建一个指定的时间</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Date d=<span class="hljs-keyword">new</span> <span class="hljs-constructor">Date()</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(d);<span class="hljs-comment">// Wed Apr 19 14:13:47 CST 2017</span><br>		 <br>long time=<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>current<span class="hljs-constructor">TimeMillis()</span>;<br>Date d1=<span class="hljs-keyword">new</span> <span class="hljs-constructor">Date(<span class="hljs-params">time</span>)</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(d1);<span class="hljs-comment">// Wed Apr 19 14:13:47 CST 2017</span><br></code></pre></td></tr></table></figure>
+<p>成员方法：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">after</span><span class="hljs-params">(Date when)</span></span> 	<span class="hljs-comment">//测试此日期是否在指定日期之后。</span><br><span class="hljs-function"><span class="hljs-title">before</span><span class="hljs-params">(Date when)</span></span> 	<span class="hljs-comment">//测试此日期是否在指定日期之前。</span><br><span class="hljs-function"><span class="hljs-title">getTime</span><span class="hljs-params">()</span></span> 			<span class="hljs-comment">//返回自 1970 年 1 月 1 日 00:00:00 GMT 以来此 Date 对象表示的毫秒数。</span><br><span class="hljs-function"><span class="hljs-title">setTime</span><span class="hljs-params">(long time)</span></span> 	<span class="hljs-comment">//设置此 Date 对象，以表示 1970 年 1 月 1 日 00:00:00 GMT 以后 time 毫秒的时间点。</span><br></code></pre></td></tr></table></figure>
+<p>不直观问题：</p>
+<p>直接打印Date对象 ：Sat Apr 01 15:28:03 GMT+08:00 2017看起来不直观，用户体验不好。希望根据不同用户的需求显示不同的效果，怎么办？需要对结构进行格式化</p>
+<blockquote>
+<p>2017-04-01 15:03:24</p>
+<p>2017/04/01</p>
+<p>2017年04月01日</p>
+</blockquote>
+<p>时间格式化：DateFormat和SimpleDateFormat</p>
+<blockquote>
+<p>1、作用一： 把一个Date对象可以转成我们希望的一个结果样式（字符串）</p>
+<p>2、作用二： 也可以把一个字符串解析为一个Date对象</p>
+<p>3、学习重点就是如何调用上面的提到的两个功能方法，注意怎么给他格式</p>
+</blockquote>
+<p><img src="/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB-%E4%BA%8C/DF.png" srcset="/img/loading.gif" alt="df"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">SimpleDateFormat sdf=<span class="hljs-keyword">new</span> <span class="hljs-constructor">SimpleDateFormat()</span>;<br>String p=<span class="hljs-string">&quot;yyyyMMdd HH:mm:ss&quot;</span>;<br>sdf.apply<span class="hljs-constructor">Pattern(<span class="hljs-params">p</span>)</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(sdf.format(d1));<br>	<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(sdf.parse(<span class="hljs-string">&quot;20170420 14:33:26&quot;</span>));<br></code></pre></td></tr></table></figure>
+<p>Calender（日历）</p>
+<p><img src="/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB-%E4%BA%8C/Calender.png" srcset="/img/loading.gif" alt="calender"></p>
+<p>日历，Calendar 类是一个抽象类，它为特定瞬间与一组诸如 YEAR、MONTH、DAY_OF_MONTH、HOUR 等 日历字段之间的转换提供了一些方法，并为操作日历字段（例如获得下星期的日期）提供了一些方法。</p>
+<p>字段：</p>
+<p>类中有标识年、月、日等字段</p>
+<p>常用方法：</p>
+<p>①获取日历对象：static Calendar getInstance() 得一个日历。(是一个抽象类，外部和内部都不能new，不能创建对象。通过源码发现，是new 了一个子类赋值给Calendar中。)</p>
+<p>② 获取指定字段值（年、月、日DAY_OF_MONTH等）：int get(int field) 返回给定日历字段的值。</p>
+<p>注意：月是从0—11，所以获取后需要+1</p>
+<p>③ 设置指定字段值：set(int field,int value)  给指定的字段设置值。</p>
+<p>这是一种重新赋值操作，会覆盖原来的值，会自动进位</p>
+<p>④ 给指定字段增加或者减少值：add(int field,int amount) : 这个方法和set差不多，但是把amount的值累加到当前设置的字段原有的值之上</p>
+<p>⑤使用指定时间创建一个Calendar： setTime(Date d)  可以直接把一个Date设置进去</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">/**<br>		 * 把 <span class="hljs-number">2033</span>年<span class="hljs-number">3</span>月<span class="hljs-number">4</span>日 <span class="hljs-number">12</span>:<span class="hljs-number">34</span>:<span class="hljs-number">23</span> 设置给日历：<br>		 *   分析：可以通过<span class="hljs-keyword">set</span>方法一个个字段的设置，不建议。使用<br>		 *     setTime(<span class="hljs-type">Date</span> <span class="hljs-type">date</span>)一个方法搞定。<br>		 *     步骤：<br>		 *      ①把 字符串 <span class="hljs-string">&quot;2033年3月4日 12:34:23&quot;</span> 转换成<span class="hljs-type">Date</span><br>		 *      ②setTime设置<br>		 */<br>		<span class="hljs-type">String</span> dateStr = <span class="hljs-string">&quot;2033年3月4日 12:34:23&quot;</span>;<br>		SimpleDateFormat sdf = <span class="hljs-built_in">new</span> SimpleDateFormat();<br>		<span class="hljs-type">String</span> pattern = <span class="hljs-string">&quot;yyyy年MM月dd日 HH:mm:ss&quot;</span>;<br>		sdf.applyPattern(pattern);<br>		<span class="hljs-type">Date</span> <span class="hljs-type">date</span> = sdf.parse(dateStr);<br><br>		Calendar c = Calendar.getInstance();<br>		c.setTime(<span class="hljs-type">date</span>);<br><br>		System.out.println(c.<span class="hljs-keyword">get</span>(Calendar.YEAR) + <span class="hljs-string">&quot;年&quot;</span><br>				+ (c.<span class="hljs-keyword">get</span>(Calendar.MONTH) + <span class="hljs-number">1</span>) + <span class="hljs-string">&quot;月&quot;</span><br>				+ c.<span class="hljs-keyword">get</span>(Calendar.DAY_OF_MONTH) + <span class="hljs-string">&quot;日&quot;</span><br>				+ c.<span class="hljs-keyword">get</span>(Calendar.HOUR_OF_DAY) + <span class="hljs-string">&quot;:&quot;</span> + c.<span class="hljs-keyword">get</span>(Calendar.MINUTE)<br>				+ <span class="hljs-string">&quot;:&quot;</span> + c.<span class="hljs-keyword">get</span>(Calendar.SECOND));<br></code></pre></td></tr></table></figure>
+<p>⑥ 获取一个Date对象：Date getTime()  可以获得日历对象中的当前日期对象</p>
+<p>回顾方法覆写要求：</p>
+<blockquote>
+<p>①保证子类方法和父类方法的方法签名(方法名+参数列表)一致;</p>
+<p>②访问权限 : 子类方法的访问权限(修饰符)不能够比父类方法的访问权限更低;</p>
+<p>③返回值类型 : 子类方法的返回值类型可以是父类方法的返回值类型的子类或者相等</p>
+<p>④子类方法抛出的异常（可以是多个）必须是父类方法抛出的异常的子类或者相等（只针对于非RuntimeException）</p>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">//错误：子类抛出异常大于父类（将在编译期间出错）</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;<br>	void test() &#123;<br>	&#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">A</span> </span>&#123;<br>	<span class="hljs-meta">@Override</span><br>	void test() <span class="hljs-keyword">throws</span> <span class="hljs-type">Exception</span>&#123;<br>		<span class="hljs-comment">// TODO Auto-generated method stub</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">//正确的子类异常抛出</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;<br>	void test() <span class="hljs-keyword">throws</span> <span class="hljs-type">Exception</span> &#123;	&#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">A</span> </span>&#123;<br>	<span class="hljs-meta">@Override</span><br>	void test() <span class="hljs-keyword">throws</span> <span class="hljs-type">Exception</span> &#123;<br>	&#125;<br>&#125;<br><span class="hljs-comment">//或者</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>&#123;<br>	void test() <span class="hljs-keyword">throws</span> <span class="hljs-type">Exception</span> &#123;<br>	&#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">A</span> </span>&#123;<br>	<span class="hljs-meta">@Override</span><br>	void test() <span class="hljs-keyword">throws</span> <span class="hljs-type">AWTException</span>&#123;<br>		<span class="hljs-comment">// TODO Auto-generated method stub</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+<p>throw和throws的区别</p>
+<p>throw</p>
+<p>1、位置：在方法里面</p>
+<p>2、后面只能够跟一个具体的异常对象</p>
+<p>throws</p>
+<p>1、位置 ： 方法上，在（）后，{}前，可以抛出多个异常，异常之间用,隔开，没有顺序之分</p>
+<p>2、后面可以有多个异常类型</p>
+<p><img src="/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB-%E4%BA%8C/clip_image008.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>只要抛出了异常：有几种处理方式</p>
+<p> *      1. 再向上个抛出</p>
+<p> *      2. try catch</p>
+<p> * 目前，先自己处理。以后学得多了在根据实际情况或抛出或捕捉</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Math/">Math</a>
+                    
+                      <a class="hover-with-bg" href="/tags/BigInteger/">BigInteger</a>
+                    
+                      <a class="hover-with-bg" href="/tags/BigDecimal/">BigDecimal</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9A%8F%E6%9C%BA%E6%95%B0/">随机数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Date/">Date</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/11/Java%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%8F%8A%E5%85%B6%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%EF%BC%88%E4%B8%89%EF%BC%89/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java常见类及其继承关系（三）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/06/Java%E5%A4%9A%E6%80%81/">
+                        <span class="hidden-mobile">Java多态</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

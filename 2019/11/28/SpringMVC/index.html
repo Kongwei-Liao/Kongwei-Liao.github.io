@@ -1,0 +1,915 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>SpringMVC - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="SpringMVC">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-28 14:13" pubdate>
+        2019年11月28日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      124
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SpringMVC</h1>
+            
+            <div class="markdown-body">
+              <h3 id="1、SpringMVC概述"><a href="#1、SpringMVC概述" class="headerlink" title="1、SpringMVC概述"></a>1、SpringMVC概述</h3><h4 id="1-1、为什么引入SpringMVC？"><a href="#1-1、为什么引入SpringMVC？" class="headerlink" title="1.1、为什么引入SpringMVC？"></a>1.1、为什么引入SpringMVC？</h4><h5 id="1-1-1、传统MVC模式的问题"><a href="#1-1-1、传统MVC模式的问题" class="headerlink" title="1.1.1、传统MVC模式的问题"></a>1.1.1、传统MVC模式的问题</h5><p><strong>1、回顾JSP中所讲的MVC</strong></p>
+<p>数据模型（Model）：负责封装应用的状态，并实现应用的功能。</p>
+<p>视图展现（View）：界面，视图从模型获得要展示的数据，然后用自己的方式展现给用户。</p>
+<p>控制器（Controller）：用来控制应用程序的流程和处理视图所发出的请求。当控制器接收到用户的请求后，会将用户的数据和模型的更新相映射，也就是调用模型来实现用户请求的功能；然后控制器会选择用于响应的视图，把模型更新后的数据展示给用户。</p>
+<p><img src="/SpringMVC/Snipaste_2019-11-28_09-21-37.png" srcset="/img/loading.gif"></p>
+<p>最典型的MVC：JSP(view)+Servlet(controller)+JavaBean(dao model)模式</p>
+<p><strong>2、 Jsp + Servlet + JavaBean存在问题：</strong></p>
+<ol>
+<li><p>web.xml 很臃肿</p>
+</li>
+<li><p>Servlet：</p>
+</li>
+</ol>
+<p>接收参数：接收参数过程非常麻烦</p>
+<p>调用业务逻辑：service</p>
+<p>跳转页面：实现forward和redirect不方便</p>
+<ol start="3">
+<li>Servlet职责不单一：（文件上传下载、令牌、字符编码等等）</li>
+</ol>
+<p>Servlet应只做核心功能，其他的功能交给框架做</p>
+<h5 id="1-1-2、解决方案"><a href="#1-1-2、解决方案" class="headerlink" title="1.1.2、解决方案"></a>1.1.2、解决方案</h5><p>针对以上问题，我们现在选择SpringMVC 框架解决。  </p>
+<h4 id="1-2、SpringMVC是什么？"><a href="#1-2、SpringMVC是什么？" class="headerlink" title="1.2、SpringMVC是什么？"></a>1.2、SpringMVC是什么？</h4><h5 id="1-2-1、基本概念"><a href="#1-2-1、基本概念" class="headerlink" title="1.2.1、基本概念"></a>1.2.1、基本概念</h5><p>SpringMVC是一个基于MVC模式的WEB表现层框架，它解决WEB开发中常见的问题(参数接收、文件上传/下载、表单验证、国际化等等)，使用非常简单，SpringMVC作为Spring中的一个模块,可以与Spring无缝集成。</p>
+<p>目前很多公司都使用SpringMVC，90%的招聘单位要求熟悉使用SpringMVC。</p>
+<p>它是一个典型的mvc构架，它是<code>一个纯正的servlet系统</code>，这也是它相比其他MVC框架所具有的优势。</p>
+<h5 id="1-2-2、核心前端控制器"><a href="#1-2-2、核心前端控制器" class="headerlink" title="1.2.2、核心前端控制器"></a>1.2.2、核心前端控制器</h5><p>顾名思义核心控制器用于Web层核心功能的处理以及在所有控制器执行之前，所有的WebMvc框架都采用了这种方式，<code>在SpringMVC中使用的是DispatcherServlet为核心控制器</code>。</p>
+<p>DispatcherServlet核心控制器会拦截匹配的请求，把拦截下来的请求，依据相应的规则【映射（url=控制器）】分发到目标Controller来处理。</p>
+<p><img src="/SpringMVC/Snipaste_2019-11-28_09-30-21.png" srcset="/img/loading.gif"></p>
+<img src="SpringMVC/Snipaste_2019-11-28_09-30-58.png" srcset="/img/loading.gif" style="zoom:80%;" />
+
+
+
+
+
+
+
+<h3 id="2、SpringMVC入门案例"><a href="#2、SpringMVC入门案例" class="headerlink" title="2、SpringMVC入门案例"></a>2、SpringMVC入门案例</h3><h4 id="2-1、实现步骤"><a href="#2-1、实现步骤" class="headerlink" title="2.1、实现步骤"></a>2.1、实现步骤</h4><p>我们要用SpringMVC，需要先准备些什么事:</p>
+<ol>
+<li><p>使用SpringMVC必须先保证，你的项目拥有Spring的运行环境。</p>
+</li>
+<li><p>在添加SpringMVC相关jar包</p>
+<ul>
+<li>spring-webmvc-4.1.2.RELEASE.jar SpringMVC的jar文件。</li>
+<li>spring-web-4.1.2.RELEASE.jar   Spring对Web项目运行的支持。</li>
+</ul>
+</li>
+<li><p>在web.xml，配置核心控制器</p>
+<p>SpringMVC框架的心脏就是核心控制器，负责所有请求的公共功能,他和我们之前的普通Servlet一样需要在web.xml中配置&lt;servlet-mapping&gt;</p>
+</li>
+<li><p>新建Controller控制器，处理请求，进行响应</p>
+<p>SpringMVC中的控制器有一定规范，要求实现Controller接口或子接口</p>
+</li>
+<li><p>配置我们的Controller控制器</p>
+<p>SpringMVC是基于Spring，Spring中的核心就是Ioc容器。SpringMVC中的控制器也是一个一个&lt;bean&gt;，需要在applicationContext.xml中进行配置</p>
+</li>
+<li><p>测试访问</p>
+</li>
+</ol>
+<h4 id="2-2、具体实现"><a href="#2-2、具体实现" class="headerlink" title="2.2、具体实现"></a>2.2、具体实现</h4><h5 id="2-2-1、创建Web工程"><a href="#2-2-1、创建Web工程" class="headerlink" title="2.2.1、创建Web工程"></a>2.2.1、创建Web工程</h5><h5 id="2-2-2、导入Jar包"><a href="#2-2-2、导入Jar包" class="headerlink" title="2.2.2、导入Jar包"></a>2.2.2、导入Jar包</h5><p>从资料中导入springMVC独立运行的jar包</p>
+<p>不要使用spring 3.x的jar和4.x的jar文件混用，危险的很</p>
+<ul>
+<li><p>   com.springsource.org.apache.commons.logging-1.1.1.jar</p>
+</li>
+<li><p>   spring-beans-4.1.2.RELEASE.jar</p>
+</li>
+<li><p>   spring-context-4.1.2.RELEASE.jar</p>
+</li>
+<li><p>   spring-core-4.1.2.RELEASE.jar</p>
+</li>
+<li><p>   spring-expression-4.1.2.RELEASE.jar</p>
+</li>
+<li><p>   spring-aop-4.1.2.RELEASE.jar</p>
+</li>
+<li><p>   spring orm、jdbc、tx相关jar根据项目使用自行添加;</p>
+</li>
+</ul>
+<p>加入相关SpringMVC相关jar包。</p>
+<ul>
+<li><p>   spring-web-4.1.2.RELEASE.jar      spring 对web项目的支持。</p>
+</li>
+<li><p>   spring-webmvc-4.1.2.RELEASE.jar     SpringMVC核心包。</p>
+</li>
+</ul>
+<h5 id="2-3-3、加入配置文件"><a href="#2-3-3、加入配置文件" class="headerlink" title="2.3.3、加入配置文件"></a>2.3.3、加入配置文件</h5><p><strong>1、创建ApplicationContext.xml</strong></p>
+<p>SpringMVC本身就是Spring的子项目，对Spring兼容性很好，不需要做很多配置。</p>
+<p>这里只配置一个Controller扫描就可以了，让Spring对页面控制层Controller进行管理。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">	<span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/context&quot;</span></span><br><span class="hljs-tag">	<span class="hljs-attr">xmlns:mvc</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/mvc&quot;</span> </span><br><span class="hljs-tag">	<span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">	<span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/beans</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/context</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/context/spring-context.xsd</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/mvc</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 配置controller包扫描器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">&quot;cn.kongwei_liao.springmvc.controller&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">context:component-scan</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p><strong>2、配置前端控制器</strong></p>
+<p>Webmvc框架的心脏就是<strong>核心控制器</strong>，负责所有请求的公共功能，然后在分发给具体的控制器（我们编写的控制器），完成业务逻辑，响应视图。</p>
+<p>在web.xml中配置SpringMVC的<strong>前端控制器DispatcherServlet</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置sringmvc前端控制器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>DispatcherServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">init-param</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>contextConfigLocation<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>classpath:applicationContext.xml<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">init-param</span>&gt;</span><br>	<span class="hljs-comment">&lt;!--若不止一个&lt;init-param&gt;标签，第一个优先--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">load-on-startup</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">load-on-startup</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>DispatcherServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>		<span class="hljs-comment">&lt;!-- </span><br><span class="hljs-comment">		1. /* :拦截所有.包括静态资源 (不建议使用)</span><br><span class="hljs-comment">		2. .action .do : 拦截以action和do结尾的请求 (主要用于后台系统.)</span><br><span class="hljs-comment">		3. / :拦截所有,但是不包含jsp...</span><br><span class="hljs-comment">其他静态资源如:.css,.js等       需要用例外的配置进行放行 (主要用于前台系统)--&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>*.do<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h5 id="2-3-4、创建MyController"><a href="#2-3-4、创建MyController" class="headerlink" title="2.3.4、创建MyController"></a>2.3.4、创建MyController</h5><p>SpringMVC中的控制器与以前我们以前学习的servlet作用一样，处理用户请求，调用业务逻辑，返回结果视图。</p>
+<p>SpringMVC中的控制器有一定规范，要么实现接口，要么使用POJO对象与注解配合使用。</p>
+<table>
+<thead>
+<tr>
+<th>规范要求</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>实现Controller接口或子接口。</code>  注意：子接口很多已经过时了。</td>
+<td>核心方法为handleRequest(req,resp)，处理用户请求</td>
+</tr>
+<tr>
+<td>普通的类(常用的哦)</td>
+<td>使用一个普通的类作为我们的控制器，每一个方法就是一个处理器，这种方式需要配合注解标签才能使用。</td>
+</tr>
+</tbody></table>
+<p>这里作为演示案例：</p>
+<p>MyController需要<code>实现Controller接口</code>，<code>重写handleRquest方法</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyController</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Controller</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ModelAndView <span class="hljs-title">handleRequest</span><span class="hljs-params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="2-3-5、创建ModelAndView"><a href="#2-3-5、创建ModelAndView" class="headerlink" title="2.3.5、创建ModelAndView"></a>2.3.5、创建ModelAndView</h5><p>handleRequest方法的两个参数与我们以前的Servlet中service方法一样，request和response对象，我们可以使用这个两个对象完成一次请求的所有工作，比如你可以使用request接受参数，或者使用response重定向等等，<strong>注意该方法还有一个返回值ModelAndView</strong>。</p>
+<p>ModelAndView是SpringMVC控制器中特有一个对象，<strong>描述一次请求响应的 数据（Model）和 视图（View）</strong>。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">@Override<br>public ModelAndView handle<span class="hljs-constructor">Request(HttpServletRequest <span class="hljs-params">request</span>, HttpServletResponse <span class="hljs-params">response</span>)</span> throws Exception &#123;<br>	<span class="hljs-comment">// 处理请求： 接收参数  业务调用  页面跳转</span><br>	<br>	<span class="hljs-comment">// 创建 ModelAndView 对象</span><br>	ModelAndView mav = <span class="hljs-keyword">new</span> <span class="hljs-constructor">ModelAndView()</span>;<br>	<br>	<span class="hljs-comment">// 添加模型数据</span><br>	mav.add<span class="hljs-constructor">Object(<span class="hljs-string">&quot;message&quot;</span>,<span class="hljs-string">&quot;&lt;h2&gt;Hello SpringMVC!&lt;/h2&gt;&quot;</span>)</span>;<br>	<br>	<span class="hljs-comment">// 设置视图路径</span><br>	mav.set<span class="hljs-constructor">ViewName(<span class="hljs-string">&quot;index.jsp&quot;</span>)</span>;<br>	<br>	return mav;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="2-3-6、配置我们的控制器"><a href="#2-3-6、配置我们的控制器" class="headerlink" title="2.3.6、配置我们的控制器"></a>2.3.6、配置我们的控制器</h5><p>**name: ** /hello.do 为<code>控制器的访问路径</code></p>
+<p><strong>class:</strong>  cn.kongwei_liao.springmvc.controller.MyController<code>控制器类的全限定名</code></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;bean <span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;/index.do&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-string">&quot;cn.kongwei_liao.springmvc.controller.MyController&quot;</span>&gt;&lt;/bean&gt;<br></code></pre></td></tr></table></figure>
+<h5 id="2-3-7、JSP页面"><a href="#2-3-7、JSP页面" class="headerlink" title="2.3.7、JSP页面"></a>2.3.7、JSP页面</h5><p>和我们之前的jsp页面一样，里面接收一下Controller 传递过来的数据</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml">	<span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Hello World!<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="xml">	$</span><span class="hljs-template-variable">&#123;message&#125;</span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<h5 id="2-3-8、启动项目"><a href="#2-3-8、启动项目" class="headerlink" title="2.3.8、启动项目"></a>2.3.8、启动项目</h5><ol>
+<li>启动Tomcat报错（？？？是否是Tomcat报错存疑）</li>
+</ol>
+<p>错误信息如下：</p>
+<p><img src="/SpringMVC/clip_image002.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/SpringMVC/Snipaste_2019-11-28_15-40-56.png" srcset="/img/loading.gif"></p>
+<p><img src="/SpringMVC/Snipaste_2019-11-28_15-31-47.png" srcset="/img/loading.gif"></p>
+<p>没找到<code>/WEB-INF/springmvc-servlet.xml</code>文件OR没找到<code>/WEB-INF/DispatcherServlet-servlet.xml</code>文件，因为在启动Tomcat服务器的时候会初始化SpringMVC中的DispatcherServlet，而这个DispatcherServlet会根据配置文件初始化Spring容器，默认配置文件路径为：**/WEB-INF/&lt;servlet-name&gt;-servlet.xml**（？？？解释存疑）</p>
+<p><img src="/SpringMVC/clip_image004.jpg" srcset="/img/loading.gif" alt="img"></p>
+<ol start="2">
+<li>解决问题方式：</li>
+</ol>
+<p>1.可以把我们的配置文件更名为DispatcherServlet-servlet.xml，然后拷贝到WEB-INF中。</p>
+<p><img src="/SpringMVC/Snipaste_2019-11-28_15-43-48.png" srcset="/img/loading.gif" alt="img"></p>
+<p>2.一般spring的配置文件都在放在src中或者Resources文件夹中，我们可以通过以下配置告诉SpringMVC我们的配置文件路径。<strong>（常见做法）</strong></p>
+<p><img src="/SpringMVC/Snipaste_2019-11-28_15-48-33.png" srcset="/img/loading.gif" alt="img"></p>
+<h5 id="2-3-9、测试"><a href="#2-3-9、测试" class="headerlink" title="2.3.9、测试"></a>2.3.9、测试</h5><p><img src="/SpringMVC/Snipaste_2019-11-28_15-50-54.png" srcset="/img/loading.gif"></p>
+<h4 id="2-4、小结"><a href="#2-4、小结" class="headerlink" title="2.4、小结"></a>2.4、小结</h4><p>以上我们，实现了一个使用SpringMVC请求响应过程。</p>
+<p>我们自己<strong>创建了MyController用于接收请求并处理</strong>，通过<strong>ModelAndView传递了数据到我们的index.jsp</strong>，</p>
+<p>这个<strong>jsp将视图页面响应给用户</strong>。</p>
+<p>另外，需要注意的事：配置文件时一定要细心</p>
+<p>我们在web.xml 中配置了前端控制器，并指定了Spring的applicationContext.xml 配置文件的位置。</p>
+<p><strong>在applicationContext.xml，通过&lt;bean&gt;标签，配置了我们的Controller。</strong></p>
+<h3 id="3、SpringMVC执行流程"><a href="#3、SpringMVC执行流程" class="headerlink" title="3、SpringMVC执行流程"></a>3、SpringMVC执行流程</h3><h4 id="3-1、引入"><a href="#3-1、引入" class="headerlink" title="3.1、引入"></a>3.1、引入</h4><p>刚刚我们实现了一个使用SpringMVC请求响应过程。那为什么可以这样用呢？SpringMVC的实现原理又是怎样的呢？我们需要分析一下springMVC的架构图</p>
+<h4 id="3-2、SpringMVC框架结构"><a href="#3-2、SpringMVC框架结构" class="headerlink" title="3.2、SpringMVC框架结构***"></a>3.2、SpringMVC框架结构***</h4><p><img src="/SpringMVC/Snipaste_2019-11-28_10-29-33.png" srcset="/img/loading.gif"></p>
+<p><code>控制器(Controller) = 处理器(Handler)</code></p>
+<h4 id="3-3、SpringMVC工作流程"><a href="#3-3、SpringMVC工作流程" class="headerlink" title="3.3、SpringMVC工作流程"></a>3.3、SpringMVC工作流程</h4><h5 id="3-3-1、详细描述"><a href="#3-3-1、详细描述" class="headerlink" title="3.3.1、详细描述"></a>3.3.1、详细描述</h5><p>1.用户发送请求至<code>前端控制器DispatcherServlet</code></p>
+<p>2.DispatcherServlet收到请求调用<code>HandlerMapping处理器映射器</code>。</p>
+<p>3.处理器映射器根据请求url找到具体的处理器，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet。</p>
+<p>4.DispatcherServlet通过<code>HandlerAdapter处理器适配器</code>调用处理器</p>
+<p>5.执行处理器(Controller，也叫后端控制器)。</p>
+<p>6.Controller执行完成返回<code>ModelAndView</code></p>
+<p>7.HandlerAdapter将Controller执行结果ModelAndView返回给DispatcherServlet</p>
+<p>8.DispatcherServlet将ModelAndView传给<code>ViewReslover视图解析器</code></p>
+<p>9.ViewReslover解析后返回具体View</p>
+<p>10.DispatcherServlet对View进行渲染视图（即将模型数据填充至视图中）。</p>
+<p>11.DispatcherServlet响应用户。</p>
+<h5 id="3-3-2、简易版本–面试回答"><a href="#3-3-2、简易版本–面试回答" class="headerlink" title="3.3.2、简易版本–面试回答"></a>3.3.2、简易版本–面试回答</h5><ol>
+<li><p>客户端请求提交到DispatcherServlet</p>
+</li>
+<li><p>由DispatcherServlet控制器查询HandlerMapping，找到处理请求的Controller。</p>
+</li>
+<li><p>DispatcherServlet将请求转发给到Controller。</p>
+</li>
+<li><p>Controller调用业务逻辑处理后，返回ModelAndView</p>
+</li>
+<li><p>DispatcherServlet查询ViewResolver视图解析器，找到ModelAndView指定的视图。</p>
+</li>
+<li><p>视图负责将填充了数据的结果响应到客户端。</p>
+</li>
+</ol>
+<h4 id="3-4、SpringMVC核心对象"><a href="#3-4、SpringMVC核心对象" class="headerlink" title="3.4、SpringMVC核心对象"></a>3.4、SpringMVC核心对象</h4><h5 id="3-4-1、DispatcherServlet：前端控制器"><a href="#3-4-1、DispatcherServlet：前端控制器" class="headerlink" title="3.4.1、DispatcherServlet：前端控制器"></a>3.4.1、DispatcherServlet：前端控制器</h5><p>用户请求到达前端控制器，它就相当于mvc模式中的C，<code>DispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请求</code>，DispatcherServlet的存在降低了组件之间的耦合性。</p>
+<h5 id="3-4-2、HandlerMapping：处理器映射器"><a href="#3-4-2、HandlerMapping：处理器映射器" class="headerlink" title="3.4.2、HandlerMapping：处理器映射器"></a>3.4.2、HandlerMapping：处理器映射器</h5><p><code>HandlerMapping负责根据用户请求url找到最合适的处理器Handler.</code><br>我们刚才是通过<strong>配置文件的方式</strong>：<br>处理器映射器通过&lt;bean name=”/xxx”&gt;注册的控制器。控制器需要实现Controller接口。<br>也可以通过<strong>注解的方式</strong>去实现，<br>等一下我们介绍完SpringMVC的核心对象后，会带着大家通过全注解的方式实现一个Controller。</p>
+<h5 id="3-4-3、HandlerAdapter：处理器适配器"><a href="#3-4-3、HandlerAdapter：处理器适配器" class="headerlink" title="3.4.3、HandlerAdapter：处理器适配器"></a>3.4.3、HandlerAdapter：处理器适配器</h5><p>支持多种类型的处理器，如何执行我们的控制器（Controller有多种不同实现方式）。<br>SpringMVC的常用的处理器适配器有：<br><code>HttpRequestHandlerAdapter</code> 处理实现了<code>HttpRequestHandler接口</code>对应的处理器。<br><code>SimpleControllerHandlerAdapter</code> 处理实现了<code>Controller接口</code>对应的控制器。<br>说明：<br>直接配置处理器映射器和处理器适配器比较麻烦，SpringMVC 3.2以上会自动加载默认的映射器RequestMappingHandlerMapping和 默认的适配器RequestMappingHandlerAdapter。</p>
+<h5 id="3-4-4、Handler：处理器"><a href="#3-4-4、Handler：处理器" class="headerlink" title="3.4.4、Handler：处理器"></a>3.4.4、Handler：处理器</h5><p><code>Handler是继DispatcherServlet前端控制器的后端控制器</code>，在DispatcherServlet的控制下Handler对具体的用户请求进行处理。<br>由于Handler涉及到具体的用户业务请求，所以一般情况需要程序员根据业务需求开发Handler。<br>我们刚才创建的 MyController 就是一个处理器。</p>
+<h5 id="3-4-5、ViewResolver：视图解析器"><a href="#3-4-5、ViewResolver：视图解析器" class="headerlink" title="3.4.5、ViewResolver：视图解析器"></a>3.4.5、ViewResolver：视图解析器</h5><p>View Resolver负责将处理结果生成View视图，ViewResolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。<br>视图解析器使用SpringMVC框架默认的<code>InternalResourceViewResolver</code>，这个视图解析器支持JSP视图解析。通常我们会配置前后缀来减少代码的重复。可以修改我们的入门案例来看一下：<br>在applicationContext.xml配置文件中配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置视图解析器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span><br>	<span class="hljs-comment">&lt;!-- 指定视图的前缀 --&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;prefix&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;/&quot;</span>/&gt;</span><br>	<span class="hljs-comment">&lt;!-- 指定视图的后缀 --&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;suffix&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;.jsp&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p><code>逻辑视图名需要在Controller中返回ModelAndView指定</code>，比如逻辑视图名为hello，则最终返回的jsp视图地址是：<code>前缀+逻辑视图名+后缀</code>、即</p>
+<p>“WEB-INF/jsp/hello.jsp”</p>
+<h5 id="3-4-6、View：视图"><a href="#3-4-6、View：视图" class="headerlink" title="3.4.6、View：视图"></a>3.4.6、View：视图</h5><p>SpringMVC框架提供了很多的View视图类型的支持，包括：jstlView、freemarkerView等。目前我们最常用的视图就是jsp。</p>
+<p>一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由程序员根据业务需求开发具体的页面。</p>
+<h4 id="3-5、小结"><a href="#3-5、小结" class="headerlink" title="3.5、小结"></a>3.5、小结</h4><p>1、在SpringMVC 的六个核心组件中，DispatcherServlet前端控制器是整个流程控制的中心<br>2、一般我们称：处理器映射器、处理器适配器、视图解析器 为SpringMVC的三大组件。<br>3、需要用户开发的组件有处理器(Controller)、视图view</p>
+<h3 id="4、Controller实现方式"><a href="#4、Controller实现方式" class="headerlink" title="4、Controller实现方式"></a>4、Controller实现方式</h3><h4 id="4-1、引入"><a href="#4-1、引入" class="headerlink" title="4.1、引入"></a>4.1、引入</h4><p>我们刚刚在介绍的SpringMVC的核心时有提到，处理器适配器可以执行的Controller其实是有不同的实现方式，在入门案例中我们也演示了通过实现Controller接口的方式。接下来我们在看看其他实现控制器的方式，并重点掌握也是Spring推荐使用的方式–全注解去实现自己的Controller。</p>
+<h4 id="4-2、三种实现方式"><a href="#4-2、三种实现方式" class="headerlink" title="4.2、三种实现方式"></a>4.2、三种实现方式</h4><h5 id="4-2-1、实现Controller接口"><a href="#4-2-1、实现Controller接口" class="headerlink" title="4.2.1、实现Controller接口"></a>4.2.1、实现Controller接口</h5><p>就是我们刚才入门案例演示的方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//实现Controller接口</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Controller01</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Controller</span></span>&#123;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> ModelAndView <span class="hljs-title">handleRequest</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>		System.out.println(<span class="hljs-keyword">this</span>.getClass());<br>		<span class="hljs-comment">//模型数据和视图对象</span><br>		ModelAndView modelAndView = <span class="hljs-keyword">new</span> ModelAndView();<br>		modelAndView.setViewName(<span class="hljs-string">&quot;/WEB-INF/controller.jsp&quot;</span>);<br>		<span class="hljs-keyword">return</span> modelAndView;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>配置：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;bean <span class="hljs-attribute">id</span>=<span class="hljs-string">&quot;/controller01.do&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-string">&quot;cn.kongwei_liao.springmvc.controller.ControllerDemo1&quot;</span>&gt;&lt;/bean&gt;<br></code></pre></td></tr></table></figure>
+<h5 id="4-2-2、实现HttpRequestHandler接口"><a href="#4-2-2、实现HttpRequestHandler接口" class="headerlink" title="4.2.2、实现HttpRequestHandler接口"></a>4.2.2、实现HttpRequestHandler接口</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//实现了HttpRequestHandler接口</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Controller02</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">HttpRequestHandler</span></span>&#123;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">handleRequest</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="hljs-keyword">throws</span> ServletException, IOException 	</span>&#123;<br>		System.out.println(<span class="hljs-keyword">this</span>.getClass());<br>		request.getRequestDispatcher(<span class="hljs-string">&quot;/WEB-INF/controller.jsp&quot;</span>).forward(request, response);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>配置：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;bean <span class="hljs-attribute">id</span>=<span class="hljs-string">&quot;/controller02.do&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-string">&quot;cn.itsource.springmvc.controller.ControllerDemo2&quot;</span>&gt;&lt;/bean&gt;<br></code></pre></td></tr></table></figure>
+<h5 id="4-2-3、普通类和注解（建议使用）"><a href="#4-2-3、普通类和注解（建议使用）" class="headerlink" title="4.2.3、普通类和注解（建议使用）***"></a>4.2.3、普通类和注解（建议使用）***</h5><p>SpringMVC中控制器建议使用注解方式，是官方推荐的，外面公司也是多使用此方式。<br>这种方式只要配置SpringMVC开启注解支持，然后在类上添加注解即可。</p>
+<p>具体步骤如下：</p>
+<p>第一步：SpringMVC开启支持注解</p>
+<p>只要在 Spring 配置文件中添加如下标签即可实现：处理通过注解方式实现的控制器。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 支持注解 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:annotation-driven</span>/&gt;</span><br><br><span class="hljs-comment">&lt;!-- 配置controller包扫描器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">&quot;cn.ant_nest.springmvc.controller&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">context:component-scan</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>说明：<br>在Spring中一般采用<code>@RequestMapping</code>注解来完成映射关系，要想使@RequestMapping注解生效必须向上下文中注册<code>DefaultAnnotationHandlerMapping</code>和一个<code>AnnotationMethodHandlerAdapter</code>实例，这两个实例分别在类级别和方法级别处理。</p>
+<p>而<code>&lt;mvc:annotation-driven/&gt;</code>配置帮助我们自动完成上述两个实例的注入。</p>
+<p>第二步：创建一个普通Java类<code>不需要实现任何接口</code></p>
+<p>只需要在类上添加@Controller注解，把Controller交由Spring管理。</p>
+<p>在方法上面添加@RequestMapping注解，里面指定请求的url。使处理器映射器可以找到它。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AnnController</span> </span>&#123;<br>	<br>	<span class="hljs-meta">@RequestMapping(&quot;/anncon.do&quot;)</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">m01</span><span class="hljs-params">()</span></span>&#123;<br>		System.out.println(<span class="hljs-string">&quot;AnnController!&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>@RequestMapping</strong> <strong>注解说明：</strong></p>
+<p>@RequestMapping 中常用的属性有以下几个:</p>
+<ol>
+<li><p>value: 默认属性，请求的实际路径，可以配置多路径映射</p>
+</li>
+<li><p>method:请求方法的限定。可以限定 GET,POST,DELETE,PUT 请求方式</p>
+</li>
+</ol>
+<p>value 的使用：</p>
+<p>①使用在方法上，可以将 url 映射到指定的方法</p>
+<p>②使用在类上，如果该 controller 的映射路径都有固定的前缀</p>
+<p>/user/addUser.do</p>
+<p>/user/deleteUser.do</p>
+<p>/user/updateUser.do</p>
+<p>修改一下 AnnController 测试一下</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@Controller</span><br><span class="hljs-variable">@RequestMapping</span>(<span class="hljs-string">&quot;/anncon&quot;</span>)<br>public class AnnController &#123;<br>	<br>	<span class="hljs-variable">@RequestMapping</span>(<span class="hljs-string">&quot;/m01.do&quot;</span>)<br>	public void m01()&#123;<br>		<span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(<span class="hljs-string">&quot;Method01 !&quot;</span>);<br>	&#125;<br><br>	@<span class="hljs-selector-tag">RequestMapping</span>(<span class="hljs-string">&quot;/m02.do&quot;</span>)<br>	<span class="hljs-selector-tag">public</span> <span class="hljs-selector-tag">void</span> <span class="hljs-selector-tag">m02</span>()&#123;<br>		<span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(<span class="hljs-string">&quot;Method2 !&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后访问路径：<a target="_blank" rel="noopener" href="http://localhost:8080/demo/anncon/m01.do">http://localhost:8080/demo/anncon/m01.do</a></p>
+<h4 id="4-3、小结"><a href="#4-3、小结" class="headerlink" title="4.3、小结"></a>4.3、小结</h4><p>常见的Controller实现方式有三种，我们<code>一般采用全注解的方式</code>：</p>
+<p>需要在Spring配置文件中开启全注解支持，怎么开启？</p>
+<p>然后在我们自己的Controller类上添加@Controller和@RequestMapping注解</p>
+<h3 id="5、接收参数，页面跳转，传递对象（Servlet原来做的事情）"><a href="#5、接收参数，页面跳转，传递对象（Servlet原来做的事情）" class="headerlink" title="5、接收参数，页面跳转，传递对象（Servlet原来做的事情）"></a>5、接收参数，页面跳转，传递对象（Servlet原来做的事情）</h3><h4 id="5-1、引入"><a href="#5-1、引入" class="headerlink" title="5.1、引入"></a>5.1、引入</h4><p>我们用过注解实现了一个Controller，但是这样一个Controller又如何才能实现原来Servlet的作用呢? 要怎样才能接收参数，实现页面跳转并且传递数据的呢? 下面我们来一一介绍。  </p>
+<h4 id="5-2、接收参数的四种方式"><a href="#5-2、接收参数的四种方式" class="headerlink" title="5.2、接收参数的四种方式"></a>5.2、接收参数的四种方式</h4><h5 id="5-2-1、接收普通参数"><a href="#5-2-1、接收普通参数" class="headerlink" title="5.2.1、接收普通参数"></a>5.2.1、接收普通参数</h5><p>1、形参名称与传递参数一致</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">@Controller<br><span class="hljs-built_in">public</span> <span class="hljs-keyword">class</span> DataController &#123;<br>	// 普通数据接收<br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * http://localhost:8080/demo/params01.do?name=admin&amp;age=24</span><br><span class="hljs-comment">	 */</span><br>	@RequestMapping(&quot;/params01.do&quot;)<br>	<span class="hljs-built_in">public</span> ModelAndView params01(String <span class="hljs-type">name</span>, <span class="hljs-type">Integer</span> age) &#123;<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;name:&quot; + <span class="hljs-type">name</span>);<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;age:&quot; + age);<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>2、形参名称与传递参数不一致</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 如果传过来的名称与接收的名称不一致</span><br><span class="hljs-comment"> * http://localhost:8080/demo/params02?name=admin&amp;age=24</span><br><span class="hljs-comment"> */</span><br><span class="hljs-variable">@RequestMapping</span>(<span class="hljs-string">&quot;/params02.do&quot;</span>)<br>	public ModelAndView params02(<span class="hljs-variable">@RequestParam</span>(<span class="hljs-string">&quot;name&quot;</span>) String username,Integer age)&#123;<br>	<span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(<span class="hljs-string">&quot;username:&quot;</span>+username);<br>	<span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(<span class="hljs-string">&quot;age:&quot;</span>+age);<br>	<span class="hljs-selector-tag">return</span> <span class="hljs-selector-tag">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="5-2-2、使用对象接收参数"><a href="#5-2-2、使用对象接收参数" class="headerlink" title="5.2.2、使用对象接收参数"></a>5.2.2、使用对象接收参数</h5><p>准备对象</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lasso"><span class="hljs-keyword">public</span> class User &#123;<br>	<span class="hljs-keyword">private</span> Long id;<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> name;<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">Integer</span> age;<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">Date</span> <span class="hljs-built_in">date</span>;<br>	<span class="hljs-comment">// 其它的getter,setter省略...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * http://localhost:8080/anncon/params03.do?name=admin&amp;age=24&amp;date=2018-12-09</span><br><span class="hljs-comment"> * 注意：接收日期必需在</span><br><span class="hljs-comment"> * set时间前配置：@DateTimeFormat(pattern=&quot;yyyy-MM-dd&quot;)</span><br><span class="hljs-comment"> */</span><br>@RequestMapping(&quot;/params03.do&quot;)<br><span class="hljs-built_in">public</span> ModelAndView params03(<span class="hljs-keyword">User</span> <span class="hljs-keyword">user</span>) &#123;<br>	<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;name:&quot; + <span class="hljs-keyword">user</span>.getName());<br>	<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;age:&quot; + <span class="hljs-keyword">user</span>.getAge());<br>	<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;date:&quot; + <span class="hljs-keyword">user</span>.getDate());<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>特别注意：在对象部分咱们加了一个日期，而日期格式的数据接收需要加相应的注解:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@DateTimeFormat</span>(pattern = <span class="hljs-string">&quot;yyyy-MM-dd&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">setDate</span>(<span class="hljs-params"><span class="hljs-built_in">Date</span> date</span>)</span> &#123;<br>	<span class="hljs-built_in">this</span>.date = date;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注: @DateTimeFormat要生效，则applicationContext.xml 中一定要配置<strong>支持注解</strong>的适配器和映射器</p>
+<h5 id="5-2-3、HttpServletRequest接收参数（不建议使用）"><a href="#5-2-3、HttpServletRequest接收参数（不建议使用）" class="headerlink" title="5.2.3、HttpServletRequest接收参数（不建议使用）"></a>5.2.3、HttpServletRequest接收参数（不建议使用）</h5><p>SpringMVC想要拿Request，Session，Response直接在参数中写即可(它很强大)</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">// 使用HttpServletRequest接收(不建议使用)</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * http://localhost:8080/demo/params04?name=admin&amp;age=24</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@RequestMapping(<span class="hljs-meta-string">&quot;/params04&quot;</span>)</span><br><span class="hljs-keyword">public</span> ModelAndView params04(HttpServletRequest request) &#123;<br>	System.<span class="hljs-keyword">out</span>.println(request.getParameter(<span class="hljs-string">&quot;name&quot;</span>));<br>	System.<span class="hljs-keyword">out</span>.println(request.getParameter(<span class="hljs-string">&quot;age&quot;</span>));<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h5 id="5-2-4、URL地址提取数据，RESTful风格"><a href="#5-2-4、URL地址提取数据，RESTful风格" class="headerlink" title="5.2.4、URL地址提取数据，RESTful风格"></a>5.2.4、URL地址提取数据，RESTful风格</h5><p>什么是 RESTful</p>
+<p><img src="/SpringMVC/clip_image001.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>当你到公司被要求写一个接口时，很有可能就需要提供一个符合Restful风格的方法实现。</p>
+<p>我们来对比传统开发和 RESTful 开发 url 的对比.</p>
+<p>功能           传统开发                                                          RESTful 风格开发</p>
+<p>​                    url                                        提交方式            url                      提交方式</p>
+<p>添加用户    /ems/addUser.do                 POST              /ems/user          POST</p>
+<p>删除用户    /ems/deleteUser.do?id=1   GET/POST      /ems/user/1      DELETE</p>
+<p>修改用户    /ems/updateUser.do           POST              /ems/user          PUT</p>
+<p>查询用户    /ems/getUser.do?id=1         GET                /ems/user/1       GET</p>
+<p>代码实现</p>
+<p>根据 RESTful 风格.我们请求的 url 是: <a target="_blank" rel="noopener" href="http://localhost/params05/user/10">http://localhost/params05/user/10</a></p>
+<p><strong>controller</strong> <strong>代码</strong></p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 接收url中参数的请求,接收用户请求参数值 </span><br><span class="hljs-comment"> * http://localhost:8080/demo/params05/user/10</span><br><span class="hljs-comment"> */</span><br><span class="hljs-variable">@RequestMapping</span>(<span class="hljs-string">&quot;/params05/user/&#123;id&#125;&quot;</span>)<br>public ModelAndView params05(<span class="hljs-variable">@PathVariable</span>(<span class="hljs-string">&quot;id&quot;</span>)Long id)&#123;<br>	<span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(id);<br>	<span class="hljs-selector-tag">return</span> <span class="hljs-selector-tag">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>说明：</p>
+<p>将动态的 id 用 { } 括起来.</p>
+<p>在方法的形参前,使用**@PathVariable** 注解, 将 url 上的参数封装到形参上；</p>
+<p>如果是使用domain对象接收参数这里无需 @pathVariable注解；</p>
+<p>如果是<code>多参数 url</code> 应为: /user/{name}/{id}, 多个参数使用 / 隔开；</p>
+<p>对于多参数的 url，在方法的形参上使用多个参数接收, 每个参数前都要添@PathVariable 。</p>
+<p><strong>web.xml</strong> <strong>修改</strong></p>
+<p>因为之前我们配置的前端控制器拦截规则是*.do，所以 RESTful 风格的请求无法进入 controller，因此我们将拦截规则修改为 / </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>DispatcherServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>说明：</p>
+<p>&lt;url-pattern&gt; 配置的3种方式 </p>
+<table>
+<thead>
+<tr>
+<th>&lt;url-pattern&gt;</th>
+<th>配置说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/*</td>
+<td>不用，所有都会拦截，包括jsp</td>
+</tr>
+<tr>
+<td>*.do</td>
+<td>配置简单,可以访问静态资源(不支持RESTful风格)</td>
+</tr>
+<tr>
+<td>/</td>
+<td>配置复杂一点，支持RESTful风格</td>
+</tr>
+</tbody></table>
+<p><strong>Spring配置：对静态资源放行</strong></p>
+<p>当拦截规则修改之后，静态资源（.html, .css, .js…）也会被拦截，所以我们需要对静态资源放行. </p>
+<p>在 applicationContext.xml 文件中 映射器和适配器的后面 进行放行配置.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 自动加载推荐的处理器映射器和适配器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:annotation-driven</span>/&gt;</span><br><br><span class="hljs-comment">&lt;!-- 静态资源放行 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:default-servlet-handler</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>现在我们就可以正常访问静态资源了，再次访问<a target="_blank" rel="noopener" href="http://localhost:8080/anncon/data.html%E8%AF%95%E8%AF%95">http://localhost:8080/anncon/data.html试试</a></p>
+<h5 id="5-2-5、小结"><a href="#5-2-5、小结" class="headerlink" title="5.2.5、小结"></a>5.2.5、小结</h5><p>1.接收参数常用方式（普通参数，对象接收，URL地址提取）</p>
+<p>2.形参名称不一致使用@RequestParam(“name”)String username </p>
+<p>3.日期接收参数添加标签@DateTimeFormat(setXxx)</p>
+<p>4.URL地址提取 /路径/{id} @PathVariable(“id”)Long id</p>
+<h4 id="5-3、页面跳转"><a href="#5-3、页面跳转" class="headerlink" title="5.3、页面跳转"></a>5.3、页面跳转</h4><h5 id="5-3-1、跳转方式"><a href="#5-3-1、跳转方式" class="headerlink" title="5.3.1、跳转方式"></a>5.3.1、跳转方式</h5><p>咱们学习的跳转方式有两种: 重定向与请求转发</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>请求转发(forward)</th>
+<th>重定向(redirect)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>访问WEB-INF</td>
+<td><strong>√</strong></td>
+<td><strong>X</strong></td>
+</tr>
+<tr>
+<td>request传参</td>
+<td><strong>√</strong></td>
+<td><strong>X</strong></td>
+</tr>
+<tr>
+<td>全新请求(URL变化)</td>
+<td><strong>X</strong></td>
+<td><strong>√</strong></td>
+</tr>
+<tr>
+<td>访问外网</td>
+<td><strong>X</strong></td>
+<td><strong>√</strong></td>
+</tr>
+</tbody></table>
+<p><strong>请求转发(forward)</strong></p>
+<p>上面4个案例都是转发，转发的值都是放到request请求作用域，下一个页面可以取出，Url地址不会改变</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 使用请求转发</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/path06&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">data5</span>(<span class="hljs-params">Model model,HttpSession session</span>)</span>&#123;<br>	model.addAttribute(<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;张三&quot;</span>);<span class="hljs-comment">//可以取出数据</span><br>	session.setAttribute(<span class="hljs-string">&quot;testsession&quot;</span>, <span class="hljs-string">&quot;张三session&quot;</span>);<span class="hljs-comment">//可以取出数据</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;forward:/data.jsp&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>重定向(redirect)</strong></p>
+<p>重定向就是发出一个全新的请求，如果把值放到request请求，下一个页面不能取出</p>
+<p>如果把值放到session会话请求，下一个页面可以取出</p>
+<p>Url地址会改变</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 使用重定向</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/path07&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">data6</span>(<span class="hljs-params">Model model,HttpSession session</span>)</span>&#123;<br>	model.addAttribute(<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;张三&quot;</span>);<span class="hljs-comment">//不可以取出数据</span><br>	session.setAttribute(<span class="hljs-string">&quot;testsession&quot;</span>, <span class="hljs-string">&quot;张三session&quot;</span>);<span class="hljs-comment">//可以取出数据</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;redirect:/data.jsp&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="5-3-2、前缀使用"><a href="#5-3-2、前缀使用" class="headerlink" title="5.3.2、前缀使用"></a>5.3.2、前缀使用</h5><p>视图名规则</p>
+<p>​    不写前缀默认为 “转发” </p>
+<p>​    视图名字符串前缀:</p>
+<p>​        forward:/xxx.jsp 采用转发。</p>
+<p>​        redirect:/xxx.jsp 采用重定向。</p>
+<p>我们之前已经配置了视图解析器，我们再次看一下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置视图解析器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span><br>	<span class="hljs-comment">&lt;!-- 指定视图的前缀 --&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;prefix&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;/&quot;</span>/&gt;</span><br>	<span class="hljs-comment">&lt;!-- 指定视图的后缀 --&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;suffix&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;.jsp&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>有没有发现什么样的问题？</p>
+<p>说明：</p>
+<p><code>使用了forword 或 redirect跳转页面通过视图解析器时是不会添加前缀和后缀的。</code></p>
+<p>用于跳转到一些特殊的路径，比如：</p>
+<p>页面不在前缀路径中的情况（或者页面路径不是以.jsp为后缀）</p>
+<h4 id="5-4、传递参数的四种方式"><a href="#5-4、传递参数的四种方式" class="headerlink" title="5.4、传递参数的四种方式"></a>5.4、传递参数的四种方式</h4><h5 id="5-4-1、通用ModelAndView方式"><a href="#5-4-1、通用ModelAndView方式" class="headerlink" title="5.4.1、通用ModelAndView方式"></a>5.4.1、通用ModelAndView方式</h5><p>在之前的入门案例里我们就看到过了ModelAndView，使用ModelAndView 可以传递参数到指定视图路径。我们再来试一下：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs awk">/**<br> * 通过ModelAndView 传递普通参数<br> * http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">8080</span><span class="hljs-regexp">/demo/</span>data01<br> * @return<br> */<br>@RequestMapping(<span class="hljs-string">&quot;/data01&quot;</span>)<br>public ModelAndView data01()&#123;<br>	<span class="hljs-regexp">//</span>创建ModelAndView.用于保存数据和视图<br>	ModelAndView mav = new ModelAndView();<br>	<span class="hljs-regexp">//</span>设置数据到模型中<br>	mav.addObject(<span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;ModelAndView 传递数据&quot;</span>);<br>	<span class="hljs-regexp">//</span>设置jsp视图<br>	mav.setViewName(<span class="hljs-string">&quot;view&quot;</span>);<br>	<span class="hljs-regexp">//</span>返回模型视图<br>	return mav;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>也可以传递JavaBean 对象：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 通过ModelAndView 传递对象参数</span><br><span class="hljs-comment"> * @return</span><br><span class="hljs-comment"> */</span><br>@<span class="hljs-constructor">RequestMapping(<span class="hljs-string">&quot;/data02&quot;</span>)</span><br>public ModelAndView data02<span class="hljs-literal">()</span>&#123;<br>	<span class="hljs-comment">//创建ModelAndView.用于保存数据和视图</span><br>	ModelAndView mav = <span class="hljs-keyword">new</span> <span class="hljs-constructor">ModelAndView()</span>;<br>	<span class="hljs-comment">//设置数据到模型中</span><br>	User user = <span class="hljs-keyword">new</span> <span class="hljs-constructor">User()</span>;<br>	user.set<span class="hljs-constructor">Name(<span class="hljs-string">&quot;李四&quot;</span>)</span>;<br>	mav.add<span class="hljs-constructor">Object(<span class="hljs-params">user</span>)</span>;<br>	<br>	<span class="hljs-comment">//设置jsp视图</span><br>	mav.set<span class="hljs-constructor">ViewName(<span class="hljs-string">&quot;view&quot;</span>)</span>;<br>	<span class="hljs-comment">//返回模型视图</span><br>	return mav;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>说明：<br>我们<code>使用addObject（String attributeName,Object attributeValue）方法添加返回的数据</code>。<br>当使用Object类型的对象的时候，必须指定一个名字。<code>ModelAndView，也可以接收没有明显名字的对象</code>，原因在于ModelAndView，将调用<code>spring自己定义的方法Conventions.getVariableName()来为这个model生成一个名字</code>。显然，<code>对model而言，名字是必须的</code>。<br>Conventions.getVariableName()生成名字的规则是<code>（使用对象的类名的小写模式来作model名字，能够由EL表达式访问）</code>。当这个model是集合或数组的时候，使用集合的第一个元素的类名加s来作model的名字。</p>
+<h5 id="5-4-2、使用Model方式（强烈建议使用）"><a href="#5-4-2、使用Model方式（强烈建议使用）" class="headerlink" title="5.4.2、使用Model方式（强烈建议使用）"></a>5.4.2、使用Model方式（强烈建议使用）</h5><p>使用ModelAndView 需要我们自己创建对象，其实体贴的SpringMVC框架已经为我们的参数传递准备了专门的对象。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 通过Model 传递参数</span><br><span class="hljs-comment"> * SpringMVC会自动创建模型对象传到方法中，我们只需要往这个模型对象中添加数据即可</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return </span>返回值为字符串,我们可以理解为就是一个视图的名称(写路径即可)</span><br><span class="hljs-comment"> */</span> <br><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/data03&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> <span class="hljs-function"><span class="hljs-title">data03</span>(<span class="hljs-params">Model model</span>)</span>&#123;<br>	<span class="hljs-comment">//添加数据</span><br>	model.addAttribute(<span class="hljs-string">&quot;message&quot;</span>,<span class="hljs-string">&quot;Model 传递数据&quot;</span>);<br><br>    <span class="hljs-comment">//指定要返回的视图路径</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;view&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>ModelAndView与 Model的区别：</p>
+<p>Model是每次请求中都存在的默认参数；</p>
+<p>利用其addAttribute()方法即可将服务器的值传递到jsp页面中</p>
+<p>ModelAndView包含model和view两部分</p>
+<p>使用时需要自己实例化，利用ModelMap用来传值，也可以设置view的名称</p>
+<p><code>无论是ModelAndView还是Model传递的对象是存放在request Scope中的</code>，如果需要在session域中传值，可以像Model一样在方法的参数里添加Session 即可使用。</p>
+<h5 id="5-4-3、HttpServletRequest方式（不建议使用）"><a href="#5-4-3、HttpServletRequest方式（不建议使用）" class="headerlink" title="5.4.3、HttpServletRequest方式（不建议使用）"></a>5.4.3、HttpServletRequest方式（不建议使用）</h5><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs aspectj"><span class="hljs-comment">//通过request对象进行数据传递(不建议使用)</span><br><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/data04&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> data04(HttpServletRequest request,HttpServletResponse response) <br>			<span class="hljs-keyword">throws</span> ServletException, IOException&#123;<br>	request.setAttribute(<span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;HttpServletRequest&quot;</span>);<br>	<span class="hljs-comment">//需要自己指定跳转页面的全路径</span><br>	request.getRequestDispatcher(<span class="hljs-string">&quot;/WEB-INF/jsp/view.jsp&quot;</span>).forward(request, response);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="5-4-4、返回值传参（不建议使用）"><a href="#5-4-4、返回值传参（不建议使用）" class="headerlink" title="5.4.4、返回值传参（不建议使用）"></a>5.4.4、返回值传参（不建议使用）</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 返回值就是模型数据</span><br><span class="hljs-comment"> * 	SpringMVC会自动创建一个ModelAndView对象，并且调用添加模型 mdv.addObject(&quot;user&quot;, user);</span><br><span class="hljs-comment"> * 	并且访问路径就是视图的名称 /data05  mdv.setViewName(&quot;/data05&quot;);</span><br><span class="hljs-comment"> * 	在这里我们的视图肯定没有data05的视图，所以会报一个错</span><br><span class="hljs-comment"> * @return</span><br><span class="hljs-comment"> */</span><br>@RequestMapping(&quot;/data05&quot;)<br><span class="hljs-built_in">public</span> <span class="hljs-keyword">User</span> data05()&#123;<br>	<span class="hljs-keyword">User</span> <span class="hljs-keyword">user</span> = <span class="hljs-built_in">new</span> <span class="hljs-keyword">User</span>();<br>	<span class="hljs-keyword">user</span>.setName(&quot;张三&quot;);<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">user</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>不要使用这种方式直接返回对象，<code>这种方式只用在我们需要把返回的对象转换为Json数据时</code>。</p>
+<h4 id="5-5、小结"><a href="#5-5、小结" class="headerlink" title="5.5、小结"></a>5.5、小结</h4><ol>
+<li><p>接收和传参的4种方式，建议使用Model方式</p>
+</li>
+<li><p>跳转时可以配置视图解析器ViewResolver，简化咱们的跳转</p>
+</li>
+<li><p>怎么使用不同的方式(forward/redirect)进行跳转 ?</p>
+</li>
+</ol>
+<h3 id="6、SpringMVC返回JSON"><a href="#6、SpringMVC返回JSON" class="headerlink" title="6、SpringMVC返回JSON"></a>6、SpringMVC返回JSON</h3><h4 id="6-1、引入"><a href="#6-1、引入" class="headerlink" title="6.1、引入"></a>6.1、引入</h4><h5 id="6-1-1-什么是json？"><a href="#6-1-1-什么是json？" class="headerlink" title="6.1.1.  什么是json？"></a>6.1.1.  什么是json？</h5><p>json是一种轻量级的前端后端以及网络传输的数据交换格式，就是一串字符串。也就是说在后端可以把一个复杂对象，通过json来转换成特定的字符串传到前端去。</p>
+<p>简单的：var json = ‘{“name”:”张三” , “age”:18 }’;</p>
+<h5 id="6-1-2-为什么要用json？"><a href="#6-1-2-为什么要用json？" class="headerlink" title="6.1.2.  为什么要用json？"></a>6.1.2.  为什么要用json？</h5><p>json本来是javascript里的内容，有时后端要传各种各样的数据格式来适应前端，所以需要用到json来转换，用它来表示各种各样复杂的数据。 </p>
+<p>数据格式比较简单, 易于读写, 能够直接为服务器端代码使用, 大大简化了服务器端和客户端的代码开发量, 且易于维护，语言无关。</p>
+<h4 id="6-2、实现"><a href="#6-2、实现" class="headerlink" title="6.2、实现"></a>6.2、实现</h4><h5 id="6-2-1、步骤分析"><a href="#6-2-1、步骤分析" class="headerlink" title="6.2.1、步骤分析"></a>6.2.1、步骤分析</h5><p>要我们的Controller返回一个Json字符串非常简单，只需要添加相关jar包，并在我们的方法上添加@ResponseBody注解即可。</p>
+<h5 id="6-2-2、添加jackson的jar包"><a href="#6-2-2、添加jackson的jar包" class="headerlink" title="6.2.2、添加jackson的jar包"></a>6.2.2、添加jackson的jar包</h5><p>如果需要 springMVC 支持 json，必须加入 json 的处理 jar 包。</p>
+<p>springmvc 官方使用 Jackson 这个 jar 包：</p>
+<blockquote>
+<p>jackson-annotations-2.5.0.jar</p>
+<p>jackson-core-2.5.0.jar</p>
+<p>jackson-databind-2.5.0.jar</p>
+</blockquote>
+<h5 id="6-2-3、JsonController"><a href="#6-2-3、JsonController" class="headerlink" title="6.2.3、JsonController"></a>6.2.3、JsonController</h5><p>在方法上添加 @ResponseBody  注解，方法返回的字符串不在被ViewResolver解析为视图，而是直接返回字符串。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Controller</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JsonController</span> </span>&#123;<br>	<span class="hljs-meta">@RequestMapping(&quot;/json1&quot;)</span><br>	<span class="hljs-meta">@ResponseBody</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">json1</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;xxx&quot;</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果方法的返回值是复杂对象，@ResponseBody注解，会将 java 对象解析为 json 格式的字符串返回</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@RequestMapping</span>(<span class="hljs-string">&quot;/json2&quot;</span>)<br><span class="hljs-variable">@ResponseBody</span><br>public User json3() throws Exception &#123;<br>	<span class="hljs-comment">//返回一个javaBean 对象</span><br>	<span class="hljs-selector-tag">return</span> <span class="hljs-selector-tag">new</span> <span class="hljs-selector-tag">User</span>(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-number">20</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当返回的对象有Date日期格式的属性：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@RequestMapping</span>(<span class="hljs-string">&quot;/json03&quot;</span>)<br><span class="hljs-variable">@ResponseBody</span><br>public User json4() throws Exception &#123;<br>	<span class="hljs-comment">// 返回一个javaBean 对象</span><br>	<span class="hljs-selector-tag">return</span> <span class="hljs-selector-tag">new</span> <span class="hljs-selector-tag">User</span>(<span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-number">20</span>, new Date());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p><img src="/SpringMVC/Snipaste_2019-11-28_14-28-37.png" srcset="/img/loading.gif"></p>
+<p>默认返回的日期格式为时间戳，而在前台我们希望显示出指定规则的日期字符串。</p>
+<p>解决：在日期get属性字段上，添加一个格式化注解</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@JsonFormat</span>(pattern=<span class="hljs-string">&quot;yyyy-MM-dd&quot;</span>,timezone=<span class="hljs-string">&quot;GMT+8&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-built_in">Date</span> <span class="hljs-function"><span class="hljs-title">getDate</span>(<span class="hljs-params"></span>)</span> &#123;<br>	<span class="hljs-keyword">return</span> date;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="6-3、注意事项"><a href="#6-3、注意事项" class="headerlink" title="6.3、注意事项"></a>6.3、注意事项</h4><h5 id="6-3-1、处理有乱码的问题"><a href="#6-3-1、处理有乱码的问题" class="headerlink" title="6.3.1、处理有乱码的问题"></a>6.3.1、处理有乱码的问题</h5><p>当返回的Json字符串对像中有中文，会出现乱码问题：这时我们可以为SpringMVC的适配器配置一个字符转换器，设置支持的媒体类型：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">mvc:annotation-driven</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:message-converters</span> <span class="hljs-attr">register-defaults</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>		<span class="hljs-comment">&lt;!-- 注册一个转换器 解决返回的json乱码问题 --&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;supportedMediaTypes&quot;</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">list</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>text/html;charset=UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>application/json;charset=UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>				<span class="hljs-tag">&lt;/<span class="hljs-name">list</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:message-converters</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mvc:annotation-driven</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>注：如果不使用注解驱动&lt;mvc:annotation-driven /&gt;，配置媒体类型的话，就需要给处理器适配器配置json转换器：</p>
+<p>在springmvc.xml配置文件中，需要给处理器适配器注入json转换器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--处理器适配器 --&gt;</span><br>&lt;bean<br>	class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;&gt;<br>	<span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;messageConverters&quot;</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">list</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.springframework.http.converter.json.</span></span><br><span class="hljs-tag"><span class="hljs-string">MappingJackson2HttpMessageConverter&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">list</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="6-4、小结"><a href="#6-4、小结" class="headerlink" title="6.4、小结"></a>6.4、小结</h4><p>Json格式的数据，是一种非常常见且有用的数据格式，今天我们只是简单的学习了通过@ResponseBody 注解返回Json格式的数据，并解决了响应类型不匹配，中文乱码，日期转换的问题。后面我们学习了Ajax后还会学习如果接收Json格式的数据，希望大家多多重视。</p>
+<h3 id="7、SpringMVC拦截器-放到项目中做登录拦截"><a href="#7、SpringMVC拦截器-放到项目中做登录拦截" class="headerlink" title="7、SpringMVC拦截器-放到项目中做登录拦截"></a>7、SpringMVC拦截器-放到项目中做登录拦截</h3><h4 id="7-1、引入"><a href="#7-1、引入" class="headerlink" title="7.1、引入"></a>7.1、引入</h4><p>我们的项目需要实现登录拦截的功能，之前我们学习Servlet的时候，也使用过Filter拦截器，SpringMVC 提供了处理器拦截器类，它的使用比Filter更方便，更强大，用于对处理器进行预处理和后处理。</p>
+<h4 id="7-2、实现"><a href="#7-2、实现" class="headerlink" title="7.2、实现"></a>7.2、实现</h4><p>实现SpringMVC拦截器非常简单，我们只需要实现拦截器接口，并把他配置到SpringMVC的配置文件中即可。</p>
+<h5 id="7-2-1、定义拦截器"><a href="#7-2-1、定义拦截器" class="headerlink" title="7.2.1、定义拦截器"></a>7.2.1、定义拦截器</h5><p>自定义类实现 <strong>HandlerInterceptor</strong> 接口.返回值决定是否放行.</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-built_in">public</span> <span class="hljs-keyword">class</span> Interceptor1 implements HandlerInterceptor &#123;<br>	@Override<br>	<span class="hljs-built_in">public</span> <span class="hljs-type">boolean</span> preHandle(HttpServletRequest request, HttpServletResponse response, <span class="hljs-keyword">Object</span> <span class="hljs-keyword">handler</span>)<br>			throws <span class="hljs-keyword">Exception</span> &#123;<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;拦截器 1----方法执行之前&quot;);<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>	&#125;<br><br>	@Override<br>	<span class="hljs-built_in">public</span> <span class="hljs-type">void</span> postHandle(HttpServletRequest request, HttpServletResponse response, <span class="hljs-keyword">Object</span> <span class="hljs-keyword">handler</span>,<br>			ModelAndView modelAndView) throws <span class="hljs-keyword">Exception</span> &#123;<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;拦截器 1----方法执行之后&quot;);<br>	&#125;<br><br>	@Override<br>	<span class="hljs-built_in">public</span> <span class="hljs-type">void</span> afterCompletion(HttpServletRequest request, HttpServletResponse response, <span class="hljs-keyword">Object</span> <span class="hljs-keyword">handler</span>, <span class="hljs-keyword">Exception</span> ex)<br>			throws <span class="hljs-keyword">Exception</span> &#123;<br>		<span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(&quot;拦截器 1----页面渲染完成&quot;);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>复制一份,命名为 HandlerInterceptor2,输出内容做相应的修改.</p>
+<h5 id="7-2-2、拦截器配置"><a href="#7-2-2、拦截器配置" class="headerlink" title="7.2.2、拦截器配置"></a>7.2.2、拦截器配置</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置拦截器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptors</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/**&quot;</span> /&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.istourec.interceptor.Interceptor1&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/**&quot;</span> /&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.istourec.interceptor.Interceptor2&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptors</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h5 id="7-2-3、拦截器拦截流程"><a href="#7-2-3、拦截器拦截流程" class="headerlink" title="7.2.3、拦截器拦截流程"></a>7.2.3、拦截器拦截流程</h5><ol>
+<li>拦截器 1 放行</li>
+</ol>
+<p><img src="/SpringMVC/clip_image003.jpg" srcset="/img/loading.gif" alt="img"></p>
+<ol start="2">
+<li>拦截器 1 不放行</li>
+</ol>
+<p><img src="/SpringMVC/clip_image005.jpg" srcset="/img/loading.gif" alt="img"></p>
+<ol start="3">
+<li>拦截器 2 不放行</li>
+</ol>
+<p><img src="/SpringMVC/clip_image007.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>说明：</p>
+<ol>
+<li><p>preHandle 按拦截器定义顺序调用</p>
+</li>
+<li><p>postHandler 按拦截器定义逆序调用</p>
+</li>
+<li><p>afterCompletion 按拦截器定义逆序调用</p>
+</li>
+<li><p>postHandler 在拦截器链内所有拦截器返成功调用</p>
+</li>
+<li><p>afterCompletion 只有 preHandle 返回 true 才调用</p>
+</li>
+</ol>
+<h5 id="7-2-4、指定不拦截方法"><a href="#7-2-4、指定不拦截方法" class="headerlink" title="7.2.4、指定不拦截方法"></a>7.2.4、指定不拦截方法</h5><p>通过&lt;mvc:exclude-mapping/&gt;标签指定不拦截的方法.但是配置这个标签之前,必须配置&lt;mvc:mapping /&gt;标签.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置拦截器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptors</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/**&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mvc:exclude-mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/userList&quot;</span> /&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.istourec.interceptor.Interceptor1&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/**&quot;</span> /&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.istourec.interceptor.Interceptor2&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptors</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>我们访问 localhost:8082/userList.观察拦截器执行效果.</p>
+<p><img src="/SpringMVC/clip_image009.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>仅有拦截器 2 执行了.</p>
+<h4 id="7-3、小结"><a href="#7-3、小结" class="headerlink" title="7.3、小结"></a>7.3、小结</h4><p>以上，我们学习了拦截器的配置与放行方式，所以我们的登录拦截可以这样来实现：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置拦截器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptors</span>&gt;</span><br> 	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span><br> 		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/**&quot;</span>/&gt;</span><br> 		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:exclude-mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/toLogin&quot;</span>/&gt;</span><br> 		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:exclude-mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/loginUser&quot;</span>/&gt;</span><br> 		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cn.itsourece.ems.interceptor.MyLogInterceptor&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br> 	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptors</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h3 id="8、文件上传-放到项目中去做"><a href="#8、文件上传-放到项目中去做" class="headerlink" title="8、文件上传-放到项目中去做"></a>8、文件上传-放到项目中去做</h3><h4 id="8-1、引入"><a href="#8-1、引入" class="headerlink" title="8.1、引入"></a>8.1、引入</h4><p>原始的Servlet文件上传，需要对提交的流对象进行复制的解析，SpringMVC 为我们提供了一个方便的解析器可以方便的实现文件上传。如果要实现文件的上传,只要在 spring-mvc.xml 中注册相应的 MultipartResolver 即可。</p>
+<h4 id="8-2、实现步骤"><a href="#8-2、实现步骤" class="headerlink" title="8.2、实现步骤"></a>8.2、实现步骤</h4><h5 id="8-2-1、加入文件上传所需依赖的jar包"><a href="#8-2-1、加入文件上传所需依赖的jar包" class="headerlink" title="8.2.1、加入文件上传所需依赖的jar包"></a>8.2.1、加入文件上传所需依赖的jar包</h5><p><img src="/SpringMVC/image-20191128144118730.png" srcset="/img/loading.gif" alt="image-20191128144118730"></p>
+<h5 id="8-2-2、配置上传解析器"><a href="#8-2-2、配置上传解析器" class="headerlink" title="8.2.2、配置上传解析器"></a>8.2.2、配置上传解析器</h5><p>在 springmvc.xml 中配置上传文件的解析器CommonsMultipartResolver</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 文件上传解析器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;multipartResolver&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.springframework.web.multipart.commons.CommonsMultipartResolver&quot;</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 设置文件大小限制,单位 B --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;maxUploadSize&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;5242880&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h5 id="8-2-3、页面调整"><a href="#8-2-3、页面调整" class="headerlink" title="8.2.3、页面调整"></a>8.2.3、页面调整</h5><p>修改表单提交的 enctype 为 multipart/form-data 多部分表单.</p>
+<p><img src="/SpringMVC/image-20191128144301227.png" srcset="/img/loading.gif" alt="image-20191128144301227"></p>
+<h5 id="8-2-4、上传文件"><a href="#8-2-4、上传文件" class="headerlink" title="8.2.4、上传文件"></a>8.2.4、上传文件</h5><p>在 Controller 方法的形参中,使用 MultipartFile 来接收上传的文件.注意方法形参的名称要与表单提交的 name 保持一致</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 修改用户信息</span><br><span class="hljs-comment"> */</span><br>@<span class="hljs-constructor">RequestMapping(<span class="hljs-string">&quot;/update&quot;</span>)</span><br>public String update(User user, MultipartFile file, Model model) throws Exception &#123;<br>	<span class="hljs-comment">// ----------------------- 准备上传图片 ----------------------</span><br>	<span class="hljs-comment">// 1. 准备上传的文件名</span><br>	String uuid = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UUID</span>.</span></span>random<span class="hljs-constructor">UUID()</span>.<span class="hljs-keyword">to</span><span class="hljs-constructor">String()</span>.replace<span class="hljs-constructor">All(<span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;&quot;</span>)</span>;<br>	String extension = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FilenameUtils</span>.</span></span>get<span class="hljs-constructor">Extension(<span class="hljs-params">file</span>.<span class="hljs-params">getOriginalFilename</span>()</span>);<br>	String newFileName = uuid + <span class="hljs-string">&quot;.&quot;</span> + extension;<br>	<span class="hljs-comment">// 2. 上传文件</span><br>String webapp = request.get<span class="hljs-constructor">ServletContext()</span>.get<span class="hljs-constructor">RealPath(<span class="hljs-string">&quot;/uploads/&quot;</span>)</span>;<br>	file.transfer<span class="hljs-constructor">To(<span class="hljs-params">new</span> File(<span class="hljs-params">webapp</span> + <span class="hljs-string">&quot;\\&quot;</span> + <span class="hljs-params">newFileName</span>)</span>);<br>	<span class="hljs-comment">// 3. 给 user 赋值</span><br>	user.set<span class="hljs-constructor">Img(<span class="hljs-params">newFileName</span>)</span>;<br>	us.update(user);<br>	<span class="hljs-comment">// 4. 获取修改后的用户信息,保存到 model 中</span><br>	User queryUser = us.select<span class="hljs-constructor">ById(<span class="hljs-params">user</span>.<span class="hljs-params">getUid</span>()</span>);<br>	model.add<span class="hljs-constructor">Attribute(<span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-params">queryUser</span>)</span>;<br>	return <span class="hljs-string">&quot;success&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="8-2-5、准备显示页面"><a href="#8-2-5、准备显示页面" class="headerlink" title="8.2.5、准备显示页面"></a>8.2.5、准备显示页面</h5><p>通过el表达式取出查询的值</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs erb"><span class="xml">&lt;%</span><span class="ruby">@ page language=<span class="hljs-string">&quot;java&quot;</span> contentType=<span class="hljs-string">&quot;text/html; charset=utf-8&quot;</span></span><br><span class="ruby">    pageEncoding=<span class="hljs-string">&quot;utf-8&quot;</span></span><span class="xml">%&gt;</span><br><span class="xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span> <span class="hljs-meta-keyword">PUBLIC</span> <span class="hljs-meta-string">&quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span> <span class="hljs-meta-string">&quot;http://www.w3.org/TR/html4/loose.dtd&quot;</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;Content-Type&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;text/html; charset=utf-8&quot;</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Insert title here<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span> 上传成功！~<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;上传的图片&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://localhost:8080/img/ems/$&#123;user.img&#125;&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">100</span> <span class="hljs-attr">height</span>=<span class="hljs-string">100</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<h4 id="8-3、小结"><a href="#8-3、小结" class="headerlink" title="8.3、小结"></a>8.3、小结</h4><p>通过配置上传解析器CommonsMultipartResolver实现文件上传。</p>
+<h3 id="9、SpringMVC小结"><a href="#9、SpringMVC小结" class="headerlink" title="9、SpringMVC小结"></a>9、SpringMVC小结</h3><h4 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h4><ol>
+<li><p>SpringMVC的执行流程。</p>
+</li>
+<li><p>配置核心组件</p>
+</li>
+<li><p>接收参数、页面跳转、响应数据</p>
+</li>
+</ol>
+<h4 id="400-类型不匹配"><a href="#400-类型不匹配" class="headerlink" title="400(类型不匹配)"></a>400(类型不匹配)</h4><p>如果传参类型不匹配，则会报400错误。大家在传参的时候一定要小心注意，特别咱们以后都是使用ajax操作，那么这个报错需要在前端调试工具(如firebug)中去查看。</p>
+<h4 id="DateTimeFormat-接收日期格式（分清楚）"><a href="#DateTimeFormat-接收日期格式（分清楚）" class="headerlink" title="@DateTimeFormat 接收日期格式（分清楚）"></a>@DateTimeFormat 接收日期格式（分清楚）</h4><ol>
+<li><p>接收日期格式使用**@DateTimeFormat(yyyy-MM-dd)**,特别注意千万不要把后台传参与前台接收参数搞混淆：</p>
+</li>
+<li><p>后台-&gt;前台:@JsonFormat(pattern=”yyyy-MM-dd hh:mm:ssS”,timezone=”GMT+8”)</p>
+</li>
+<li><p>前台-&gt;后台:@DateTimeFormat(pattern=”yyyy-MM-dd”)</p>
+</li>
+</ol>
+<h4 id="tomcat6-x，7-x中文编码问题"><a href="#tomcat6-x，7-x中文编码问题" class="headerlink" title="tomcat6.x，7.x中文编码问题"></a>tomcat6.x，7.x中文编码问题</h4><p>Get请求：</p>
+<p>/conf/server.xml </p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;Connector <span class="hljs-attribute">port</span>=<span class="hljs-string">&quot;80&quot;</span> <span class="hljs-attribute">protocol</span>=<span class="hljs-string">&quot;HTTP/1.1&quot;</span> <span class="hljs-attribute">URIEncoding</span>=<span class="hljs-string">&quot;UTF-8&quot;</span><br>			<span class="hljs-attribute">connectionTimeout</span>=<span class="hljs-string">&quot;20000&quot;</span><br>			<span class="hljs-attribute">redirectPort</span>=<span class="hljs-string">&quot;8443&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+<p>Post请求：</p>
+<p>注意：SpringMVC框架本身没有处理请求编码，需要配置一个spring内置请求编码过滤器。</p>
+<p><img src="/SpringMVC/clip_image0022.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p>web.xml </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- Post请求编码过滤器 --&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">filter-class</span>&gt;</span><br>			org.springframework.web.filter.CharacterEncodingFilter<br>		<span class="hljs-tag">&lt;/<span class="hljs-name">filter-class</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">init-param</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>encoding<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>utf-8<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">init-param</span>&gt;</span>	<br>	<span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">filter-mapping</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/*<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">filter-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>1.1.5.  出现406状态异常，加入jackson json工具包</p>
+<p><img src="/SpringMVC/clip_image0021.jpg" srcset="/img/loading.gif" alt="img"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Spring-MVC/">Spring MVC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/28/Spring/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spring</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/26/%E4%BA%86%E8%A7%A3HTML/">
+                        <span class="hidden-mobile">了解HTML</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

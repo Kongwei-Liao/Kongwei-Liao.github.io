@@ -1,0 +1,597 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>软件测试 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="软件测试">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-19 14:38" pubdate>
+        2019年11月19日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      50
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">软件测试</h1>
+            
+            <div class="markdown-body">
+              <h3 id="1、软件测试一些概念"><a href="#1、软件测试一些概念" class="headerlink" title="1、软件测试一些概念"></a>1、软件测试一些概念</h3><p><strong>按是否查看程序内部结构分为</strong></p>
+<p>黑盒测试（black-box testing）：只关心输入和输出的结果，黑盒测试分为功能测试和性能测试<br>白盒测试（white-box testing）：去研究里面的源代码和程序结构</p>
+<p><strong>按是否运行程序分为：静态测试、动态测试</strong></p>
+<p>静态测试（static testing）</p>
+<p>是指不实际运行被测软件，而只是静态地检查程序代码、界面或文档可能存在的错误的过程。包括：</p>
+<ul>
+<li>对于代码测试，主要是测试代码是否符合相应的标准和规范。</li>
+<li>对于界面测试，主要测试软件的实际界面与需求中的说明是否相符。</li>
+<li>对于文档测试，主要测试用户手册和需求说明是否真正符合用户的实际需求。</li>
+</ul>
+<p>动态测试（dynamic testing）</p>
+<p>是指实际运行被测程序，输入相应的测试数据，检查输出结果和预期结果是否相符的过程</p>
+<p><strong>UT是单元测试，Unit Test；</strong></p>
+<p>单元测试任务包括：1 模块接口测试；2 模块局部数据结构测试；3 模块边界条件测试；4 模块中所有独立执行通路测试；5 模块的各条错误处理通路测试。；</p>
+<p><strong>IT是集成测试，Integration Test；</strong></p>
+<p>集成测试阶段是以黑盒法为主，在自底向上集成的早期，白盒法测试占一定的比例，随着集成测试的不断深入，这种比例在测试过程中将越来越少，渐渐地，黑盒法测试占据主导地位。</p>
+<p><strong>ST是系统测试，System Test；</strong></p>
+<p>从技术角度看，系统测试是整个测试阶段的最后一步，所有的开发和测试在这一点上集中表现为生成一个具有一定功能的软件系统。该阶段主要对系统的准确性及完整性等方面进行测试。主要进行：功能确认测试、运行测试、强度测试、恢复测试、安全性测试等。系统测试的测试人员由测试组成员（或质量保证人员）或测试组成员与用户共同测试。在整个系统开发完成，即将交付用户使用前进行。在这一阶段，完全采用黑盒法对整个系统进行测试。</p>
+<p><strong>UAT是验收测试，User Acceptance Test；</strong></p>
+<p>验收测试是向未来的用户表明系统能够像预定要求那样工作。经集成测试后，已经按照设计把所有的模块组装成一个完整的软件系统，接口错误也已经基本排除了，接着就应该进一步验证软件的有效性，这就是验收测试的任务，即软件的功能和性能如同用户所合理期待的那样。 </p>
+<p><strong>功能测试</strong></p>
+<p>功能测试分三个阶段，第一个阶段自测，第二个阶段交叉测试，最后回归测试。交叉测试按字面意思理解就是把测试人员所测试的模块交换测试。回归测试是指修改了旧代码后，重新进行测试以确认修改没有引入新的错误或导致其他代码产生错误。回归测试是指重复以前的全部或部分的相同测试，回归测试的重心，以关键性模组为核心。</p>
+<h3 id="2、单元测试"><a href="#2、单元测试" class="headerlink" title="2、单元测试"></a>2、单元测试</h3><p>写了个类，要给别人用，会不会有bug？测试一下。</p>
+<p>程序单元是应用的最小可测试部件。一个单元可能是单个程序、类、对象、方法等。</p>
+<p>单元测试是保障业务代码质量的非常有效工具，也是提高代码可靠性的必要手段。单元测试是编写测试代码，应该准确、快速地保证程序基本模块的正确性。<br>用main方法测试的问题：不能一起运行，大多数情况下需要人为的观察输出确定是否正确。</p>
+<p>减少Bug、快速定位Bug减少调试时间、提高代码质量、性能测试、放心重构</p>
+<h4 id="2-1、Junit4入门"><a href="#2-1、Junit4入门" class="headerlink" title="2.1、Junit4入门"></a>2.1、Junit4入门</h4><p>JUnit是一个单元测试框架，我们可以基于它编写用来测试代码的代码，从而更方便地进行回归测试。</p>
+<h5 id="2-1-1、导包"><a href="#2-1-1、导包" class="headerlink" title="2.1.1、导包"></a>2.1.1、导包</h5><p><strong>Eclipse</strong>自带junit包，也可导入最新的Junit包，最好是自己导入的最新的包。<a target="_blank" rel="noopener" href="https://github.com/junit-team/junit4/wiki/Download-and-Install">junit4传送门</a></p>
+<p><strong>IntelliJ IDEA</strong>创建Maven项目，添加依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>junit<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.11<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<h5 id="2-1-2、新建一个Test类"><a href="#2-1-2、新建一个Test类" class="headerlink" title="2.1.2、新建一个Test类"></a>2.1.2、新建一个Test类</h5><p><strong>Eclipse：</strong>New–&gt;JunitTest Case–&gt;在Junit Test Case界面中，选New Junit 4 test , Name一般为要被测试的类名+Test,Class under test可以选对哪个类进行测试、对这个类的哪些方法测试。–&gt;Finish</p>
+<p><strong>IntelliJ IDEA</strong>：</p>
+<p>写一个方法类，定义两个方法实现两个数的相加和相减运算。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JunitDemo</span></span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span>  b)</span></span>&#123;<br>        <span class="hljs-keyword">return</span> a+b;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">subtract</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span>  b)</span></span>&#123;<br>        <span class="hljs-keyword">return</span> a-b;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>接下写我们的测试类：</p>
+<p><code>assertEquals</code>方法第一个参数是预期的值，第二个参数就是调用类的方法。如果调用结果和预期不一样就会报错。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.junit.Assert;<br><span class="hljs-keyword">import</span> org.junit.Test;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JunitTest</span> </span>&#123;<br>    <span class="hljs-meta">@Test</span><span class="hljs-comment">//测试方法必须用@Test修饰</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testAdd</span><span class="hljs-params">()</span></span>&#123;<span class="hljs-comment">//测试方法必须用public void修饰，不能带参数</span><br>        assertEquals(<span class="hljs-number">6</span>, <span class="hljs-keyword">new</span> JunitDemo().add(<span class="hljs-number">2</span>,<span class="hljs-number">4</span>));<br>    &#125;<br>    <span class="hljs-meta">@Test</span><span class="hljs-comment">//测试方法必须用@Test修饰</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testSubtract</span><span class="hljs-params">()</span></span>&#123;<br>        assertEquals(<span class="hljs-number">20</span>, <span class="hljs-keyword">new</span> JunitDemo().subtract(<span class="hljs-number">30</span>, <span class="hljs-number">10</span>));<br>    &#125;<br>    <span class="hljs-comment">//每个测试方法必须可以单独测试，各方法间不要有依赖。</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="2-1-3、测试的类和开发的类分开放"><a href="#2-1-3、测试的类和开发的类分开放" class="headerlink" title="2.1.3、测试的类和开发的类分开放"></a>2.1.3、测试的类和开发的类分开放</h5><p>测试类应有单独源代码目录，不要和业务代码放在一起。</p>
+<p>建议测试类放在test包中，使用<code>Test作为类名的后缀</code>,测试方法使用<code>test作为方法名的前缀</code>，如测试类JunitTest和测试方法testAdd。</p>
+<p><img src="/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/junitdemo.png" srcset="/img/loading.gif"></p>
+<h5 id="2-1-4、静态引入"><a href="#2-1-4、静态引入" class="headerlink" title="2.1.4、静态引入"></a>2.1.4、静态引入</h5><p>比如import static org.junit.Assert.*; 静态引入一个类，类里面有很多静态方法，可以直接调用这个类里面的静态方法，而不用在其前面加 ‘类名.’</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.junit.Test;<br><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.junit.Assert.assertEquals;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JunitTest</span> </span>&#123;<br>    <span class="hljs-meta">@Test</span><span class="hljs-comment">//测试方法必须用@Test修饰</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testAdd</span><span class="hljs-params">()</span></span>&#123;<span class="hljs-comment">//测试方法必须用public void修饰，不能带参数</span><br>        assertEquals(<span class="hljs-number">6</span>, <span class="hljs-keyword">new</span> JunitDemo().add(<span class="hljs-number">2</span>,<span class="hljs-number">4</span>));<br>    &#125;<br>    <span class="hljs-meta">@Test</span><span class="hljs-comment">//测试方法必须用@Test修饰</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testSubtract</span><span class="hljs-params">()</span></span>&#123;<br>        assertEquals(<span class="hljs-number">20</span>, <span class="hljs-keyword">new</span> JunitDemo().subtract(<span class="hljs-number">30</span>, <span class="hljs-number">10</span>));<br>    &#125;<br>    <span class="hljs-comment">//每个测试方法必须可以单独测试，各方法间不要有依赖。</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="2-1-5、运行测试"><a href="#2-1-5、运行测试" class="headerlink" title="2.1.5、运行测试"></a>2.1.5、运行测试</h5><p><strong>Eclipse：</strong>可以在测试类上或测试方法–&gt;右键–&gt;Run As–&gt;Junit Test</p>
+<p><strong>IntelliJ IDEA：</strong>详见2.1.3图</p>
+<h5 id="2-1-6、测试结果"><a href="#2-1-6、测试结果" class="headerlink" title="2.1.6、测试结果"></a>2.1.6、测试结果</h5><p><strong>Eclipse：</strong></p>
+<p><code>测试通过</code></p>
+<p><img src="/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/junits.png" srcset="/img/loading.gif"></p>
+<p><code>测试失败</code></p>
+<p><img src="/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/junitf.png" srcset="/img/loading.gif"></p>
+<p><strong>IntelliJ IDEA：</strong>详见2.1.3图。</p>
+<p>JUnit 将测试失败的情况分为两种：<code>failure</code>和 <code>error</code>。Failure 一般由单元测试使用的<code>断言方法判断失败引起</code>，它表示在测试点发现了问题；而 error 则是由<code>代码异常引起</code>，这是测试目的之外的发现，它可能产生于<code>测试代码本身</code>的错误，也可能是<code>被测试代码</code>中的一个隐藏的 bug。</p>
+<h5 id="2-1-7、Assert断言"><a href="#2-1-7、Assert断言" class="headerlink" title="2.1.7、Assert断言"></a>2.1.7、Assert断言</h5><p>①Assert类里面有很多静态方法，查阅相关文档：<a target="_blank" rel="noopener" href="https://junit.org/junit4/javadoc/latest/org/junit/Assert.html">https://junit.org/junit4/javadoc/latest/org/junit/Assert.html</a></p>
+<p>②有的函数的第一个参数String message在断言没有通过，会显示出来，用来自定义提示错误。</p>
+<p>列如：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">assert</span><span class="hljs-constructor">Equals(String <span class="hljs-params">message</span>, <span class="hljs-params">double</span> <span class="hljs-params">expected</span>, <span class="hljs-params">double</span> <span class="hljs-params">actual</span>)</span><br></code></pre></td></tr></table></figure>
+<p><code>③assertThat可以替代其他所有的assert</code></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">assert</span><span class="hljs-constructor">That(T <span class="hljs-params">actual</span>,<span class="hljs-params">org</span>.<span class="hljs-params">hamcrest</span>.Matcher&lt;T&gt; <span class="hljs-params">matcher</span>)</span>    <br><span class="hljs-keyword">assert</span><span class="hljs-constructor">That(String <span class="hljs-params">reason</span>,T <span class="hljs-params">actual</span>,<span class="hljs-params">org</span>.<span class="hljs-params">hamcrest</span>.Matcher&lt;T&gt; <span class="hljs-params">matcher</span>)</span>    <br></code></pre></td></tr></table></figure>
+<p>需要hamcrest-cose-x.jar和hamcrest-library-x.jar，使用了这两个包后，junit包最好不要用eclipse自带的，会出错。包的下载地址：[hamcrest传送门](<a target="_blank" rel="noopener" href="http://search.maven.org/#search|ga|1|g%3Aorg.hamcrest">http://search.maven.org/#search|ga|1|g%3Aorg.hamcrest</a>    hamcrest)</p>
+<p>hamcrest帮助文档<a target="_blank" rel="noopener" href="http://hamcrest.org/JavaHamcrest/javadoc/2.0.0.0/">http://hamcrest.org/JavaHamcrest/javadoc/2.0.0.0/</a>    </p>
+<p>Matcher常用的方法见文章第四大点</p>
+<h4 id="2-2、Junit4注解"><a href="#2-2、Junit4注解" class="headerlink" title="2.2、Junit4注解"></a>2.2、Junit4注解</h4><blockquote>
+<p>@Test：讲一个普通方法修饰为测试方法<br>@BeforeClass：在所有方法执行前执行一次<br>@Before：在每一个方法执行前执行一次<br>@After：在每一个方法执行后执行一次<br>@AfterClass：在所有方法执行后执行一次。<br>@Ignore：修饰的方法会在测试运行时被忽略<br>@RunWith：修改测试运行器</p>
+</blockquote>
+<h5 id="2-2-1、-Test：测试方法"><a href="#2-2-1、-Test：测试方法" class="headerlink" title="2.2.1、@Test：测试方法"></a>2.2.1、@Test：测试方法</h5><p>@Test表示是测试方法，测试方法必须使用注解 <code>org.junit.Test </code>修饰。测试方法必须使用 public void 修饰，而且不能带有任何参数。</p>
+<p><strong>异常以及时间测试</strong></p>
+<p>注解<code>org.junit.Test</code>中有两个非常有用的参数：<code>expected</code> 和 <code>timeout</code>。</p>
+<p>参数 <strong>expected</strong> 代表测试方法期望抛出指定的异常，如果运行测试并没有抛出这个异常，则JUnit 会认为这个测试没有通过。这为验证被测试方法在错误的情况下是否会抛出预定的异常提供了便利。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-comment">//当测试方法抛出NullPointerException时测试成功  </span><br><span class="hljs-variable">@Test</span>(expected = NullPointerException.class) <br><br><span class="hljs-comment">//如果代码里抛出了不止一处错误，不好区分，可以使用JUnit的ExpectedException Rule来解决</span><br><span class="hljs-variable">@Rule</span>  <br>public ExpectedException expectedException = ExpectedException.none();  <br></code></pre></td></tr></table></figure>
+<p>另一个参数 <strong>timeout</strong>，指定被测试方法被允许运行的最长时间应该是多少，如果测试方法运行时间超过了指定的毫秒数，则 JUnit 认为测试失败。这个参数对于性能测试有一定的帮助。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-comment">//设置1000ms的超时时间，当超过这个时间测试还没执行完毕则失败  </span><br><span class="hljs-variable">@Test</span>(timeout = <span class="hljs-number">1000</span>) <br><br><span class="hljs-comment">//使用Timeout Rule设定全局的超时时间</span><br><span class="hljs-variable">@Rule</span>  <br>public Timeout timeout = new Timeout(<span class="hljs-number">1000</span>);  <br></code></pre></td></tr></table></figure>
+
+
+<h5 id="2-2-3、忽略测试方法"><a href="#2-2-3、忽略测试方法" class="headerlink" title="2.2.3、忽略测试方法"></a>2.2.3、忽略测试方法</h5><p>注解 <code>org.junit.Ignore</code> 用于暂时忽略某个测试方法，因为有时候由于测试环境受限，并不能保证每一个测试方法都能正确运行。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">//忽略该测试，参数为输出信息  </span><br><span class="hljs-meta">@Ignore(<span class="hljs-meta-string">&quot;Temporary ignored as no changes.&quot;</span>)</span>  <br></code></pre></td></tr></table></figure>
+<p>执行类里的所有测试，会输出以下信息，表示该测试被忽略了。</p>
+<blockquote>
+<p>…… ,ignored (Temporary ignored as no changes.)</p>
+</blockquote>
+<h5 id="2-2-4、Fixture"><a href="#2-2-4、Fixture" class="headerlink" title="2.2.4、Fixture"></a>2.2.4、Fixture</h5><p>Fixture是指在执行一个或者多个测试方法时需要的一系列公共资源或者数据，例如测试环境，测试数据等等。JUnit 专门提供了设置公共 Fixture 的方法，同一测试类中的所有测试方法都可以共用它来初始化 Fixture 和注销 Fixture。</p>
+<p>①方法级别的Fixture：</p>
+<p>使用注解<code> org,junit.Before</code> 修饰用于<code>初始化 Fixture 的方法</code>。每一个测试方法之前运行使用注解 <code>org.junit.After </code>修饰用于<code>注销 Fixture 的方法</code>。每一个测试方法之后运行保证这两种方法都使用 public void 修饰，而且不能带有任何参数。</p>
+<p>②类级别的 Fixture</p>
+<p>使用注解<code>org,junit.BeforeClass</code>修饰用于初始Fixture 的方法。所有测试方法开始之前运行，它比较适合加载配置文件,进行初始化等等使用注解<code>org.junit.AfterClass</code>修饰用于注销 Fixture 的方法。所有测试方法开始之后运行，通常用来对资源的清理,如关闭数据库的连接保证这两种方法都使用 public static void 修饰，而且不能带有任何参数。</p>
+<h5 id="2-2-5、测试运行器"><a href="#2-2-5、测试运行器" class="headerlink" title="2.2.5、测试运行器"></a>2.2.5、测试运行器</h5><p>可以定制自己的运行器（所有的运行器都继承自<code>org.junit.runner.Runner</code>）使用注解 <code>org.junit.runner.RunWith</code> 在测试类上显式的声明要使用的运行器</p>
+<h5 id="2-2-6、测试套件"><a href="#2-2-6、测试套件" class="headerlink" title="2.2.6、测试套件"></a>2.2.6、测试套件</h5><p>Unit 提供的一种批量（一次执行多个测试类）运行测试类的方法，测试套件的写法遵循以下规则：</p>
+<p>​    ①创建一个空类作为测试套件的入口。</p>
+<p>​    ②使用注解<code>org.junit.runner.RunWith</code>和<code>org.junit.runners.Suite.SuiteClasses</code>修饰这个空类。</p>
+<p>​    ③将<code>org.junit.runners.Suite</code>作为参数传入注解 RunWith，以提示 JUnit 为此类使用套件运行器执行。</p>
+<p>​    ④将需要放入此测试套件的测试类组成数组作为注解 SuiteClasses 的参数。</p>
+<p>​    ⑤保证这个空类使用 public 修饰，而且存在公开的不带有任何参数的构造函数。</p>
+<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs d"><span class="hljs-keyword">import</span> org.junit.runner.RunWith;<br><span class="hljs-keyword">import</span> org.junit.runners.Suite;<br><br><span class="hljs-keyword">@RunWith</span>(Suite.<span class="hljs-keyword">class</span>)  <br><span class="hljs-keyword">@Suite</span>.SuiteClasses(&#123;TaskTest1.<span class="hljs-keyword">class</span>,TaskTest2.<span class="hljs-keyword">class</span>,...&#125;)  <br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> SuiteTest &#123; ... &#125;<br></code></pre></td></tr></table></figure>
+<h5 id="2-2-7、多个测试类同时运行"><a href="#2-2-7、多个测试类同时运行" class="headerlink" title="2.2.7、多个测试类同时运行"></a>2.2.7、多个测试类同时运行</h5><p>选择任意一个测试类–&gt;Run As–&gt;RunConfigurations–&gt;选择Run all tests in the selected project, package or source folder–&gt;Run</p>
+<h5 id="2-2-8、参数化测试"><a href="#2-2-8、参数化测试" class="headerlink" title="2.2.8、参数化测试"></a>2.2.8、参数化测试</h5><p>参数化测试将测试方法中相同的代码结构提取出来，提高代码的重用度。参数化测试的编写：</p>
+<p>​    ①为准备使用参数化测试的测试类指定特殊的运行器 <code>org.junit.runners.Parameterized</code>。</p>
+<p>​    ②为测试类声明几个变量，分别用于存放期望值和测试所用数据。</p>
+<p>​    ③为测试类声明一个使用注解<code>org.junit.runners.Parameterized.Parameters</code>修饰的，返回值为<code>java.util.Collection</code>的公共静态方法，并在此方法中初始化所有需要测试的参数对。</p>
+<p>​    ④为测试类声明一个带有参数的公共构造函数，并在其中为第二个环节中声明的几个变量赋值。        ⑤编写测试方法，使用定义的变量作为参数进行测试。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 第一步</span><br><span class="hljs-meta">@RunWith</span>(Parameterized.class)<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestWordDealUtilWithParam</span></span><br><span class="hljs-class"></span>&#123;<br>	<span class="hljs-comment">// 第二步</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> expected;<br>	<span class="hljs-keyword">private</span> <span class="hljs-built_in">String</span> target;<br>	<span class="hljs-comment">// 第三步</span><br>	<span class="hljs-meta">@Parameters</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Collection words()<br>	&#123;<br>		<span class="hljs-keyword">return</span> Arrays.asList(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>[][]<br>		&#123;<br>			&#123; <span class="hljs-string">&quot;employee_info&quot;</span>, <span class="hljs-string">&quot;employeeInfo&quot;</span> &#125;, <span class="hljs-comment">// 测试一般的处理情况</span><br>			&#123; <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span> &#125;, <span class="hljs-comment">// 测试 null 时的处理情况</span><br>		&#125;);<br>	&#125;<br>	<span class="hljs-comment">// 第四步</span><br>	<span class="hljs-keyword">public</span> TestWordDealUtilWithParam(<span class="hljs-built_in">String</span> expected, <span class="hljs-built_in">String</span> target)<br>	&#123;<br>		<span class="hljs-built_in">this</span>.expected = expected;<br>		<span class="hljs-built_in">this</span>.target = target;<br>	&#125;<br>	<span class="hljs-comment">// 第五步</span><br>	<span class="hljs-meta">@Test</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> wordFormat4DB()<br>	&#123;<br>		assertEquals(expected, WordDealUtil.wordFormat4DB(target));<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="2-3、assertThat"><a href="#2-3、assertThat" class="headerlink" title="2.3、assertThat"></a>2.3、assertThat</h4><h5 id="2-3-1、一般匹配符"><a href="#2-3-1、一般匹配符" class="headerlink" title="2.3.1、一般匹配符"></a>2.3.1、一般匹配符</h5><p>1、assertThat( testedNumber, allOf( greaterThan(8), lessThan(16) ) );</p>
+<p>注释： allOf匹配符表明如果接下来的所有条件必须都成立测试才通过，相当于“与”（&amp;&amp;）</p>
+<p>2、assertThat( testedNumber, anyOf( greaterThan(16), lessThan(8) ) );</p>
+<p>注释：anyOf匹配符表明如果接下来的所有条件只要有一个成立则测试通过，相当于“或”（||）</p>
+<p>3、assertThat( testedNumber, anything() );</p>
+<p>注释：anything匹配符表明无论什么条件，永远为true</p>
+<p>4、assertThat( testedString, is( “developerWorks” ) );</p>
+<p>注释： is匹配符表明如果前面待测的object等于后面给出的object，则测试通过</p>
+<p>5、assertThat( testedString, not( “developerWorks” ) );</p>
+<p>注释：not匹配符和is匹配符正好相反，表明如果前面待测的object不等于后面给出的object，则测试通过</p>
+<h5 id="2-3-2、字符串相关匹配符"><a href="#2-3-2、字符串相关匹配符" class="headerlink" title="2.3.2、字符串相关匹配符"></a>2.3.2、字符串相关匹配符</h5><p>1、assertThat( testedString, containsString( “developerWorks” ) );</p>
+<p>注释：containsString匹配符表明如果测试的字符串testedString包含子字符串”developerWorks”则测试通过</p>
+<p>2、assertThat( testedString, endsWith( “developerWorks” ) ); </p>
+<p>注释：endsWith匹配符表明如果测试的字符串testedString以子字符串”developerWorks”结尾则测试通过</p>
+<p>3、assertThat( testedString, startsWith( “developerWorks” ) ); </p>
+<p>注释：startsWith匹配符表明如果测试的字符串testedString以子字符串”developerWorks”开始则测试通过</p>
+<p>4、assertThat( testedValue, equalTo( expectedValue ) ); </p>
+<p>注释： equalTo匹配符表明如果测试的testedValue等于expectedValue则测试通过，equalTo可以测试数值之间，字符串之间和对象之间是否相等，相当于Object的equals方法</p>
+<p>5、assertThat( testedString, equalToIgnoringCase( “developerWorks” ) ); </p>
+<p>注释：equalToIgnoringCase匹配符表明如果测试的字符串testedString在忽略大小写的情况下等于”developerWorks”则测试通过</p>
+<p>6、assertThat( testedString, equalToIgnoringWhiteSpace( “developerWorks” ) );</p>
+<p>注释：equalToIgnoringWhiteSpace匹配符表明如果测试的字符串testedString在忽略头尾的任意个空格的情况下等于”developerWorks”则测试通过，注意：字符串中的空格不能被忽略</p>
+<h5 id="2-3-3、数值相关匹配符"><a href="#2-3-3、数值相关匹配符" class="headerlink" title="2.3.3、数值相关匹配符"></a>2.3.3、数值相关匹配符</h5><p>1、assertThat( testedDouble, closeTo( 20.0, 0.5 ) );</p>
+<p>注释：closeTo匹配符表明如果所测试的浮点型数testedDouble在20.0±0.5范围之内则测试通过</p>
+<p>2、assertThat( testedNumber, greaterThan(16.0) );</p>
+<p>注释：greaterThan匹配符表明如果所测试的数值testedNumber大于16.0则测试通过</p>
+<p>3、assertThat( testedNumber, lessThan (16.0) );</p>
+<p>注释：lessThan匹配符表明如果所测试的数值testedNumber小于16.0则测试通过</p>
+<p>4、assertThat( testedNumber, greaterThanOrEqualTo (16.0) );</p>
+<p>注释： greaterThanOrEqualTo匹配符表明如果所测试的数值testedNumber大于等于16.0则测试通过</p>
+<p>5、assertThat( testedNumber, lessThanOrEqualTo (16.0) );</p>
+<p>注释：lessThanOrEqualTo匹配符表明如果所测试的数值testedNumber小于等于16.0则测试通过</p>
+<h5 id="2-3-4、collection相关匹配符"><a href="#2-3-4、collection相关匹配符" class="headerlink" title="2.3.4、collection相关匹配符"></a>2.3.4、collection相关匹配符</h5><p>1、assertThat( mapObject, hasEntry( “key”, “value” ) );</p>
+<p>注释：hasEntry匹配符表明如果测试的Map对象mapObject含有一个键值为”key”对应元素值为”value”的Entry项则测试通过</p>
+<p>2、assertThat( iterableObject, hasItem ( “element” ) );</p>
+<p>注释：hasItem匹配符表明如果测试的迭代对象iterableObject含有元素“element”项则测试通过</p>
+<p>3、assertThat( mapObject, hasKey ( “key” ) );</p>
+<p>注释： hasKey匹配符表明如果测试的Map对象mapObject含有键值“key”则测试通过</p>
+<p>4、assertThat( mapObject, hasValue ( “key” ) );</p>
+<p>注释：hasValue匹配符表明如果测试的Map对象mapObject含有元素值“value”则测试通过</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43520650/article/details/101308036">https://blog.csdn.net/qq_43520650/article/details/101308036</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">软件测试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">软件测试</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/19/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%83%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数据库练习（一）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/18/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="hidden-mobile">数据库</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
