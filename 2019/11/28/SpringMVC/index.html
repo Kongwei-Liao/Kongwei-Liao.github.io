@@ -231,7 +231,7 @@
 <p>数据模型（Model）：负责封装应用的状态，并实现应用的功能。</p>
 <p>视图展现（View）：界面，视图从模型获得要展示的数据，然后用自己的方式展现给用户。</p>
 <p>控制器（Controller）：用来控制应用程序的流程和处理视图所发出的请求。当控制器接收到用户的请求后，会将用户的数据和模型的更新相映射，也就是调用模型来实现用户请求的功能；然后控制器会选择用于响应的视图，把模型更新后的数据展示给用户。</p>
-<p><img src="/SpringMVC/Snipaste_2019-11-28_09-21-37.png" srcset="/img/loading.gif"></p>
+<p><img src="SpringMVC/Snipaste_2019-11-28_09-21-37.png" srcset="/img/loading.gif"></p>
 <p>最典型的MVC：JSP(view)+Servlet(controller)+JavaBean(dao model)模式</p>
 <p><strong>2、 Jsp + Servlet + JavaBean存在问题：</strong></p>
 <ol>
@@ -253,7 +253,7 @@
 <p>它是一个典型的mvc构架，它是<code>一个纯正的servlet系统</code>，这也是它相比其他MVC框架所具有的优势。</p>
 <h5 id="1-2-2、核心前端控制器"><a href="#1-2-2、核心前端控制器" class="headerlink" title="1.2.2、核心前端控制器"></a>1.2.2、核心前端控制器</h5><p>顾名思义核心控制器用于Web层核心功能的处理以及在所有控制器执行之前，所有的WebMvc框架都采用了这种方式，<code>在SpringMVC中使用的是DispatcherServlet为核心控制器</code>。</p>
 <p>DispatcherServlet核心控制器会拦截匹配的请求，把拦截下来的请求，依据相应的规则【映射（url=控制器）】分发到目标Controller来处理。</p>
-<p><img src="/SpringMVC/Snipaste_2019-11-28_09-30-21.png" srcset="/img/loading.gif"></p>
+<p><img src="SpringMVC/Snipaste_2019-11-28_09-30-21.png" srcset="/img/loading.gif"></p>
 <img src="SpringMVC/Snipaste_2019-11-28_09-30-58.png" srcset="/img/loading.gif" style="zoom:80%;" />
 
 
@@ -350,19 +350,19 @@
 <li>启动Tomcat报错（？？？是否是Tomcat报错存疑）</li>
 </ol>
 <p>错误信息如下：</p>
-<p><img src="/SpringMVC/clip_image002.jpg" srcset="/img/loading.gif" alt="img"></p>
-<p><img src="/SpringMVC/Snipaste_2019-11-28_15-40-56.png" srcset="/img/loading.gif"></p>
-<p><img src="/SpringMVC/Snipaste_2019-11-28_15-31-47.png" srcset="/img/loading.gif"></p>
+<p><img src="SpringMVC/clip_image002.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/Snipaste_2019-11-28_15-40-56.png" srcset="/img/loading.gif"></p>
+<p><img src="SpringMVC/Snipaste_2019-11-28_15-31-47.png" srcset="/img/loading.gif"></p>
 <p>没找到<code>/WEB-INF/springmvc-servlet.xml</code>文件OR没找到<code>/WEB-INF/DispatcherServlet-servlet.xml</code>文件，因为在启动Tomcat服务器的时候会初始化SpringMVC中的DispatcherServlet，而这个DispatcherServlet会根据配置文件初始化Spring容器，默认配置文件路径为：**/WEB-INF/&lt;servlet-name&gt;-servlet.xml**（？？？解释存疑）</p>
-<p><img src="/SpringMVC/clip_image004.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/clip_image004.jpg" srcset="/img/loading.gif" alt="img"></p>
 <ol start="2">
 <li>解决问题方式：</li>
 </ol>
 <p>1.可以把我们的配置文件更名为DispatcherServlet-servlet.xml，然后拷贝到WEB-INF中。</p>
-<p><img src="/SpringMVC/Snipaste_2019-11-28_15-43-48.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/Snipaste_2019-11-28_15-43-48.png" srcset="/img/loading.gif" alt="img"></p>
 <p>2.一般spring的配置文件都在放在src中或者Resources文件夹中，我们可以通过以下配置告诉SpringMVC我们的配置文件路径。<strong>（常见做法）</strong></p>
-<p><img src="/SpringMVC/Snipaste_2019-11-28_15-48-33.png" srcset="/img/loading.gif" alt="img"></p>
-<h5 id="2-3-9、测试"><a href="#2-3-9、测试" class="headerlink" title="2.3.9、测试"></a>2.3.9、测试</h5><p><img src="/SpringMVC/Snipaste_2019-11-28_15-50-54.png" srcset="/img/loading.gif"></p>
+<p><img src="SpringMVC/Snipaste_2019-11-28_15-48-33.png" srcset="/img/loading.gif" alt="img"></p>
+<h5 id="2-3-9、测试"><a href="#2-3-9、测试" class="headerlink" title="2.3.9、测试"></a>2.3.9、测试</h5><p><img src="SpringMVC/Snipaste_2019-11-28_15-50-54.png" srcset="/img/loading.gif"></p>
 <h4 id="2-4、小结"><a href="#2-4、小结" class="headerlink" title="2.4、小结"></a>2.4、小结</h4><p>以上我们，实现了一个使用SpringMVC请求响应过程。</p>
 <p>我们自己<strong>创建了MyController用于接收请求并处理</strong>，通过<strong>ModelAndView传递了数据到我们的index.jsp</strong>，</p>
 <p>这个<strong>jsp将视图页面响应给用户</strong>。</p>
@@ -370,7 +370,7 @@
 <p>我们在web.xml 中配置了前端控制器，并指定了Spring的applicationContext.xml 配置文件的位置。</p>
 <p><strong>在applicationContext.xml，通过&lt;bean&gt;标签，配置了我们的Controller。</strong></p>
 <h3 id="3、SpringMVC执行流程"><a href="#3、SpringMVC执行流程" class="headerlink" title="3、SpringMVC执行流程"></a>3、SpringMVC执行流程</h3><h4 id="3-1、引入"><a href="#3-1、引入" class="headerlink" title="3.1、引入"></a>3.1、引入</h4><p>刚刚我们实现了一个使用SpringMVC请求响应过程。那为什么可以这样用呢？SpringMVC的实现原理又是怎样的呢？我们需要分析一下springMVC的架构图</p>
-<h4 id="3-2、SpringMVC框架结构"><a href="#3-2、SpringMVC框架结构" class="headerlink" title="3.2、SpringMVC框架结构***"></a>3.2、SpringMVC框架结构***</h4><p><img src="/SpringMVC/Snipaste_2019-11-28_10-29-33.png" srcset="/img/loading.gif"></p>
+<h4 id="3-2、SpringMVC框架结构"><a href="#3-2、SpringMVC框架结构" class="headerlink" title="3.2、SpringMVC框架结构***"></a>3.2、SpringMVC框架结构***</h4><p><img src="SpringMVC/Snipaste_2019-11-28_10-29-33.png" srcset="/img/loading.gif"></p>
 <p><code>控制器(Controller) = 处理器(Handler)</code></p>
 <h4 id="3-3、SpringMVC工作流程"><a href="#3-3、SpringMVC工作流程" class="headerlink" title="3.3、SpringMVC工作流程"></a>3.3、SpringMVC工作流程</h4><h5 id="3-3-1、详细描述"><a href="#3-3-1、详细描述" class="headerlink" title="3.3.1、详细描述"></a>3.3.1、详细描述</h5><p>1.用户发送请求至<code>前端控制器DispatcherServlet</code></p>
 <p>2.DispatcherServlet收到请求调用<code>HandlerMapping处理器映射器</code>。</p>
@@ -463,7 +463,7 @@
 
 
 <h5 id="5-2-4、URL地址提取数据，RESTful风格"><a href="#5-2-4、URL地址提取数据，RESTful风格" class="headerlink" title="5.2.4、URL地址提取数据，RESTful风格"></a>5.2.4、URL地址提取数据，RESTful风格</h5><p>什么是 RESTful</p>
-<p><img src="/SpringMVC/clip_image001.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/clip_image001.jpg" srcset="/img/loading.gif" alt="img"></p>
 <p>当你到公司被要求写一个接口时，很有可能就需要提供一个符合Restful风格的方法实现。</p>
 <p>我们来对比传统开发和 RESTful 开发 url 的对比.</p>
 <p>功能           传统开发                                                          RESTful 风格开发</p>
@@ -610,7 +610,7 @@
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@RequestMapping</span>(<span class="hljs-string">&quot;/json03&quot;</span>)<br><span class="hljs-variable">@ResponseBody</span><br>public User json4() throws Exception &#123;<br>	<span class="hljs-comment">// 返回一个javaBean 对象</span><br>	<span class="hljs-selector-tag">return</span> <span class="hljs-selector-tag">new</span> <span class="hljs-selector-tag">User</span>(<span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-number">20</span>, new Date());<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
-<p><img src="/SpringMVC/Snipaste_2019-11-28_14-28-37.png" srcset="/img/loading.gif"></p>
+<p><img src="SpringMVC/Snipaste_2019-11-28_14-28-37.png" srcset="/img/loading.gif"></p>
 <p>默认返回的日期格式为时间戳，而在前台我们希望显示出指定规则的日期字符串。</p>
 <p>解决：在日期get属性字段上，添加一个格式化注解</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@JsonFormat</span>(pattern=<span class="hljs-string">&quot;yyyy-MM-dd&quot;</span>,timezone=<span class="hljs-string">&quot;GMT+8&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-built_in">Date</span> <span class="hljs-function"><span class="hljs-title">getDate</span>(<span class="hljs-params"></span>)</span> &#123;<br>	<span class="hljs-keyword">return</span> date;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -629,15 +629,15 @@
 <h5 id="7-2-3、拦截器拦截流程"><a href="#7-2-3、拦截器拦截流程" class="headerlink" title="7.2.3、拦截器拦截流程"></a>7.2.3、拦截器拦截流程</h5><ol>
 <li>拦截器 1 放行</li>
 </ol>
-<p><img src="/SpringMVC/clip_image003.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/clip_image003.jpg" srcset="/img/loading.gif" alt="img"></p>
 <ol start="2">
 <li>拦截器 1 不放行</li>
 </ol>
-<p><img src="/SpringMVC/clip_image005.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/clip_image005.jpg" srcset="/img/loading.gif" alt="img"></p>
 <ol start="3">
 <li>拦截器 2 不放行</li>
 </ol>
-<p><img src="/SpringMVC/clip_image007.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/clip_image007.jpg" srcset="/img/loading.gif" alt="img"></p>
 <p>说明：</p>
 <ol>
 <li><p>preHandle 按拦截器定义顺序调用</p>
@@ -654,16 +654,16 @@
 <h5 id="7-2-4、指定不拦截方法"><a href="#7-2-4、指定不拦截方法" class="headerlink" title="7.2.4、指定不拦截方法"></a>7.2.4、指定不拦截方法</h5><p>通过&lt;mvc:exclude-mapping/&gt;标签指定不拦截的方法.但是配置这个标签之前,必须配置&lt;mvc:mapping /&gt;标签.</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置拦截器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptors</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/**&quot;</span> /&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mvc:exclude-mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/userList&quot;</span> /&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.istourec.interceptor.Interceptor1&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/**&quot;</span> /&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.istourec.interceptor.Interceptor2&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptors</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>我们访问 localhost:8082/userList.观察拦截器执行效果.</p>
-<p><img src="/SpringMVC/clip_image009.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/clip_image009.jpg" srcset="/img/loading.gif" alt="img"></p>
 <p>仅有拦截器 2 执行了.</p>
 <h4 id="7-3、小结"><a href="#7-3、小结" class="headerlink" title="7.3、小结"></a>7.3、小结</h4><p>以上，我们学习了拦截器的配置与放行方式，所以我们的登录拦截可以这样来实现：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置拦截器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptors</span>&gt;</span><br> 	<span class="hljs-tag">&lt;<span class="hljs-name">mvc:interceptor</span>&gt;</span><br> 		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/**&quot;</span>/&gt;</span><br> 		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:exclude-mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/toLogin&quot;</span>/&gt;</span><br> 		<span class="hljs-tag">&lt;<span class="hljs-name">mvc:exclude-mapping</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/loginUser&quot;</span>/&gt;</span><br> 		<span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cn.itsourece.ems.interceptor.MyLogInterceptor&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br> 	<span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptor</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mvc:interceptors</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <h3 id="8、文件上传-放到项目中去做"><a href="#8、文件上传-放到项目中去做" class="headerlink" title="8、文件上传-放到项目中去做"></a>8、文件上传-放到项目中去做</h3><h4 id="8-1、引入"><a href="#8-1、引入" class="headerlink" title="8.1、引入"></a>8.1、引入</h4><p>原始的Servlet文件上传，需要对提交的流对象进行复制的解析，SpringMVC 为我们提供了一个方便的解析器可以方便的实现文件上传。如果要实现文件的上传,只要在 spring-mvc.xml 中注册相应的 MultipartResolver 即可。</p>
-<h4 id="8-2、实现步骤"><a href="#8-2、实现步骤" class="headerlink" title="8.2、实现步骤"></a>8.2、实现步骤</h4><h5 id="8-2-1、加入文件上传所需依赖的jar包"><a href="#8-2-1、加入文件上传所需依赖的jar包" class="headerlink" title="8.2.1、加入文件上传所需依赖的jar包"></a>8.2.1、加入文件上传所需依赖的jar包</h5><p><img src="/SpringMVC/image-20191128144118730.png" srcset="/img/loading.gif" alt="image-20191128144118730"></p>
+<h4 id="8-2、实现步骤"><a href="#8-2、实现步骤" class="headerlink" title="8.2、实现步骤"></a>8.2、实现步骤</h4><h5 id="8-2-1、加入文件上传所需依赖的jar包"><a href="#8-2-1、加入文件上传所需依赖的jar包" class="headerlink" title="8.2.1、加入文件上传所需依赖的jar包"></a>8.2.1、加入文件上传所需依赖的jar包</h5><p><img src="SpringMVC/image-20191128144118730.png" srcset="/img/loading.gif" alt="image-20191128144118730"></p>
 <h5 id="8-2-2、配置上传解析器"><a href="#8-2-2、配置上传解析器" class="headerlink" title="8.2.2、配置上传解析器"></a>8.2.2、配置上传解析器</h5><p>在 springmvc.xml 中配置上传文件的解析器CommonsMultipartResolver</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 文件上传解析器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;multipartResolver&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;org.springframework.web.multipart.commons.CommonsMultipartResolver&quot;</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 设置文件大小限制,单位 B --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;maxUploadSize&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;5242880&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <h5 id="8-2-3、页面调整"><a href="#8-2-3、页面调整" class="headerlink" title="8.2.3、页面调整"></a>8.2.3、页面调整</h5><p>修改表单提交的 enctype 为 multipart/form-data 多部分表单.</p>
-<p><img src="/SpringMVC/image-20191128144301227.png" srcset="/img/loading.gif" alt="image-20191128144301227"></p>
+<p><img src="SpringMVC/image-20191128144301227.png" srcset="/img/loading.gif" alt="image-20191128144301227"></p>
 <h5 id="8-2-4、上传文件"><a href="#8-2-4、上传文件" class="headerlink" title="8.2.4、上传文件"></a>8.2.4、上传文件</h5><p>在 Controller 方法的形参中,使用 MultipartFile 来接收上传的文件.注意方法形参的名称要与表单提交的 name 保持一致</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 修改用户信息</span><br><span class="hljs-comment"> */</span><br>@<span class="hljs-constructor">RequestMapping(<span class="hljs-string">&quot;/update&quot;</span>)</span><br>public String update(User user, MultipartFile file, Model model) throws Exception &#123;<br>	<span class="hljs-comment">// ----------------------- 准备上传图片 ----------------------</span><br>	<span class="hljs-comment">// 1. 准备上传的文件名</span><br>	String uuid = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">UUID</span>.</span></span>random<span class="hljs-constructor">UUID()</span>.<span class="hljs-keyword">to</span><span class="hljs-constructor">String()</span>.replace<span class="hljs-constructor">All(<span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;&quot;</span>)</span>;<br>	String extension = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FilenameUtils</span>.</span></span>get<span class="hljs-constructor">Extension(<span class="hljs-params">file</span>.<span class="hljs-params">getOriginalFilename</span>()</span>);<br>	String newFileName = uuid + <span class="hljs-string">&quot;.&quot;</span> + extension;<br>	<span class="hljs-comment">// 2. 上传文件</span><br>String webapp = request.get<span class="hljs-constructor">ServletContext()</span>.get<span class="hljs-constructor">RealPath(<span class="hljs-string">&quot;/uploads/&quot;</span>)</span>;<br>	file.transfer<span class="hljs-constructor">To(<span class="hljs-params">new</span> File(<span class="hljs-params">webapp</span> + <span class="hljs-string">&quot;\\&quot;</span> + <span class="hljs-params">newFileName</span>)</span>);<br>	<span class="hljs-comment">// 3. 给 user 赋值</span><br>	user.set<span class="hljs-constructor">Img(<span class="hljs-params">newFileName</span>)</span>;<br>	us.update(user);<br>	<span class="hljs-comment">// 4. 获取修改后的用户信息,保存到 model 中</span><br>	User queryUser = us.select<span class="hljs-constructor">ById(<span class="hljs-params">user</span>.<span class="hljs-params">getUid</span>()</span>);<br>	model.add<span class="hljs-constructor">Attribute(<span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-params">queryUser</span>)</span>;<br>	return <span class="hljs-string">&quot;success&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h5 id="8-2-5、准备显示页面"><a href="#8-2-5、准备显示页面" class="headerlink" title="8.2.5、准备显示页面"></a>8.2.5、准备显示页面</h5><p>通过el表达式取出查询的值</p>
@@ -691,11 +691,11 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;Connector <span class="hljs-attribute">port</span>=<span class="hljs-string">&quot;80&quot;</span> <span class="hljs-attribute">protocol</span>=<span class="hljs-string">&quot;HTTP/1.1&quot;</span> <span class="hljs-attribute">URIEncoding</span>=<span class="hljs-string">&quot;UTF-8&quot;</span><br>			<span class="hljs-attribute">connectionTimeout</span>=<span class="hljs-string">&quot;20000&quot;</span><br>			<span class="hljs-attribute">redirectPort</span>=<span class="hljs-string">&quot;8443&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
 <p>Post请求：</p>
 <p>注意：SpringMVC框架本身没有处理请求编码，需要配置一个spring内置请求编码过滤器。</p>
-<p><img src="/SpringMVC/clip_image0022.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/clip_image0022.jpg" srcset="/img/loading.gif" alt="img"></p>
 <p>web.xml </p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- Post请求编码过滤器 --&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">filter-class</span>&gt;</span><br>			org.springframework.web.filter.CharacterEncodingFilter<br>		<span class="hljs-tag">&lt;/<span class="hljs-name">filter-class</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">init-param</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>encoding<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>utf-8<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">init-param</span>&gt;</span>	<br>	<span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><br>	<span class="hljs-tag">&lt;<span class="hljs-name">filter-mapping</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/*<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">filter-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>1.1.5.  出现406状态异常，加入jackson json工具包</p>
-<p><img src="/SpringMVC/clip_image0021.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="SpringMVC/clip_image0021.jpg" srcset="/img/loading.gif" alt="img"></p>
 
             </div>
             <hr>

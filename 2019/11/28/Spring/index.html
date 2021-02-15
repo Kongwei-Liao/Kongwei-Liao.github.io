@@ -250,7 +250,7 @@
 <td>做数据的持久化(现在咱们操作数据库就是完成持久化的功能)  JDBC，SpringJDBC,Hibernate,MyBatis</td>
 </tr>
 </tbody></table>
-<p><img src="/Spring/Spring.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/Spring.png" srcset="/img/loading.gif"></p>
 <p>命名规范：</p>
 <ol>
 <li>dao层：<ul>
@@ -326,13 +326,13 @@
 </li>
 </ol>
 <h5 id="5-2、导包"><a href="#5-2、导包" class="headerlink" title="5.2、导包"></a>5.2、导包</h5><p>spring-framework-4.1.2.RELEASE</p>
-<p><img src="/Spring/Snipaste_2019-11-27_09-40-42.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/Snipaste_2019-11-27_09-40-42.png" srcset="/img/loading.gif"></p>
 <p><strong>1、核心基础包：</strong></p>
-<p><img src="/Spring/image-20191213221515169.png" srcset="/img/loading.gif" alt="image-20191213221515169"></p>
+<p><img src="Spring/image-20191213221515169.png" srcset="/img/loading.gif" alt="image-20191213221515169"></p>
 <p><strong>2、日志包</strong></p>
-<p><img src="/Spring/Snipaste_2019-11-27_09-42-35.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/Snipaste_2019-11-27_09-42-35.png" srcset="/img/loading.gif"></p>
 <p>目前就先导入核心包(core)和beans包【最小配置包】</p>
-<p><img src="/Spring/Snipaste_2019-11-27_09-44-16.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/Snipaste_2019-11-27_09-44-16.png" srcset="/img/loading.gif"></p>
 <p>导包的时候注意，现在使用Spring，要完成最小导包，即：需要什么jar包，我们就导入哪一个jar包，这个对咱们认识框架的包是非常有帮助的。不然以后由于出现问题自己都不知道应该怎么解决。</p>
 <h5 id="5-3、准备对象类"><a href="#5-3、准备对象类" class="headerlink" title="5.3、准备对象类"></a>5.3、准备对象类</h5><p>在domain包中创建新的实体类，亦即Javabean，如下：</p>
 <figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-comment">//User.java</span><br><span class="hljs-keyword">package</span> cn.kongwei_liao.spring.Domain;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> name;<br>    <span class="hljs-keyword">private</span> Integer age;<br>	<span class="hljs-comment">//省略了getter和setter方法</span><br>&#125;<br></code></pre></td></tr></table></figure>
@@ -341,7 +341,7 @@
 <p>该配置文件的基本信息如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">	<span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">	<span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span><br>	<br>  <span class="hljs-comment">&lt;!--目前现在上面基本配置里加入如下一条，在&lt;beans&gt;中--&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;user&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cn.kongwei_liao.spring.Domain.User&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>或使用英文文档中的配置：</p>
-<p><img src="/Spring/app.xml.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/app.xml.png" srcset="/img/loading.gif"></p>
 <p>引入约束：XMLcatalog，位置：spring-framework-3.2.0.RELEASE\schema\beans目录下</p>
 <h5 id="5-5、代码测试"><a href="#5-5、代码测试" class="headerlink" title="5.5、代码测试"></a>5.5、代码测试</h5><p>我们第一步是要启动框架，而启动框架则需要拿到Spring的核心对象；</p>
 <p>第一个核心对象是<strong>BeanFactory</strong> : 顾名思义，这是一个创建Bean的工厂</p>
@@ -362,7 +362,7 @@
 </li>
 </ol>
 <h4 id="6、Spring原理分析"><a href="#6、Spring原理分析" class="headerlink" title="6、Spring原理分析"></a>6、Spring原理分析</h4><p>通过之前的Spring入门案例，知道的Spring的核心就是一个容器，它会根据配置创建相应的bean(对象)，那它的具体实现原理是怎样的呢？就需要我们来在学习一下<code>Spring的核心接口BeanFactory</code>和<code>ApplicationContext</code>，并了解一下Spring创建对象的原理。</p>
-<p><img src="/Spring/image-20191228165021684.png" srcset="/img/loading.gif" alt="image-20191228165021684"></p>
+<p><img src="Spring/image-20191228165021684.png" srcset="/img/loading.gif" alt="image-20191228165021684"></p>
 <h5 id="6-1、核心接口BeanFactory"><a href="#6-1、核心接口BeanFactory" class="headerlink" title="6.1、核心接口BeanFactory"></a>6.1、核心接口BeanFactory</h5><p>SpringIoC容器：<strong>BeanFactory(com.springframework.beans.factory.BeanFactory)是Spring框架最核心的一个接口</strong>，spring使用BeanFactory来<strong>实例化、配置和管理Bean对象</strong>，但是它只是一个接口，里面有一个getBean()方法。</p>
 <h6 id="6-1-1、使用BeanFactory"><a href="#6-1-1、使用BeanFactory" class="headerlink" title="6.1.1、使用BeanFactory"></a>6.1.1、使用BeanFactory</h6><p>方式一：通过id直接拿到相应的Bean对象（常见方法）</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">//通过applicationContext.xml配置文件中配置的bean的id拿到对象</span><br>MyBean bean = (MyBean)factory.get<span class="hljs-constructor">Bean(<span class="hljs-string">&quot;myBean&quot;</span>)</span>;<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(bean);<br></code></pre></td></tr></table></figure>
@@ -490,9 +490,9 @@
 <p><strong>4、结果</strong></p>
 <p>注：打印的包路径名，因为文档的内容后期改动ant_nest为kongwei_liao。</p>
 <p>singleton 单例模式结果：</p>
-<p><img src="/Spring/Snipaste_2019-11-27_16-37-51.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/Snipaste_2019-11-27_16-37-51.png" srcset="/img/loading.gif"></p>
 <p>prototype 多实例：</p>
-<p><img src="/Spring/Snipaste_2019-11-27_17-16-15.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/Snipaste_2019-11-27_17-16-15.png" srcset="/img/loading.gif"></p>
 <p>小结:</p>
 <ul>
 <li>加载容器 -&gt; 创建对象 -&gt; 初始化-&gt; 运行-&gt; 销毁；</li>
@@ -511,7 +511,7 @@
 <p>例如在Spring操作连接池的时候，它会在DateSource销毁的时候执行。</p>
 <h4 id="9、Spring单元测试"><a href="#9、Spring单元测试" class="headerlink" title="9、Spring单元测试"></a>9、Spring单元测试</h4><p>之前的测试，我们是通过Junit或者main方法，其实在使用Spring框架的时候，我们经常使用的是Spring提供的测试模块。可以简化很多操作。</p>
 <h5 id="9-1、Spring-Test测试原理"><a href="#9-1、Spring-Test测试原理" class="headerlink" title="9.1、Spring Test测试原理"></a>9.1、Spring Test测试原理</h5><p>Spring测试主要是Spring-junit，这个是Spring自己专门写的一套测试框架功能。</p>
-<p><img src="/Spring/Snipaste_2019-11-27_15-25-56.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/Snipaste_2019-11-27_15-25-56.png" srcset="/img/loading.gif"></p>
 <h5 id="9-2、使用步骤"><a href="#9-2、使用步骤" class="headerlink" title="9.2、使用步骤"></a>9.2、使用步骤</h5><p>1、导入Spring-Test依赖包 </p>
 <p>2、添加注解</p>
 <p>@RunWith()、@ContextConfiguration 和 @Autowired</p>
@@ -526,7 +526,7 @@
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@RunWith</span>(SpringJUnit4ClassRunner.class)<br><span class="hljs-variable">@ContextConfiguration</span>(<span class="hljs-string">&quot;classpath:spring-context.xml&quot;</span>)<br>public class Spring4Test &#123;<br>	<br>	<span class="hljs-variable">@Autowired</span><br>	private User user;<br>	<br>	<span class="hljs-variable">@Test</span><br>	public void springTest() throws Exception &#123;<br>		<span class="hljs-selector-tag">user</span><span class="hljs-selector-class">.setName</span>(<span class="hljs-string">&quot;Spring 测试&quot;</span>);<br>		<span class="hljs-selector-tag">System</span><span class="hljs-selector-class">.out</span><span class="hljs-selector-class">.println</span>(user.getName());<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>如果配置文件中，配置了两个同一class类型的bean，用@Qualifier(“User”)限定</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;bean <span class="hljs-attribute">id</span>=<span class="hljs-string">&quot;User&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-string">&quot;cn.ant_nest.spring.Domain.User&quot;</span> <span class="hljs-attribute">init-method</span>=<span class="hljs-string">&quot;init&quot;</span> <span class="hljs-attribute">destroy-method</span>=<span class="hljs-string">&quot;destroy&quot;</span>&gt;&lt;/bean&gt;<br>&lt;bean <span class="hljs-attribute">id</span>=<span class="hljs-string">&quot;User1&quot;</span> <span class="hljs-attribute">class</span>=<span class="hljs-string">&quot;cn.ant_nest.spring.Domain.User&quot;</span>&gt;&lt;/bean&gt;<br></code></pre></td></tr></table></figure>
-<p><img src="/Spring/Snipaste_2019-11-27_16-56-30.png" srcset="/img/loading.gif"></p>
+<p><img src="Spring/Snipaste_2019-11-27_16-56-30.png" srcset="/img/loading.gif"></p>
 <p>小结：</p>
 <ol>
 <li>通过 @RunWith和 @ContextConfiguration， 我们可以指定Spring管理测试类，自动加载配置文件，执行相关的测试。</li>
@@ -572,7 +572,7 @@
 <li>修改类，在类上面加上注解，让Spring 可以扫描到</li>
 </ol>
 <p>1、修改XML配置context命名空间，让Spring扫描类与支持注解</p>
-<p><img src="/Spring/image-20191228191254644.png" srcset="/img/loading.gif" alt="image-20191228191254644"></p>
+<p><img src="Spring/image-20191228191254644.png" srcset="/img/loading.gif" alt="image-20191228191254644"></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">	<span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">	<span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/context&quot;</span></span><br><span class="hljs-tag">	<span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/beans</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/context</span></span><br><span class="hljs-tag"><span class="hljs-string">	http://www.springframework.org/schema/context/spring-context.xsd&quot;</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 配置让Spring扫描类与支持注解--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">&quot;cn.kongwei_liao.*&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>2、在类里面加上注解</p>
 <blockquote>

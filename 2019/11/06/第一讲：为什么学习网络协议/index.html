@@ -231,7 +231,7 @@
 <p>《圣经》中有一个通天塔的故事，大致是说，上帝为了阻止人类联合起来，就让人类说不同的语言。人类 没法儿沟通，达不成“协议”，通天塔的计划就失败了。 但是千年以后，有一种叫“程序猿”的物种，敲着一种这个群体通用的语言，连接着全世界所有的人，打 造这互联网世界的通天塔。如今的世界，正是因为互联网，才连接在一起。 当 “Hello World!” 从显示器打印出来的时候，还记得你激动的心情吗？ public class </p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arduino">HelloWorld &#123; <br>  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">String</span>[] args)</span></span>&#123; <br>    System.out.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Hello World!&quot;</span>); <br>  &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
 <p>如果你是程序员，一定看得懂上面这一段文字。这是每一个程序员向计算机世界说“你好，世界”的方 式。但是，你不一定知道，这段文字也是一种协议，是人类和计算机沟通的协议，只有通过这种协议，计 算机才知道我们想让它做什么。 协议三要素 当然，这种协议还是更接近人类语言，机器不能直接读懂，需要进行翻译，翻译的工作教给编译器，也就 是程序员常说的 compile。这个过程比较复杂，其中的编译原理非常复杂，我在这里不进行详述。  </p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/1.png" srcset="/img/loading.gif" alt="1"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/1.png" srcset="/img/loading.gif" alt="1"></p>
 <p>但是可以看得出，计算机语言作为程序员控制一台计算机工作的协议，具备了<code>协议的三要素</code>。</p>
 <ul>
 <li><code>语法</code>，就是这一段内容要符合一定的规则和格式。例如，括号要成对，结束要使用分号等。 </li>
@@ -254,37 +254,37 @@
 <p>在经济学领域，有个伦纳德∙里德（Leonard E. Read）创作的《铅笔的故事》。这个故事通过一个铅笔的 诞生过程，来讲述复杂的经济学理论。这里，我也用一个下单的过程，看看互联网世界的运行过程中，都 使用了哪些网络协议。 </p>
 <p>你先在浏览器里面输入 <a target="_blank" rel="noopener" href="https://www.kaola.com/">https://www.kaola.com</a> ，这是一个URL。浏览器只知道名字 是“<a target="_blank" rel="noopener" href="http://www.kaola.com”,但是不知道具体的地点,所以不知道应该如何访问.于是,它打开地址簿去查/">www.kaola.com”，但是不知道具体的地点，所以不知道应该如何访问。于是，它打开地址簿去查</a> 找。可以使用一般的地址簿协议DNS（本地DNS？）去查找，还可以使用另一种更加精准的地址簿查找协议HTTPDNS（DNS服务器）。 无论用哪一种方法查找，终都会得到这个地址：106.114.138.24。这个是IP地址，是互联网世界的“门牌号”。</p>
 <p>知道了目标地址，浏览器就开始打包它的请求。对于普通的浏览请求，往往会使用HTTP协议；但是对于购物的请求，往往需要进行加密传输，因而会使用HTTPS协议。无论是什么协议，里面都会写明“你要买什么和买多少”。 </p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/2.png" srcset="/img/loading.gif" alt="2"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/2.png" srcset="/img/loading.gif" alt="2"></p>
 <p>DNS、HTTP、HTTPS 所在的层我们称为应用层。经过应用层封装后，浏览器会将应用层的包交给下一层 去完成，通过<code> socket编程</code>来实现。下一层是传输层。传输层有两种协议，一种是<code>无连接的协议UDP</code>，一 种是<code>面向连接的协议TCP</code>。对于支付来讲，往往使用 TCP 协议。所谓的面向连接就是，TCP 会保证这个包 能够到达目的地。如果不能到达，就会重新发送，直至到达。 </p>
 <p>TCP 协议里面会有两个<code>端口</code>，一个是<code>浏览器监听的端口</code>，一个是电商的<code>服务器监听的端口</code>。操作系统往往通过端口来判断，它得到的包应该给哪个进程。</p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/3.png" srcset="/img/loading.gif" alt="3"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/3.png" srcset="/img/loading.gif" alt="3"></p>
 <p>传输层封装完毕后，浏览器会将包交给操作系统的网络层。网络层的协议是<code> IP 协议</code>。在 IP 协议里面会有<code>源IP地址</code>，即浏览器所在机器的IP地址和<code>目标IP地址</code>，也即电商网站所在服务器的IP地址。</p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/4.png" srcset="/img/loading.gif" alt="4"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/4.png" srcset="/img/loading.gif" alt="4"></p>
 <p>操作系统既然知道了目标 IP 地址，就开始想如何根据这个门牌号找到目标机器。操作系统往往会判断，这 个目标 IP 地址是本地人，还是外地人。如果是本地人，从门牌号就能看出来，但是显然电商网站不在本 地，而在遥远的地方。</p>
 <p>操作系统知道要离开本地去远方。虽然不知道远方在何处，但是可以这样类比一下：如果去国外要去海 关，去外地就要去网关。而操作系统启动的时候，就会被 <code>DHCP 协议配置 IP 地址</code>，以及<code>默认的网关的 IP地址 192.168.1.1</code>。 </p>
 <p>操作系统如何将 IP 地址发给网关(网关在本地)呢？在本地通信基本靠吼，于是操作系统大吼一声，谁是 192.168.1.1  啊？网关会回答它，我就是，我的本地地址在村东头。这个本地地址就是MAC地址，而大吼的那一声是 ARP协议。</p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/5.png" srcset="/img/loading.gif" alt="5"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/5.png" srcset="/img/loading.gif" alt="5"></p>
 <p>于是操作系统将 IP 包交给了下一层，也就是MAC 层。网卡再将包发出去。由于这个包里面是有 MAC 地 址的，因而它能够到达网关。 </p>
 <p>网关收到包之后，会根据自己的知识，判断下一步应该怎么走。<code>网关往往是一个路由器</code>，到某个 IP 地址应该怎么走，这个叫作<code>路由表</code>。 </p>
 <p>路由器有点像玄奘西行路过的一个个国家的一个个城关。每个城关都连着两个国家，每个国家相当于一个 局域网，在每个国家内部，都可以使用本地的地址 MAC 进行通信。 </p>
 <p>一旦跨越城关，就需要拿出 IP 头来，里面写着贫僧来自东土大唐（就是源 IP 地址），欲往西天拜佛求经 （指的是目标 IP 地址）。路过宝地，借宿一晚，明日启行，请问接下来该怎么走啊？ </p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/6.png" srcset="/img/loading.gif" alt="6"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/6.png" srcset="/img/loading.gif" alt="6"></p>
 <p>城关往往是知道这些“知识”的，因为城关和临近的城关也会经常沟通。到哪里应该怎么走，这种沟通的协议称为<code>路由协议</code>，常用的有<code>OSPF</code>和<code>BGP</code>。 </p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/7.png" srcset="/img/loading.gif" alt="7"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/7.png" srcset="/img/loading.gif" alt="7"></p>
 <p>城关与城关之间是一个国家，当网络包知道了下一步去哪个城关，还是要使用国家内部的 MAC 地址，通过下一个城关的 MAC 地址，找到下一个城关，然后再问下一步的路怎么走，一直到走出最后一个城关。 最后一个城关知道这个网络包要去的地方。于是，对着这个国家吼一声，谁是目标 IP 啊？目标服务器就会 回复一个 MAC 地址。网络包过关后，通过这个 MAC 地址就能找到目标服务器。 </p>
 <p>目标服务器发现 MAC 地址对上了，取下 MAC 头来，发送给操作系统的网络层。发现 IP 也对上了，就取 下 IP 头。IP 头里会写上一层封装的是 TCP 协议，然后将其交给传输层，即TCP 层。</p>
 <p>在这一层（TCP）里，对于收到的每个包，都会有一个回复的包说明收到了。这个回复的包绝非这次下单请求的结果，例如购物是否成功，扣了多少钱等，而仅仅是 TCP 层的一个说明，即收到之后的回复。当然这个回复，会沿着刚才来的方向走回去，报个平安。 </p>
 <p>因为一旦出了国门，西行路上千难万险，如果在这个过程中，网络包走丢了，例如进了大沙漠，或者被强 盗抢劫杀害怎么办呢？因而到了要报个平安。 </p>
 <p>如果过一段时间还是没到，发送端的 TCP 层会重新发送这个包，还是上面的过程，直到有一天收到平安到 达的回复。这个重试绝非你的浏览器重新将下单这个动作重新请求一次。对于浏览器来讲，就发送了一次 下单请求，TCP 层不断自己闷头重试。除非 TCP 这一层出了问题，例如连接断了，才轮到浏览器的应用层 重新发送下单请求。 </p>
 <p>当网络包平安到达 TCP 层之后，TCP 头中有目标端口号，通过这个端口号，可以找到电商网站的进程正在 监听这个端口号，假设一个 Tomcat，将这个包发给电商网站。 </p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/8.png" srcset="/img/loading.gif" alt="8"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/8.png" srcset="/img/loading.gif" alt="8"></p>
 <p>电商网站的进程得到 HTTP 请求的内容，知道了要买东西，买多少。往往一个电商网站初接待请求的这 个 Tomcat 只是个接待员，负责统筹处理这个请求，而不是所有的事情都自己做。例如，这个接待员要告 诉专门管理订单的进程，登记要买某个商品，买多少，要告诉管理库存的进程，库存要减少多少，要告诉 支付的进程，应该付多少钱，等等。 </p>
 <p>如果告诉相关的进程呢？往往通过<code>RPC 调用</code>，即远程过程调用的方式来实现。远程过程调用就是当告诉管 理订单进程的时候，接待员不用关心中间的网络互连问题，会由 RPC 框架统一处理。RPC 框架有很多种， 有基于 HTTP 协议放在 HTTP 的报文里面的，有直接封装在 TCP 报文里面的。 </p>
 <p>当接待员发现相应的部门都处理完毕，就回复一个 HTTPS 的包，告知下单成功。这个 HTTPS 的包，会像 来的时候一样，经过千难万险到达你的个人电脑，终进入浏览器，显示支付成功。 </p>
 <p>小结 </p>
 <p>看到了吧，一个简简单单的下单过程，中间牵扯到这么多的协议。而管理一大片机器，更是一件特别有技 术含量的事情。除此之外，像近比较火的云计算、容器、微服务等技术，也都需要借助各种协议，来达 成大规模机器之间的合作。 </p>
 <p>我在这里列一下之后要讲的网络协议，之后我会按照从底层到上层的顺序来讲述。 </p>
-<p><img src="/%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/9.png" srcset="/img/loading.gif" alt="9"></p>
+<p><img src="%E7%AC%AC%E4%B8%80%E8%AE%B2%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/9.png" srcset="/img/loading.gif" alt="9"></p>
 <p>上面的“双十一”故事只是为了给你一个大致的框架，这里面有些协议，我在故事里已经提到了，有些还 没有提到。在这门课的后一章，当所有的协议都讲过之后，我会再重新讲一遍这个故事，到时候你就能 明白更多的细节。</p>
 <p>最后，学完了这一节，给你留一个问题吧。 当网络包到达一个城关的时候，可以通过路由表得到下一个城关的 IP 地址，直接通过 IP 地址找就可以 了，为什么还要通过本地的 MAC 地址呢？ 欢迎你留言和我讨论。趣谈网络协议，我们下期见！</p>
 

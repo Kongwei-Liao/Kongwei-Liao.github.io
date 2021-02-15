@@ -245,24 +245,24 @@
 <li><p>安装无误后：cmd输入git –version查看Git的版本</p>
 </li>
 </ul>
-<p><img src="/scaffold/git-v.png" srcset="/img/loading.gif" alt="git-v"></p>
+<p><img src="scaffold/git-v.png" srcset="/img/loading.gif" alt="git-v"></p>
 <h4 id="2、安装nodejs"><a href="#2、安装nodejs" class="headerlink" title="2、安装nodejs"></a>2、安装nodejs</h4><p>Hexo是基于nodeJS环境的静态博客，里面的npm工具很有用</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://nodejs.org/en/">下载地址</a>(说明：LTS为长期支持版，Current为当前最新版)</li>
 <li>安装步骤：反正下载好msi文件后，双击打开安装，也是一路next，不过在Custom Setup这一步记得选 <code>Add to PATH</code> ,这样你就不用自己去配置电脑上环境变量了，装完在按 <code>win + r</code> 快捷键调出运行，然后输入cmd确定，在cmd中输入path可以看到你的node是否配置在里面（环境变量），没有的话你就自由发挥吧。</li>
 <li>查看版本：命令<code>node -v</code></li>
 </ul>
-<p><img src="/scaffold/node-v.png" srcset="/img/loading.gif" alt="node-v"></p>
+<p><img src="scaffold/node-v.png" srcset="/img/loading.gif" alt="node-v"></p>
 <h4 id="3、安装Hexo"><a href="#3、安装Hexo" class="headerlink" title="3、安装Hexo"></a>3、安装Hexo</h4><ul>
 <li><p>先创建一个文件夹，如/Hexo，这个文件夹就相当于我们Blog项目目录</p>
 </li>
 <li><p>执行Hexo安装命令：<code>npm i -g hexo</code></p>
 </li>
 <li><p>安装完成后，查看版本：<code>hexo -v</code></p>
-<p><img src="/scaffold/hexo-v.png" srcset="/img/loading.gif" alt="1572250103953"></p>
+<p><img src="scaffold/hexo-v.png" srcset="/img/loading.gif" alt="1572250103953"></p>
 </li>
 <li><p><code>cd</code>到先前创建目录，如/Hexo，执行<code>hexo init</code>初始化命令，完成后即可看到自动创建的如下内容：</p>
-<p><img src="/scaffold/hexo-init.png" srcset="/img/loading.gif" alt="hexo-init"></p>
+<p><img src="scaffold/hexo-init.png" srcset="/img/loading.gif" alt="hexo-init"></p>
 </li>
 <li><p>解释一下：</p>
 <ul>
@@ -279,30 +279,30 @@
 </ul>
 <h4 id="4、搭桥到你的GitHub"><a href="#4、搭桥到你的GitHub" class="headerlink" title="4、搭桥到你的GitHub"></a>4、搭桥到你的GitHub</h4><p>没账号的创建账号，有账号的看下面。</p>
 <ul>
-<li>创建一个repo，名称为<code>yourname.github.io</code>, 其中<code>yourname</code>是你的github名称，按照这个规则创建才有用哦，如下：<br><img src="/scaffold/newrepo1.png" srcset="/img/loading.gif" alt="newrepo1"></li>
+<li>创建一个repo，名称为<code>yourname.github.io</code>, 其中<code>yourname</code>是你的github名称，按照这个规则创建才有用哦，如下：<br><img src="scaffold/newrepo1.png" srcset="/img/loading.gif" alt="newrepo1"></li>
 </ul>
-<p>  <img src="/scaffold/newrepo2.png" srcset="/img/loading.gif" alt="newrepo2"></p>
+<p>  <img src="scaffold/newrepo2.png" srcset="/img/loading.gif" alt="newrepo2"></p>
 <ul>
-<li>进入git bash中其实进入cmd一样，配置Github账户信息（YourName和YourEail都替换成你自己的）：<br><img src="/scaffold/gitbash.png" srcset="/img/loading.gif" alt="gitbash"></li>
+<li>进入git bash中其实进入cmd一样，配置Github账户信息（YourName和YourEail都替换成你自己的）：<br><img src="scaffold/gitbash.png" srcset="/img/loading.gif" alt="gitbash"></li>
 </ul>
-<p>  <img src="/scaffold/gitconfigname.png" srcset="/img/loading.gif" alt="gitconfigname"></p>
-<p>  <img src="/scaffold/gitconfigemail.png" srcset="/img/loading.gif" alt="gitconfigemail"></p>
-<p>  <img src="/scaffold/gitconfig.png" srcset="/img/loading.gif" alt="gitconfig"></p>
+<p>  <img src="scaffold/gitconfigname.png" srcset="/img/loading.gif" alt="gitconfigname"></p>
+<p>  <img src="scaffold/gitconfigemail.png" srcset="/img/loading.gif" alt="gitconfigemail"></p>
+<p>  <img src="scaffold/gitconfig.png" srcset="/img/loading.gif" alt="gitconfig"></p>
 <ul>
 <li><p>创建SSH</p>
 <ul>
-<li><p>在Git bash中输入：<code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</code>，生成ssh。然后按下图的方式找到<code>id_rsa.pub</code>文件的内容。<br><img src="/scaffold/sshdir.png" srcset="/img/loading.gif" alt="sshdir"></p>
+<li><p>在Git bash中输入：<code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</code>，生成ssh。然后按下图的方式找到<code>id_rsa.pub</code>文件的内容。<br><img src="scaffold/sshdir.png" srcset="/img/loading.gif" alt="sshdir"></p>
 </li>
-<li><p>将上面获取的ssh放到github中：<br><img src="/scaffold/sshcontent.png" srcset="/img/loading.gif" alt="sshcontent"></p>
+<li><p>将上面获取的ssh放到github中：<br><img src="scaffold/sshcontent.png" srcset="/img/loading.gif" alt="sshcontent"></p>
 </li>
 <li><p>添加一个 New SSH key ，title随便取，key就填刚刚那一段。</p>
 </li>
 </ul>
-<p><img src="/scaffold/githubssh.png" srcset="/img/loading.gif" alt="githubssh"></p>
+<p><img src="scaffold/githubssh.png" srcset="/img/loading.gif" alt="githubssh"></p>
 <ul>
 <li>在gitbash中验证是否添加成功：<code>ssh -T git@github.com</code></li>
 </ul>
-<p><img src="/scaffold/sshtest.png" srcset="/img/loading.gif" alt="sshtest"></p>
+<p><img src="scaffold/sshtest.png" srcset="/img/loading.gif" alt="sshtest"></p>
 </li>
 </ul>
 <h4 id="5、一步之遥了"><a href="#5、一步之遥了" class="headerlink" title="5、一步之遥了"></a>5、一步之遥了</h4><ul>
@@ -323,7 +323,7 @@
 </ul>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs verilog">hexo clean<br>hexo <span class="hljs-keyword">generate</span><br>hexo deploy<br></code></pre></td></tr></table></figure>
 <p>注意deploy的过程中要输入你的username及passward。如下：</p>
-<p>  <img src="/scaffold/hexo-deploy.png" srcset="/img/loading.gif" alt="hexo-deploy"></p>
+<p>  <img src="scaffold/hexo-deploy.png" srcset="/img/loading.gif" alt="hexo-deploy"></p>
 <ul>
 <li>在浏览器中输入<code>http://YourGithubName.github.io</code>就可以看到你的个人博客啦，是不是很兴奋！</li>
 <li>感觉Git bash中东西太多的时候输入<code>clear</code>命令清空一下。</li>
@@ -332,22 +332,22 @@
 <li><p>第一步购买域名：随便在哪个网站买一个就好了，鄙人是在Tencent购买的kongwei-liao.cn, DNS也是顺道在那买的。</p>
 </li>
 <li><p>第二步添加CNAME：在项目的source文件夹下新建一个名为CNAME的文件，在里面添加你购买的域名，比如我添加的是<code>kongwei-liao.cn</code>，只能添加一个哦。</p>
-<p><img src="/scaffold/domainnamebind.png" srcset="/img/loading.gif" alt="domainnamebind"></p>
+<p><img src="scaffold/domainnamebind.png" srcset="/img/loading.gif" alt="domainnamebind"></p>
 </li>
 <li><p>到DNS中添加一条记录</p>
 </li>
 </ul>
 <p>其中ip地址为你的Github的地址，可在cmd中ping一下就能看到(<code>ping yourname.github.io</code>)：</p>
-<p>  <img src="/scaffold/pinggithub.png" srcset="/img/loading.gif" alt="pinggithub"></p>
+<p>  <img src="scaffold/pinggithub.png" srcset="/img/loading.gif" alt="pinggithub"></p>
 <ul>
 <li>接着再次部署一下，用你购买的域名打开，就可以看到你的博客啦~</li>
 </ul>
 <h4 id="8-修改及配置主题"><a href="#8-修改及配置主题" class="headerlink" title="8. 修改及配置主题"></a>8. <strong>修改及配置主题</strong></h4><ul>
 <li><p>hexo初始化之后默认的主题是<code>landscape</code> , 然后你可以去<a target="_blank" rel="noopener" href="https://hexo.io/themes/">这个地址</a>里面找到你想要的主题。在github中搜索你要的主题名称，里面都会有该主题的如何使用的介绍，按着来就好了，反正就是改改改！我选的是<code>hueman</code>,看起来挺不错，至少是我喜欢的类型。</p>
-<p><img src="/scaffold/theme1.png" srcset="/img/loading.gif" alt="theme1"></p>
+<p><img src="scaffold/theme1.png" srcset="/img/loading.gif" alt="theme1"></p>
 </li>
 <li><p>跟该主题相关的配置在<code>themes/hueman/_config.yml</code>里面,然后根据你的需要在这配配配就行了。</p>
-<p><img src="/scaffold/theme2.png" srcset="/img/loading.gif" alt="theme2"></p>
+<p><img src="scaffold/theme2.png" srcset="/img/loading.gif" alt="theme2"></p>
 </li>
 <li><p>有的东西我也不知道是啥玩意儿，你要多试多倒腾几次，就能意会啦</p>
 </li>
