@@ -227,8 +227,8 @@
             <h1 style="display: none"></h1>
             
             <div class="markdown-body">
-              <h1 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h1><h2 id="一、集合框架图"><a href="#一、集合框架图" class="headerlink" title="一、集合框架图"></a>一、集合框架图</h2><p><img src="JavaCollectionsFramework/249993-20161122112853268-1919394058.gif" srcset="/img/loading.gif"></p>
-<p><img src="JavaCollectionsFramework/249993-20161122113410534-705560500.jpg" srcset="/img/loading.gif"></p>
+              <h1 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h1><h2 id="一、集合框架图"><a href="#一、集合框架图" class="headerlink" title="一、集合框架图"></a>一、集合框架图</h2><p><img src="/JavaCollectionsFramework/249993-20161122112853268-1919394058.gif" srcset="/img/loading.gif"></p>
+<p><img src="/JavaCollectionsFramework/249993-20161122113410534-705560500.jpg" srcset="/img/loading.gif"></p>
 <blockquote>
 <p>说明：对于以上的框架图有如下几点说明</p>
 <ol>
@@ -253,7 +253,7 @@
 </li>
 </ol>
 </blockquote>
-<h2 id="二、总体分析"><a href="#二、总体分析" class="headerlink" title="二、总体分析"></a>二、总体分析</h2><p><img src="JavaCollectionsFramework/249993-20170119151138921-1550766941.jpg" srcset="/img/loading.gif"></p>
+<h2 id="二、总体分析"><a href="#二、总体分析" class="headerlink" title="二、总体分析"></a>二、总体分析</h2><p><img src="/JavaCollectionsFramework/249993-20170119151138921-1550766941.jpg" srcset="/img/loading.gif"></p>
 <p>从上面的框架图中很容易看出有两个主干：<code>Collection</code>和<code>Map</code>。</p>
 <ol>
 <li>Collection是一个接口，高度抽象的集合，包含了集合的基本操作和属性。Collection又包含了List和Set两大分支。<ul>
@@ -267,10 +267,10 @@
 <li>最后，看Arrays和Collections。它们是操作数组、集合的两个工具类。</li>
 </ol>
 <h2 id="三、Collection接口"><a href="#三、Collection接口" class="headerlink" title="三、Collection接口"></a>三、Collection接口</h2><p>Collection接口是处理对象集合的根接口，其中定义了很多对元素进行操作的方法。Collection接口有两个主要的子接口List和Set，注意Map不是Collection的子接口，这个要牢记。</p>
-<p><img src="JavaCollectionsFramework/image-20200419221637399.png" srcset="/img/loading.gif" alt="image-20200419221637399"></p>
+<p><img src="/JavaCollectionsFramework/image-20200419221637399.png" srcset="/img/loading.gif" alt="image-20200419221637399"></p>
 <p>其中，有几个比较常用的方法，比如方法add()添加一个元素到集合中，addAll()将指定集合中的所有元素添加到集合中，contains()方法检测集合中是否包含指定的元素，toArray()方法返回一个表示集合的数组。</p>
 <p>另外，Collection中有一个iterator()函数，它的作用是返回一个Iterator接口。通常，我们通过Iterator迭代器来遍历集合。ListIterator是List接口所特有的，在List接口中，通过ListIterator()返回一个ListIterator对象。</p>
-<h3 id="1、Collection子接口List"><a href="#1、Collection子接口List" class="headerlink" title="1、Collection子接口List"></a>1、Collection子接口List</h3><p><img src="JavaCollectionsFramework/image-20200419222504675.png" srcset="/img/loading.gif" alt="image-20200419231037188"></p>
+<h3 id="1、Collection子接口List"><a href="#1、Collection子接口List" class="headerlink" title="1、Collection子接口List"></a>1、Collection子接口List</h3><p><img src="/JavaCollectionsFramework/image-20200419222504675.png" srcset="/img/loading.gif" alt="image-20200419231037188"></p>
 <p>List集合代表一个有序集合，集合中每个元素都有其对应的顺序索引。List集合允许使用重复元素，可以通过索引来访问指定位置的集合元素。</p>
 <p>List接口继承于Collection接口，它可以定义一个允许重复的有序集合。因为List中的元素是有序的，所以我们可以通过使用索引（元素在List中的位置，类似于数组下标）来访问List中的元素，这类似于Java的数组。</p>
 <p>List接口为Collection直接接口。List所代表的是有序的Collection，即它用某种特定的插入顺序来维护元素顺序。用户可以对列表中每个元素的插入位置进行精确地控制，同时可以根据元素的整数索引（在列表中的位置）访问元素，并搜索列表中的元素。实现List接口的集合主要有：ArrayList、LinkedList、Vector、Stack。</p>
@@ -315,7 +315,7 @@
 <p>定制排序：定义TreeMap时，创建一个comparator对象，该对象对所有的treeMap中所有的key值进行排序，采用定制排序的时候不需要TreeMap中所有的key必须实现Comparable接口。</p>
 <p>TreeMap判断两个元素相等的标准：两个key通过compareTo()方法返回0，则认为这两个key相等。</p>
 <p>如果使用自定义的类来作为TreeMap中的key值，且想让TreeMap能够良好的工作，则必须重写自定义类中的equals()方法，TreeMap中判断相等的标准是：两个key通过equals()方法返回为true，并且通过compareTo()方法比较应该返回为0。</p>
-<p><img src="JavaCollectionsFramework/image-20200419223344332.png" srcset="/img/loading.gif" alt="image-20200419223344332"></p>
+<p><img src="/JavaCollectionsFramework/image-20200419223344332.png" srcset="/img/loading.gif" alt="image-20200419223344332"></p>
 <h2 id="Iterator与ListIterator"><a href="#Iterator与ListIterator" class="headerlink" title="Iterator与ListIterator"></a>Iterator与ListIterator</h2><h3 id="1-Iterator"><a href="#1-Iterator" class="headerlink" title="1.Iterator"></a>1.Iterator</h3><p>Iterator的定义如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Iterator</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;&#125;<br></code></pre></td></tr></table></figure>
 <p>Iterator是一个接口，它是集合的迭代器。集合可以通过Iterator去遍历集合中的元素。Iterator提供的API接口如下：</p>

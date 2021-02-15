@@ -245,7 +245,7 @@
 <p>cplusplus.com</p>
 <p>creference.com</p>
 <p>gcc.gnu.org</p>
-<p><img src="C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/tuijian.png" srcset="/img/loading.gif" alt="1"></p>
+<p><img src="/C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/tuijian.png" srcset="/img/loading.gif" alt="1"></p>
 </blockquote>
 <h3 id="C-Standard-Library"><a href="#C-Standard-Library" class="headerlink" title="C++ Standard Library"></a>C++ Standard Library</h3><h3 id="STL-Standard-Template-Library-标准模板库"><a href="#STL-Standard-Template-Library-标准模板库" class="headerlink" title="STL Standard Template Library,标准模板库"></a>STL Standard Template Library,标准模板库</h3><p>标准库以header files形式呈现:</p>
 <blockquote>
@@ -272,10 +272,10 @@
 <li>仿函数(Functors)</li>
 </ul>
 </blockquote>
-<h4 id="六大部件之间的关系"><a href="#六大部件之间的关系" class="headerlink" title="六大部件之间的关系"></a>六大部件之间的关系</h4><p><img src="C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/components.png" srcset="/img/loading.gif" alt="compoenets"></p>
-<p><img src="C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/stl.png" srcset="/img/loading.gif" alt="stl"></p>
+<h4 id="六大部件之间的关系"><a href="#六大部件之间的关系" class="headerlink" title="六大部件之间的关系"></a>六大部件之间的关系</h4><p><img src="/C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/components.png" srcset="/img/loading.gif" alt="compoenets"></p>
+<p><img src="/C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/stl.png" srcset="/img/loading.gif" alt="stl"></p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;functional&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">int</span> ia[<span class="hljs-number">6</span>]=&#123;<span class="hljs-number">27</span>,<span class="hljs-number">210</span>,<span class="hljs-number">12</span>,<span class="hljs-number">47</span>,<span class="hljs-number">109</span>,<span class="hljs-number">83</span>&#125;;<br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;vi(ia,ia+<span class="hljs-number">6</span>);<span class="hljs-comment">//将数组存入vector容器</span><br>    <span class="hljs-built_in">cout</span>&lt;&lt;count_if(vi.<span class="hljs-built_in">begin</span>(),vi.<span class="hljs-built_in">end</span>(),not1(bind2nd(less&lt;<span class="hljs-keyword">int</span>&gt;(),<span class="hljs-number">40</span>)));<span class="hljs-comment">//输出数组中大于等于40的元素</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><img src="C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/result.png" srcset="/img/loading.gif" alt="result"></p>
+<p><img src="/C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/result.png" srcset="/img/loading.gif" alt="result"></p>
 <h4 id="复杂度，Complexity，Big-oh"><a href="#复杂度，Complexity，Big-oh" class="headerlink" title="复杂度，Complexity，Big-oh"></a>复杂度，Complexity，Big-oh</h4><p>目前常用的Big-oh有下列几种情况：</p>
 <blockquote>
 <p>O(1)或O(c)：称为常数时间(constant time)</p>
@@ -287,10 +287,10 @@
 <p>O(nlogn):称为介于线性及二次方成长的中间时间</p>
 </blockquote>
 <h4 id="”前开后闭“-区间"><a href="#”前开后闭“-区间" class="headerlink" title="”前开后闭“ 区间"></a>”前开后闭“ 区间</h4><p><strong><code>c.end()</code>: off by one, pass the end</strong></p>
-<p><img src="C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/container.png" srcset="/img/loading.gif" alt="container"></p>
-<h4 id="C-11新特性-新迭代格式"><a href="#C-11新特性-新迭代格式" class="headerlink" title="C++11新特性 新迭代格式"></a>C++11新特性 新迭代格式</h4><p><img src="C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/C11iter.png" srcset="/img/loading.gif" alt="image-20191029222035691"></p>
-<h4 id="C-11新特性auto-keyword"><a href="#C-11新特性auto-keyword" class="headerlink" title="C++11新特性auto keyword"></a>C++11新特性auto keyword</h4><p><img src="C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/autokeyword.png" srcset="/img/loading.gif" alt="autokeyword"></p>
-<h4 id="容器的结构图"><a href="#容器的结构图" class="headerlink" title="容器的结构图"></a>容器的结构图</h4><p><img src="C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/containerstruct.png" srcset="/img/loading.gif" alt="structconta"></p>
+<p><img src="/C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/container.png" srcset="/img/loading.gif" alt="container"></p>
+<h4 id="C-11新特性-新迭代格式"><a href="#C-11新特性-新迭代格式" class="headerlink" title="C++11新特性 新迭代格式"></a>C++11新特性 新迭代格式</h4><p><img src="/C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/C11iter.png" srcset="/img/loading.gif" alt="image-20191029222035691"></p>
+<h4 id="C-11新特性auto-keyword"><a href="#C-11新特性auto-keyword" class="headerlink" title="C++11新特性auto keyword"></a>C++11新特性auto keyword</h4><p><img src="/C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/autokeyword.png" srcset="/img/loading.gif" alt="autokeyword"></p>
+<h4 id="容器的结构图"><a href="#容器的结构图" class="headerlink" title="容器的结构图"></a>容器的结构图</h4><p><img src="/C-STL%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93/containerstruct.png" srcset="/img/loading.gif" alt="structconta"></p>
 
             </div>
             <hr>
