@@ -236,7 +236,7 @@
 <li><p>使用泛型的方法或实例化泛型的类，只能用传入引用数据类型，不能传入基本数据类型</p>
 </li>
 </ol>
-<h4 id="规则限制："><a href="#规则限制：" class="headerlink" title="规则限制："></a>规则限制：</h4><p>1、泛型的类型参数只能是类类型（包括自定义类），不能是简单类型。<br>2、同一种泛型可以对应多个版本（因为参数类型是不确定的），不同版本的泛型类实例是不兼容的。<br>3、泛型的类型参数可以有多个。<br>4、泛型的参数类型可以使用extends语句，例如<T extends superclass>。习惯上称为“有界类型”。<br>5、泛型的参数类型还可以是通配符类型。例如Class&lt;?&gt; classType = Class.forName(“java.lang.String”);</p>
+<h4 id="规则限制："><a href="#规则限制：" class="headerlink" title="规则限制："></a>规则限制：</h4><p>1、泛型的类型参数只能是类类型（包括自定义类），不能是简单类型。<br>2、同一种泛型可以对应多个版本（因为参数类型是不确定的），不同版本的泛型类实例是不兼容的。<br>3、泛型的类型参数可以有多个。<br>4、泛型的参数类型可以使用extends语句，例如<T extends superclass>。习惯上称为“有界类型”。<br>5、泛型的参数类型还可以是通配符类型。例如Class&lt;?&gt; classType = Class.forName(“java.lang.String”);</T></p>
 <p>泛型作用</p>
 <p>泛型的作用：在编译的时候检查<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8/7308285">类型安全</a>，并且所有的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2/4463315">强制转换</a>都是自动和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%9A%90%E5%BC%8F/957024">隐式</a>的，以提高代码的重用率。</p>
 <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs processing"><span class="hljs-comment">// 准备一个List用来存储公司员工对象  假设有一个类 Employee</span><br>List  emp = <span class="hljs-keyword">new</span> ArrayList();<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">&quot;张三&quot;</span>));<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">&quot;李三&quot;</span>));<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">&quot;王三&quot;</span>));<br>由于List中可以存储任意类型的数据，因此可以这样<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-string">&quot;王麻子&quot;</span>);<br>emp.<span class="hljs-built_in">add</span>(<span class="hljs-keyword">new</span> Dog(<span class="hljs-string">&quot;旺财&quot;</span>));<br><br><br><span class="hljs-comment">// 写一个发工资的方法</span><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">Object</span> o : emp)&#123;<br>syso(<span class="hljs-string">&quot;给&quot;</span>+o.getName() + <span class="hljs-number">50000</span>);<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">上面代码可能引发的问题： 当我们获得一个字符串  或者一条狗的时候可能就调用不出来getName()方法</span><br><span class="hljs-comment">结果： 从业务上来讲，emp集合中只应该放Employee类型的数据，但是List可以放任意的类型的数据，在编译的时候我们无法阻止</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">如何解决？使用泛型  ---》限定我们上面的emp中只能够放Employee</span><br><span class="hljs-comment">List&lt;Employee&gt;  emp = new ArrayList&lt;Employee&gt;();</span><br><span class="hljs-comment">*/</span><br><br></code></pre></td></tr></table></figure>
@@ -256,21 +256,21 @@
 <p>也可以支持多个泛型参数例如Map&lt;K,V&gt;</p>
 <h4 id="泛型的具体使用案例"><a href="#泛型的具体使用案例" class="headerlink" title="泛型的具体使用案例"></a>泛型的具体使用案例</h4><p>1、把学生对象存入TreeSet中，自然排序 或者 比较器</p>
 <p>2、统计字符串中字母个数的示例</p>
-<p><img src="/Java%E6%B3%9B%E5%9E%8B/clip_image002.jpg" srcset="/img/loading.gif" alt="im"></p>
+<p><img src="/.com//clip_image002.jpg" srcset="/img/loading.gif" alt="im"></p>
 <p>泛型的上、下限</p>
-<p><img src="/Java%E6%B3%9B%E5%9E%8B/clip_im002.jpg" srcset="/img/loading.gif" alt="img"></p>
-<p><img src="/Java%E6%B3%9B%E5%9E%8B/clip_im02.jpg" srcset="/img/loading.gif" alt="img"></p>
-<h4 id="泛型方法的设计和使用"><a href="#泛型方法的设计和使用" class="headerlink" title="泛型方法的设计和使用"></a>泛型方法的设计和使用</h4><p><img src="/Java%E6%B3%9B%E5%9E%8B/clip_im01.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/.com//clip_im002.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/.com//clip_im02.jpg" srcset="/img/loading.gif" alt="img"></p>
+<h4 id="泛型方法的设计和使用"><a href="#泛型方法的设计和使用" class="headerlink" title="泛型方法的设计和使用"></a>泛型方法的设计和使用</h4><p><img src="/.com//clip_im01.png" srcset="/img/loading.gif" alt="img"></p>
 <p>错误原因： 在类设计上面。因为被static修饰的方法，是在类加载的时候就加载的到静态区中，而这时候加载到jvm中的T类型，JVM根本就不知道是什么类型。</p>
 <p>解决方法：在方法上加一个泛型</p>
-<p><img src="/Java%E6%B3%9B%E5%9E%8B/ge001.png" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/.com//ge001.png" srcset="/img/loading.gif" alt="img"></p>
 <p>什么是泛型方法</p>
 <p>1、就是把泛型类型的声明放在某个方法上面，只需将泛型参数列表置于返回值前；只能够本方法上或者内部可以使用这个符号；</p>
 <p>2、泛型类，声明的泛型类型可以使用到整个类的</p>
 <p>3、泛型方法来说，是再调用方法的时候传入的实际参数为真实的类型</p>
 <h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p>限制泛型</p>
 <blockquote>
-<p>1）<T extends Collection>这里的限定使用关键字extends，后面可以是类也可以是接口。但这里的extends已经不是继承的含义了，应该理解为T类型是实现Collection接口的类型，或者T是继承了XX类的类型。<br>2）&lt;T extends SomeClass &amp; interface1 &amp; interface2 &amp; interface3&gt;</p>
+<p>1）<T extends collection>这里的限定使用关键字extends，后面可以是类也可以是接口。但这里的extends已经不是继承的含义了，应该理解为T类型是实现Collection接口的类型，或者T是继承了XX类的类型。<br>2）&lt;T extends SomeClass &amp; interface1 &amp; interface2 &amp; interface3&gt;</T></p>
 </blockquote>
 <p>通配符泛型</p>
 <blockquote>
