@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>MacOS软件安装使用的一系列问题</title>
+    <link href="/2021/02/17/MacOS%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%80%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/"/>
+    <url>/2021/02/17/MacOS%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%80%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h2 id="MacOS软件安装使用的一系列问题"><a href="#MacOS软件安装使用的一系列问题" class="headerlink" title="MacOS软件安装使用的一系列问题"></a>MacOS软件安装使用的一系列问题</h2><h3 id="Mac打开软件提示”已损坏，无法打开。-您应该将它移到废纸篓”"><a href="#Mac打开软件提示”已损坏，无法打开。-您应该将它移到废纸篓”" class="headerlink" title="Mac打开软件提示”已损坏，无法打开。 您应该将它移到废纸篓”"></a>Mac打开软件提示”已损坏，无法打开。 您应该将它移到废纸篓”</h3><p>1、打开任何来源设置<br>打开系统偏好设置 -&gt; 安全性与隐私 -&gt; 通用 -&gt; 任何来源。在终端执行如下命令，打开后如图所示</p><p><code>sudo spctl --master-disable</code></p><p>2、更改应用程序拓展属性<br>如果您仍然坚持软件没有问题，在终端执行如下命令</p><p><code>sudo xattr -r -d com.apple.quarantine （注意最后有一个空格）</code></p><p>先不要按回车,打开 “访达”（Finder）进入 “应用程序” 目录，找到该软件图标，将图标拖到刚才的终端窗口里面，会得到如下组合</p><p><code>sudo xattr -r -d com.apple.quarantine xxx</code></p><p>回车输入密码即可</p><p>3、考虑app本身问题<br>如果上诉办法仍然没有解决问题，90%可能性就不是mac系统了，建议上Stack Overflow搜索下解决办法。<br>比如Shimo报错macOS cannot connect to OpenVPN using Shimo - Kext error，最终发现是软件缺少了配置文件，打开科学上网软件下载一个配置文件安装即可。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Mac</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title></title>
     <link href="/2021/02/16/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E5%BC%8F/"/>
     <url>/2021/02/16/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E5%BC%8F/</url>

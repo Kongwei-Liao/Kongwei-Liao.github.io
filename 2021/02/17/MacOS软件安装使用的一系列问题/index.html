@@ -17,9 +17,25 @@
   <meta name="description" content="liaogangwei的个人主页">
   <meta name="author" content="Kongwei_Liao">
   <meta name="keywords" content="black, foolish, positive">
-  <title>归档 - Kongwei_Liao</title>
+  <title>MacOS软件安装使用的一系列问题 - Kongwei_Liao</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -47,7 +63,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -146,9 +162,59 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="MacOS软件安装使用的一系列问题">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-17 01:37" pubdate>
+        2021年2月17日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      292 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      3
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
 
             
           </div>
@@ -161,112 +227,117 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MacOS软件安装使用的一系列问题</h1>
+            
+            <div class="markdown-body">
+              <h2 id="MacOS软件安装使用的一系列问题"><a href="#MacOS软件安装使用的一系列问题" class="headerlink" title="MacOS软件安装使用的一系列问题"></a>MacOS软件安装使用的一系列问题</h2><h3 id="Mac打开软件提示”已损坏，无法打开。-您应该将它移到废纸篓”"><a href="#Mac打开软件提示”已损坏，无法打开。-您应该将它移到废纸篓”" class="headerlink" title="Mac打开软件提示”已损坏，无法打开。 您应该将它移到废纸篓”"></a>Mac打开软件提示”已损坏，无法打开。 您应该将它移到废纸篓”</h3><p>1、打开任何来源设置<br>打开系统偏好设置 -&gt; 安全性与隐私 -&gt; 通用 -&gt; 任何来源。在终端执行如下命令，打开后如图所示</p>
+<p><code>sudo spctl --master-disable</code></p>
+<p>2、更改应用程序拓展属性<br>如果您仍然坚持软件没有问题，在终端执行如下命令</p>
+<p><code>sudo xattr -r -d com.apple.quarantine （注意最后有一个空格）</code></p>
+<p>先不要按回车,打开 “访达”（Finder）进入 “应用程序” 目录，找到该软件图标，将图标拖到刚才的终端窗口里面，会得到如下组合</p>
+<p><code>sudo xattr -r -d com.apple.quarantine xxx</code></p>
+<p>回车输入密码即可</p>
+<p>3、考虑app本身问题<br>如果上诉办法仍然没有解决问题，90%可能性就不是mac系统了，建议上Stack Overflow搜索下解决办法。<br>比如Shimo报错macOS cannot connect to OpenVPN using Shimo - Kext error，最终发现是软件缺少了配置文件，打开科学上网软件下载一个配置文件安装即可。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
                 
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Mac/">Mac</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/16/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E5%BC%8F/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
 
-<div class="list-group">
-  <p class="h4">共计 69 篇文章</p>
-  <hr>
-  
-  
-    
-      
-      <p class="h5">2021</p>
-    
-    <a href="/2021/02/15/JDBC%E7%B1%BB%E5%9E%8B%E4%B8%8EJava%E7%B1%BB%E5%9E%8B%E5%AF%B9%E7%85%A7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title"></span>
-      <time style="float: right;">02-15</time>
-    </a>
-  
-    
-    <a href="/2021/02/15/JavaCollectionsFramework/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title"></span>
-      <time style="float: right;">02-15</time>
-    </a>
-  
-    
-    <a href="/2021/02/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%83%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title"></span>
-      <time style="float: right;">02-15</time>
-    </a>
-  
-    
-    <a href="/2021/02/15/%E5%B2%9B%E5%B1%BF%E6%95%B0%E9%87%8F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title"></span>
-      <time style="float: right;">02-15</time>
-    </a>
-  
-    
-    <a href="/2021/02/15/%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title"></span>
-      <time style="float: right;">02-15</time>
-    </a>
-  
-    
-    <a href="/2021/02/15/hello-world/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Hello World</span>
-      <time style="float: right;">02-15</time>
-    </a>
-  
-    
-      
-      <p class="h5">2020</p>
-    
-    <a href="/2020/01/05/Windows%E6%8A%80%E5%B7%A7-%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%9A%84%E7%94%B5%E6%B1%A0%E7%8A%B6%E6%80%81/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Windows技巧:笔记本的电池状态</span>
-      <time style="float: right;">01-05</time>
-    </a>
-  
-    
-    <a href="/2020/01/04/JSP/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">JSP</span>
-      <time style="float: right;">01-04</time>
-    </a>
-  
-    
-      
-      <p class="h5">2019</p>
-    
-    <a href="/2019/12/10/SVN/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">SVN</span>
-      <time style="float: right;">12-10</time>
-    </a>
-  
-    
-    <a href="/2019/12/10/JavaScript/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">JavaScript</span>
-      <time style="float: right;">12-10</time>
-    </a>
-  
-</div>
-
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
-      ele.href += '#board';
-    }
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2021/02/17/MacOS%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%80%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
   </script>
 
 
-
-
-              </div>
-            </div>
-          </div>
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
     
 
     
@@ -370,9 +441,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
 
 
 
