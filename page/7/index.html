@@ -181,6 +181,120 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2019/11/01/Java%E6%91%98%E8%A6%81/">Java细节摘要</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/01/Java%E6%91%98%E8%A6%81/">
+          
+          
+            
+          
+          在 Java 的领域里，基本数据类型变量存的是数据本身，
+而引用类型变量存的是保存数据的内存空间地址。
+
+为什么会有不同大小的类型，举个例子比如存 5 这个数据怎么存的？
+A.   byte(8位，范围是-128到127)
+B.   short（16位）
+C.   int（32位）
+D.   long (64位)
+给long赋值时，因为整数默认是int类型，要转换为long类型的值，后面加上l或L
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-01 16:11" pubdate>
+              2019-11-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java/">Java</a>
+            
+              <a href="/tags/Java%E7%BB%86%E8%8A%82%E6%91%98%E8%A6%81/">Java细节摘要</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/01/Java%E6%B3%A8%E8%A7%A3/">Java注解</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/01/Java%E6%B3%A8%E8%A7%A3/">
+          
+          
+            
+          
+          Java注解一、认识注解　　注解(Annotation)很重要，未来的开发模式都是基于注解的，JPA是基于注解的，Spring2.5以上都是基于注解的，Hibernate3.x以后也是基于注解的，现在的Struts2有一部分也是基于注解的了，注解是一种趋势，现在已经有不少的人开始用注解了，注解是JDK1.5之后才有的新特性
+​    JDK1.5之后内部提供的三个注解：
+​        @Dep
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-01 14:31" pubdate>
+              2019-11-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java/">Java</a>
+            
+              <a href="/tags/%E6%B3%A8%E8%A7%A3-Annotation/">注解(Annotation)</a>
+            
+              <a href="/tags/Retention%E5%85%83%E6%B3%A8%E8%A7%A3/">Retention元注解</a>
+            
+              <a href="/tags/Target%E5%85%83%E6%B3%A8%E8%A7%A3/">Target元注解</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2019/10/31/Vue-js-I/">Vue.js-I</a>
       </h1>
 
@@ -611,133 +725,6 @@ Jekyll把 _posts 文件夹内的所有文件复制到 source/_posts 文件夹
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
             <time datetime="2019-10-29 17:00" pubdate>
-              2019-10-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Hexo%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8/">Hexo开始使用</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Hexo/">Hexo</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/10/29/Hexo%E6%8C%87%E4%BB%A4/">Hexo指令</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/10/29/Hexo%E6%8C%87%E4%BB%A4/">
-          
-          
-            
-          
-          指令init1$ hexo init [folder]
-新建一个网站。如果没有设置 folder ，Hexo 默认在目前的文件夹建立网站。
-new1$ hexo new [layout] &lt;title&gt;
-新建一篇文章。如果没有设置 layout 的话，默认使用 _config.yml 中的 default_layout 参数代替。如果标题包含空格的话，请使用引号括起来。
-1$ hexo
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-10-29 16:50" pubdate>
-              2019-10-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Hexo%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8/">Hexo开始使用</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/10/29/Hexo%E9%85%8D%E7%BD%AE/">Hexo配置</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/10/29/Hexo%E9%85%8D%E7%BD%AE/">
-          
-          
-            
-          
-          配置您可以在 _config.yml 中修改大部分的配置。
-网站
-
-
-参数
-描述
-
-
-
-title
-网站标题
-
-
-subtitle
-网站副标题
-
-
-description
-网站描述
-
-
-keywords
-网站的关键词。使用半角逗号 , 分隔多个关键词。
-
-
-author
-您的名字
-
-
-language
-网站使用的语言
-
-
-timezone
-网站时区。Hexo 默认使用您电脑的时区。时区列表。比如说
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-10-29 16:34" pubdate>
               2019-10-29
             </time>
           </div>

@@ -253,7 +253,7 @@
 <li>Queue: 消息最终被送到这里等待consumer取走。一个message可以被同时拷贝到多个queue中。</li>
 <li>Binding: exchange和queue之间的虚拟连接，binding中可以包含routing key。Binding信息被保存到exchange中的查询表中，用于message的分发依据。</li>
 </ul>
-<p><img src="https://i.loli.net/2021/02/27/5kDv8dhiJYEszeI.png" srcset="/img/loading.gif" alt="结构图-1"><br><img src="https://i.loli.net/2021/02/27/ny7kZ84qMEs2HeK.png" srcset="/img/loading.gif" alt="结构图-2"></p>
+<p><img src="https://i.loli.net/2021/02/27/5kDv8dhiJYEszeI.png" srcset="/img/loading.gif" alt="结构图-1"><br><img src="https://i.loli.net/2021/02/27/ny7kZ84qMEs2HeK.png" srcset="/img/loading.gif" alt="结构图-2"><br><img src="https://i.loli.net/2021/02/27/VxuLacWmdiYwJZC.png" srcset="/img/loading.gif" alt="结构图-3"></p>
 <h1 id="生产者-消费者模型"><a href="#生产者-消费者模型" class="headerlink" title="生产者/消费者模型"></a>生产者/消费者模型</h1><p>生产者发送消息到broker server（RabbitMQ）。在Broker内部，用户创建Exchange／Queue，通过Binding规则将两者联系在一起。Exchange分发消息，根据类型／binding的不同分发策略有区别。消息最后来到Queue中，等待消费者取走。</p>
 <h1 id="Exchange类型"><a href="#Exchange类型" class="headerlink" title="Exchange类型"></a>Exchange类型</h1><p>Exchange有多种类型，最常用的是Direct／Fanout／Topic三种类型。</p>
 <ul>
@@ -295,6 +295,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/02/27/Java%E5%BC%80%E5%90%AF%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java开启定时任务</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
