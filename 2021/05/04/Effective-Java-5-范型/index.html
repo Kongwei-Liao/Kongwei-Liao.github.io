@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      641 字
+      2.2k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      23
        分钟
     </span>
   
@@ -254,6 +254,52 @@
 <p>泛型则是通过擦除 (erasure) [ JLS, 4.6 ］来实现的。这意味着，泛型只在编译时强化它们的类型信息，并在运行时丢弃（或者擦除）它们的元素类型信息。擦除就是使泛型可以与没有使用泛型的代码随意进行互用（详见第 26 条），以确保在 Java 5 中平滑过渡到泛型。</p>
 <p>由 于上述这些根本 的 区别 ，因此数组和 泛型不能很好地棍合使用 。 例如，创建泛型、 参数化类型或者类型参数的数组是非法的 3 这些数组创建表达式没有一个是合法 的： new</p>
 <p>List<E>[]、new List<String>[]和 new E[]。 这些在编译时都会导致一个泛型数组创建（ generic array creation ）错误。为什么创建泛型数组是非法的，因为它不是类型安全的。要是它合法，编译器在其他正确的程序中发生的转换就会在运行时失败，并出现一个ClassCastException异常。 这就违背了泛型系统提供的基本保证。</String></E></p>
+<h2 id="第29条-优先考虑范型"><a href="#第29条-优先考虑范型" class="headerlink" title="第29条 优先考虑范型"></a>第29条 优先考虑范型</h2><p>一般来说 ，将集合声明参数化，以及使用 JDK 所提供的泛型方法，这些都不太困难 。编写自己的泛型会比较困难一些，但是值得花些时间去学习如何编写 。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><br></code></pre></td></tr></table></figure>
+<p>这个类应该先被参数化，但是它没有，我们可以在后面将它泛型化（ generify ） 。 换句话说，可以将它参数化，而又不破坏原来非参数化版本的客户端代码。 </p>
+<p>也就是说，客户端必须转换从堆楼里弹出的对象，以及可能在运行时失败的那些转换。 </p>
+<p>将类泛型化的第一步是在它的声明中添加一个或者多个类型参数。 在这个例子中有一个类型参数，它表示堆桔的元素类型，这个参数的名称通常为 E （详见第 68 条） 。</p>
+<p>下一步是用相应的类型参数替换所有的 Object 类型，然后试着编译最终的程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><br></code></pre></td></tr></table></figure>
+<p>通常，你将至少得到 一个错误提示或警告，这个类也不例外 。 幸运的是，这个类只产 生一个错误，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain"><br></code></pre></td></tr></table></figure>
+<p>如第 28 条中所述，你不能创建不可具体化的（ non-reifiable ）类型的数组，如 E 。 每当编写用数组支持的泛型时，都会出现这个问题。 解决这个问题有两种方法 。 </p>
+<ul>
+<li>第一种，直接绕 过创建泛型数组的禁令 ： 创建一个 Object 的数组，并将它转换成泛型数组类型 。 现在错误是消除了，但是编译器会产生一条警告。 这种用法是合法的，但（整体上而言）不是类型 安全的：  <figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">```<br>编译器不可能证明你的程序是类型安全的，但是你可以 。 你自己必须确保未受检的转换不会危及程序的类型安全性。 相关的数组（即 elements 变量）保存在一个私有的域中， 永远不会被返回到客户端，或者传给任何其他方法。 这个数组中保存的唯一元素，是传给 push 方法的那些元素，它们的类型为 E ，因此未受检的转换不会有任何危害 。<br><br>一旦你证明了未受检的转换是安全的，就要在尽可能小的 范围中禁止警告（详见第 <span class="hljs-number">27</span> 条） 。 在这种情况下，构造器只包含未受检的数组创建，因此可以在整个构造器中禁止这条警 告。 通过增加一条注解＠ SuppressWarnings 来完成禁止， Stack 能够正确无误地进行编译，你就可以使用它了，无须显式的转换，也无须担心会出现 ClassCastException 异常：<br><br></code></pre></td></tr></table></figure>
+  <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-operator">-</span> 消除 <span class="hljs-built_in">Stack</span> 中泛型数组创建错误的第二种方法是，将 <span class="hljs-variable">elements</span> 域的类型从 <span class="hljs-built_in">E</span> ［］改 为 <span class="hljs-variable">Object</span> ［］ 。 这么做会得到一条不同的错误：<br></code></pre></td></tr></table></figure>
+  <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">通过把从数组中获取到的元素由 <span class="hljs-built_in">Object</span> 转换成 E ，可以将这条错误变成一条警告：<br></code></pre></td></tr></table></figure>
+<pre><code>由于 E 是一个不可具体化的 （ non-reifiable ）类型，编译器无法在运行时检验转换。 你还 是可以自己证实未受检的转换是安全的，因此可以禁止该警告。 根据第 27 条的建议，我们只 要在包含未受检转换的任务上禁止警告，而不是在整个 pop 方法上禁止就可以了，方法如下：
+</code></pre>
+</li>
+</ul>
+<p>这两种消除泛型数组创建的方法，各有所长 。 </p>
+<ul>
+<li><p>第一种方法的可读性更强 ： 数组被声明 为 E ［］类型清楚地表明它只包含 E 实例 。 它也更加简洁 ： 在一个典型的泛型类 中，可以 在 代码中的多个地方读取到该数组；第一种方法只需要转换一次（创建数组的时候），而</p>
+</li>
+<li><p>第二 种方法则是每次读取一个数组元素时都需要转换一次。 因此，第一种方法优先，在实践中也更常用 。 但是，它会导致堆污染（ heap pollution ），详见第 32 条 ： 数组的运行时类型与它的编译时类型不匹配（除非 E 正好是 Object ）。 这使得有些程序员会觉得很不舒服，因而选择第二种方案，虽然堆污染在这种情况下并没有什么危害。</p>
+</li>
+</ul>
+<p>打卡 第29条 优先使用范型</p>
+<ol>
+<li>将代码逻辑拆分为两部分：通用的逻辑和与类型相关的逻辑；<br> 通用逻辑是一些跟参数类型无关的逻辑；<br> 类型相关逻辑，是需要确定类型后才能编写的逻辑。</li>
+<li>如果没有类型相关的逻辑，那么直接完善通用代码即可；</li>
+<li>如果有与类型相关的逻辑，那么就需要考虑这些逻辑是否已有共同的接口实现，如果已有共同的接口实现，可以使用边界限定通配符；</li>
+<li>如果还没有共同的接口，那么需要考虑是否可以抽象出一个通用的接口实现；</li>
+<li>如果无法抽象出通用接口，便不要使用泛型了。</li>
+</ol>
+<p>如果一个类在设计之初没有考虑使用范型，我们可以在后面将它泛型化（generify），并不会破坏原来非参数化版本的代码。 </p>
+<p>编写用数组支持的泛型时：不能创建不可具体化的（ non-reifiable ）类型的数组，如 E[]，解决：</p>
+<ul>
+<li>第一种 绕过创建泛型数组的禁令：创建一个 Object 的数组，并将它转换成泛型数组类型；</li>
+<li>第二种 将E[] 改为 Object[] ，从数组中获取到的元素时，将其由 Object 转换成 E。</li>
+</ul>
+<p>质数生成器流</p>
+<p>暴露即是承诺</p>
+<p>public</p>
+<p>protected 就是告诉别人来继承覆盖他的意思</p>
+<p>Java为什么不能多继承，而能够多实现？</p>
+<p>如果继承两个类里面有相同的方法签名，会导致混乱（调用或者覆盖这个方法的时候调用和覆盖的是哪个类的）。</p>
+<p>接口</p>
 
             </div>
             <hr>

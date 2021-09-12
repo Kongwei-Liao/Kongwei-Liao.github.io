@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>Java后端面试-基础语法 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java后端面试-基础语法">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-05 21:51" pubdate>
+        2021年9月5日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java后端面试-基础语法</h1>
+            
+            <div class="markdown-body">
+              <h1 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h1><h2 id="一、基本数据结构"><a href="#一、基本数据结构" class="headerlink" title="一、基本数据结构"></a>一、基本数据结构</h2><p>Java 的基本数据类型有 8 种，包括 6 种数字类型、1 种字符类型和 1 种布尔类型。</p>
+<h3 id="基本数据类型总览"><a href="#基本数据类型总览" class="headerlink" title="基本数据类型总览"></a>基本数据类型总览</h3><ol>
+<li><p>数字类型：包括 4 种整数类型和 2 种浮点数类型，4 种整数类型是 byte、short、int 和 long，2 种浮点数类型是 float 和 double。</p>
+</li>
+<li><p>字符类型：是 char，用于表示单个字符。Java 使用统一码对字符进行编码。</p>
+</li>
+<li><p>布尔类型：是 boolean，包括 true 和 false 两种取值。</p>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2021/09/05/zHwdjChF3EN9Yot.png" srcset="/img/loading.gif" alt="基本数据类型"></p>
+<h3 id="数字类型直接量"><a href="#数字类型直接量" class="headerlink" title="数字类型直接量"></a>数字类型直接量</h3><p><strong>直接量</strong>是在程序中直接出现的常量值。</p>
+<p>将整数类型的直接量赋值给整数类型的变量时，只要直接量没有超出变量的取值范围，即可直接赋值，如果直接量超出了变量的取值范围，则会导致编译错误。</p>
+<p>整数类型的直接量默认是 int 类型，如果直接量超出了 int 类型的取值范围，则必须在其后面加上字母 L 或 l，将直接量显性声明为 long 类型，否则会导致编译错误。</p>
+<p>浮点类型的直接量默认是 double 类型，如果要将直接量表示成 float 类型，则必须在其后面加上字母 F 或 f。将 double 类型的直接量赋值给 float 类型的变量是不允许的，会导致编译错误。</p>
+<h3 id="基本数据类型之间的转换"><a href="#基本数据类型之间的转换" class="headerlink" title="基本数据类型之间的转换"></a>基本数据类型之间的转换</h3><p>有时需要把不同类型的值混合运算，因此需要对数据类型进行转换。</p>
+<h4 id="数字类型转换"><a href="#数字类型转换" class="headerlink" title="数字类型转换"></a>数字类型转换</h4><p>不同的数字类型对应不同的范围，按照范围从小到大的顺序依次是：byte、short、int、long、float、double。</p>
+<p>将小范围类型的变量转换为大范围类型称为拓宽类型，不需要显性声明类型转换。将大范围类型的变量转换为小范围类型称为缩窄类型，必须显性声明类型转换，否则会导致编译错误。</p>
+<h4 id="字符类型与数字类型之间的转换"><a href="#字符类型与数字类型之间的转换" class="headerlink" title="字符类型与数字类型之间的转换"></a>字符类型与数字类型之间的转换</h4><p>字符类型与数字类型之间可以进行转换。</p>
+<p>将数字类型转换成字符类型时，只使用整数的低 16 位（浮点数类型将整数部分转换成字符类型）。</p>
+<p>将字符类型转换成数字类型时，字符的统一码转换成指定的数值类型。如果字符的统一码超出了转换成的数值类型的取值范围，则必须显性声明类型转换。</p>
+<h4 id="布尔类型不能与其他基本数据类型进行转换"><a href="#布尔类型不能与其他基本数据类型进行转换" class="headerlink" title="布尔类型不能与其他基本数据类型进行转换"></a>布尔类型不能与其他基本数据类型进行转换</h4><p>布尔类型不能转换成其他基本数据类型，其他基本数据类型也不能转换成布尔类型。</p>
+<p><img src="https://i.loli.net/2021/09/05/SVExNg7DQjd8mX5.png" srcset="/img/loading.gif" alt="练习题1"></p>
+<p><img src="https://i.loli.net/2021/09/05/GUnaRxkLXQO3zbI.png" srcset="/img/loading.gif" alt="练习题2"></p>
+<p><img src="https://i.loli.net/2021/09/05/96d1mNfjiyWvzbU.png" srcset="/img/loading.gif" alt="nowcode1"></p>
+<p><img src="https://i.loli.net/2021/09/05/VDhXlc9bFSONCYn.png" srcset="/img/loading.gif" alt="nowcoder2"></p>
+<p><img src="https://i.loli.net/2021/09/05/dt6xyBZ9vL8QsmE.png" srcset="/img/loading.gif" alt="nowcoder3"></p>
+<p><img src="https://i.loli.net/2021/09/05/heYwKR32FHOSXWr.png" srcset="/img/loading.gif" alt="nowcoder4"></p>
+<p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/test/question/done?tid=47461352&amp;qid=25211#summary">https://www.nowcoder.com/test/question/done?tid=47461352&amp;qid=25211#summary</a></p>
+<p><img src="https://i.loli.net/2021/09/05/57AjMgfYXrh4FGK.png" srcset="/img/loading.gif" alt="nowcoder4"></p>
+<p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/test/question/done?tid=47461352&amp;qid=304923#summary">https://www.nowcoder.com/test/question/done?tid=47461352&amp;qid=304923#summary</a></p>
+<p><img src="https://i.loli.net/2021/09/06/xsXlpVPIWJ2Hg8R.png" srcset="/img/loading.gif" alt="nowcoder20"></p>
+<p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/test/question/done?tid=47513854&amp;qid=4337#summary">https://www.nowcoder.com/test/question/done?tid=47513854&amp;qid=4337#summary</a></p>
+<h2 id="二、方法"><a href="#二、方法" class="headerlink" title="二、方法"></a>二、方法</h2><p>Java 中的方法，在其他语言中也可能被称为过程或函数，是为执行一个操作而组合在一起的语句组。如果一个操作会被多次执行，则可以将该操作定义成一个方法，执行该操作的时候调用方法即可。</p>
+<h3 id="方法的语法结构"><a href="#方法的语法结构" class="headerlink" title="方法的语法结构"></a>方法的语法结构</h3><p>方法包括方法头和方法体，方法头又可以分成修饰符、返回值类型、方法名和参数列表，因此方法包括 5 个部分。</p>
+<ol>
+<li><p>修饰符：修饰符是可选的，告诉编译器如何调用该方法。</p>
+</li>
+<li><p>返回值类型：方法可以返回一个值，此时返回值类型是方法要返回的值的数据类型。方法也可以没有返回值，此时返回值类型是 void。</p>
+</li>
+<li><p>方法名：方法的实际名称。</p>
+</li>
+<li><p>参数列表：定义在方法头中的变量称为形式参数或参数，简称形参。当调用方法时，需要给参数传递一个值，称为实际参数，简称实参。参数列表指明方法中的参数类型、次序和数量。参数是可选的，方法可以不包含参数。</p>
+</li>
+<li><p>方法体：方法体包含具体的语句集合。</p>
+</li>
+</ol>
+<p>方法名和参数表共同构成方法签名。</p>
+<h3 id="参数的值传递"><a href="#参数的值传递" class="headerlink" title="参数的值传递"></a>参数的值传递</h3><p>调用方法时，需要提供实参，实参必须与形参的次序相同，称为参数顺序匹配。实参必须与方法签名中的形参在次序上和数量上匹配，在类型上兼容，兼容的意思是不需要显性声明类型转换，即类型相同或者类型转换为拓宽类型。</p>
+<p>在调用带参数的方法时，实参的值赋给形参，称为值传递。Java 中只有值传递，无论形参在方法中如何改变，实参不受影响。</p>
+<ol>
+<li><p>当参数类型是基本数据类型时，传递的是实参的值，因此不能对实参进行修改。</p>
+</li>
+<li><p>当参数类型是对象时，传递的是对象的引用，此时可以对实参引用的对象进行修改，但是不能让实参引用新的对象。</p>
+</li>
+</ol>
+<h3 id="方法的重载"><a href="#方法的重载" class="headerlink" title="方法的重载"></a>方法的重载</h3><p>方法的重载是指在同一个类中的多个方法有相同的名称，但是方法签名不同，编译器能够根据方法签名决定调用哪个方法。由于方法签名由方法名和参数表共同构成，因此方法的重载等同于多个方法有相同的名称和不同的参数列表。</p>
+<p>方法的重载可以增加程序的可读性，执行相似操作的方法应该有相同的名称。</p>
+<p>关于方法的重载，需要注意以下两点。</p>
+<ol>
+<li><p>方法签名只由方法名和参数列表共同构成，因此被重载的方法必须具有不同的参数列表，而不能通过不同的修饰符和返回值类型进行方法的重载。</p>
+</li>
+<li><p>如果一个方法调用有多个可能的匹配，则编译器会调用最合适的匹配方法，如果编译器无法判断哪个方法最匹配，则称为歧义调用，会导致编译错误。</p>
+</li>
+</ol>
+<p>比较下列两段代码说明方法的重载：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-comment">// 示例一</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> &#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">String</span>[] args)</span> </span>&#123;<br>        getSum(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);<br>        getSum(<span class="hljs-number">1.5</span>, <span class="hljs-number">2.5</span>);<br>        getSum(<span class="hljs-number">5</span>, <span class="hljs-number">5.5</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getSum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num1, <span class="hljs-keyword">int</span> num2)</span> </span>&#123;<br>        System.out.<span class="hljs-built_in">println</span>(num1 + <span class="hljs-string">&quot;+&quot;</span> + num2 + <span class="hljs-string">&quot;=&quot;</span> + (num1 + num2));<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getSum</span><span class="hljs-params">(<span class="hljs-keyword">double</span> num1, <span class="hljs-keyword">double</span> num2)</span> </span>&#123;<br>        System.out.<span class="hljs-built_in">println</span>(num1 + <span class="hljs-string">&quot;+&quot;</span> + num2 + <span class="hljs-string">&quot;=&quot;</span> + (num1 + num2));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> &#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">String</span>[] args)</span> </span>&#123;<br>        getSum(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);<span class="hljs-comment">// 歧义调用，编译错误</span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getSum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num1, <span class="hljs-keyword">double</span> num2)</span> </span>&#123;<br>        System.out.<span class="hljs-built_in">println</span>(num1 + <span class="hljs-string">&quot;+&quot;</span> + num2 + <span class="hljs-string">&quot;=&quot;</span> + (num1 + num2));<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getSum</span><span class="hljs-params">(<span class="hljs-keyword">double</span> num1, <span class="hljs-keyword">int</span> num2)</span> </span>&#123;<br>        System.out.<span class="hljs-built_in">println</span>(num1 + <span class="hljs-string">&quot;+&quot;</span> + num2 + <span class="hljs-string">&quot;=&quot;</span> + (num1 + num2));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>在示例 1 中，getSum(1, 2) 调用的是参数为两个 int 型的方法，getSum(1.5, 2.5) 和 getSum(5, 5.5) 调用的是参数为两个 double 型的方法，因此运行上述代码得到的输出结果是：</p>
+<blockquote>
+<p>1+2=3<br>1.5+2.5=4.0<br>5.0+5.5=10.5</p>
+</blockquote>
+<p>在示例 2 中，getSum(1, 2) 可以同时匹配两个方法，任何一个方法都不比另一个方法更匹配，因此为歧义调用，导致编译错误。</p>
+<p><img src="https://i.loli.net/2021/09/05/j4Iz1mPc9vGLAgX.png" srcset="/img/loading.gif" alt="练习3"></p>
+<h2 id="三、递归"><a href="#三、递归" class="headerlink" title="三、递归"></a>三、递归</h2><p>程序调用自身的编程技巧称为递归。递归方法是直接或间接调用自身的方法。</p>
+<h3 id="递归的要点"><a href="#递归的要点" class="headerlink" title="递归的要点"></a>递归的要点</h3><p>定义递归方法时，需要定义递归的初始状态、初始状态的处理和递归调用。</p>
+<p>初始状态也称为终止条件，即最简单的情况，此时应该直接给出如何处理初始状态。</p>
+<p>对于非初始状态，则需要进行递归调用，对子问题进行求解，直到初始状态，然后将结果返回给调用者，直到传回原始的调用者。</p>
+<p>递归必须定义初始状态，且保证所有的递归调用都能到达初始状态，否则会发生无限递归，导致栈溢出。</p>
+<h3 id="递归的优点"><a href="#递归的优点" class="headerlink" title="递归的优点"></a>递归的优点</h3><p>递归的优点是代码简洁且易于理解。如果问题满足递归的特点，即可以分解成子问题且子问题与原始问题相似，则可以使用递归给出自然、直接、简单的解法。</p>
+<h3 id="递归的缺点"><a href="#递归的缺点" class="headerlink" title="递归的缺点"></a>递归的缺点</h3><p>时间和空间的消耗比较大。每一次函数调用都需要在内存栈中分配空间，对栈的操作还需要时间，因此时间复杂度和空间复杂度都会比较高。</p>
+<p>如果子问题之间存在重叠，则在不加记忆化的情况下，递归会产生重复计算，导致时间复杂度过高。</p>
+<p>由于栈的空间有限，如果递归调用的次数太多，则可能导致调用栈溢出。</p>
+<h3 id="尾递归"><a href="#尾递归" class="headerlink" title="尾递归"></a>尾递归</h3><p>当递归调用是方法中最后执行的语句且它的返回值不属于表达式的一部分时，这个递归调用就是尾递归。</p>
+<p>尾递归的特点是在返回时直接传回原始的调用者，而不用经过中间的调用者，这个特点很重要，因为大多数现代的编译器会利用该特点自动生成优化的代码。</p>
+<p>使用尾递归代替普通的递归，可以在时间和空间方面都带来显著的提升。</p>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p>以下代码是计算斐波那契数的普通递归和尾递归的实现。</p>
+<p>使用普通递归，会产生大量重复计算，导致时间复杂度过高。</p>
+<p>使用尾递归，则不会有重复计算。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Fibonacci</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">long</span> fibonacci(<span class="hljs-built_in">long</span> <span class="hljs-keyword">index</span>) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">index</span> &lt;= <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">index</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">return</span> fibonacci(<span class="hljs-keyword">index</span> - <span class="hljs-number">1</span>) + fibonacci(<span class="hljs-keyword">index</span> - <span class="hljs-number">2</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">long</span> fibonacciTailRecursion(<span class="hljs-built_in">long</span> <span class="hljs-keyword">index</span>) &#123;<br>        <span class="hljs-keyword">return</span> fibonacciTailRecursion(<span class="hljs-keyword">index</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">long</span> fibonacciTailRecursion(<span class="hljs-built_in">long</span> <span class="hljs-keyword">index</span>, <span class="hljs-built_in">int</span> curr, <span class="hljs-built_in">int</span> <span class="hljs-keyword">next</span>) &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">index</span> == <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span> curr;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">return</span> fibonacciTailRecursion(<span class="hljs-keyword">index</span> - <span class="hljs-number">1</span>, <span class="hljs-keyword">next</span>, curr + <span class="hljs-keyword">next</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/09/05/g8lGrBzkPQ32exO.png" srcset="/img/loading.gif" alt="练习4"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/09/05/Java%E5%90%8E%E7%AB%AF%E9%9D%A2%E8%AF%95-%E9%94%99%E9%A2%98%E6%9C%AC/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java后端面试-错题本</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/06/MySql%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">
+                        <span class="hidden-mobile">MySql执行计划</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2021/09/05/Java%E5%90%8E%E7%AB%AF%E9%9D%A2%E8%AF%95-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
