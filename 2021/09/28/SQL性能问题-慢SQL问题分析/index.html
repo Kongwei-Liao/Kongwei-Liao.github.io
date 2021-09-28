@@ -1,0 +1,760 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>SQL性能问题:慢SQL问题分析 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="SQL性能问题:慢SQL问题分析">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-28 22:44" pubdate>
+        2021年9月28日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      45
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SQL性能问题:慢SQL问题分析</h1>
+            
+            <div class="markdown-body">
+              <h1 id="慢SQL问题分析"><a href="#慢SQL问题分析" class="headerlink" title="慢SQL问题分析"></a>慢SQL问题分析</h1><p>今天和大家聊一个常见的问题：慢SQL。</p>
+<p>通过本文你将了解到以下内容：</p>
+<ul>
+<li>慢SQL的危害</li>
+<li>SQL语句的执行过程</li>
+<li>存储引擎和索引的那些事儿</li>
+<li>慢SQL解决之道</li>
+</ul>
+<p>后续均以MySQL默认存储引擎InnoDB为例进行展开，话不多说，开搞！</p>
+<hr>
+<h2 id="一、慢SQL-的危害"><a href="#一、慢SQL-的危害" class="headerlink" title="一、慢SQL 的危害"></a>一、慢SQL 的危害</h2><p>今天和大家聊一个常见的问题：慢SQL。通过本文你将了解到以下内容：</p>
+<ol>
+<li>慢SQL的危害</li>
+<li>SQL语句的执行过程</li>
+<li>存储引擎和索引的那些事儿</li>
+<li>慢SQL解决之道</li>
+</ol>
+<p>后续均以MySQL默认存储引擎InnoDB为例进行展开，话不多说，开搞！</p>
+<hr>
+<p>慢SQL，就是跑得很慢的SQL语句，你可能会问慢SQL会有啥问题吗？试想一个场景：</p>
+<blockquote>
+<p>大白和小黑端午出去玩，机票太贵于是买了高铁，火车站的人真是乌央乌央的。</p>
+<p>马上检票了，大白和小黑准备去厕所清理下库存，坑位不多，排队的人还真不少。</p>
+<p>小黑发现其中有3个坑的乘客贼慢，其他2个坑位换了好几波人，这3位坑主就是不出来。</p>
+<p>等在外面的大伙，心里很是不爽，长期占用公共资源，后面的人没法用。</p>
+<p>小黑苦笑道：这不就是厕所版的慢SQL嘛！</p>
+</blockquote>
+<p>这是实际生活中的例子，换到MySQL服务器也是一样的，毕竟科技源自生活嘛。</p>
+<hr>
+<p>MySQL服务器的资源(CPU、IO、内存等)是有限的，尤其在高并发场景下需要快速处理掉请求，否则一旦出现慢SQL就会阻塞掉很多正常的请求，造成大面积的失败/超时等。</p>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_22-51-28.png" srcset="/img/loading.gif"></p>
+<hr>
+<h2 id="二、SQL执行过程"><a href="#二、SQL执行过程" class="headerlink" title="二、SQL执行过程"></a>二、SQL执行过程</h2><p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_22-53-18.png" srcset="/img/loading.gif"></p>
+<p>客户端和MySQL服务端的交互过程简介：</p>
+<blockquote>
+<ol>
+<li>客户端发送一条SQL语句给服务端，服务端的连接器先进行账号/密码、权限等环节验证，有异常直接拒绝请求。</li>
+<li>服务端查询缓存，如果SQL语句命中了缓存，则返回缓存中的结果，否则继续处理。</li>
+<li>服务端对SQL语句进行词法解析、语法解析、预处理来检查SQL语句的合法性。</li>
+<li>服务端通过优化器对之前生成的解析树进行优化处理，生成最优的物理执行计划。</li>
+<li>将生成的物理执行计划调用存储引擎的相关接口，进行数据查询和处理。</li>
+<li>处理完成后将结果返回客户端。</li>
+</ol>
+</blockquote>
+<hr>
+<p>客户端和MySQL服务端的交互过程简图：</p>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_22-54-20.png" srcset="/img/loading.gif"></p>
+<p>俗话说”条条大路通罗马”，优化器的作用就是找到这么多路中最优的那一条。<strong>存储引擎更是决定SQL执行的核心组件，适当了解其中原理十分有益</strong>。</p>
+<hr>
+<h2 id="三、存储引擎和索引那些事儿"><a href="#三、存储引擎和索引那些事儿" class="headerlink" title="三、存储引擎和索引那些事儿"></a>三、存储引擎和索引那些事儿</h2><h3 id="1、存储引擎"><a href="#1、存储引擎" class="headerlink" title="1、存储引擎"></a>1、存储引擎</h3><p>InnoDB存储引擎(Storage Engine)是MySQL默认之选。<strong>存储引擎的主要作用是进行数据的存取和检索，也是真正执行SQL语句的组件。</strong></p>
+<p>InnoDB的整体架构分为两个部分：内存架构和磁盘架构，如图：</p>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_22-55-46.png" srcset="/img/loading.gif"></p>
+<blockquote>
+<p>存储引擎的内容非常多，并不是一篇文章能说清楚的，本文不过多展开，我们在此只需要了解内存架构和磁盘架构的大致组成即可。</p>
+</blockquote>
+<p>InnoDB 引擎是<strong>面向行存储</strong>的，数据都是存储在磁盘的数据页中，数据页里面按照固定的行格式存储着每一行数据。</p>
+<blockquote>
+<p>行格式主要分为四种类型Compact、Redundant、Dynamic和Compressed，<strong>默认为Compact格式</strong>。</p>
+</blockquote>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_22-56-56.png" srcset="/img/loading.gif"></p>
+<h4 id="1-1、磁盘预读机制和局部性原理"><a href="#1-1、磁盘预读机制和局部性原理" class="headerlink" title="1.1、磁盘预读机制和局部性原理"></a>1.1、磁盘预读机制和局部性原理</h4><p>当计算机访问一个数据时，不仅会加载当前数据所在的数据页，还会将当前数据页相邻的数据页一同加载到内存，磁盘预读的长度一般为页的整倍数，从而有效降低磁盘IO的次数。</p>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_22-57-48.png" srcset="/img/loading.gif"></p>
+<h4 id="1-2、磁盘和内存的交互"><a href="#1-2、磁盘和内存的交互" class="headerlink" title="1.2、磁盘和内存的交互"></a>1.2、磁盘和内存的交互</h4><p>MySQL中磁盘的数据需要被交换到内存，才能完成一次SQL交互，大致如图：</p>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_22-58-27.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>扇区是硬盘的读写的基本单位，通常情况下每个扇区的大小是 512B</li>
+<li>磁盘块文件系统读写数据的最小单位，相邻的扇区组合在一起形成一个块，一般是4KB</li>
+<li>页（操作系统页）是内存的最小存储单位，页的大小通常为磁盘块大小的 2^n 倍</li>
+<li>InnoDB页面（MySQL数据页）的默认大小是16KB，是数倍个操作系统的页</li>
+</ul>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_22-59-21.png" srcset="/img/loading.gif"></p>
+<h4 id="1-3、随机磁盘IO"><a href="#1-3、随机磁盘IO" class="headerlink" title="1.3、随机磁盘IO"></a>1.3、随机磁盘IO</h4><p>MySQL的数据是一行行存储在磁盘上的，并且这些数据并非物理连续地存储，这样的话要查找数据就无法避免随机在磁盘上读取和写入数据。</p>
+<p>对于MySQL来说，当出现大量磁盘随机IO时，大部分时间都被浪费到寻道上，磁盘呼噜呼噜转，就是传输不了多少数据。</p>
+<blockquote>
+<p>一次磁盘访问由三个动作组成：</p>
+<ul>
+<li>寻道：磁头移动定位到指定磁道</li>
+<li>旋转：等待指定扇区从磁头下旋转经过</li>
+<li>数据传输：数据在磁盘与内存之间的实际传输</li>
+</ul>
+</blockquote>
+<p><strong>对于存储引擎来说，如何有效降低随机IO是个非常重要的问题</strong>。</p>
+<h3 id="2、索引"><a href="#2、索引" class="headerlink" title="2、索引"></a>2、索引</h3><p>可以实现增删改查的数据结构非常多，包括：哈希表、二叉搜索树、AVL、红黑树、B树、B+树等，这些都是可以作为索引的候选数据结构。</p>
+<p>结合MySQL的实际情况：磁盘和内存交互、随机磁盘IO、排序和范围查找、增删改的复杂度等等，综合考量之下B+树脱颖而出。</p>
+<p>B+树作为多叉平衡树，对于范围查找和排序都可以很好地支持，并且更加矮胖，访问数据时的平均磁盘IO次数取决于树的高度，因此<strong>B+树可以让磁盘的查找次数更少</strong>。</p>
+<p>在InnoDB中B+树的高度一般都在2<del>4层，并且根节点常驻内存中，也就是说查找某值的行记录时最多只需要1</del>3次磁盘I/O操作。</p>
+<p><strong>MyISAM是将数据和索引分开存储</strong>的，<strong>InnoDB存储引擎的数据和索引没有分开存储</strong>，这也就是为什么有人说<strong>Innodb索引即数据，数据即索引</strong>，如图：</p>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_23-15-01.png" srcset="/img/loading.gif"></p>
+<p>说到<strong>InnoDB的数据和索引的存储</strong>，就提到一个名词：<strong>聚集索引</strong>。</p>
+<h4 id="1、聚集索引"><a href="#1、聚集索引" class="headerlink" title="1、聚集索引"></a>1、聚集索引</h4><p>聚集索引将索引和数据完美地融合在一起，是每个Innodb表都会有的一个特殊索引，<u>一般来说是借助于表的主键来构建的B+树</u>。</p>
+<p>假设我们有student表，将id作为主键索引，那么聚集索引的B+树结构，如图：</p>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_23-16-49.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>非叶子节点不存数据，只有主键和相关指针</li>
+<li>叶子节点包含主键、行数据、指针</li>
+<li>叶子节点之间由双向指针串联形成有序双向链表，叶子节点内部也是有序的</li>
+</ul>
+<hr>
+<p>聚集索引按照如下规则创建：</p>
+<ul>
+<li>有主键时InnoDB利用主键来生成</li>
+<li>没有主键，InnoDB会选择一个非空的唯一索引来创建</li>
+<li>无主键且非NULL唯一索引时，InnoDB会隐式创建一个自增的列来创建</li>
+</ul>
+<hr>
+<p>假如我们要查找id=10的数据，大致过程如下：</p>
+<ul>
+<li>索引的根结点在内存中，10&gt;9 因此找到P3指针</li>
+<li>P3指向的数据并没有在内存中，因此产生1次磁盘IO读取磁盘块3到内存</li>
+<li>在内存中对磁盘块3进行二分查找，找到ID=9的全部值</li>
+</ul>
+<h4 id="2、非聚集索引"><a href="#2、非聚集索引" class="headerlink" title="2、非聚集索引"></a>2、非聚集索引</h4><p>非聚集索引的叶子节点中存放的是<strong>二级索引值</strong>和<strong>主键键值</strong>，<strong>非叶子节点和叶子节点都没有存储整行数据值</strong>。</p>
+<p>假设我们有student表，将<strong>name作为二级索引</strong>，那么非聚集索引的B+树结构，如图：</p>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_23-18-08.png" srcset="/img/loading.gif"></p>
+<p>由于非聚集索引的叶子节点没有存储行数据，如果通过非聚集索引来查找非二级索引值，需要分为两步：</p>
+<ul>
+<li>第一步：通过非聚集索引的叶子节点来确定数据行对应的主键</li>
+<li>第二步：通过相应的主键值在聚集索引中查询到对应的行记录</li>
+</ul>
+<p>我们把通过非聚集索引找到主键值，再根据主键值从聚集索引找对于行数据的过程称为：<strong>回表查询</strong>。</p>
+<p>换句话说：<code>select * from student where name = &#39;Bob&#39;</code> 将产生回表查询，因为在name索引的叶子节点没有其他值，只能从聚集索引获得。</p>
+<p>所以如果查找的字段在非聚集索引就可以完成，就可以避免一次回表过程，<u>这种称为：覆盖索引，所以select * 并不是好习惯，需要什么拿什么就好。</u></p>
+<hr>
+<p>假如我们要查找name=Tom的记录的所有值，大致过程如下：</p>
+<ol>
+<li>从非聚集索引开始，根节点在内存中，按照name的字典序找到P3指针</li>
+<li>P3指针所指向的磁盘块不在内存中，产生1次磁盘IO加载到内存</li>
+<li>在内存中对磁盘块3的数据进行搜索，获得name=tom的记录的主键值为4</li>
+<li>根据主键值4从聚集索引的根节点中获得P2指针</li>
+<li>P2指针所指向的磁盘块不在内存中，产生第2次磁盘IO加载到内存</li>
+<li>将上一步获得的数据，在内存中进行二分查找获得全部行数据</li>
+</ol>
+<p>上述查询就包含了一次回表过程，因此性能比主键查询慢了一倍，因此尽量使用主键查询，一次完事。</p>
+<h2 id="四、慢SQL解决思路"><a href="#四、慢SQL解决思路" class="headerlink" title="四、慢SQL解决思路"></a>四、慢SQL解决思路</h2><p>出现慢SQL的原因很多，我们抛开单表数亿记录和无索引的特殊情况，来讨论一些更有普遍意义的慢SQL原因和解决之道。</p>
+<p>我们从两个方面来进行阐述：</p>
+<ul>
+<li>数据库表索引设置不合理</li>
+<li>SQL语句有问题，需要优化</li>
+</ul>
+<p><img src="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/Snipaste_2021-09-28_23-19-46.png" srcset="/img/loading.gif"></p>
+<h3 id="1、索引设置原则"><a href="#1、索引设置原则" class="headerlink" title="1、索引设置原则"></a>1、索引设置原则</h3><p>程序员的角度和存储引擎的角度是不一样的，索引写的好，SQL跑得快。</p>
+<ul>
+<li><strong>索引区分度低</strong></li>
+</ul>
+<p>假如表中有1000w记录，其中有status字段表示状态，可能90%的数据status=1，可以不将status作为索引，因为其对数据记录区分度很低。</p>
+<ul>
+<li><strong>切忌过多创建索引</strong></li>
+</ul>
+<p>每个索引都需要占用磁盘空间，修改表数据时会对索引进行更新，索引越多，更新越复杂。</p>
+<blockquote>
+<p>因为每添加一个索引，.ibd文件中就需要多维护一个B+Tree索引树，如果某一个table中存在10个索引，那么就需要维护10棵B+Tree，写入效率会降低，并且会浪费磁盘空间。</p>
+</blockquote>
+<ul>
+<li><strong>常用查询字段建索引</strong></li>
+</ul>
+<p>如果某个字段经常用来做查询条件，那么该字段的查询速度会影响整个表的查询速度，属于热门字段，为其建立索引非常必要。</p>
+<ul>
+<li><strong>常排序/分组/去重字段建索引</strong></li>
+</ul>
+<p>对于需要经常使用ORDER BY、GROUP BY、DISTINCT和UNION等操作的字段建立索引，可以有效借助B+树的特性来加速执行。</p>
+<ul>
+<li><strong>主键和外键建索引</strong></li>
+</ul>
+<p>主键可以用来创建聚集索引，外键也是唯一的且常用于表关联的字段，也需要建索引来提高性能。</p>
+<h3 id="2、SQL的优化"><a href="#2、SQL的优化" class="headerlink" title="2、SQL的优化"></a>2、SQL的优化</h3><p>如果数据库表的索引设置比较合理，SQL语句书写不当会造成索引失效，甚至造成全表扫描，迅速拉低性能。</p>
+<h4 id="2-1、索引失效"><a href="#2-1、索引失效" class="headerlink" title="2.1、索引失效"></a>2.1、索引失效</h4><p>我们在写SQL的时候在某些情况下会出现索引失效的情况：</p>
+<ul>
+<li><strong>对索引使用函数</strong></li>
+</ul>
+<blockquote>
+<p>select id from std upper(name) = ‘JIM’;</p>
+</blockquote>
+<ul>
+<li><strong>对索引进行运算</strong></li>
+</ul>
+<blockquote>
+<p>select id from std where id+1=10;</p>
+</blockquote>
+<ul>
+<li><strong>对索引使用&lt;&gt; 、not in 、not exist、!=</strong></li>
+</ul>
+<blockquote>
+<p>select id from std where name != ‘jim’;</p>
+</blockquote>
+<ul>
+<li><strong>对索引进行前导模糊查询</strong></li>
+</ul>
+<blockquote>
+<p>select id from std name like ‘%jim’;</p>
+</blockquote>
+<ul>
+<li><strong>隐式转换会导致不走索引</strong></li>
+</ul>
+<blockquote>
+<p>比如：字符串类型索引字段不加引号，select id from std name = 100;保持变量类型与字段类型一致</p>
+</blockquote>
+<ul>
+<li><strong>非索引字段的or连接</strong></li>
+</ul>
+<blockquote>
+<p>并不是所有的or都会使索引失效，如果or连接的所有字段都设置了索引，是会走索引的，一旦有一个字段没有索引，就会走全表扫描。</p>
+</blockquote>
+<ul>
+<li><strong>联合索引仅包含复合索引非前置列</strong></li>
+</ul>
+<blockquote>
+<p>联合索引包含key1，key2，key3三列，但SQL语句没有key1，根据联合索引的最左匹配原则，不会走联合索引。<br>select name from table where key2=1 and key3=2;</p>
+</blockquote>
+<hr>
+<h4 id="2-2、好的建议"><a href="#2-2、好的建议" class="headerlink" title="2.2、好的建议"></a>2.2、好的建议</h4><ul>
+<li><strong>使用连接代替子查询</strong></li>
+</ul>
+<blockquote>
+<p>对于数据库来说，在绝大部分情况下，连接会比子查询更快，使用连接的方式，MySQL优化器一般可以生成更佳的执行计划，更高效地处理查询<br>而子查询往往需要运行重复的查询，子查询生成的临时表上也没有索引， 因此效率会更低。</p>
+</blockquote>
+<ul>
+<li><strong>LIMIT偏移量过大的优化</strong></li>
+</ul>
+<blockquote>
+<p>禁止分页查询偏移量过大，如limit 100000,10</p>
+</blockquote>
+<ul>
+<li><strong>使用覆盖索引</strong><br>减少select * 借助覆盖索引，减少回表查询次数。</li>
+<li><strong>多表关联查询时，小表在前，大表在后</strong></li>
+</ul>
+<blockquote>
+<p>在MySQL中，执行from后的表关联查询是从左往右执行的，第一张表会涉及到全表扫描，所以将小表放在前面，先扫小表，扫描快效率较高，在扫描后面的大表，或许只扫描大表的前100行就符合返回条件并return了。</p>
+</blockquote>
+<ul>
+<li><strong>调整Where字句中的连接顺序</strong></li>
+</ul>
+<blockquote>
+<p>MySQL采用从左往右的顺序解析where子句，可以将过滤数据多的条件放在前面，最快速度缩小结果集。</p>
+</blockquote>
+<ul>
+<li><strong>使用小范围事务，而非大范围事务</strong></li>
+<li><strong>遵循最左匹配原则</strong></li>
+<li><strong>使用联合索引，而非建立多个单独索引</strong></li>
+</ul>
+<h3 id="3、慢SQL的分析"><a href="#3、慢SQL的分析" class="headerlink" title="3、慢SQL的分析"></a>3、慢SQL的分析</h3><p>在分析慢SQL之前需要通过MySQL进行相关设置：</p>
+<ul>
+<li>开启慢SQL日志</li>
+<li>设置慢SQL的执行时间阈值</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">开启：<span class="hljs-keyword">SET</span> <span class="hljs-keyword">GLOBAL</span> slow_query_log = <span class="hljs-number">1</span>;<br>开启状态：<span class="hljs-keyword">SHOW</span> VARIABLES <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%slow_query_log%&#x27;</span>;<br>设置阈值：<span class="hljs-keyword">SET</span> <span class="hljs-keyword">GLOBAL</span> long_query_time=<span class="hljs-number">3</span>;<br>查看阈值：<span class="hljs-keyword">SHOW</span> <span class="hljs-keyword">GLOBAL</span> VARIABLES <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;long_query_time%&#x27;</span>; <br></code></pre></td></tr></table></figure>
+<h4 id="3-1、explain分析SQL"><a href="#3-1、explain分析SQL" class="headerlink" title="3.1、explain分析SQL"></a>3.1、explain分析SQL</h4><p>explain命令只需要加在select之前即可，例如:</p>
+<blockquote>
+<p>explain select * from std where id &lt; 100;</p>
+</blockquote>
+<p>该命令会展示sql语句的详细执行过程，帮助我们定位问题，网上关于explain的用法和讲解很多，本文不再展开。</p>
+<h2 id="五、其他"><a href="#五、其他" class="headerlink" title="五、其他"></a>五、其他</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sql">sysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">show</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> <br>    <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> t_user;<br><span class="hljs-operator">+</span><span class="hljs-comment">--------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="hljs-operator">|</span> <span class="hljs-keyword">Table</span>  <span class="hljs-operator">|</span> <span class="hljs-keyword">Create</span> <span class="hljs-keyword">Table</span>                                                                                                                                                                                                                                                                                                                                                        <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">--------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="hljs-operator">|</span> t_user <span class="hljs-operator">|</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `t_user` (<br>  `id` <span class="hljs-type">int</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,<br>  `nam` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">COLLATE</span> utf8mb4_bin <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `age` <span class="hljs-type">int</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `sex` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">COLLATE</span> utf8mb4_bin <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `dept` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">COLLATE</span> utf8mb4_bin <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  <span class="hljs-keyword">PRIMARY</span> KEY (`id`),<br>  KEY `indx_nam` (`nam`) <span class="hljs-keyword">USING</span> BTREE<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_bin <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">--------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="hljs-number">1</span> <span class="hljs-type">row</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">set</span> (<span class="hljs-number">0.00</span> sec)<br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">mysql&gt; select * from t_user\G<br>*************************** 1. row ***************************<br>  id: 1<br> nam: hello<br> age: 13<br> sex: male<br>dept: 软开<br>1 row in <span class="hljs-keyword">set</span> <span class="hljs-params">(0.00 sec)</span><br><br>mysql&gt; explain select * from t_user;<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>| id | select_type | table  | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>|  1 | SIMPLE      | t_user | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    1 |   100.00 | NULL  |<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>1 row in <span class="hljs-keyword">set</span>, 1 warning <span class="hljs-params">(0.00 sec)</span><br><br>mysql&gt; mysql&gt; explain select * from t_user where id = 1;<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>| id | select_type | table  | partitions | type  | possible_keys | key     | key_len | ref   | rows | filtered | Extra |<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>|  1 | SIMPLE      | t_user | NULL       | const | PRIMARY       | PRIMARY | 4       | const |    1 |   100.00 | NULL  |<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>1 row in <span class="hljs-keyword">set</span>, 1 warning <span class="hljs-params">(0.00 sec)</span><br><br>mysql&gt; explain select * from t_user t_user where nam = &#x27;hello&#x27;;<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>| id | select_type | table  | partitions | type | possible_keys | key      | key_len | ref   | rows | filtered | Extra |<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>|  1 | SIMPLE      | t_user | NULL       | ref  | indx_nam      | indx_nam | 1023    | const |    1 |   100.00 | NULL  |<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">-------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------</span>+<br>1 row in <span class="hljs-keyword">set</span>, 1 warning <span class="hljs-params">(0.00 sec)</span><br><br>mysql&gt; explain select * from t_user t_user where sex = &#x27;male&#x27;;<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------------</span>+<br>| id | select_type | table  | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------------</span>+<br>|  1 | SIMPLE      | t_user | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    1 |   100.00 | Using where |<br>+<span class="hljs-params">----</span>+<span class="hljs-params">-------------</span>+<span class="hljs-params">--------</span>+<span class="hljs-params">------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">---------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">------</span>+<span class="hljs-params">----------</span>+<span class="hljs-params">-------------</span>+<br>1 row in <span class="hljs-keyword">set</span>, 1 warning <span class="hljs-params">(0.01 sec)</span><br><br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/SQL/">SQL</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%85%A2SQL/">慢SQL</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">SQL性能优化</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%AF%BC%E8%87%B4%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/">
+                        <span class="hidden-mobile">SQL性能问题:隐式转换导致索引失效</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
