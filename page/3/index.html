@@ -181,6 +181,43 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/05/19/Thread-Deamon/">Thread-Deamon</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/19/Thread-Deamon/">
+          
+          
+            
+          
+          守护线程Java程序入口就是由JVM启动main线程，main线程又可以启动其他线程。当所有线程都运行结束时，JVM退出，进程结束。
+如果有一个线程没有退出，JVM进程就不会退出。所以，必须保证所有线程都能及时结束。
+但是有一种线程的目的就是无限循环，例如，一个定时触发任务的线程：
+12345678910111213class TimerThread extends Thread &#123;  
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-19 00:08" pubdate>
+              2021-05-19
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/05/18/Thread-Interrupt/">Thread-Interrupt</a>
       </h1>
 
@@ -519,52 +556,6 @@ Why: synchronized 只解决了有和没有的问题，但是锁的场景和多�
               <a href="/tags/Java/">Java</a>
             
               <a href="/tags/Schedule/">Schedule</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/27/AMQP%E5%8D%8F%E8%AE%AE%E4%B8%8ERabbitMQ/">AMQP协议与RabbitMQ</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/27/AMQP%E5%8D%8F%E8%AE%AE%E4%B8%8ERabbitMQ/">
-          
-          
-            
-          
-          消息队列的历史了解一件事情的来龙去脉，将不会对它感到神秘。让我们来看看消息队列（Message Queue）这项技术的发展历史。
-Message Queue的需求由来已久，80年代最早在金融交易中，高盛等公司采用Teknekron公司的产品，当时的Message queuing软件叫做：the information bus（TIB）。 TIB被电信和通讯公司采用，路透社收购了Teknekron公
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-27 14:37" pubdate>
-              2021-02-27
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a>
-            
-              <a href="/tags/RabbitMQ/">RabbitMQ</a>
-            
-              <a href="/tags/AMQP/">AMQP</a>
             
           </div>
         
