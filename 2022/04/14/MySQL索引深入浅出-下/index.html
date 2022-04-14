@@ -1,0 +1,577 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>MySQL索引深入浅出(下) - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="MySQL索引深入浅出(下)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-14 00:18" pubdate>
+        2022年4月14日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MySQL索引深入浅出(下)</h1>
+            
+            <div class="markdown-body">
+              <h1 id="深入浅出索引（下）"><a href="#深入浅出索引（下）" class="headerlink" title="深入浅出索引（下）"></a>深入浅出索引（下）</h1><p>上一篇文章中，我和你介绍了InnoDB索引的数据结构模型，今天我们再继续聊聊跟MySQL索 引有关的概念。</p>
+<p>我们先来看一下这个问题：</p>
+<p>在下面这个表T中，如果我执行 select * from T where k between 3 and 5，需要执行几次树的搜索操作，会扫描多少行？ 下面是这个表的初始化语句。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql">mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> T ( <br>    ID <span class="hljs-type">int</span> <span class="hljs-keyword">primary</span> key, <br>    k <span class="hljs-type">int</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>, <br>    s <span class="hljs-type">varchar</span>(<span class="hljs-number">16</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;&#x27;</span>, <br>    index k(k)<br>) engine<span class="hljs-operator">=</span>InnoDB;<br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> T <span class="hljs-keyword">values</span>(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;aa&#x27;</span>),(<span class="hljs-number">200</span>,<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;bb&#x27;</span>),(<span class="hljs-number">300</span>,<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;cc&#x27;</span>),(<span class="hljs-number">500</span>,<span class="hljs-number">5</span>,<span class="hljs-string">&#x27;ee&#x27;</span>),(<span class="hljs-number">600</span>,<span class="hljs-number">6</span>,<span class="hljs-string">&#x27;ff&#x27;</span>),(<span class="hljs-number">700</span>,<span class="hljs-number">7</span>,<span class="hljs-string">&#x27;gg&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<p><img src="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/image-20220414232248464.png" srcset="/img/loading.gif" alt="image-20220414232248464"></p>
+<p>现在，我们一起来看看这条SQL查询语句的执行流程：</p>
+<ol>
+<li><p>在 k 索引树上找到 k=3 的记录，取得 ID = 300；</p>
+</li>
+<li><p>再到ID索引树查到 ID=300 对应的R3；</p>
+</li>
+<li><p>在 k 索引树取下一个值 k=5，取得 ID=500；</p>
+</li>
+<li><p>再回到ID索引树查到 ID=500 对应的 R4；</p>
+</li>
+<li><p>在 k 索引树取下一个值 k=6，不满足条件，循环结束。</p>
+</li>
+</ol>
+<p>在这个过程中，第 2、3 步回到主键索引树搜索的过程， 我们称为回表 。可以看到，这个查询过程读了k 索引树的3条记录（步骤1、3和5），回表了两次（步骤2和4）。 在这个例子中，由于查询结果所需要的数据只在主键索引上有，所以不得不回表。那么，有没有可能经过索引优化，避免回表过程呢？</p>
+<h2 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h2><p>如果执行的语句是select ID from T where k between 3 and 5，这时只需要查ID的值，而ID的值 已经在k索引树上了，因此可以直接提供查询结果，不需要回表。</p>
+<p>也就是说，在这个查询里面， 索引 k 已经 “覆盖了” 我们的查询需求，我们称为覆盖索引。</p>
+<p>由于覆盖索引可以减少树的搜索次数， 显著提升查询性能， 所以使用覆盖索引是一个常用的性能优化手段。</p>
+<p>需要注意的是，在引擎内部使用覆盖索引在索引 k 上其实读了三个记录，R3~R5（对应的索引 k 上的记录项），但是对于MySQL的Server层来说，它就是找引擎拿到了两条记录，因此MySQL认为扫描行数是2。</p>
+<p>备注：关于如何查看扫描行数的问题，我将会在第16文章《如何正确地显示随机消息？》 中，和你详细讨论。</p>
+<p>基于上面覆盖索引的说明，我们来讨论一个问题：在一个市民信息表上， 是否有必要将身份证号和名字建立联合索引？</p>
+<p>在一个市民信息表上，假设这个市民表的定义是这样的：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">CREATE</span> TABLE <span class="hljs-symbol">`tuser`</span> ( <br>    <span class="hljs-symbol">`id`</span> int(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-symbol">`id_card`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-symbol">`name`</span> varchar(<span class="hljs-number">32</span>) DEFAULT <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-symbol">`age`</span> int(<span class="hljs-number">11</span>) DEFAULT <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-symbol">`ismale`</span> tinyint(<span class="hljs-number">1</span>) DEFAULT <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-keyword">PRIMARY</span> <span class="hljs-keyword">KEY</span> (<span class="hljs-symbol">`id`</span>), <br>    <span class="hljs-keyword">KEY</span> <span class="hljs-symbol">`id_card`</span> (<span class="hljs-symbol">`id_card`</span>), <br>    <span class="hljs-keyword">KEY</span> <span class="hljs-symbol">`name_age`</span> (<span class="hljs-symbol">`name`</span>,<span class="hljs-symbol">`age`</span>) <br>) ENGINE=InnoDB<br></code></pre></td></tr></table></figure>
+<p>我们知道，身份证号是市民的唯一标识。也就是说，如果有根据身份证号查询市民信息的需求， 我们只要在身份证号字段上建立索引就够了。而再建立一个（身份证号、姓名）的联合索引，是 不是浪费空间？</p>
+<p>如果现在有一个高频请求，要根据市民的身份证号查询他的姓名，这个联合索引就有意义了。它 可以在这个高频请求上用到覆盖索引，不再需要回表查整行记录，减少语句的执行时间。</p>
+<p>当然，索引字段的维护总是有代价的。因此，在建立冗余索引来支持覆盖索引时就需要权衡考虑 了。这正是业务DBA，或者称为业务数据架构师的工作。</p>
+<h2 id="最左前缀匹配"><a href="#最左前缀匹配" class="headerlink" title="最左前缀匹配"></a>最左前缀匹配</h2><p>看到这里你一定有一个疑问，如果为每一种查询都设计一个索引，索引是不是太多了。如果我现 在要按照市民的身份证号去查他的家庭地址呢？虽然这个查询需求在业务中出现的概率不高，但 总不能让它走全表扫描吧？反过来说，单独为一个不频繁的请求创建一个（身份证号，地址）的 索引又感觉有点浪费。应该怎么做呢？</p>
+<p>这里，我先和你说结论吧。B+树这种索引结构， 可以利用索引的 “ 最左前缀 ” ， 来定位记录。</p>
+<p>为了直观地说明这个概念，我们用（name，age）这个联合索引来分析。</p>
+<p><img src="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/image-20220414234154466.png" srcset="/img/loading.gif" alt="image-20220414234154466"></p>
+<p>可以看到，索引项（如 (”李四“, 20)）是按照索引定义 ( KEY name_age (name, age) ) 里面出现的字段顺序排序的。</p>
+<p>当你的逻辑需求是查到所有名字是“张三”的人时，可以快速定位到ID4，然后向后遍历得到所有需要的结果。</p>
+<p>如果你要查的是所有名字第一个字是“张”的人，你的SQL语句的条件是”where name like ‘张%’”。这时，你也能够用上这个索引，查找到第一个符合条件的记录是ID3，然后向后遍历，直到不满足条件为止。</p>
+<p>可以看到，不只是索引的全部定义，只要满足最左前缀，就可以利用索引来加速检索。这个最左 前缀可以是联合索引的最左N个字段，也可以是字符串索引的最左M个字符。 </p>
+<h3 id="索引定义的字段顺序安排"><a href="#索引定义的字段顺序安排" class="headerlink" title="索引定义的字段顺序安排"></a>索引定义的字段顺序安排</h3><p>基于上面对最左前缀索引的说明，我们来讨论一个问题：</p>
+<p>在建立联合索引的时候， 如何安排索引内的字段顺序。 这里我们的评估标准是，索引的复用能力。因为可以支持最左前缀，所以当已经有了(a,b)这个联合索引后，一般就不需要单独在a上建立索引了。</p>
+<h4 id="第一原则：索引复用原则"><a href="#第一原则：索引复用原则" class="headerlink" title="第一原则：索引复用原则"></a>第一原则：索引复用原则</h4><p>因此，<strong>第一原则</strong>是， 如果通过调整顺序， 可以少维护一个索引， 那么这个顺序往往就是需要优先考虑采用的。 </p>
+<p>所以现在你知道了，这段开头的问题里，我们要为高频请求创建(身份证号，姓名）这个联合索引，并用这个索引支持 “根据身份证号查询地址” 的需求。 </p>
+<hr>
+<p>那么，如果既有联合查询，又有基于a、b各自的查询呢？查询条件里面只有b的语句，是无法使 用 (a,b) 这个联合索引的，这时候你不得不维护另外一个索引，也就是说你需要同时维护(a,b)、 (b) 这两个索引。 </p>
+<h4 id="第二原则：最小成本原则"><a href="#第二原则：最小成本原则" class="headerlink" title="第二原则：最小成本原则"></a>第二原则：最小成本原则</h4><p>这时候，我们要考虑的<strong>第二原则</strong>就是空间考虑的原则就是空间 了。比如上面这个市民表的情况，name 字段是比 age 字段大的 ，那我就建议你创建一个（name, age) 的联合索引和一个(age)的单字段索引。</p>
+<h2 id="索引下推"><a href="#索引下推" class="headerlink" title="索引下推"></a>索引下推</h2><p>上一段我们说到满足最左前缀原则的时候，最左前缀可以用于在索引中定位记录。这时，你可能 要问，那些不符合最左前缀的部分，会怎么样呢？ </p>
+<p>我们还是以市民表的联合索引（name, age）为例。如果现在有一个需求：检索出表中“名字第一 个字是张，而且年龄是10岁的所有男孩”。那么，SQL语句是这么写的：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">mysql&gt; <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> tuser <span class="hljs-keyword">where</span> <span class="hljs-type">name</span> <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;张%&#x27;</span> <span class="hljs-keyword">and</span> age=<span class="hljs-number">10</span> <span class="hljs-keyword">and</span> ismale=<span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+<p>你已经知道了前缀索引规则，所以这个语句在搜索索引树的时候，只能用 “张” （age 为什吗没用到？先这样理解，在姓名和年龄上建立联合索引，就相当于是以 <strong>姓名+年龄拼接作为KEY</strong>，这个KEY是一个整体，不能把姓名和年龄分开看。），找到第一个满足 条件的记录 ID3。当然，这还不错，总比全表扫描要好。</p>
+<p>然后是判断其他条件是否满足。 </p>
+<p>在MySQL 5.6之前，只能从ID3开始一个个回表。到主键索引上找出数据行，再对比字段值。 </p>
+<p>而MySQL 5.6 引入的索引下推优化（index condition pushdown)， 可以在索引遍历过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表次数。 </p>
+<p>图3和图4，是这两个过程的执行流程图。</p>
+<p><img src="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/%E6%97%A0%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8%E6%B5%81%E7%A8%8B.png" srcset="/img/loading.gif" alt="图-3"></p>
+<p><img src="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8%E8%BF%87%E7%A8%8B.png" srcset="/img/loading.gif" alt="图-4"></p>
+<p>在这两个图里面，每一个虚线箭头表示回表一次。</p>
+<p>图 3 中，在 (name,age) 索引里面我特意去掉了age的值，这个过程InnoDB并不会去看age的值， 只是按顺序把“name第一个字是’张’”的记录一条条取出来回表。因此，需要回表4次。</p>
+<p>图 4 跟图 3 的区别是，InnoDB在 (name,age) 索引内部就判断了age 是否等于10，对于不等于10的记录，直接判断并跳过。在我们的这个例子中，只需要对ID4、ID5这两条记录回表取数据判断，就只需要回表2次。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在满足语句需求的情况下， 尽量少地访问资源是数据库设计的重要原则之一。我 们在使用数据库的时候，尤其是在设计表结构时，也要以减少资源消耗作为目标。</p>
+<h2 id="思考问题"><a href="#思考问题" class="headerlink" title="思考问题"></a>思考问题</h2><p>实际上主键索引也是可以使用多个字段的。DBA小吕在入职新公司的时候，就发现自己接手维 护的库里面，有这么一个表，表结构定义类似这样的：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">CREATE</span> TABLE <span class="hljs-symbol">`geek`</span> ( <br>    <span class="hljs-symbol">`a`</span> int(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-symbol">`b`</span> int(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-symbol">`c`</span> int(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-symbol">`d`</span> int(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>, <br>    <span class="hljs-keyword">PRIMARY</span> <span class="hljs-keyword">KEY</span> (<span class="hljs-symbol">`a`</span>,<span class="hljs-symbol">`b`</span>), <br>    <span class="hljs-keyword">KEY</span> <span class="hljs-symbol">`c`</span> (<span class="hljs-symbol">`c`</span>), <br>    <span class="hljs-keyword">KEY</span> <span class="hljs-symbol">`ca`</span> (<span class="hljs-symbol">`c`</span>,<span class="hljs-symbol">`a`</span>), <br>    <span class="hljs-keyword">KEY</span> <span class="hljs-symbol">`cb`</span> (<span class="hljs-symbol">`c`</span>,<span class="hljs-symbol">`b`</span>) <br>) ENGINE=InnoDB;<br></code></pre></td></tr></table></figure>
+<p>公司的同事告诉他说，由于历史原因，这个表需要a、b做联合主键，这个小吕理解了。</p>
+<p>但是，学过本章内容的小吕又纳闷了，既然主键包含了a、b这两个字段，那意味着单独在字段c 上创建一个索引，就已经包含了三个字段了呀，为什么要创建 “ca”、“cb” 这两个索引？</p>
+<p>同事告诉他，是因为他们的业务里面有这样的两种语句：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> geek <span class="hljs-keyword">where</span> c=N <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> a <span class="hljs-keyword">limit</span> <span class="hljs-number">1</span>; <br><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> geek <span class="hljs-keyword">where</span> c=N <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> b <span class="hljs-keyword">limit</span> <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+<p>这位同事的解释对吗，为了这两个查询模式，这两个索引是否都是必须的？为什么呢？</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/MySQL/">MySQL</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/MySQL/">MySQL</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8A/">
+                        <span class="hidden-mobile">MySQL索引深入浅出(上)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
