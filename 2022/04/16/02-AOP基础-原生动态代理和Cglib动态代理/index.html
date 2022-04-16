@@ -1,0 +1,578 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>02-AOP基础-原生动态代理和Cglib动态代理 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="02-AOP基础-原生动态代理和Cglib动态代理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-16 15:01" pubdate>
+        2022年4月16日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">02-AOP基础-原生动态代理和Cglib动态代理</h1>
+            
+            <div class="markdown-body">
+              <h1 id="AOP基础-原生动态代理与Cglib动态代理回顾"><a href="#AOP基础-原生动态代理与Cglib动态代理回顾" class="headerlink" title="AOP基础-原生动态代理与Cglib动态代理回顾"></a>AOP基础-原生动态代理与Cglib动态代理回顾</h1><p>关于动态代理，网络上有无数多的例子和场景，小册这里选用 【游戏陪玩】 的故事来演绎动态代理。</p>
+<p>应该是 2017 年左右吧，网络上涌上了一批游戏陪玩的平台和服务，游戏玩家可以通过在平台上付费邀请 “小姐姐” 来一起组队玩游戏。</p>
+<p>这种游戏陪玩平台的兴起，既满足了部门游戏玩家不能找到一起组排的队友的问题，也为一些游戏玩的不错 / 声音气质等很讨喜的玩家提供了收入的渠道。</p>
+<p>本章咱要演绎的场景，是一个普通玩家寻找陪玩的过程。</p>
+<p>首先我们要先有一名普通玩家：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Player</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> String name;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Player</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个设计相当简单了，只有一个 name 作为标识就好啦。</p>
+<p>然后要有一名游戏陪练，按照最简单的操作来看，陪玩应该有两个行为：<strong>收钱</strong>、<strong>陪玩</strong>。那我们就可以在 Partner 中定义这两个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java">    <br>    <span class="hljs-keyword">private</span> String name;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Partner</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br>    <br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 收钱</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> money</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">receiveMoney</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span> </span>&#123;<br>        System.out.println(name + <span class="hljs-string">&quot;收到佣金：&quot;</span> + money + <span class="hljs-string">&quot;元 ~ &quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 陪玩</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> player</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">playWith</span><span class="hljs-params">(Player player)</span> </span>&#123;<br>        System.out.println(name + <span class="hljs-string">&quot;与&quot;</span> + player.getName() + <span class="hljs-string">&quot;一起愉快地玩耍 ~ &quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>接下来就来演示真实场景了：假设有一个游戏玩家，名为 “郝武辽” ，他去找一个名为 “肖洁洁” 的陪玩陪他一起玩游戏。对应的代码就可以这样编写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Player player = <span class="hljs-keyword">new</span> Player(<span class="hljs-string">&quot;郝武辽&quot;</span>);<br>        Partner partner = <span class="hljs-keyword">new</span> Partner(<span class="hljs-string">&quot;肖洁洁&quot;</span>);<br>        <br>        partner.receiveMoney(<span class="hljs-number">200</span>);<br>        partner.playWith(player);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p>仔细观察一下上面的代码，先思考一个问题：这个 郝武辽 是怎么找到的 肖洁洁 呢？</p>
+<p>很明显，是在 <code>Client</code> 的 <code>main</code> 方法中，由 <code>main</code> 方法把他们俩搞到一起的吧，那如果不看 <code>Client</code> 的话，那就可以理解为，<strong>郝武辽 直接去 肖洁洁 的家里找的她，然后让她陪她一起玩游戏</strong>。</p>
+<p>但现实情况中，通常都是玩家去陪玩的平台上找陪玩，下面我们就来搞一个陪玩平台。</p>
+<h2 id="原生动态代理"><a href="#原生动态代理" class="headerlink" title="原生动态代理"></a>原生动态代理</h2><p>陪玩平台中入驻了一些陪玩的选手，这里咱可以使用静态代码块来初始化一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PartnerPlatform</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> List&lt;Partner&gt; partners = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>    <br>    <span class="hljs-keyword">static</span> &#123;<br>        partners.add(<span class="hljs-keyword">new</span> Partner(<span class="hljs-string">&quot;肖洁洁&quot;</span>));<br>        partners.add(<span class="hljs-keyword">new</span> Partner(<span class="hljs-string">&quot;田苟&quot;</span>));<br>        partners.add(<span class="hljs-keyword">new</span> Partner(<span class="hljs-string">&quot;高总裁&quot;</span>));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后，陪玩平台要根据玩家的预算，推荐合适的陪玩。不过这里我们就不给 陪玩 的模型添加单价的设计了，只是做一下形式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Partner <span class="hljs-title">getPartner</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span> </span>&#123;<br>  Partner partner = partners.remove(<span class="hljs-number">0</span>);<br>  <span class="hljs-keyword">return</span> partner;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们在这里定义一个陪玩平台的额外规则：<strong>如果一开始指定预算后，但付费时没给够，则这个陪玩直接 “装死” 不干了</strong>。于是我们可以这样设计：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Partner <span class="hljs-title">getPartner</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span> </span>&#123;<br>    Partner partner = partners.remove(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> (Partner) Proxy.newProxyInstance(partner.getClass().getClassLoader(), partner.getClass().getInterfaces(), ......);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>呃。。。等一下，<code>Partner</code> 还没有接口呢，所以我们需要给 <code>Partner</code> 抽取一个接口出来了。</p>
+<p>新建一个包吧，在这个包中声明 <code>Partner</code> 的接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Partner</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">receiveMoney</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span></span>;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">playWith</span><span class="hljs-params">(Player player)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>以及 <code>Partner</code> 的实现类 <code>IndividualPartner</code> ，代表个人陪玩：（个人的意思是区别于平台）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IndividualPartner</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Partner</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> String name;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">IndividualPartner</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">receiveMoney</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span> </span>&#123;<br>        System.out.println(name + <span class="hljs-string">&quot;收到佣金：&quot;</span> + money + <span class="hljs-string">&quot;元 ~ &quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">playWith</span><span class="hljs-params">(Player player)</span> </span>&#123;<br>        System.out.println(name + <span class="hljs-string">&quot;与&quot;</span> + player.getName() + <span class="hljs-string">&quot;一起愉快地玩耍 ~ &quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后，在 <code>PartnerPlatform</code> 中修改静态代码块的初始化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">static</span> &#123;<br>    partners.add(<span class="hljs-keyword">new</span> IndividualPartner(<span class="hljs-string">&quot;肖洁洁&quot;</span>));<br>    partners.add(<span class="hljs-keyword">new</span> IndividualPartner(<span class="hljs-string">&quot;田苟&quot;</span>));<br>    partners.add(<span class="hljs-keyword">new</span> IndividualPartner(<span class="hljs-string">&quot;高总裁&quot;</span>));<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样就算抽取接口完成了。</p>
+<p>抽取完接口后，就可以完成 <code>getPartner</code> 的逻辑编写了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Partner <span class="hljs-title">getPartner</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span> </span>&#123;<br>    Partner partner = partners.remove(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> (Partner) Proxy.newProxyInstance(partner.getClass().getClassLoader(), partner.getClass().getInterfaces(),<br>            <span class="hljs-keyword">new</span> InvocationHandler() &#123;<br>                <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> budget = money;<br>                <span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> status = <span class="hljs-keyword">false</span>;<br>                <br>                <span class="hljs-meta">@Override</span><br>                <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>                    <span class="hljs-keyword">if</span> (method.getName().equals(<span class="hljs-string">&quot;receiveMoney&quot;</span>)) &#123;<br>                        <span class="hljs-keyword">int</span> money = (<span class="hljs-keyword">int</span>) args[<span class="hljs-number">0</span>];<br>                        <span class="hljs-comment">// 平台需要运营，抽成一半</span><br>                        args[<span class="hljs-number">0</span>] = money / <span class="hljs-number">2</span>;<br>                        <span class="hljs-comment">// 如果在付钱时没给够，则标记budget为异常值</span><br>                        <span class="hljs-keyword">this</span>.status = money &gt;= budget;<br>                    &#125;<br>                    <span class="hljs-keyword">if</span> (status) &#123;<br>                        <span class="hljs-keyword">return</span> method.invoke(partner, args);<br>                    &#125;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>                &#125;<br>            &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>Client</code> 的测试代码中，只需要把 <code>Partner</code> 的获取动作由手动构造改为 <code>PartnerPlatform</code>获取，其余的代码均不需要变动：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Player player = <span class="hljs-keyword">new</span> Player(<span class="hljs-string">&quot;郝武辽&quot;</span>);<br>        Partner partner = PartnerPlatform.getPartner(<span class="hljs-number">50</span>);<br>    <br>        partner.receiveMoney(<span class="hljs-number">20</span>);<br>        partner.playWith(player);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>一开始我们先不给足钱，运行 <code>main</code> 方法，发现控制台没有任何输出。。。</p>
+<p>然后，将 20 改成 200 ，发现控制台可以打印输出了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">肖洁洁收到佣金：<span class="hljs-number">100</span>元 ~ <br>肖洁洁与郝武辽一起愉快地玩耍 ~ <br></code></pre></td></tr></table></figure>
+
+
+<h3 id="jdk动态代理的核心API"><a href="#jdk动态代理的核心API" class="headerlink" title="jdk动态代理的核心API"></a>jdk动态代理的核心API</h3><p>jdk 的动态代理，要求被代理的对象所属类必须实现一个以上的接口，代理对象的创建使用 <code>Proxy.newProxyInstance</code> 方法，该方法中有三个参数：</p>
+<ul>
+<li><code>ClassLoader loader</code> ：被代理的对象所属类的类加载器</li>
+<li><code>Class&lt;?&gt;[] interfaces</code> ：被代理的对象所属类实现的接口</li>
+<li><code>InvocationHandler h</code> ：代理的具体代码实现</li>
+</ul>
+<p>在这三个参数中，前面两个都容易理解，最后一个 <code>InvocationHandler</code> 是一个接口，它的核心方法 <code>invoke</code> 中也有三个参数，一一来看：</p>
+<ul>
+<li><code>Object proxy</code> ：代理对象的引用（代理后的）</li>
+<li><code>Method method</code> ：代理对象执行的方法</li>
+<li><code>Object[] args</code> ：代理对象执行方法的参数列表</li>
+</ul>
+<p>具体的代理逻辑就在 <code>InvocationHandler</code> 的 <code>invoke</code> 方法中编写。</p>
+<h2 id="Cglib动态代理"><a href="#Cglib动态代理" class="headerlink" title="Cglib动态代理"></a>Cglib动态代理</h2><p>前面场景都演绎完了，唯一一个让我们可能不爽的就是这个接口的抽取，不过还好 Cglib 可以直接使用字节码增强的技术，同样实现动态代理。下面我们也来回顾一下。</p>
+<p>要使用 Cglib ，必须先引入 Cglib 的 jar 包：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>cglib<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>cglib<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>首先，给原来的 <code>Partner</code> 添加一个无参构造方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Partner</span><span class="hljs-params">()</span> </span>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后，修改 <code>PartnerPlatform</code> 获取 <code>Partner</code> 的方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Partner <span class="hljs-title">getPartner</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span> </span>&#123;<br>    Partner partner = partners.remove(<span class="hljs-number">0</span>);<br>    <span class="hljs-comment">// 使用Cglib的Enhancer创建代理对象</span><br>    <span class="hljs-keyword">return</span> (Partner) Enhancer.create(partner.getClass(), <span class="hljs-keyword">new</span> MethodInterceptor() &#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> budget = money;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> status = <span class="hljs-keyword">false</span>;<br>        <br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">intercept</span><span class="hljs-params">(Object proxy, Method method, Object[] args, MethodProxy methodProxy)</span></span><br><span class="hljs-function">                <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>            <span class="hljs-comment">// 如果在付钱时没给够，则标记budget为异常值</span><br>            <span class="hljs-keyword">if</span> (method.getName().equals(<span class="hljs-string">&quot;receiveMoney&quot;</span>)) &#123;<br>                <span class="hljs-keyword">int</span> money = (<span class="hljs-keyword">int</span>) args[<span class="hljs-number">0</span>];<br>                <span class="hljs-keyword">this</span>.status = money &gt;= budget;<br>            &#125;<br>            <span class="hljs-keyword">if</span> (status) &#123;<br>                <span class="hljs-keyword">return</span> method.invoke(partner, args);<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>之后，在 <code>Client</code> 中修改获取代理的方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Player player = <span class="hljs-keyword">new</span> Player(<span class="hljs-string">&quot;郝武辽&quot;</span>);<br>        <span class="hljs-comment">// 此处的Partner是a_basic包下的，不是接口 是类</span><br>        Partner partner = PartnerPlatform.getPartner(<span class="hljs-number">50</span>);<br>        <br>        partner.receiveMoney(<span class="hljs-number">20</span>);<br>        partner.playWith(player);<br>        <br>        partner.receiveMoney(<span class="hljs-number">200</span>);<br>        partner.playWith(player);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台只会打印拿到 200 之后的玩耍，证明已经成功构造了代理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">肖洁洁收到佣金：200元 ~ <br>肖洁洁与郝武辽一起愉快地玩耍 ~ <br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Cglib动态代理的核心API"><a href="#Cglib动态代理的核心API" class="headerlink" title="Cglib动态代理的核心API"></a>Cglib动态代理的核心API</h3><p>同 jdk 动态代理相似，Cglib 动态代理的内容相对较少，它只需要传入两个东西：</p>
+<ul>
+<li><code>Class type</code> ：被代理的 </li>
+<li><code>Callback callback</code> ：增强的代码实现</li>
+</ul>
+<p>由于一般情况下我们都是对类中的方法增强，所以在传入 <code>Callback</code> 时通常选择这个接口的子接口 <code>MethodInterceptor</code> （所以也就有了上面代码中 new 的 <code>MethodInterceptor</code> 的匿名内部类）。</p>
+<p><code>MethodInterceptor</code> 的 <code>intercept</code> 方法中参数列表与 <code>InvocationHandler</code> 的 <code>invoke</code> 方法类似，唯独多了一个 <code>MethodProxy</code> ，它是对参数列表中的 <code>Method</code> 又做了一层封装，利用它可以直接执行被代理对象的方法，就像这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 执行代理对象的方法</span><br>method.invoke(proxy, args);<br><br><span class="hljs-comment">// 执行原始对象(被代理对象)的方法</span><br>methodProxy.invokeSuper(proxy, args);<br></code></pre></td></tr></table></figure>
+<p>除此之外也就没啥好说的了。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Spring/">Spring</a>
+                    
+                      <a class="hover-with-bg" href="/tags/AOP/">AOP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/16/01-AOP%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">
+                        <span class="hidden-mobile">01-AOP是怎么来的</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/16/02-AOP%E5%9F%BA%E7%A1%80-%E5%8E%9F%E7%94%9F%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
