@@ -1,0 +1,579 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>MySQL行锁功过 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="MySQL行锁功过">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-15 16:42" pubdate>
+        2022年4月15日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MySQL行锁功过</h1>
+            
+            <div class="markdown-body">
+              <h1 id="行锁功过：怎么减少行锁对性能的影响？"><a href="#行锁功过：怎么减少行锁对性能的影响？" class="headerlink" title="行锁功过：怎么减少行锁对性能的影响？"></a>行锁功过：怎么减少行锁对性能的影响？</h1><p>MySQL的行锁是在引擎层由各个引擎自己实现的。但并不是所有的引擎都支持行锁，比如 MyISAM引擎就不支持行锁。</p>
+<p>不支持行锁意味着并发控制只能使用表锁，对于这种引擎的表，同一张表上任何时刻只能有一个更新在执行，这就会影响到业务并发度。InnoDB是支持行锁的， 这也是MyISAM被InnoDB替代的重要原因之一。 </p>
+<p>我们今天就主要来聊聊InnoDB的行锁，以及如何通过减少锁冲突来提升业务并发度。 </p>
+<p>顾名思义，行锁就是针对数据表中行记录的锁。这很好理解，比如事务A更新了一行，而这时候事务B也要更新同一行，则必须等事务A的操作完成后才能进行更新。 </p>
+<p>当然，数据库中还有一些没那么一目了然的概念和设计，这些概念如果理解和使用不当，容易导 致程序出现非预期行为，比如两阶段锁。</p>
+<h2 id="两阶段锁"><a href="#两阶段锁" class="headerlink" title="两阶段锁"></a>两阶段锁</h2><p>先给你举个例子。在下面的操作序列中，事务B的update语句执行时会是什么现象呢？假设字段id是表 t 的主键。</p>
+<p><img src="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/image-20220415164532375.png" srcset="/img/loading.gif" alt="image-20220415164532375"></p>
+<p>这个问题的结论取决于事务A在执行完两条update语句后，持有哪些锁，以及在什么时候释放。 你可以验证一下：实际上事务B的update语句会被阻塞，直到事务A执行commit之后，事务B才能继续执行。</p>
+<p><img src="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/image-20220415165255776.png" srcset="/img/loading.gif" alt="image-20220415165255776"></p>
+<p><img src="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/image-20220415165426000.png" srcset="/img/loading.gif" alt="image-20220415165426000"></p>
+<p><img src="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/image-20220415165839745.png" srcset="/img/loading.gif" alt="image-20220415165839745"></p>
+<p><img src="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/image-20220415170306435.png" srcset="/img/loading.gif" alt="image-20220415170306435"></p>
+<blockquote>
+<p>为什么上面 Session A 更新  a = 1 为 a = a + 1，Session B 更新 a = 1 为 a = a + 2，现象是Session B 的更新动作是失败的？</p>
+<p>这里理解一下：更新是先执行引擎，在更新视图，都是在一个事务内。</p>
+</blockquote>
+<p><img src="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/image-20220415171338385.png" srcset="/img/loading.gif" alt="image-20220415171338385"></p>
+<blockquote>
+</blockquote>
+<p>知道了这个答案，你一定知道了事务A持有的两个记录的行锁，都是在commit的时候才释放的。 </p>
+<p>也就是说，在 InnoDB事务中， 行锁是在需要的时候才加上的， 但并不是不需要了就立刻释放， 而是要等到事务结束时才释放。 这个就是两阶段锁协议。 </p>
+<p>知道了这个设定，对我们使用事务有什么帮助呢？</p>
+<p>那就是，如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放。</p>
+<p>我给你举个例子。 假设你负责实现一个电影票在线交易业务，顾客A要在影院B购买电影票。我们简化一点，这个业务需要涉及到以下操作：</p>
+<ol>
+<li><p>从顾客A账户余额中扣除电影票价；</p>
+</li>
+<li><p>给影院B的账户余额增加这张电影票价；</p>
+</li>
+<li><p>记录一条交易日志。</p>
+</li>
+</ol>
+<p>也就是说，要完成这个交易，我们需要update两条记录，并insert一条记录。当然，为了保证交 易的原子性，我们要把这三个操作放在一个事务中。那么，你会怎样安排这三个语句在事务中的 顺序呢？</p>
+<p>试想如果<strong>同时</strong>有另外一个顾客C要在影院B买票，那么这两个事务冲突的部分就是语句2了。因为 它们要更新同一个影院账户的余额，需要修改同一行数据。</p>
+<p>根据两阶段锁协议，不论你怎样安排语句顺序，所有的操作需要的行锁都是在事务提交的时候才 释放的。所以，如果你把语句2安排在最后，比如按照3、1、2这样的顺序，那么影院账户余额这一行的锁时间就最少。这就最大程度地减少了事务之间的锁等待，提升了并发度。</p>
+<p>好了，现在由于你的正确设计，影院余额这一行的行锁在一个事务中不会停留很长时间。但是， 这并没有完全解决你的困扰。</p>
+<p>如果这个影院做活动，可以低价预售一年内所有的电影票，而且这个活动只做一天。于是在活动 时间开始的时候，你的MySQL就挂了。你登上服务器一看，CPU消耗接近100%，但整个数据库 每秒就执行不到100个事务。这是什么原因呢？</p>
+<p>这里，我就要说到死锁和死锁检测了。</p>
+<h2 id="死锁和死锁检测"><a href="#死锁和死锁检测" class="headerlink" title="死锁和死锁检测"></a>死锁和死锁检测</h2><p>当并发系统中不同线程出现循环资源依赖，涉及的线程都在等待别的线程释放资源时，就会导致 这几个线程都进入无限等待的状态，称为死锁。这里我用数据库中的行锁举个例子。</p>
+<p><img src="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/image-20220415172753425.png" srcset="/img/loading.gif" alt="image-20220415172753425"></p>
+<p>这时候，事务A在等待事务B释放id=2的行锁，而事务B在等待事务A释放id=1的行锁。 事务A和 事务B在互相等待对方的资源释放，就是进入了死锁状态。当出现死锁以后，有两种策略：</p>
+<ol>
+<li><p>一种策略是，直接进入等待，直到超时。这个超时时间可以通过参数 innodb_lock_wait_timeout来设置。</p>
+</li>
+<li><p>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事 务得以继续执行。将参数innodb_deadlock_detect设置为on，表示开启这个逻辑。</p>
+</li>
+</ol>
+<p>在InnoDB中，innodb_lock_wait_timeout的默认值是50s，意味着如果采用第一个策略，当出现 死锁以后，第一个被锁住的线程要过50s才会超时退出，然后其他线程才有可能继续执行。对于在线服务来说，这个等待时间往往是无法接受的。</p>
+<p>但是，我们又不可能直接把这个时间设置成一个很小的值，比如1s。这样当出现死锁的时候，确 实很快就可以解开，但如果不是死锁，而是简单的锁等待呢？所以，超时时间设置太短的话，会 出现很多误伤。</p>
+<h3 id="主动死锁检测策略"><a href="#主动死锁检测策略" class="headerlink" title="主动死锁检测策略"></a>主动死锁检测策略</h3><h4 id="innodb-deadlock-detect"><a href="#innodb-deadlock-detect" class="headerlink" title="innodb_deadlock_detect"></a>innodb_deadlock_detect</h4><p>所以，正常情况下我们还是要采用第二种策略，即：主动死锁检测，而且 innodb_deadlock_detect的默认值本身就是on。主动死锁检测在发生死锁的时候，是能够快速发现并进行处理的，但是它也是有额外负担的。</p>
+<p>你可以想象一下这个过程：每当一个事务被锁的时候，就要看看它所依赖的线程有没有被别人锁 住，如此循环，最后判断是否出现了循环等待，也就是死锁。</p>
+<p>那如果是我们上面说到的所有事务都要更新同一行的场景呢？</p>
+<p>每个新来的被堵住的线程，都要判断会不会由于自己的加入导致了死锁，这是一个时间复杂度是 O(n)的操作。假设有1000个并发线程要同时更新同一行，那么死锁检测操作就是100万这个量级 的。虽然最终检测的结果是没有死锁，但是这期间要消耗大量的CPU资源。因此，你就会看到 CPU利用率很高，但是每秒却执行不了几个事务。</p>
+<p>根据上面的分析，我们来讨论一下，怎么解决由这种热点行更新导致的性能问题呢？问题的症结 在于，死锁检测要耗费大量的CPU资源。</p>
+<h4 id="设计优化"><a href="#设计优化" class="headerlink" title="设计优化"></a>设计优化</h4><h5 id="关闭死锁检测"><a href="#关闭死锁检测" class="headerlink" title="关闭死锁检测"></a>关闭死锁检测</h5><p>一种头痛医头的方法， 就是如果你能确保这个业务一定不会出现死锁， 可以临时把死锁检测关掉。 </p>
+<ol>
+<li>但是这种操作本身带有一定的风险，因为业务设计的时候一般不会把死锁当做一个严重错误，毕竟出现死锁了，就回滚，然后通过业务重试一般就没问题了，这是业务无损的。</li>
+<li>而关掉死锁检测意味着可能会出现大量的超时，这是业务有损的。</li>
+</ol>
+<h5 id="并发度控制"><a href="#并发度控制" class="headerlink" title="并发度控制"></a>并发度控制</h5><p>另一个思路是控制并发度。 根据上面的分析，你会发现如果并发能够控制住，比如同一行同时最多只有10个线程在更新，那么死锁检测的成本很低，就不会出现这个问题。</p>
+<p>一个直接的想法就是，在客户端做并发控制。但是，你会很快发现这个方法不太可行，因为客户端很多。我见过一个应用，有600个客户端，这样即使每个客户端控制到只有5个并发线程，汇总到数据库服务端以后，峰值并发数也可能要达到3000。</p>
+<h5 id="中间件控制"><a href="#中间件控制" class="headerlink" title="中间件控制"></a>中间件控制</h5><p>因此，这个并发控制要做在数据库服务端。如果你有中间件，可以考虑在中间件实现；如果你的 团队有能修改MySQL源码的人，也可以做在MySQL里面。基本思路就是，对于相同行的更新， 在进入引擎之前排队。这样在InnoDB内部就不会有大量的死锁检测工作了。</p>
+<p>可能你会问，如果团队里暂时没有数据库方面的专家， 不能实现这样的方案， 能不能从设计上优化这个问题呢？</p>
+<h5 id="锁压力分摊"><a href="#锁压力分摊" class="headerlink" title="锁压力分摊"></a>锁压力分摊</h5><p>你可以考虑通过将一行改成逻辑上的多行来减少锁冲突。还是以影院账户为例，可以考虑放在多 条记录上，比如10个记录，影院的账户总额等于这10个记录的值的总和。这样每次要给影院账 户加金额的时候，随机选其中一条记录来加。这样每次冲突概率变成原来的1/10，可以减少锁等 待个数，也就减少了死锁检测的CPU消耗。</p>
+<p>这个方案看上去是无损的，但其实这类方案需要根据业务逻辑做详细设计。如果账户余额可能会 减少，比如退票逻辑，那么这时候就需要考虑当一部分行记录变成0的时候，代码要有特殊处 理。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>介绍了MySQL的行锁，涉及了两阶段锁协议、死锁和死锁检测这两大部分内容。 </p>
+<p>其中，我以两阶段协议为起点，和你一起讨论了在开发的时候如何安排正确的事务语句。这里的 原则/我给你的建议是：如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁的申请时机尽量往后放。</p>
+<p>但是，调整语句顺序并不能完全避免死锁。所以我们引入了死锁和死锁检测的概念，以及提供了 三个方案，来减少死锁对数据库的影响。减少死锁的主要方向，就是控制访问相同资源的并发事 务量。</p>
+<p>如果你要删除一个表里面的前10000行数据，有以下三种方法可 以做到：</p>
+<ol>
+<li>第一种，直接执行delete from T limit 10000; </li>
+<li>第二种，在一个连接中循环执行20次 delete from T limit 500;</li>
+<li>第三种，在20个连接中同时执行delete from T limit 500。</li>
+</ol>
+<p>你会选择哪一种方法呢？为什么呢？</p>
+<p>第二种方式是相对较好的。</p>
+<p>第一种方式（即：直接执行delete from T limit 10000）里面，单个语句占用时间长，锁的时间也 比较长；而且大事务还会导致主从延迟。 </p>
+<p>第三种方式（即：在20个连接中同时执行delete from T limit 500），会人为造成锁冲突。如果可以加上特定条件，将这10000行天然分开，可以考虑第三种。是的，实际上在操作的时候我也建议你尽量拿到ID再删除。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/15/MySQL%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB-%E4%BA%8B%E5%8A%A1%E5%88%B0%E5%BA%95%E6%98%AF%E4%B8%8D%E6%98%AF%E9%9A%94%E7%A6%BB%E7%9A%84/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MySQL事务隔离:事务到底是不是隔离的</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/15/MySQL%E5%85%A8%E5%B1%80%E9%94%81%E5%92%8C%E8%A1%A8%E9%94%81/">
+                        <span class="hidden-mobile">MySQL全局锁和表锁</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

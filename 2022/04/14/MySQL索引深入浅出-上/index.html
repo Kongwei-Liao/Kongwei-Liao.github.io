@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.9k 字
+      4k 字
     </span>
   
 
@@ -295,7 +295,7 @@
 <ol>
 <li><p>主键索引的叶子节点存的是整行数据。在InnoDB里，<strong>主键索引也被称为聚簇索引</strong>（clustered index）。</p>
 </li>
-<li><p>非主键索引的叶子节点内容是主键（如果一个表上没有设置主键，这个非主键索引的节点中应该存的啥呢）的值。在InnoDB里，<strong>非主键索引也被称为二级索引</strong> （secondary index）。</p>
+<li><p>非主键索引的叶子节点内容是主键（<strong>如果一个表上没有设置主键，这个非主键索引的节点中应该存的啥呢？InnoDB必须有唯一索引（主键），如果没有指定的话InnoDB会自己生成一个隐藏列Row_id充当默认主键</strong>）的值。在InnoDB里，<strong>非主键索引也被称为二级索引</strong> （secondary index）。</p>
 </li>
 </ol>
 <p>根据上面的索引结构说明，我们来讨论一个问题：基于主键索引和普通索引的查询有什么区别？ </p>
