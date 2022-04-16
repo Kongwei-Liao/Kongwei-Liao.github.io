@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>06-AOP进阶-延伸知识和进阶使用 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="06-AOP进阶-延伸知识和进阶使用">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-16 20:24" pubdate>
+        2022年4月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      65
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">06-AOP进阶-延伸知识和进阶使用</h1>
+            
+            <div class="markdown-body">
+              <h1 id="AOP进阶-AOP的延伸知识和进阶使用"><a href="#AOP进阶-AOP的延伸知识和进阶使用" class="headerlink" title="AOP进阶-AOP的延伸知识和进阶使用"></a>AOP进阶-AOP的延伸知识和进阶使用</h1><h2 id="1-AOP联盟【了解】"><a href="#1-AOP联盟【了解】" class="headerlink" title="1. AOP联盟【了解】"></a>1. AOP联盟【了解】</h2><p>在 SpringFramework 2.0 之前，它还没有整合 AspectJ ，当时的 SpringFramework 还有一套相对低层级的实现，它也是 SpringFramework 原生的实现，而我们要了解它，首先要先了解一个组织：<strong>AOP 联盟</strong>。</p>
+<p>早在很久之前，AOP 的概念就被提出来了。同之前的 EJB 一样，作为一个概念、思想，它要有一批人来制定规范，于是就有了这样一个 AOP 联盟。这个联盟的人将 AOP 的这些概念都整理好，形成了一个规范 AOP 框架底层实现的 API ，并最终总结出了 5 种 AOP 通知类型。</p>
+<p>咱要了解的，就是 AOP 联盟提出的这 5 种通知类型。</p>
+<h3 id="1-1-AOP联盟制定的通知类型"><a href="#1-1-AOP联盟制定的通知类型" class="headerlink" title="1.1 AOP联盟制定的通知类型"></a>1.1 AOP联盟制定的通知类型</h3><p>5 种通知类型分别为：</p>
+<ul>
+<li><strong>前置通知</strong></li>
+<li>后置通知（<strong>返回通知</strong>）</li>
+<li><strong>异常通知</strong></li>
+<li><strong>环绕通知</strong></li>
+<li>引介通知</li>
+</ul>
+<p>注意它跟 AspectJ 规定的 5 种通知类型的区别：它<strong>多了一个引介通知，少了一个后置通知</strong>。而且还有一个要注意的，AOP 联盟定义的后置通知实际上是返回通知（ after-returning ），而 AspectJ 的后置通知是真的后置通知，与返回通知是两码事。</p>
+<h3 id="1-2-SpringFramework中对应的通知接口"><a href="#1-2-SpringFramework中对应的通知接口" class="headerlink" title="1.2 SpringFramework中对应的通知接口"></a>1.2 SpringFramework中对应的通知接口</h3><p>AOP 联盟定义的 5 种通知类型在 SpringFramework 中都有对应的接口定义：</p>
+<ul>
+<li>前置通知：<code>org.springframework.aop.MethodBeforeAdvice</code></li>
+<li>返回通知：<code>org.springframework.aop.AfterReturningAdvice</code></li>
+<li>异常通知：<code>org.springframework.aop.ThrowsAdvice</code></li>
+<li>环绕通知：<code>org.aopalliance.intercept.MethodInterceptor</code></li>
+<li>引介通知：<code>org.springframework.aop.IntroductionAdvisor</code></li>
+</ul>
+<p>注意！<strong>环绕通知的接口是 AOP 联盟原生定义的接口</strong>（不是 cglib 的那个 <code>MethodInterceptor</code>）！小伙伴们可以先思考一下为什么会是这样。</p>
+<p>其实答案不难理解，由于 SpringFramework 是基于 AOP 联盟制定的规范来的，所以自然会去兼容原有的方案。又由于咱之前写过原生的动态代理，知道它其实就是<strong>环绕通知</strong>，所以 SpringFramework 要在环绕通知上拆解结构，自然也会保留原本环绕通知的接口支持。</p>
+<p>了解这部分的知识，在后面咱分析 Spring AOP 的原理时，看到一些特殊的 API 接口时，就不会觉得奇怪或者陌生了，现在小伙伴们只是有个基本的印象即可。</p>
+<h2 id="2-切面类的通知方法参数【掌握】"><a href="#2-切面类的通知方法参数【掌握】" class="headerlink" title="2. 切面类的通知方法参数【掌握】"></a>2. 切面类的通知方法参数【掌握】</h2><p>在上一章的环绕通知编写中，咱提到了一个特殊的接口 <code>ProceedingJoinPoint</code> ，它的具体使用，以及切面类中的通知方法参数等等，咱都有必要来学习一下。</p>
+<p>其实在之前的代码中，或许有的小伙伴就已经产生很强的不适感了：<strong>这所有的日志打印都是一样的，我也不知道哪个日志打印是哪个方法触发的，这咋区分呢？</strong> 所以，我们得想个办法，把被增强的方法，以及对应的目标对象的信息拿到才行。（原生动态代理都行，到 AOP 就不行了？这肯定不合理）</p>
+<h3 id="2-1-JoinPoint的使用"><a href="#2-1-JoinPoint的使用" class="headerlink" title="2.1 JoinPoint的使用"></a>2.1 JoinPoint的使用</h3><p>其实切面类的通知方法，咱都可以在方法的参数列表上加上切入点的引用，就像这样：（咱以 <code>beforePrint</code> 方法为例）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(public * com..FinanceService.*(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样写之后，重新运行程序不会有任何错误，说明这样写是被允许的，但咱更关心的是，能从这个 <code>JoinPoint</code> 中得到什么呢？</p>
+<p>直接在方法中调用 <code>joinPoint</code> 的方法，可以发现它能获取到这么多东西：</p>
+<p><img src="/2022/04/16/06-AOP%E8%BF%9B%E9%98%B6-%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86%E5%92%8C%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8/joinpoint.png" srcset="/img/loading.gif" alt="img"></p>
+<p>这么多内容，咱选几个比较重要的来讲解。</p>
+<h4 id="2-1-1-getTarget和getThis"><a href="#2-1-1-getTarget和getThis" class="headerlink" title="2.1.1 getTarget和getThis"></a>2.1.1 getTarget和getThis</h4><p><code>getTarget</code> 方法是最容易被理解的，咱可以简单的测试一下效果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(public * com..FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    System.out.println(joinPoint.getTarget());<br>    System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台会打印 <code>FinanceService</code> 的信息：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">com</span>.linkedbear.spring.aop.c_joinpoint.service.FinanceService@<span class="hljs-number">4</span>c<span class="hljs-number">309</span>d<span class="hljs-number">4</span>d<br><span class="hljs-attribute">Logger</span> beforePrint run ......<br><span class="hljs-attribute">FinanceService</span> 收钱 === <span class="hljs-number">123</span>.<span class="hljs-number">45</span><br></code></pre></td></tr></table></figure>
+<p>包括使用 Debug 打断点，识别到的 <code>FinanceService</code> 也是未经过代理的原始对象：</p>
+<p><img src="/2022/04/16/06-AOP%E8%BF%9B%E9%98%B6-%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86%E5%92%8C%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8/getTarget.png" srcset="/img/loading.gif" alt="img"></p>
+<p>那相对的，<code>getThis</code> 方法返回的就是代理对象咯？咱也可以来打印一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(public * com..FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    System.out.println(joinPoint.getTarget());<br>    System.out.println(joinPoint.getThis());<br>    System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，控制台打印了两个一模一样的 <code>FinanceService</code> ：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">com</span>.linkedbear.spring.aop.c_joinpoint.service.FinanceService@<span class="hljs-number">4</span>c<span class="hljs-number">309</span>d<span class="hljs-number">4</span>d<br><span class="hljs-attribute">com</span>.linkedbear.spring.aop.c_joinpoint.service.FinanceService@<span class="hljs-number">4</span>c<span class="hljs-number">309</span>d<span class="hljs-number">4</span>d<br><span class="hljs-attribute">Logger</span> beforePrint run ......<br><span class="hljs-attribute">FinanceService</span> 收钱 === <span class="hljs-number">123</span>.<span class="hljs-number">45</span><br></code></pre></td></tr></table></figure>
+<p>怎么个情况？难道是我们推理错了吗？用 Debug 看一眼：</p>
+<p><img src="/2022/04/16/06-AOP%E8%BF%9B%E9%98%B6-%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86%E5%92%8C%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8/getThis.png" srcset="/img/loading.gif" alt="img"></p>
+<p>诶呦吓一跳，<code>getThis</code> 肯定还是获取到代理对象才是啦。那为什么原始的目标对象，与代理对象的控制台打印结果是一样的呢？</p>
+<p>其实从上面的截图中也能猜到端倪：它增强了 <code>equals</code> 方法，增强了 <code>hashcode</code> 方法，就是没有增强 <code>toString</code> 方法，那当然就执行目标对象的方法啦，自然也就打印原来的目标对象的全限定名了。</p>
+<h4 id="2-1-2-getArgs"><a href="#2-1-2-getArgs" class="headerlink" title="2.1.2 getArgs"></a>2.1.2 getArgs</h4><p>这个方法也是超级好理解，它可以获取到被拦截的方法的参数列表。快速的来测试一下吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(public * com..FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    System.out.println(Arrays.toString(joinPoint.getArgs()));<br>    System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，控制台打印出了 <code>addMoney</code> 方法传入的 123.45 ：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gams">[<span class="hljs-number">123.45</span>]<br><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>FinanceService 收钱 === <span class="hljs-number">123.45</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-1-3-getSignature"><a href="#2-1-3-getSignature" class="headerlink" title="2.1.3 getSignature"></a>2.1.3 getSignature</h4><p>这个方法，从名上看是获取签名，关键是这个签名是个啥？不知道，猜不出来，干脆先打印一把吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(public * com..FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    System.out.println(joinPoint.getSignature());<br>    System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，控制台打印的是被拦截的方法的全限定名等信息：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">void com.linkedbear.spring.aop.c_joinpoint.service.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">FinanceService</span>.</span></span>add<span class="hljs-constructor">Money(<span class="hljs-params">double</span>)</span><br>Logger beforePrint run ......<br>FinanceService 收钱<span class="hljs-operator"> === </span><span class="hljs-number">123.45</span><br></code></pre></td></tr></table></figure>
+<p>哦，突然明白了，合着它打印的是这个被拦截的方法的签名啊！那是不是还可以顺便拿到方法的信息呢？</p>
+<p>直接调用 <code>getSignature()</code> 的方法，发现这里面只有类的信息，没有方法的信息：</p>
+<p><img src="/2022/04/16/06-AOP%E8%BF%9B%E9%98%B6-%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86%E5%92%8C%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8/getSignature.png" srcset="/img/loading.gif" alt="img"></p>
+<p>诶？那可奇了怪了，既然基于 AspectJ 的 AOP 是对方法的拦截，那理所应当的应该能拿到方法的信息才对呀！那当然，肯定能拿到，只是缺少了一点点步骤而已。</p>
+<p>既然是基于方法的拦截，那获取到的 <code>Signature</code> 就应该可以强转为一种类似于 <code>Method</code> 的 <code>Signature</code> ，刚好还真就有这么一个 <code>MethodSignature</code> 的接口！</p>
+<p>所以，咱就可以这样写了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(public * com..FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    MethodSignature signature = (MethodSignature) joinPoint.getSignature();<br>    <br>    System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>那既然是这样，<code>MethodSignature</code> 中一定能拿到方法的信息了！果不其然，这个接口还真就定义了获取 <code>Method</code> 的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">MethodSignature</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CodeSignature</span> </span>&#123;<br>    <span class="hljs-function">Class <span class="hljs-title">getReturnType</span><span class="hljs-params">()</span></span>;<br>	<span class="hljs-function">Method <span class="hljs-title">getMethod</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>so ，我们就可以打印出这个方法的信息了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(public * com..FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    MethodSignature signature = (MethodSignature) joinPoint.getSignature();<br>    Method method = signature.getMethod();<br>    System.out.println(method.getName());<br>    System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，控制台可以打印出方法的信息：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">addMoney</span><br><span class="hljs-attribute">Logger</span> beforePrint run ......<br><span class="hljs-attribute">FinanceService</span> 收钱 === <span class="hljs-number">123</span>.<span class="hljs-number">45</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>其实 <code>Signature</code> 的 <code>getName</code> 方法，就相当于拿到 <code>Method</code> 后再调 <code>getName</code> 方法了，小伙伴们可以自行测试一下。</p>
+</blockquote>
+<p>至此，其实我们就可以完成前面说的需求了。</p>
+<h4 id="2-1-4-需求的改造"><a href="#2-1-4-需求的改造" class="headerlink" title="2.1.4 需求的改造"></a>2.1.4 需求的改造</h4><p>重新修改 <code>addMoney</code> 方法的逻辑，就可以很简单轻松的完成一开始说的 “不知道哪个日志打印是哪个方法触发” 的需求了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(public * com..FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>    System.out.println(<span class="hljs-string">&quot;被拦截的类：&quot;</span> + joinPoint.getTarget().getClass().getName());<br>    System.out.println(<span class="hljs-string">&quot;被拦截的方法：&quot;</span> + ((MethodSignature) joinPoint.getSignature()).getMethod().getName());<br>    System.out.println(<span class="hljs-string">&quot;被拦截的方法参数：&quot;</span> + Arrays.toString(joinPoint.getArgs()));<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，控制台打印出了我们预期的需求效果：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>被拦截的类：com.linkedbear.spring.aop.c_joinpoint.service.FinanceService<br>被拦截的方法：addMoney<br>被拦截的方法参数：[<span class="hljs-number">123.45</span>]<br>FinanceService 收钱 === <span class="hljs-number">123.45</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-2-ProceedingJoinPoint的扩展"><a href="#2-2-ProceedingJoinPoint的扩展" class="headerlink" title="2.2 ProceedingJoinPoint的扩展"></a>2.2 ProceedingJoinPoint的扩展</h3><p>上一章中我们提前使用了 <code>ProceedingJoinPoint</code> 这个家伙，而它是基于 <code>JoinPoint</code> 的扩展，它扩展的方法只有 <code>proceed</code> 方法，也就是那个能让我们在环绕通知中显式执行目标对象的目标方法的那个 API 。</p>
+<p>不过有一点要注意：<code>proceed</code> 方法还有一个带参数的重载方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">proceed</span><span class="hljs-params">(Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable</span>;<br></code></pre></td></tr></table></figure>
+<p>由此可以说明一点：<strong>在环绕通知中，可以自行替换掉原始目标方法执行时传入的参数列表</strong>！</p>
+<p>其实这个一点也不奇怪，想想在之前的动态代理案例中，咱不就是可以随便改参数的嘛。</p>
+<h3 id="2-3-返回通知和异常通知的特殊参数"><a href="#2-3-返回通知和异常通知的特殊参数" class="headerlink" title="2.3 返回通知和异常通知的特殊参数"></a>2.3 返回通知和异常通知的特殊参数</h3><p>之前我们在写返回通知和异常通知时，还有一个小问题没有解决：<strong>返回通知中我们要拿到方法的返回值，异常通知中我们要拿到具体的异常抛出</strong>。这个呢，其实非常容易解决。</p>
+<p>咱先把之前的代码再拿出来：（顺便简化了一下）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AfterReturning(&quot;execution(* com..FinanceService.subtractMoney(double))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturningPrint</span><span class="hljs-params">()</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger afterReturningPrint run ......&quot;</span>);<br>&#125;<br><br><span class="hljs-meta">@AfterThrowing(&quot;defaultPointcut()&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowingPrint</span><span class="hljs-params">()</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger afterThrowingPrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>想拿到返回值或者异常非常简单，两个步骤。</p>
+<p>首先在方法的参数列表中声明一个 result 或者 e ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AfterReturning(&quot;execution(* com..FinanceService.subtractMoney(double))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturningPrint</span><span class="hljs-params">(Object retval)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger afterReturningPrint run ......&quot;</span>);<br>    System.out.println(<span class="hljs-string">&quot;返回的数据：&quot;</span> + retval);<br>&#125;<br><br><span class="hljs-meta">@AfterThrowing(&quot;defaultPointcut()&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowingPrint</span><span class="hljs-params">(Exception e)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger afterThrowingPrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意只是这样写了之后，此时运行 <code>main</code> 方法是不好使的，是拿不到返回值的！</p>
+<p>我们<strong>还需要告诉 SpringFramework</strong> ，我拿了一个名叫 retval 的参数来接这个方法返回的异常，拿一个名叫 e 的参数来接收方法抛出的异常，反映到代码上就应该是这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AfterReturning(value = &quot;execution(* com..FinanceService.subtractMoney(double))&quot;, returning = &quot;retval&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturningPrint</span><span class="hljs-params">(Object retval)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger afterReturningPrint run ......&quot;</span>);<br>    System.out.println(<span class="hljs-string">&quot;返回的数据：&quot;</span> + retval);<br>&#125;<br><br><span class="hljs-meta">@AfterThrowing(value = &quot;defaultPointcut()&quot;, throwing = &quot;e&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowingPrint</span><span class="hljs-params">(Exception e)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger afterThrowingPrint run ......&quot;</span>);<br>    System.out.println(<span class="hljs-string">&quot;抛出的异常：&quot;</span> + e.getMessage());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样再运行 <code>main</code> 方法，控制台才会打印出方法的返回值：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs erlang">FinanceService 付钱 === <span class="hljs-number">543.21</span><br>Logger <span class="hljs-keyword">after</span>ReturningPrint run ......<br>返回的数据：<span class="hljs-number">543.21</span><br></code></pre></td></tr></table></figure>
+<p>异常的信息接收同理，小伙伴们可以自行测试。</p>
+<h2 id="3-多个切面的执行顺序【熟悉】"><a href="#3-多个切面的执行顺序【熟悉】" class="headerlink" title="3. 多个切面的执行顺序【熟悉】"></a>3. 多个切面的执行顺序【熟悉】</h2><p>日常开发中，或许我们会碰到一些特殊的情况：一个方法被多个切面同时增强了，这个时候如何控制好各个切面的执行顺序，以保证最终的运行结果能符合最初设计，这个也是非常重要的，咱有必要来研究一下多个切面的执行顺序问题。</p>
+<h3 id="3-1-代码准备"><a href="#3-1-代码准备" class="headerlink" title="3.1 代码准备"></a>3.1 代码准备</h3><p>咱先把测试的代码准备一下，很简单，咱只声明两个切面和一个 Service 即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">saveUser</span><span class="hljs-params">(String id)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;UserService 保存用户&quot;</span> + id);<br>    &#125;<br>&#125;<br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.d_order.service.UserService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printLog</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;LogAspect 打印日志 ......&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TransactionAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.d_order.service.UserService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beginTransaction</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;TransactionAspect 开启事务 ......&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后，编写配置类，开启注解 AOP ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;com.linkedbear.spring.aop.d_order&quot;)</span><br><span class="hljs-meta">@EnableAspectJAutoProxy</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AspectOrderConfiguration</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>最后，编写启动类，用上面的配置类驱动 IOC 容器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AspectOrderApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(AspectOrderConfiguration.class);<br>        UserService userService = ctx.getBean(UserService.class);<br>        userService.saveUser(<span class="hljs-string">&quot;abc&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台可以打印出两个切面的前置通知：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lasso">LogAspect 打印日志 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>TransactionAspect 开启事务 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>UserService 保存用户abc<br></code></pre></td></tr></table></figure>
+<h3 id="3-2-预设的顺序？"><a href="#3-2-预设的顺序？" class="headerlink" title="3.2 预设的顺序？"></a>3.2 预设的顺序？</h3><p>观察这个打印的结果，它是打印日志在前，开启事务在后，这难不成是因为我先写的 <code>LogAspect</code> ，后写的 <code>TransactionAspect</code> ，它就按照我的顺序来了？那不可能啊，即便我后写 <code>TransactionAspect</code> ，也是日志打印在前啊！所以它一定有一个默认的预设规则。</p>
+<p>小伙伴可以先猜测一下预设的规则是什么，小册在这里再写一个切面，想必写完这个切面后，基本上顺序就非常容易推理了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbcAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.d_order.service.UserService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">abc</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;abc abc abc&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，发现 <code>AbcAspect</code> 的前置通知打印在 <code>LogAspect</code> 之前！</p>
+<p>由此是不是咱就可以推测出预设的顺序了：<strong>默认的切面执行顺序，是按照字母表的顺序来的</strong>！</p>
+<p>严谨一点，排序规则其实是<strong>根据切面类的 unicode 编码，按照十六进制排序得来的</strong>，unicode 编码靠前的，那自然就会排在前面。（作者个人习惯称其为字典表顺序）</p>
+<h3 id="3-3-显式声明执行顺序"><a href="#3-3-显式声明执行顺序" class="headerlink" title="3.3 显式声明执行顺序"></a>3.3 显式声明执行顺序</h3><p>那我们不能因为这个毛病，就搞得调整顺序就必须改类名吧，一定有更好的方案才对。</p>
+<p>还记得之前在第 26 章，小册讲解 <code>BeanPostProcessor</code> 的 javadoc 中提到的 <code>Ordered</code> 接口吗？而且在 IOC 原理的 <code>BeanPostProcessor</code> 的初始化部分，也提到过有关排序的接口，也涉及到了这个 <code>Ordered</code> 接口。不过前面我们一直都没有实际演示 <code>Ordered</code> 接口的使用，这里咱就来搞一下。</p>
+<p>现在咱希望让事务控制的切面提早执行，让它在所有切面之前，那么我们就可以这样写：给 <code>TransactionAspect</code> 实现 <code>Ordered</code> 接口，并声明 <code>getOrder</code> 的返回值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TransactionAspect</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Ordered</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.d_order.service.UserService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beginTransaction</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;TransactionAspect 开启事务 ......&quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getOrder</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个值设置成多少呢？咱先放个 0 试试，运行 <code>main</code> 方法，观察控制台的打印：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs lasso">TransactionAspect 开启事务 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>abc abc abc<br>LogAspect 打印日志 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>UserService 保存用户abc<br></code></pre></td></tr></table></figure>
+<p>咦，发现事务切面的前置通知已经提前执行了，说明 0 这个顺序已经是提早了的，那最晚的时机对应的 order 值是什么呢？</p>
+<h4 id="3-3-1-默认的排序值？"><a href="#3-3-1-默认的排序值？" class="headerlink" title="3.3.1 默认的排序值？"></a>3.3.1 默认的排序值？</h4><p>很简单，<strong>Integer 的最大值</strong> 2147483647 嘛！其实在 <code>Ordered</code> 接口中，就有这两个常量的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Ordered</span> </span>&#123;<br>	<span class="hljs-keyword">int</span> HIGHEST_PRECEDENCE = Integer.MIN_VALUE;<br>	<span class="hljs-keyword">int</span> LOWEST_PRECEDENCE = Integer.MAX_VALUE;<br></code></pre></td></tr></table></figure>
+<p>那我们把这个值调到最低试一下？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getOrder</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> Ordered.LOWEST_PRECEDENCE;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，发现事务的切面又回去了：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs lasso">abc abc abc<br>LogAspect 打印日志 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>TransactionAspect 开启事务 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>UserService 保存用户abc<br></code></pre></td></tr></table></figure>
+<p>那到底默认值是啥呢？咱把 order 值往上调一个点试试？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getOrder</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> Ordered.LOWEST_PRECEDENCE - <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>再次重新运行 <code>main</code> 方法，事务的切面打印又上去了。。。</p>
+<p>所以得出结论：在不显式声明 order 排序值时，默认的排序值是 <strong><code>Integer.MAX_VALUE</code></strong> 。</p>
+<h4 id="3-3-2-另一种声明办法"><a href="#3-3-2-另一种声明办法" class="headerlink" title="3.3.2 另一种声明办法"></a>3.3.2 另一种声明办法</h4><p>除了使用 <code>Ordered</code> 接口，还有通过注解的方式声明：**<code>@Order</code>** 。</p>
+<p>这次我们在 <code>LogAspect</code> 上标注 <code>@Order</code> 注解，并声明一下排序值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Order(0)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.d_order.service.UserService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printLog</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;LogAspect 打印日志 ......&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，发现日志切面的打印提到最早了：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs lasso">LogAspect 打印日志 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>TransactionAspect 开启事务 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>abc abc abc<br>UserService 保存用户abc<br></code></pre></td></tr></table></figure>
+<p>说明 <code>@Order</code> 注解也可以实现同样的效果。</p>
+<h2 id="4-同切面的多个通知执行顺序【熟悉】"><a href="#4-同切面的多个通知执行顺序【熟悉】" class="headerlink" title="4. 同切面的多个通知执行顺序【熟悉】"></a>4. 同切面的多个通知执行顺序【熟悉】</h2><p>除了多个切面的顺序问题，如果同一个切面定义了多个相同类型的通知，它的执行顺序又是怎么样呢？咱也来研究一下。</p>
+<p>这次编码的内容就少多了，直接在 <code>AbsAspect</code> 中添加一个方法 <code>def</code> 即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.d_order.service.UserService.*(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">def</span><span class="hljs-params">()</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;def def def&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>直接重新运行 <code>main</code> 方法，控制台先后打印了 <code>abc</code> 和 <code>def</code> 的内容：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs lasso">LogAspect 打印日志 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>TransactionAspect 开启事务 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>abc abc abc<br>def def def<br>UserService 保存用户abc<br></code></pre></td></tr></table></figure>
+<p>原因是什么呢？估计小伙伴们也能猜到了，跟上面的逻辑一样，都是根据<strong>unicode编码顺序</strong>（字典表顺序）来的。</p>
+<p>至于怎么搞，小伙伴们立马想到办法了吧！直接在方法上标注 <strong><code>@Order</code></strong> 注解就 OK （方法没办法实现接口的嘛）！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.d_order.service.UserService.*(..))&quot;)</span><br><span class="hljs-meta">@Order(Ordered.HIGHEST_PRECEDENCE)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">def</span><span class="hljs-params">()</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;def def def&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，发现 def 的通知内容并没有被提前执行。。。看来这个办法行不通。。。</p>
+<p>那怎么办呢？哎，这还真没办法。。。只能靠方法名去区分了。。。（是不是很无奈）</p>
+<p>好了，有关切面、通知的执行顺序的研究，咱就到这里了。</p>
+<h2 id="5-代理对象调用自身的方法【熟悉】"><a href="#5-代理对象调用自身的方法【熟悉】" class="headerlink" title="5. 代理对象调用自身的方法【熟悉】"></a>5. 代理对象调用自身的方法【熟悉】</h2><p>有一些特殊的场景下，我们产生的这些代理对象，会出现自身调用自身的另外方法的。下面我们也来演示一下这个现象。</p>
+<blockquote>
+<p>本节源码位置：<code>com.linkedbear.spring.aop.e_aopcontext</code> 。</p>
+</blockquote>
+<h3 id="5-1-代码准备"><a href="#5-1-代码准备" class="headerlink" title="5.1 代码准备"></a>5.1 代码准备</h3><p>测试代码还是三个类，不再重复了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(String id, String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.get(id);<br>        System.out.println(<span class="hljs-string">&quot;修改指定id的name。。。&quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">get</span><span class="hljs-params">(String id)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;获取指定id的user。。。&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.e_aopcontext.service.UserService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;LogAspect 前置通知 ......&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;com.linkedbear.spring.aop.e_aopcontext&quot;)</span><br><span class="hljs-meta">@EnableAspectJAutoProxy</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AopContextConfiguration</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后，依然是编写测试启动类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AopContextApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(AopContextConfiguration.class);<br>        UserService userService = ctx.getBean(UserService.class);<br>        userService.update(<span class="hljs-string">&quot;abc&quot;</span>, <span class="hljs-string">&quot;def&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样写完之后，运行 <code>main</code> 方法，发现控制台只打印了一次 <code>LogAspect</code> 的切面打印：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">LogAspect 前置通知 ......<br>获取指定<span class="hljs-built_in">id</span>的user。。。<br>修改指定<span class="hljs-built_in">id</span>的<span class="hljs-built_in">name</span>。。。<br></code></pre></td></tr></table></figure>
+<p>如果需求是每次调用 <code>UserService</code> 的方法都需要打印切面日志，应该怎么处理呢？</p>
+<h3 id="5-2-不优雅的解决方案"><a href="#5-2-不优雅的解决方案" class="headerlink" title="5.2 不优雅的解决方案"></a>5.2 不优雅的解决方案</h3><p>可能有的小伙伴想到了一个能行但不太优雅的解决方案，就是利用依赖注入的特性，把自己注入进来，之后不用 <code>this.get</code> ，换用 <code>userService.get</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Autowired</span><br>    UserService userService;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(String id, String name)</span> </span>&#123;<br>        <span class="hljs-comment">// this.get(id);</span><br>        userService.get(id);<br>        System.out.println(<span class="hljs-string">&quot;修改指定id的name。。。&quot;</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，控制台确实打印了两次切面日志：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs lasso">LogAspect 前置通知 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>LogAspect 前置通知 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>获取指定id的user。。。<br>修改指定id的name。。。<br></code></pre></td></tr></table></figure>
+<p>但是吧。。。这样写真的好吗。。。有木有感觉怪怪的。。。难不成SpringFramework 就没有考虑到这个问题吗？</p>
+<h3 id="5-3-正确的解决方案：AopContext"><a href="#5-3-正确的解决方案：AopContext" class="headerlink" title="5.3 正确的解决方案：AopContext"></a>5.3 正确的解决方案：AopContext</h3><p>当然还是得有的，SpringFramework 从一开始就考虑到这个问题了，于是它提供了一个 AopContext 的类，使用这个类，可以在代理对象中取到自身，它的使用方法很简单：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(String id, String name)</span> </span>&#123;<br>    ((UserService) AopContext.currentProxy()).get(id);<br>    System.out.println(<span class="hljs-string">&quot;修改指定id的name。。。&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>使用 <code>AopContext.currentProxy()</code> 方法就可以取到代理对象的 this 了。</p>
+<p>不过这样直接写完之后，运行是不好使的，它会抛出一个异常：</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">Exception <span class="hljs-keyword">in</span> thread <span class="hljs-string">&quot;main&quot;</span> java.lang.IllegalStateException: Cannot find current proxy: <span class="hljs-built_in">Set</span> <span class="hljs-string">&#x27;exposeProxy&#x27;</span> property <span class="hljs-literal">on</span> Advised <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;true&#x27;</span> <span class="hljs-keyword">to</span> make <span class="hljs-literal">it</span> available, <span class="hljs-keyword">and</span> ensure <span class="hljs-literal">that</span> AopContext.currentProxy() <span class="hljs-keyword">is</span> invoked <span class="hljs-keyword">in</span> the same thread <span class="hljs-keyword">as</span> the AOP invocation context.<br></code></pre></td></tr></table></figure>
+<p>这个异常的大致含义是，没有开启一个 <code>exposeProxy</code> 的属性，导致无法暴露出代理对象，从而无法获取。那开启 <code>exposeProxy</code> 这个属性的位置在哪里呢？好巧不巧，它是在我们一开始学习注解 AOP 的那个 <code>@EnableAspectJAutoProxy</code> 上：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;com.linkedbear.spring.aop.e_aopcontext&quot;)</span><br><span class="hljs-meta">@EnableAspectJAutoProxy(exposeProxy = true)</span> <span class="hljs-comment">// 暴露代理对象</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AopContextConfiguration</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>它的默认值是 <code>false</code> ，改为 <code>true</code> 之后，再运行 <code>main</code> 方法，就可以达到同样的效果了，控制台会打印两次切面日志。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/16/07-AOP%E8%BF%9B%E9%98%B6-%E5%AE%9E%E6%88%98AOP%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">07-AOP进阶-实战AOP事务控制</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/16/05-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EAspectJ%E7%9A%84AOP/">
+                        <span class="hidden-mobile">05-AOP基础-基于AspectJ的AOP</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/16/06-AOP%E8%BF%9B%E9%98%B6-%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86%E5%92%8C%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

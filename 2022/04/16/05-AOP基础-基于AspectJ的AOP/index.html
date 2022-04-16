@@ -1,0 +1,575 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>05-AOP基础-基于AspectJ的AOP - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="05-AOP基础-基于AspectJ的AOP">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-16 19:46" pubdate>
+        2022年4月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">05-AOP基础-基于AspectJ的AOP</h1>
+            
+            <div class="markdown-body">
+              <h1 id="AOP基础-基于AspectJ实现AOP"><a href="#AOP基础-基于AspectJ实现AOP" class="headerlink" title="AOP基础-基于AspectJ实现AOP"></a>AOP基础-基于AspectJ实现AOP</h1><h2 id="1-Spring-AOP与AspectJ【了解】"><a href="#1-Spring-AOP与AspectJ【了解】" class="headerlink" title="1. Spring AOP与AspectJ【了解】"></a>1. Spring AOP与AspectJ【了解】</h2><p>在 SpringFramework 的官方文档中，AOP 的介绍下面有一个段落，它说明了 Spring AOP 与 AspectJ 的关系：</p>
+<p><a href="https://link.juejin.cn/?target=https://docs.spring.io/spring-framework/docs/5.2.x/spring-framework-reference/core.html%23aop">docs.spring.io/spring-fram…</a></p>
+<blockquote>
+<p>Spring provides simple and powerful ways of writing custom aspects by using either a schema-based approach or the @AspectJ annotation style. Both of these styles offer fully typed advice and use of the AspectJ pointcut language while still using Spring AOP for weaving.</p>
+<p>Spring 通过使用基于模式的方法或 <code>@AspectJ</code> 注解样式，提供了编写自定义切面的简单而强大的方法。这两种样式都提供了完全类型化的通知，并使用了 AspectJ 切入点表达式语言，同时仍使用 Spring AOP 进行通知的织入。</p>
+</blockquote>
+<p>由此可知，SpringFramework 实现注解配置 AOP ，是整合了 AspectJ 完成的。</p>
+<ul>
+<li><strong>Before 前置通知</strong>：目标对象的方法调用之前触发</li>
+<li><strong>After 后置通知</strong>：目标对象的方法调用之后触发</li>
+<li><strong>AfterReturning 返回通知</strong>：目标对象的方法调用完成，在返回结果值之后触发</li>
+<li><strong>AfterThrowing 异常通知</strong>：目标对象的方法运行中抛出 / 触发异常后触发</li>
+<li><strong>Around 环绕通知</strong>：编程式控制目标对象的方法调用</li>
+</ul>
+<h2 id="2-基于注解的AOP配置【掌握】"><a href="#2-基于注解的AOP配置【掌握】" class="headerlink" title="2. 基于注解的AOP配置【掌握】"></a>2. 基于注解的AOP配置【掌握】</h2><p>好了咱下面可以开始学习基于注解的 AOP 配置了，跟上一章一样，咱还是分步骤进行。</p>
+<h3 id="2-1-标注-Component注解"><a href="#2-1-标注-Component注解" class="headerlink" title="2.1 标注@Component注解"></a>2.1 标注@Component注解</h3><p>上一章中咱注册 Bean 是使用 <code>&lt;bean&gt;</code> 标签的方式注册，这一章咱使用注解驱动，那就在两个 Service 类上标注 <code>@Component</code> 注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FinanceService</span> </span>&#123; ... &#125;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OrderServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">OrderService</span> </span>&#123; ... &#125;<br></code></pre></td></tr></table></figure>
+<h3 id="2-2-修改Logger切面类"><a href="#2-2-修改Logger切面类" class="headerlink" title="2.2 修改Logger切面类"></a>2.2 修改Logger切面类</h3><p>这次使用 AspectJ 注解配置，切面类上也得做改动了。</p>
+<p>首先，在 Logger 上标注 <code>@Component</code> 注解，将其注册到 IOC 容器中。然后还得标注一个 <strong><code>@Aspect</code></strong> 注解，代表该类是一个切面类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Logger</span> </span>&#123; ... &#125;<br></code></pre></td></tr></table></figure>
+<p>接下来，就是给这些方法标注通知注解了。小册先写一个，小伙伴们一下子就知道了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Logger</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(public * com.linkedbear.spring.aop.a_xmlaspect.service.FinanceService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>嚯，这也太简单了是吧！那前置通知叫 <code>@Before</code> ，那后置通知就是 <code>@After</code> 咯？当然啦，相应的，返回通知 <code>@AfterReturning</code> ，异常通知 <code>@AfterThrowing</code> ，环绕通知 <code>@Around</code> 。</p>
+<p>这些编写思路都是一样的，所以咱可以简单的这样写一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Logger</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(public * com.linkedbear.spring.aop.b_aspectj.service.FinanceService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Logger beforePrint run ......&quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-meta">@After(&quot;execution(* com.linkedbear.spring.aop.b_aspectj.service.*.*(String)))</span><span class="hljs-string">&quot;)</span><br><span class="hljs-string">    public void afterPrint() &#123;</span><br><span class="hljs-string">        System.out.println(&quot;</span>Logger afterPrint run ......<span class="hljs-string">&quot;);</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    @AfterReturning(&quot;</span>execution(* com.linkedbear.spring.aop.b_aspectj.service.*.*(String)))<span class="hljs-string">&quot;)</span><br><span class="hljs-string">    public void afterReturningPrint() &#123;</span><br><span class="hljs-string">        System.out.println(&quot;</span>Logger afterReturningPrint run ......<span class="hljs-string">&quot;);</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    @AfterThrowing(&quot;</span>execution(* com.linkedbear.spring.aop.b_aspectj.service.*.*(String)))<span class="hljs-string">&quot;)</span><br><span class="hljs-string">    public void afterThrowingPrint() &#123;</span><br><span class="hljs-string">        System.out.println(&quot;</span>Logger afterThrowingPrint run ......<span class="hljs-string">&quot;);</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-3-编写配置类"><a href="#2-3-编写配置类" class="headerlink" title="2.3 编写配置类"></a>2.3 编写配置类</h3><p>配置类中，无需做任何多余的操作，只需要几个注解即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;com.linkedbear.spring.aop.b_aspectj&quot;)</span><br><span class="hljs-meta">@EnableAspectJAutoProxy</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AspectJAOPConfiguration</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意这里用了一个新的注解：**<code>@EnableAspectJAutoProxy</code>** ，是不是突然产生了一点亲切感（模块装配 + 条件装配）！用它可以开启基于 AspectJ 的自动代理，简言之，就是<strong>开启注解 AOP</strong> 。</p>
+<p>如果要使用 xml 配置文件开启注解 AOP ，则需要添加一个 <code>&lt;aop:aspectj-autoproxy/&gt;</code> 的标签声明（它等价于 <code>@EnableAspectJAutoProxy</code> 注解）。</p>
+<h3 id="2-4-测试运行"><a href="#2-4-测试运行" class="headerlink" title="2.4 测试运行"></a>2.4 测试运行</h3><p>好啦，编写测试启动类的步骤已经很简单了吧，咱就不啰嗦了，直接上代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AnnotationAspectJApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(AspectJAOPConfiguration.class);<br>        FinanceService financeService = ctx.getBean(FinanceService.class);<br>        financeService.addMoney(<span class="hljs-number">123.45</span>);<br>        financeService.subtractMoney(<span class="hljs-number">543.21</span>);<br>        financeService.getMoneyById(<span class="hljs-string">&quot;abc&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台打印出了 <code>Logger</code> 的前置 、后置 、返回通知：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>FinanceService 收钱 === <span class="hljs-number">123.45</span><br><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>FinanceService 付钱 === <span class="hljs-number">543.21</span><br><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>FinanceService 查询账户，id为abc<br><span class="hljs-function"><span class="hljs-title">Logger</span></span> afterReturningPrint run ......<br><span class="hljs-function"><span class="hljs-title">Logger</span></span> afterPrint run ......<br></code></pre></td></tr></table></figure>
+<h2 id="3-环绕通知的编写"><a href="#3-环绕通知的编写" class="headerlink" title="3. 环绕通知的编写"></a>3. 环绕通知的编写</h2><p>除了前面提到的 4 种基本的通知类型之外，还有环绕通知没有说。环绕通知的编写其实在第 40 章回顾动态代理的时候就已经写过了，对，<code>InvocationHandler</code> 和 <code>MethodInterceptor</code>的编写本身就是环绕通知的体现。换做使用 AspectJ 的写法，又要如何来编写呢？咱也要来学习一下。</p>
+<h3 id="3-1-添加新的环绕通知方法"><a href="#3-1-添加新的环绕通知方法" class="headerlink" title="3.1 添加新的环绕通知方法"></a>3.1 添加新的环绕通知方法</h3><p>在 <code>Logger</code> 类中，咱添加一个 <code>aroundPrint</code> 方法：（切入的方法就不覆盖那么多了，一个就好）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Around(&quot;execution(public * com.linkedbear.spring.aop.b_aspectj.service.FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">aroundPrint</span><span class="hljs-params">()</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后咱回想一下，<code>InvocationHandler</code> 的结构是什么来着？得有入参，里面有对应的方法、参数，还得有返回值 <code>Object</code> 。。。可是这里啥也没有呀，这咱怎么写呢？</p>
+<p>所以我们要先学习一个通知方法中的特殊参数：<code>ProceedingJoinPoint</code> 。</p>
+<p>在 <code>aroundPrint</code> 方法的参数中添加 <code>ProceedingJoinPoint</code> ，并把方法的返回值类型改为 <code>Object</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Around(&quot;execution(public * com.linkedbear.spring.aop.b_aspectj.service.FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">aroundPrint</span><span class="hljs-params">(ProceedingJoinPoint joinPoint)</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后来看，<code>ProceedingJoinPoint</code> 有一个 <code>proceed</code> 方法，执行了它，就相当于之前咱在动态代理中写的 <code>method.invoke(target, args);</code> 方法了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Around(&quot;execution(public * com.linkedbear.spring.aop.b_aspectj.service.FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">aroundPrint</span><span class="hljs-params">(ProceedingJoinPoint joinPoint)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>    <span class="hljs-keyword">return</span> joinPoint.proceed(); <span class="hljs-comment">// 此处会抛出Throwable异常</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>之后剩下的部分，咱就很熟悉了，快速的来编写一下吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Around(&quot;execution(public * com.linkedbear.spring.aop.b_aspectj.service.FinanceService.addMoney(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">aroundPrint</span><span class="hljs-params">(ProceedingJoinPoint joinPoint)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger aroundPrint before run ......&quot;</span>);<br>    <span class="hljs-keyword">try</span> &#123;<br>        Object retVal = joinPoint.proceed();<br>        System.out.println(<span class="hljs-string">&quot;Logger aroundPrint afterReturning run ......&quot;</span>);<br>        <span class="hljs-keyword">return</span> retVal;<br>    &#125; <span class="hljs-keyword">catch</span> (Throwable e) &#123;<br>        System.out.println(<span class="hljs-string">&quot;Logger aroundPrint afterThrowing run ......&quot;</span>);<br>        <span class="hljs-keyword">throw</span> e;<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Logger aroundPrint after run ......&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>仔细观看小册的这种写法，是不是刚刚好就是上面 4 种通知的结合呀！</p>
+<h3 id="3-2-测试运行"><a href="#3-2-测试运行" class="headerlink" title="3.2 测试运行"></a>3.2 测试运行</h3><p>直接重新运行 <code>main</code> 方法，可以发现在控制台有同时打印环绕通知和前置通知：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">Logger</span></span> aroundPrint before run ......<br><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>FinanceService 收钱 === <span class="hljs-number">123.45</span><br><span class="hljs-function"><span class="hljs-title">Logger</span></span> aroundPrint afterReturning run ......<br><span class="hljs-function"><span class="hljs-title">Logger</span></span> aroundPrint after run ......<br></code></pre></td></tr></table></figure>
+<p>由此也得出了一个小小的结论：<strong>同一个切面类中，环绕通知的执行时机比单个通知要早</strong>。</p>
+<h2 id="4-切入点表达式的更多使用方法【掌握】"><a href="#4-切入点表达式的更多使用方法【掌握】" class="headerlink" title="4. 切入点表达式的更多使用方法【掌握】"></a>4. 切入点表达式的更多使用方法【掌握】</h2><p>上一章咱只是在切入点表达式的学习中接触了一些比较简单的写法和用法，这一章咱继续学习更多的使用方法。</p>
+<h3 id="4-1-抽取通用切入点表达式"><a href="#4-1-抽取通用切入点表达式" class="headerlink" title="4.1 抽取通用切入点表达式"></a>4.1 抽取通用切入点表达式</h3><p>注意上面咱在 <code>Logger</code> 类中标注的切入点表达式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@After(&quot;execution(* com.linkedbear.spring.aop.b_aspectj.service.*.*(String)))</span><span class="hljs-string">&quot;)</span><br><span class="hljs-string">public void afterPrint() &#123;</span><br><span class="hljs-string">    System.out.println(&quot;</span>Logger afterPrint run ......<span class="hljs-string">&quot;);</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string"></span><br><span class="hljs-string">@AfterReturning(&quot;</span>execution(* com.linkedbear.spring.aop.b_aspectj.service.*.*(String)))<span class="hljs-string">&quot;)</span><br><span class="hljs-string">public void afterReturningPrint() &#123;</span><br><span class="hljs-string">    System.out.println(&quot;</span>Logger afterReturningPrint run ......<span class="hljs-string">&quot;);</span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>这两个切入点表达式是一样的，如果这种同样的切入点表达式一多起来，回头修改起来那岂不是太费劲了？Spring 当然也为我们考虑到这一点了，所以它分别就 xml 和注解的方式提供了抽取通用表达式的方案。</p>
+<h4 id="4-1-1-AspectJ注解抽取"><a href="#4-1-1-AspectJ注解抽取" class="headerlink" title="4.1.1 AspectJ注解抽取"></a>4.1.1 AspectJ注解抽取</h4><p>在注解 AOP 切面中，定义通用的切入点表达式只需要声明一个空方法，并标注 <code>@Pointcut</code>注解即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(&quot;execution(* com.linkedbear.spring.aop.b_aspectj.service.*.*(String)))</span><span class="hljs-string">&quot;)</span><br><span class="hljs-string">public void defaultPointcut() &#123;</span><br><span class="hljs-string"></span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+<p>其它的通知要引用这个切入点表达式，只需要标注方法名即可，效果是一样的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@After(&quot;defaultPointcut()&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterPrint</span><span class="hljs-params">()</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger afterPrint run ......&quot;</span>);<br>&#125;<br><br><span class="hljs-meta">@AfterReturning(&quot;defaultPointcut()&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturningPrint</span><span class="hljs-params">()</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Logger afterReturningPrint run ......&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>可能有的小伙伴注意到了，在引用通用切入点表达式的时候，IDEA 会有特殊的提示：<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dbd3c9ef4dce4e24a7b62f308cb9434a~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<p>可见 IDEA 还是强大的呀。</p>
+</blockquote>
+<h4 id="4-1-2-xml抽取"><a href="#4-1-2-xml抽取" class="headerlink" title="4.1.2 xml抽取"></a>4.1.2 xml抽取</h4><p>相应的，在 xml 配置文件中，也有一个专门的标签来抽取，那就是 <code>aop:pointcut</code> ：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:aspect</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;loggerAspect&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;logger&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;defaultPointcut&quot;</span> </span><br><span class="hljs-tag">                      <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(public * com.linkedbear.spring.aop.a_xmlaspect.service.*.*(..))&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!-- ... --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after-returning</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;afterReturningPrint&quot;</span></span><br><span class="hljs-tag">                             <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;defaultPointcut&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">aop:aspect</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>注意，要引用 xml 的切入点表达式，需要使用 <code>pointcut-ref</code> 而不是 <code>pointcut</code> 属性！</p>
+<h3 id="4-2-annotation的使用"><a href="#4-2-annotation的使用" class="headerlink" title="4.2 @annotation的使用"></a>4.2 @annotation的使用</h3><p>除了 <code>execution</code> 之外，还有一种切入点表达式也比较常用：<code>@annotation()</code> 。</p>
+<p>它的使用方式就非常简单了，只需要在括号中声明注解的全限定名即可。下面咱简单演示一下。</p>
+<p>咱还是使用 <code>Logger</code> 作为切面类，这次咱声明一个 <code>@Log</code> 注解，用于标注要打印日志的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Documented</span><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-meta">@Target(ElementType.METHOD)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Log &#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后，切入点表达式中只需要以下声明即可：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">@annotation(com<span class="hljs-selector-class">.linkedbear</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.aop</span><span class="hljs-selector-class">.b_aspectj</span><span class="hljs-selector-class">.component</span>.Log)<br></code></pre></td></tr></table></figure>
+<p>以此法声明的切入点表达式会<strong>搜索整个 IOC 容器中标注了 @Log 注解的所有 bean 全部增强</strong>。</p>
+<p>咱把这个切入点表达式代替之前的</p>
+<p>接下来咱就在 <code>FinanceService</code> 的 <code>subtractMoney</code> 方法中标注一个 <code>@Log</code> 注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Log</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">subtractMoney</span><span class="hljs-params">(<span class="hljs-keyword">double</span> money)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;FinanceService 付钱 === &quot;</span> + money);<br>    <span class="hljs-keyword">return</span> money;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>main</code> 方法，发现只有 <code>subtractMoney</code> 方法有打印后置通知的日志了：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>FinanceService 收钱 === <span class="hljs-number">123.45</span><br><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>FinanceService 付钱 === <span class="hljs-number">543.21</span><br><span class="hljs-function"><span class="hljs-title">Logger</span></span> afterPrint run ......      <span class="hljs-comment">// 此处打印了</span><br><span class="hljs-function"><span class="hljs-title">Logger</span></span> beforePrint run ......<br>FinanceService 查询账户，id为abc<br><span class="hljs-function"><span class="hljs-title">Logger</span></span> afterReturningPrint run ......<br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/16/06-AOP%E8%BF%9B%E9%98%B6-%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86%E5%92%8C%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">06-AOP进阶-延伸知识和进阶使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/16/04-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EXML%E7%9A%84AOP/">
+                        <span class="hidden-mobile">04-AOP基础-基于XML的AOP</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/16/05-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EAspectJ%E7%9A%84AOP/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

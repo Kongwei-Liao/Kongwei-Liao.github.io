@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>09-AOP高级-尝试自己实现AOP - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="09-AOP高级-尝试自己实现AOP">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-16 22:30" pubdate>
+        2022年4月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">09-AOP高级-尝试自己实现AOP</h1>
+            
+            <div class="markdown-body">
+              <h1 id="AOP高级-如果我们自己实现一个AOP？"><a href="#AOP高级-如果我们自己实现一个AOP？" class="headerlink" title="AOP高级-如果我们自己实现一个AOP？"></a>AOP高级-如果我们自己实现一个AOP？</h1><p>前面学习 IOC 高级的 <code>BeanPostProcessor</code> 中，咱就了解到 <code>BeanPostProcessor</code> 的 <code>postProcessAfterInitialization</code> 方法可以用于创建代理对象，那 Spring AOP 是如何实现的呢？</p>
+<h2 id="1-前期分析"><a href="#1-前期分析" class="headerlink" title="1. 前期分析"></a>1. 前期分析</h2><p>先分析一下，一个完整的 AOP 机制需要的 支撑组件 和 它们的作用 分别都是什么。</p>
+<h4 id="1-1-生成代理对象的时机"><a href="#1-1-生成代理对象的时机" class="headerlink" title="1.1 生成代理对象的时机"></a>1.1 生成代理对象的时机</h4><p>最先想到的，肯定是普通的 bean 在初始化阶段，被 <code>BeanPostProcessor</code> 影响后，在 <code>postProcessAfterInitialization</code> 方法中生成代理对象。这也是 AOP 的实现机制中最重要的环节之一。</p>
+<h4 id="1-2-解析切入点表达式的时机"><a href="#1-2-解析切入点表达式的时机" class="headerlink" title="1.2 解析切入点表达式的时机"></a>1.2 解析切入点表达式的时机</h4><p>再想一个问题，<code>BeanPostProcessor</code> 怎么知道哪些 bean 在创建时需要织入通知，生成代理对象呢？</p>
+<p>可能是在 bean 的初始化逻辑中检查的吧，可是检查的依据是什么呢？</p>
+<p>依据是那些被 <code>@Aspect</code> 标注的切面类，里面定义的 pointcut 方法定义的切入点表达式吧！</p>
+<p>但是什么时候解析这些切入点表达式呢？</p>
+<ul>
+<li>Aspect 切面类初始化的时候再解析？晚了吧，万一在解析之前已经有好多 bean 已经创建完了呢？那岂不是错过时机了？</li>
+<li>Aspect 切面类加载进 <code>BeanFactory</code> 后再解析？哎这个可以，此时所有的 bean 还都没有创建，AOP 可以大展身手，但是再想一个问题：如果此时已经把 AOP 的东西全部准备好了，那回头后置处理器的初始化阶段咋办？这个通知是织入还是不织入呢？所以看来这个时机虽然很靠前了，但还是有点尴尬；</li>
+<li>负责 AOP 的核心后置处理器初始化的时候再去 <code>BeanFactory</code> 中解析？哎这个看样子就能同时顾及到两方面了，此时所有的 <code>BeanDefinition</code> 都加载进 <code>BeanFactory</code> 了，而且后置处理器都初始化好了，普通 bean 也都没有创建，所以这个时机点是相对最合适的。</li>
+</ul>
+<p>所以我们得出结论：<strong>在 AOP 核心后置处理器的初始化阶段，解析容器中的所有切面类中的切入点表达式</strong>。</p>
+<h4 id="1-3-通知织入的方式"><a href="#1-3-通知织入的方式" class="headerlink" title="1.3 通知织入的方式"></a>1.3 通知织入的方式</h4><p>接下来，通知如何织入呢？既然是动态代理，那就应该区分到底是使用 jdk 动态代理，还是 Cglib 动态代理了。</p>
+<p>除此之外， <code>InvocationHandler</code> 或者 <code>MethodInterceptor</code> 的逻辑应该怎么写，这也是个问题，因为一个 bean 可能会被多个切面同时织入通知，所以这些因素我们也要考虑进去。</p>
+<h2 id="2-开始编码吧！"><a href="#2-开始编码吧！" class="headerlink" title="2. 开始编码吧！"></a>2. 开始编码吧！</h2><p>好了，咱暂时就想到这么多，下面咱自己搞一个后置处理器，把这个思路实际运用一下。</p>
+<blockquote>
+<p>温馨提示：千万不要觉得思路都理清楚了，就要直接造一个简易版的出来，真的没必要，人家 SpringFramework 写的比咱好太多了，咱理解思路就好啦，后面马上咱研究原理就好，这只是个铺垫。</p>
+</blockquote>
+<h3 id="2-1-代码准备"><a href="#2-1-代码准备" class="headerlink" title="2.1 代码准备"></a>2.1 代码准备</h3><p>还是跟往常一样，咱先准备好代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">get</span><span class="hljs-params">(String id)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;获取id为&quot;</span> + id + <span class="hljs-string">&quot;的用户。。。&quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">save</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;保存name为&quot;</span> + name + <span class="hljs-string">&quot;的用户。。。&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.h_imitate.service.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;LogAspect beforePrint ......&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意，这次不需要配置类了，因为不需要声明 <code>@EnableAspectJAutoProxy</code> 注解，我们通过自己编写的后置处理器，一样可以达到效果（理论上）。</p>
+<h3 id="2-2-基本的后置处理器编写"><a href="#2-2-基本的后置处理器编写" class="headerlink" title="2.2 基本的后置处理器编写"></a>2.2 基本的后置处理器编写</h3><p>接下来的核心就是编写后置处理器，咱声明一个 <code>AopProxyPostProcessor</code> 吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AopProxyPostProcessor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">BeanPostProcessor</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">postProcessAfterInitialization</span><span class="hljs-params">(Object bean, String beanName)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>        <br>        <span class="hljs-keyword">return</span> bean;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里面只需要实现 <code>postProcessAfterInitialization</code> 方法（ beforeProcessAfterInitialization 主要做属性赋值 以及 初始化等动作）。</p>
+<h3 id="2-3-获得所有切面和切入点表达式"><a href="#2-3-获得所有切面和切入点表达式" class="headerlink" title="2.3 获得所有切面和切入点表达式"></a>2.3 获得所有切面和切入点表达式</h3><p>上面分析了，后置处理器的初始化阶段需要获取到容器中现有的所有切面和切入点表达式，而且要注意这个过程中不要把这些切面给初始化了（也就是不要调用 <code>getBean</code> 方法）。具体的步骤咱分解来看：</p>
+<h4 id="2-3-1-获得BeanFactory"><a href="#2-3-1-获得BeanFactory" class="headerlink" title="2.3.1 获得BeanFactory"></a>2.3.1 获得BeanFactory</h4><p>实现上述逻辑的操作，需要提前获取到 <code>BeanFactory</code> ，所以咱在这里需要借助回调注入的机制，把 <code>BeanFactory</code> 注入进来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AopProxyPostProcessor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">BeanPostProcessor</span>, <span class="hljs-title">BeanFactoryAware</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> ConfigurableListableBeanFactory beanFactory;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">postProcessAfterInitialization</span><span class="hljs-params">(Object bean, String beanName)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>        <br>        <span class="hljs-keyword">return</span> bean;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setBeanFactory</span><span class="hljs-params">(BeanFactory beanFactory)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>        <span class="hljs-comment">// 这里强转为比较高级的类型，方便接下来拿BeanDefinition</span><br>        <span class="hljs-keyword">this</span>.beanFactory = (ConfigurableListableBeanFactory) beanFactory;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-3-2-筛选出切面类"><a href="#2-3-2-筛选出切面类" class="headerlink" title="2.3.2 筛选出切面类"></a>2.3.2 筛选出切面类</h4><p>然后，要获取这里面所有的切面类，就要先获取到 <code>BeanFactory</code> 中已经存在的所有 <code>BeanDefinition</code> ，而这个动作也比较简单，咱放到初始化方法的回调中做吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostConstruct</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initAspectAndPointcuts</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 取到BeanFactory中的所有BeanDefinition</span><br>    String[] beanDefinitionNames = beanFactory.getBeanDefinitionNames();<br>    <span class="hljs-keyword">for</span> (String beanDefinitionName : beanDefinitionNames) &#123;<br>        <span class="hljs-comment">// 检查BeanDefinition对应的class上是否标注了@Aspect注解</span><br>        BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanDefinitionName);<br>        String beanClassName = beanDefinition.getBeanClassName();<br>        <span class="hljs-keyword">if</span> (!StringUtils.hasText(beanClassName)) &#123;<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        Class&lt;?&gt; clazz = ClassUtils.resolveClassName(beanClassName, ClassUtils.getDefaultClassLoader());<br>        <span class="hljs-keyword">if</span> (!clazz.isAnnotationPresent(Aspect.class)) &#123;<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        <span class="hljs-comment">// 到此为止，说明当前BeanDefinition对应的bean是一个切面类，解析方法</span><br>        <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-3-3-解析切入点表达式"><a href="#2-3-3-解析切入点表达式" class="headerlink" title="2.3.3 解析切入点表达式"></a>2.3.3 解析切入点表达式</h4><p>接下来的工作就是解析 Aspect 切面类了，既然是切面类，那就需要解析这个类上的每个方法，在 SpringFramework 中提供了一个很方便的反射类，它可以很快速的对类中的方法进行访问和过滤：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">ReflectionUtils.doWithMethods(clazz, method -&gt; &#123;<br>    <span class="hljs-comment">// 此处要实现切入点表达式的解析</span><br>&#125;, method -&gt; &#123;<br>    <span class="hljs-comment">// 此处只过滤出通知方法</span><br>    <span class="hljs-keyword">return</span> method.isAnnotationPresent(Before.class)<br>            || method.isAnnotationPresent(After.class)<br>            || method.isAnnotationPresent(AfterReturning.class)<br>            || method.isAnnotationPresent(AfterThrowing.class)<br>            || method.isAnnotationPresent(Around.class);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>剩下的就是怎么解析这些注解了，这里面我不打算写的特别复杂，也不写那些乱七八糟的处理逻辑了，咱还是以 <code>@Before</code> 注解为例来演示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 借助AspectJ中的切入点表达式解析器来搞定</span><br>PointcutParser pointcutParser = PointcutParser.<br>        getPointcutParserSupportingAllPrimitivesAndUsingContextClassloaderForResolution();<br><span class="hljs-comment">// 到此为止，说明当前BeanDefinition对应的bean是一个切面类，解析方法</span><br>ReflectionUtils.doWithMethods(clazz, method -&gt; &#123;<br>    Before before = method.getAnnotation(Before.class);<br>    <span class="hljs-keyword">if</span> (before != <span class="hljs-keyword">null</span>) &#123;<br>        String pointcutExp = before.value();<br>        <span class="hljs-comment">// 借助pointcutParser解析切入点表达式</span><br>        PointcutExpression pointcutExpression = pointcutParser.parsePointcutExpression(pointcutExp);<br>        <br>    &#125;<br>&#125;, method -&gt; &#123; ... &#125;);<br></code></pre></td></tr></table></figure>
+<p>到这里，咱就可以把切面类中的切入点表达式都拿出来了，并且还封装了一个 <code>PointcutExpression</code> 。</p>
+<h4 id="2-3-4-缓存切入点表达式和通知方法"><a href="#2-3-4-缓存切入点表达式和通知方法" class="headerlink" title="2.3.4 缓存切入点表达式和通知方法"></a>2.3.4 缓存切入点表达式和通知方法</h4><p>表达式有了，怎么保存为好呢？很简单，放到一个 <code>Map</code> 中就好：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> Map&lt;PointcutExpression, Method&gt; beforePointcutMethodMap = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();<br><br><span class="hljs-meta">@PostConstruct</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initAspectAndPointcuts</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// ......</span><br>        <span class="hljs-comment">// 到此为止，说明当前BeanDefinition对应的bean是一个切面类，解析方法</span><br>        PointcutParser pointcutParser = PointcutParser.<br>                getPointcutParserSupportingAllPrimitivesAndUsingContextClassloaderForResolution();<br>        ReflectionUtils.doWithMethods(clazz, method -&gt; &#123;<br>            Before before = method.getAnnotation(Before.class);<br>            <span class="hljs-keyword">if</span> (before != <span class="hljs-keyword">null</span>) &#123;<br>                String pointcutExp = before.value();<br>                <span class="hljs-comment">// 借助pointcutParser解析切入点表达式</span><br>                PointcutExpression pointcutExpression = pointcutParser.parsePointcutExpression(pointcutExp);<br>                <span class="hljs-comment">// 放入对应的缓存区</span><br>                beforePointcutMethodMap.put(pointcutExpression, method);<br>            &#125;<br>        &#125;, method -&gt; &#123; ... &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意这里面为了编写简单快速演示，我这里只用了一个 <code>Map</code> 保存所有的前置通知，但实际上的通知类型有 5 种，它们需要分别保存，或者封装为类似于 Metadata 的元信息，这里咱就不演示了。</p>
+<h3 id="2-4-代理对象的创建"><a href="#2-4-代理对象的创建" class="headerlink" title="2.4 代理对象的创建"></a>2.4 代理对象的创建</h3><p>接下来，咱就要给普通的 bean 对象构造代理对象了。AspectJ 提供的 <code>PointcutExpression</code>已经足以搞定切入点表达式与目标类的匹配，所以我们编写起来会很容易。</p>
+<p>具体来看，可以把这个部分的内容分为下面几个小步骤。</p>
+<h4 id="2-4-1-排除的项"><a href="#2-4-1-排除的项" class="headerlink" title="2.4.1 排除的项"></a>2.4.1 排除的项</h4><p>首先！切面类不要代理了，否则会一直循环调用直到栈溢出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">postProcessAfterInitialization</span><span class="hljs-params">(Object bean, String beanName)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    <span class="hljs-comment">// 切面不增强</span><br>    <span class="hljs-keyword">if</span> (bean.getClass().isAnnotationPresent(Aspect.class)) &#123;<br>        <span class="hljs-keyword">return</span> bean;<br>    &#125;<br>    <span class="hljs-comment">// ......</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-4-2-切入点的匹配"><a href="#2-4-2-切入点的匹配" class="headerlink" title="2.4.2 切入点的匹配"></a>2.4.2 切入点的匹配</h4><p>然后，对于普通 bean 而言，要看看有没有能切入当前 bean 的切面，如果没有，则不需要创建代理对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">postProcessAfterInitialization</span><span class="hljs-params">(Object bean, String beanName)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    <span class="hljs-comment">// 切面不增强</span><br>    <span class="hljs-keyword">if</span> (bean.getClass().isAnnotationPresent(Aspect.class)) &#123;<br>        <span class="hljs-keyword">return</span> bean;<br>    &#125;<br>    <span class="hljs-comment">// 检查类是否能被切入点表达式切入</span><br>    List&lt;Method&gt; proxyMethods = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>    beforePointcutMethodMap.forEach((pointcutExpression, method) -&gt; &#123;<br>        <span class="hljs-keyword">if</span> (pointcutExpression.couldMatchJoinPointsInType(bean.getClass())) &#123;<br>            proxyMethods.add(method);<br>        &#125;<br>    &#125;);<br>    <span class="hljs-comment">// 没有能匹配的切面，则直接返回普通对象</span><br>    <span class="hljs-keyword">if</span> (proxyMethods.isEmpty()) &#123;<br>        <span class="hljs-keyword">return</span> bean;<br>    &#125;<br>    <span class="hljs-comment">// ......</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-4-3-织入通知生成代理对象"><a href="#2-4-3-织入通知生成代理对象" class="headerlink" title="2.4.3 织入通知生成代理对象"></a>2.4.3 织入通知生成代理对象</h4><p>接下来，就是如何织入通知了，这里由于我们只演示了前置通知，这里只需要在方法调用之前反射执行切面类的前置通知方法即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">    <span class="hljs-comment">// 需要织入通知</span><br>    <span class="hljs-keyword">return</span> Enhancer.create(bean.getClass(), (MethodInterceptor) (proxy, method, args, methodProxy) -&gt; &#123;<br>        <span class="hljs-comment">// 依次执行前置通知</span><br>        <span class="hljs-keyword">for</span> (Method proxyMethod : proxyMethods) &#123;<br>            Object aspectBean = beanFactory.getBean(proxyMethod.getDeclaringClass());<br>            proxyMethod.invoke(aspectBean);<br>        &#125;<br>        <span class="hljs-keyword">return</span> methodProxy.invokeSuper(proxy, args);<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个实现方式说实话很粗糙，小伙伴们只需要领会其中的思想即可。</p>
+<h3 id="2-5-测试运行"><a href="#2-5-测试运行" class="headerlink" title="2.5 测试运行"></a>2.5 测试运行</h3><p>编写测试启动类，由于没有配置类，所以只需要用包扫描驱动 IOC 容器即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ImitateAopApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(<span class="hljs-string">&quot;com.linkedbear.spring.aop.h_imitate&quot;</span>);<br>        UserService userService = ctx.getBean(UserService.class);<br>        userService.get(<span class="hljs-string">&quot;abc&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台可以打印前置通知，说明实现是可以执行的：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">LogAspect</span></span> beforePrint ......<br>获取id为abc的用户。。。<br></code></pre></td></tr></table></figure>
+<p>这样我们就完成了一个自行实现的 AOP 后置处理器，小伙伴们要体会其中的思想，接下来的几章 AOP 原理中，会涉及到这里面的思想，以及更复杂的概念。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/16/10-AOP%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E6%A0%B8%E5%BF%83%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">10-AOP原理-底层核心后置处理器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/16/08-AOP%E9%AB%98%E7%BA%A7-%E5%85%B6%E4%BB%96AOP%E6%89%A9%E5%B1%95/">
+                        <span class="hidden-mobile">08-AOP高级-其他AOP扩展</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/16/09-AOP%E9%AB%98%E7%BA%A7-%E5%B0%9D%E8%AF%95%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0AOP/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

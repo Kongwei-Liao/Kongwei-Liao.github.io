@@ -1,0 +1,593 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>08-AOP高级-其他AOP扩展 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="08-AOP高级-其他AOP扩展">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-16 21:57" pubdate>
+        2022年4月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      39
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">08-AOP高级-其他AOP扩展</h1>
+            
+            <div class="markdown-body">
+              <h1 id="AOP高级-AOP的其他扩展知识"><a href="#AOP高级-AOP的其他扩展知识" class="headerlink" title="AOP高级-AOP的其他扩展知识"></a>AOP高级-AOP的其他扩展知识</h1><h2 id="1-AOP的引介【了解】"><a href="#1-AOP的引介【了解】" class="headerlink" title="1. AOP的引介【了解】"></a>1. AOP的引介【了解】</h2><p>在学习 AOP 的术语时，就说过了引介只是了解即可，现在用的实在是太少了。不过还是会有对此感兴趣的小伙伴。</p>
+<blockquote>
+<p>考虑到整体的难度和使用情况来看，这里只介绍基于 AspectJ 的引介，对于 SpringFramework 原生的这里小册不作介绍，感兴趣的小伙伴自己查资料去。</p>
+</blockquote>
+<h3 id="1-1-引介的作用和目标"><a href="#1-1-引介的作用和目标" class="headerlink" title="1.1 引介的作用和目标"></a>1.1 引介的作用和目标</h3><p>引介的作用是<strong>给目标对象所在的类，动态的添加属性和方法</strong>，这种增强的类型区别于方法级别的通知，它不会影响已有的方法，而是直接给类添加新的方法和属性。</p>
+<p>不过话又说回来，如果手头的项目，源码都好好的，谁会闲的没事用这种东西呢？而且即便是因为工程依赖的 jar 包中的代码没办法修改，我们也能把那个类拷出来，自己再任意改造呀，所以这个引介通知的使用就越来越少了。</p>
+<p>但是，这样直接改造框架的源码，回头每个项目都要这么搞，本身就很麻烦；如果每个项目对于既定源码的扩展内容都不一样，那可就没法搞了。所以，引介通知还是能起到作用的。</p>
+<p>注意，<strong>引介作为一种特殊的 AOP 通知，它的作用对象是目标对象所属类而不是目标对象本身</strong>，这也就意味着<strong>引介的织入是对类织入</strong>，而不是对方法的逻辑织入。</p>
+<h3 id="1-2-Spring框架中的引介"><a href="#1-2-Spring框架中的引介" class="headerlink" title="1.2 Spring框架中的引介"></a>1.2 Spring框架中的引介</h3><p>SpringFramework 中原生的引介通知，是通过 <code>IntroductionInterceptor</code> 来创建的，它本身扩展了 <code>MethodInterceptor</code> ，以及 <code>DynamicIntroductionAdvice</code> 接口。</p>
+<p>我们开发者可以通过实现 <code>IntroductionInterceptor</code> 的子接口 <code>DelegatintIntroductionInterceptor</code> ，来实现引介通知的编写。</p>
+<h3 id="1-3-AspectJ的引介"><a href="#1-3-AspectJ的引介" class="headerlink" title="1.3 AspectJ的引介"></a>1.3 AspectJ的引介</h3><p>AspectJ 中的引介，有一个专门的注解 <strong><code>@DeclareParents</code></strong> 来很方便的实现目标对象所属类的属性和方法增强。</p>
+<p>它可以指定被增强的类要扩展什么接口，以及扩展的实现类。这种声明引介通知的方式相对比较简单，下面咱来学习这种编写方式。</p>
+<h4 id="1-3-1-代码准备"><a href="#1-3-1-代码准备" class="headerlink" title="1.3.1 代码准备"></a>1.3.1 代码准备</h4><p>这次的代码准备也不难，三个类就可以，分别是 Service 、切面类、配置类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FinanceService</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">transfer</span><span class="hljs-params">(Long source, Long target, <span class="hljs-keyword">int</span> money)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;转账完成！&quot;</span>);<br>        System.out.println(source + <span class="hljs-string">&quot; 为 &quot;</span> + target + <span class="hljs-string">&quot; 转钱&quot;</span> + money + <span class="hljs-string">&quot;元！&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntroductionAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com..f_introduction.service.FinanceService.transfer(Long, Long, int))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrintLog</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;转账动作前置打印 。。。&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableAspectJAutoProxy</span><br><span class="hljs-meta">@ComponentScan(&quot;com.linkedbear.spring.aop.f_introduction&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntroductionConfiguration</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>最后，编写测试启动类，驱动 IOC 容器后获取 <code>FinanceService</code> 并调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntroductionApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(IntroductionConfiguration.class);<br>        FinanceService financeService = ctx.getBean(FinanceService.class);<br>        financeService.transfer(<span class="hljs-number">1L</span>, <span class="hljs-number">2L</span>, <span class="hljs-number">100</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台可以正常打印 <code>IntroductionAspect</code> 中的前置通知，这样代码就准备好了。</p>
+<h4 id="1-3-2-需求说明"><a href="#1-3-2-需求说明" class="headerlink" title="1.3.2 需求说明"></a>1.3.2 需求说明</h4><p><strong>转账的动作中，金额一定不能是负的</strong>，而目前的代码中并没有这方面的校验逻辑。</p>
+<p>相对简单的办法是，在前置通知中编写参数校验的逻辑即可，这个很好写不多说。这里咱学习的是如何用引介的方式解决这个问题。</p>
+<h4 id="1-3-3-编写校验服务"><a href="#1-3-3-编写校验服务" class="headerlink" title="1.3.3 编写校验服务"></a>1.3.3 编写校验服务</h4><p>要用引介通知增强，首先需要一个<strong>新的接口</strong> + <strong>实现类</strong>，这里咱可以声明一个 <code>MoneyValidator</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">MoneyValidator</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">validate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>紧接着，编写一个 <code>MoneyValidator</code> 的实现类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MoneyValidatorImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MoneyValidator</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">validate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> money)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> money &gt; <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样就有了一个金额的校验器。</p>
+<h4 id="1-3-4-DeclareParents的使用"><a href="#1-3-4-DeclareParents的使用" class="headerlink" title="1.3.4 @DeclareParents的使用"></a>1.3.4 @DeclareParents的使用</h4><p>接下来就是给 <code>FinanceService</code> 织入引介通知了。首先咱要回到切面类中，在这里面添加一个 <code>MoneyValidator</code> 的成员，并标注 <code>@DeclareParents</code> 注解，这个 <code>@DeclareParents</code> 注解有两个参数，</p>
+<ol>
+<li><code>value</code> 是即将增强到原有目标类的全限定名;</li>
+<li><code>defaultImpl</code> 是引介接口的默认实现类。</li>
+</ol>
+<p>所以我们可以在这里面这样声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntroductionAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@DeclareParents(value = &quot;com.linkedbear.spring.aop.f_introduction.service.FinanceService&quot;, </span><br><span class="hljs-meta">                    defaultImpl = MoneyValidatorImpl.class)</span><br>    <span class="hljs-keyword">private</span> MoneyValidator moneyValidator;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>但是话又说回来，现在的 <code>FinanceService</code> 是个类，那可以，如果这是个接口呢（FinanceServiceImpl implements FinanceService）？这次该怎么写呢？</p>
+<p>AspectJ 当然也考虑到了这一点，只需要在整个接口的全限定名后面带一个 + 就可以了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@DeclareParents(value = &quot;com.linkedbear.spring.aop.f_introduction.service.FinanceService+&quot;, // &lt;--看这里</span><br><span class="hljs-meta">                defaultImpl = MoneyValidatorImpl.class)</span><br><span class="hljs-keyword">private</span> MoneyValidator moneyValidator;<br></code></pre></td></tr></table></figure>
+<p>这样就代表，<strong>对于这个 <code>FinanceService</code> 接口下面的所有实现类，全部织入引介通知</strong>。</p>
+<p>效果上理解，就是代理类实现了 MoneyValidator 接口中的方法，实现的内容就是 MoneyValidatorImpl 中的实现。（具体是不是就是这样实现的，后面补充到这块知识的时候在补充）</p>
+<h4 id="1-3-5-编写校验逻辑"><a href="#1-3-5-编写校验逻辑" class="headerlink" title="1.3.5 编写校验逻辑"></a>1.3.5 编写校验逻辑</h4><p>剩下的就是使用引介过去的 <code>MoneyValidatorImpl</code> 的逻辑了，这个逻辑也非常的简单，咱先理一下思路哈：</p>
+<ol>
+<li>首先把方法的请求参数先拿出来；</li>
+<li>然后拿到<strong>目标对象的代理对象</strong>（注意此处必须要拿到代理对象，原始目标对象压根就没实现 <code>MoneyValidator</code> 接口），强转为 <code>MoneyValidator</code> 类型，就可以调用它的 <code>validate</code> 方法了。</li>
+<li>如果 <code>validate</code> 方法返回 <code>true</code> ，则接下来的方法可以执行；如果返回 <code>false</code> ，则代表 <code>money</code> 参数不合法，抛出参数不合法的异常即可。</li>
+</ol>
+<p>用代码编写也很简单：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(* com..f_introduction.service.FinanceService.transfer(Long, Long, int))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrintLog</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> money = (<span class="hljs-keyword">int</span>) joinPoint.getArgs()[<span class="hljs-number">2</span>];<br>    MoneyValidator validator = (MoneyValidator) joinPoint.getThis();<br>    <span class="hljs-keyword">if</span> (validator.validate(money)) &#123;<br>        System.out.println(<span class="hljs-string">&quot;转账动作前置打印 。。。&quot;</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">&quot;转账金额不合法！&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="1-3-6-测试运行"><a href="#1-3-6-测试运行" class="headerlink" title="1.3.6 测试运行"></a>1.3.6 测试运行</h4><p>修改一下 <code>main</code> 方法的测试代码，我们把正常数据和错误数据都执行一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>    AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(IntroductionConfiguration.class);<br>    FinanceService financeService = ctx.getBean(FinanceService.class);<br>    financeService.transfer(<span class="hljs-number">1L</span>, <span class="hljs-number">2L</span>, <span class="hljs-number">100</span>);<br>    System.out.println(<span class="hljs-string">&quot;------------------------------&quot;</span>);<br>    financeService.transfer(<span class="hljs-number">1L</span>, <span class="hljs-number">2L</span>, -<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台可以打印出 100 的成功，和 -1 的异常：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">转账动作前置打印 。。。<br>转账完成！<br>1 为 2 转钱100元！<br>------------------------------<br>Exception in thread &quot;main&quot; java.lang.IllegalArgumentException: 转账金额不合法！<br></code></pre></td></tr></table></figure>
+<p>由此可以完成引介通知的增强。</p>
+<h2 id="2-LoadTimeWeawer【了解】"><a href="#2-LoadTimeWeawer【了解】" class="headerlink" title="2. LoadTimeWeawer【了解】"></a>2. LoadTimeWeawer【了解】</h2><p>这个标签的作用是修改代理对象的构建时机为 类加载时期织入。与之相匹配的注解是 <code>@EnableLoadTimeWeaving</code> 。</p>
+<h3 id="2-1-AOP增强的时机"><a href="#2-1-AOP增强的时机" class="headerlink" title="2.1 AOP增强的时机"></a>2.1 AOP增强的时机</h3><p>一开始讲解 AOP 的时候，说到 SpringFramework 的 AOP 底层是使用运行时动态代理的技术实现，其实这话并不绝对（所以咱一开始说的是<strong>可以</strong>，而不是一定），因为从原生的 AOP 设计角度来看，通知的织入是有三种时机的，它们分别是：</p>
+<ul>
+<li><strong>字节码编译织入</strong>：在 javac 的动作中，使用特殊的编译器，将通知直接织入到 Java 类的字节码文件中</li>
+<li><strong>类加载时期织入</strong>：在类加载时期，使用特殊的类加载器，在目标类的字节码加载到 JVM 的时机中，将通知织入进去；</li>
+<li><strong>运行时创建对象织入</strong>：在目标对象的创建时机，使用动态代理技术将通知织入到目标对象中，形成代理对象。</li>
+</ul>
+<p>我们前面编写的所有 AOP 的实例，全部都是基于运行时创建代理对象的方式织入通知的。除此之外，还有上面的两种方式可以选择，只是我们几乎都不用了。</p>
+<h3 id="2-2-AspectJ-对于增强的时机"><a href="#2-2-AspectJ-对于增强的时机" class="headerlink" title="2.2 AspectJ 对于增强的时机"></a>2.2 AspectJ 对于增强的时机</h3><p>AspectJ 作为很早就出现的 AOP 框架，它可以说是非常强大了，以上三种方式它都有提供方案 / 支持：</p>
+<ul>
+<li><strong>对于字节码的编译期织入</strong>：它可以利用它自己定义的 AspectJ 语言编写好切面，并借助 Maven 等项目管理工具，在工程的编译期使用特殊的编译器（ajc等），将切面类中定义的通知织入到 Java 类中；</li>
+<li><strong>对于类加载时期的织入</strong>：它的机制就是 <strong>LoadTimeWeaving</strong> （刚好就是字面意思）；</li>
+<li><strong>对于运行时创建对象的织入</strong>：它在早期有整合一个叫 AspectWerkz 框架，也是在运行时动态代理产生代理对象，只不过我们现在学习的是 Spring 整合 AspectJ ，那最终还是用基于 SpringFramework 底层的动态代理搞定了。</li>
+</ul>
+<h3 id="2-3-AspectJ的-LoadTimeWeaving"><a href="#2-3-AspectJ的-LoadTimeWeaving" class="headerlink" title="2.3 AspectJ的 LoadTimeWeaving"></a>2.3 AspectJ的 LoadTimeWeaving</h3><p>下面咱还是通过一个简单的示例，来了解一下 LoadTimeWeaving 这个机制。</p>
+<h4 id="2-3-1-代码准备"><a href="#2-3-1-代码准备" class="headerlink" title="2.3.1 代码准备"></a>2.3.1 代码准备</h4><p>一个 Service 一个 Aspect 一个 Configuration ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">get</span><span class="hljs-params">(String id)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;获取id为&quot;</span> + id + <span class="hljs-string">&quot;的用户。。。&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(* com.linkedbear.spring.aop.g_weawer.service.UserService.*(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforePrint</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;LogAspect 前置通知 ......&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;com.linkedbear.spring.aop.g_weawer&quot;)</span><br><span class="hljs-comment">//@EnableAspectJAutoProxy</span><br><span class="hljs-meta">@EnableLoadTimeWeaving</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoadTimeWeavingConfiguration</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意！此处不再使用 <code>@EnableAspectJAutoProxy</code> 注解，它是启用运行时的动态代理织入通知，而开启类加载时期的织入就需要使用另外的注解了，也就是上面提到的 <code>@EnableLoadTimeWeaving</code> 注解（或者在 xml 中声明 <code>&lt;context:load-time-weaver/&gt;</code> 标签）。</p>
+<p>最后，编写测试启动类，套路还是都一样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoadTimeWeavingApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(LoadTimeWeavingConfiguration.class);<br>        UserService userService = ctx.getBean(UserService.class);<br>        userService.get(<span class="hljs-string">&quot;aaa&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-3-2-只声明注解并不会生效"><a href="#2-3-2-只声明注解并不会生效" class="headerlink" title="2.3.2 只声明注解并不会生效"></a>2.3.2 只声明注解并不会生效</h4><p>此时运行 <code>main</code> 方法，控制台会抛出一个异常：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">Caused <span class="hljs-keyword">by</span>: java.lang.IllegalStateException: ClassLoader [sun.misc.Launcher$AppClassLoader] does NOT provide <span class="hljs-keyword">an</span> <span class="hljs-string">&#x27;addTransformer(ClassFileTransformer)&#x27;</span> method. Specify <span class="hljs-keyword">a</span> custom LoadTimeWeaver <span class="hljs-keyword">or</span> <span class="hljs-built_in">start</span> your Java virtual machine <span class="hljs-keyword">with</span> Spring<span class="hljs-string">&#x27;s agent: -javaagent:spring-instrument-&#123;version&#125;.jar</span><br></code></pre></td></tr></table></figure>
+<p>大概翻译一下，说是如果使用类加载器阶段的通知织入，要么自定义一个 LoadTimeWeaver ，要么导个 jar 包，而这个 jar 包叫 <code>spring-instrument</code> 。</p>
+<p>这个家伙我们没见过，但它说了，那咱就导吧：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-instrument<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;spring.framework.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>导入之后还不行，注意异常的提示中还需要一个 vm 启动参数，叫 <strong><code>-javaagent</code></strong> ，那好吧，我们也把它加上：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">-javaagent:E:<span class="hljs-regexp">/maven/</span>repository<span class="hljs-regexp">/org/</span>springframework<span class="hljs-regexp">/spring-instrument/</span><span class="hljs-number">5.2</span>.<span class="hljs-number">8</span>.RELEASE/spring-instrument-<span class="hljs-number">5.2</span>.<span class="hljs-number">8</span>.RELEASE.jar<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注意 jar 包的位置要使用绝对路径，且小伙伴要记得修改这个 jar 包的路径呀。</p>
+</blockquote>
+<p>这样声明好之后，重新运行 <code>main</code> 方法后发现还是不生效，控制台依然没有打印切面日志。。。</p>
+<h4 id="2-3-3-aop-xml"><a href="#2-3-3-aop-xml" class="headerlink" title="2.3.3 aop.xml"></a>2.3.3 aop.xml</h4><p>在 SpringFramework 整合 AspectJ 的规则中，规定了一点：如果要使用类加载级别的 AOP ，需要在 <code>resources</code> 的 <strong><code>META-INF</code></strong> 下编写一个 <strong><code>aop.xml</code></strong> 的配置文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">aspectj</span> <span class="hljs-meta-keyword">PUBLIC</span> <span class="hljs-meta-string">&quot;-//AspectJ//DTD//EN&quot;</span> <span class="hljs-meta-string">&quot;http://www.eclipse.org/aspectj/dtd/aspectj.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">aspectj</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 要织入切面的目标类 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">weaver</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">include</span> <span class="hljs-attr">within</span>=<span class="hljs-string">&quot;com.linkedbear.spring.aop.g_weaving..*&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">weaver</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 切面类 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aspects</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aspect</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;com.linkedbear.spring.aop.g_weaving.aspect.LogAspect&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">aspects</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">aspectj</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>注意，<code>weaver</code> 中包含的类要把切面类一起包含进去！否则无法正常织入切面。</p>
+<p>这样写完之后，就算是终于都搞完了。重新运行 <code>main</code> 方法，<code>LogAspect</code> 的通知就被织入到 <code>UserService</code> 中了：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lasso">LogAspect 前置通知 <span class="hljs-params">...</span><span class="hljs-params">...</span><br>获取id为aaa的用户。。。<br></code></pre></td></tr></table></figure>
+<h4 id="2-3-4-不好使？"><a href="#2-3-4-不好使？" class="headerlink" title="2.3.4 不好使？"></a>2.3.4 不好使？</h4><p>可能有的小伙伴在实际编码时，会遇到按照上面步骤一步一步来，但最后仍然没有打印切面日志！这种情况就需要另加一个步骤了：</p>
+<p>在 <code>vm-options</code> 中再加入一行 <code>javaagent</code> ：</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">-javaagent:E:<span class="hljs-symbol">\m</span>aven<span class="hljs-symbol">\r</span>epository<span class="hljs-symbol">\o</span>rg<span class="hljs-symbol">\a</span>spectj<span class="hljs-symbol">\a</span>spectjweaver<span class="hljs-symbol">\1</span>.9.5<span class="hljs-symbol">\a</span>spectjweaver-1.9.5.jar<br></code></pre></td></tr></table></figure>
+<p>这样再执行 main 方法，就可以成功打印切面日志了。不过这样写完之后，控制台会报一个警告：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-attr">[AppClassLoader@18b4aac2]</span> error at com\linkedbear\spring\aop\g_weaving\aspect\LogAspect<span class="hljs-selector-class">.java</span>::<span class="hljs-number">0</span> class com<span class="hljs-selector-class">.linkedbear</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.aop</span><span class="hljs-selector-class">.g_weaving</span><span class="hljs-selector-class">.aspect</span><span class="hljs-selector-class">.LogAspect</span> is already woven and has not been built <span class="hljs-keyword">in</span> reweavable mode <span class="hljs-selector-attr">[Xlint:nonReweavableTypeEncountered]</span><br></code></pre></td></tr></table></figure>
+<p>这个警告的意思也很明确，<code>LogAspect</code> 这个切面已经被使用过了，已经织入成功了，所以就不要再搞了。</p>
+<p>出现这个问题的原因，是因为上面的 javaagent 与 <code>@EnableLoadTimeWeaving</code> 同时存在了，所以导致通知织入了两次。解决方法很简单，把注解配置类上的 <code>@EnableLoadTimeWeaving</code>注解删掉即可。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/16/09-AOP%E9%AB%98%E7%BA%A7-%E5%B0%9D%E8%AF%95%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0AOP/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">09-AOP高级-尝试自己实现AOP</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/16/07-AOP%E8%BF%9B%E9%98%B6-%E5%AE%9E%E6%88%98AOP%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6/">
+                        <span class="hidden-mobile">07-AOP进阶-实战AOP事务控制</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/16/08-AOP%E9%AB%98%E7%BA%A7-%E5%85%B6%E4%BB%96AOP%E6%89%A9%E5%B1%95/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
