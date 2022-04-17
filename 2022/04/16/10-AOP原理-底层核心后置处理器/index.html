@@ -295,7 +295,7 @@
 <p>这里咱简单说下增强器的概念。一个 <code>Advisor</code> 可以视为<strong>一个切入点 + 一个通知方法的结合体</strong>，对于 Aspect 切面类中定义的通知方法，<strong>方法体 + 方法上的通知注解</strong>就可以看做一个 <code>Advisor</code> 增强器。更多相关的解释，咱放到下一章再研究。</p>
 <p>至于上面的 <code>findCandidateAdvisors</code> 方法，里面的逻辑有点复杂，咱也放到下一章再研究。</p>
 <p>不过在此 Debug 的时候，可以发现 <code>findCandidateAdvisors</code> 方法执行完成后，获取到了 5 个增强器，也都是在 <code>Logger</code> 类中定义的那 5 个通知方法：</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/aa955a366d1542d982d517d86c12b61d~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="/2022/04/16/10-AOP%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E6%A0%B8%E5%BF%83%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8/aa955a366d1542d982d517d86c12b61d~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image.png" srcset="/img/loading.gif" alt="img"></p>
 <p>（最后一个名太长了，实际上是 afterThrowing 的通知，引用的通用切入点表达式罢了。。。）</p>
 <h5 id="2-3-2-3-TargetSource？"><a href="#2-3-2-3-TargetSource？" class="headerlink" title="2.3.2.3 TargetSource？"></a>2.3.2.3 TargetSource？</h5><p>这个概念咱之前在 IOC 部分没有见到过，当然它也不是 IOC 的东西。。。这个概念咱也是放到下一章再解释吧，这里咱可以先简单说一下，<strong>AOP 的代理其实不是代理的目标对象本身，而是目标对象包装后的 <code>TargetSource</code> 对象</strong>。至于为什么它会这么做，咱下一章也会展开解释的。</p>
 <h4 id="2-3-3-AnnotationAwareAspectJAutoProxyCreator-postProcessAfterInitialization"><a href="#2-3-3-AnnotationAwareAspectJAutoProxyCreator-postProcessAfterInitialization" class="headerlink" title="2.3.3 AnnotationAwareAspectJAutoProxyCreator#postProcessAfterInitialization"></a>2.3.3 AnnotationAwareAspectJAutoProxyCreator#postProcessAfterInitialization</h4><p>前面的拦截判断结束后，<code>AnnotationAwareAspectJAutoProxyCreator</code> 再发挥作用就要等到最后一步的 <code>postProcessAfterInitialization</code> 方法了，这里面就是真正的生成代理对象。方法的实现很简单，咱跳转进来看一下：</p>
@@ -326,6 +326,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/04/17/11-AOP%E5%8E%9F%E7%90%86-%E5%88%87%E9%9D%A2%E7%B1%BB%E6%94%B6%E9%9B%86%E5%B0%81%E8%A3%85/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">11-AOP原理-切面类收集封装</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

@@ -181,6 +181,149 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/04/17/14-AOP%E6%80%BB%E7%BB%93-%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/">14-AOP总结-面试整理</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/17/14-AOP%E6%80%BB%E7%BB%93-%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/">
+          
+          
+            
+          
+          1. AOP概念与基础与 IOC 一样，咱先回顾一下 AOP 中涉及到的概念。
+1.1 AOP概述AOP 面向切面编程，全称 Aspect Oriented Programming ，它是 OOP 的补充。OOP 关注的核心是对象，AOP 的核心是切面（Aspect）。AOP 可以在不修改功能代码本身的前提下，使用运行时动态代理的技术对已有代码逻辑增强。AOP 可以实现组件化、可插拔式的功能扩展，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-17 09:32" pubdate>
+              2022-04-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/17/13-AOP%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1%E5%BA%95%E5%B1%82%E6%89%A7%E8%A1%8C%E9%80%BB%E8%BE%91/">13-AOP原理-代理对象底层执行逻辑</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/17/13-AOP%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1%E5%BA%95%E5%B1%82%E6%89%A7%E8%A1%8C%E9%80%BB%E8%BE%91/">
+          
+          
+            
+          
+          AOP原理-代理对象的底层执行逻辑代理对象已经创建好了，接下来就到了正常的业务代码执行了。经过 AOP 的增强后，获取到目标对象的代理对象执行方法时，就会先执行 AOP 增强中的增强器逻辑。下面咱继续以 com.linkedbear.spring.aop.b_aspectj.AnnotationAspectJApplication 中的代码来测试，执行 financeService.addMone
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-17 09:29" pubdate>
+              2022-04-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/17/12-AOP%E5%8E%9F%E7%90%86-Bean%E5%A6%82%E4%BD%95%E8%A2%ABAOP%E4%BB%A3%E7%90%86%E7%9A%84/">12-AOP原理-Bean如何被AOP代理的</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/17/12-AOP%E5%8E%9F%E7%90%86-Bean%E5%A6%82%E4%BD%95%E8%A2%ABAOP%E4%BB%A3%E7%90%86%E7%9A%84/">
+          
+          
+            
+          
+          AOP原理-Bean是如何被AOP代理的前面咱已经知道，最终 bean 的初始化会被 BeanPostProcessor 的 postProcessAfterInitialization 处理，进入到 AnnotationAwareAspectJAutoProxyCreator 的 postProcessAfterInitialization 方法中，它又要调用 wrapIfNecessary 方
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-17 09:26" pubdate>
+              2022-04-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/17/11-AOP%E5%8E%9F%E7%90%86-%E5%88%87%E9%9D%A2%E7%B1%BB%E6%94%B6%E9%9B%86%E5%B0%81%E8%A3%85/">11-AOP原理-切面类收集封装</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/17/11-AOP%E5%8E%9F%E7%90%86-%E5%88%87%E9%9D%A2%E7%B1%BB%E6%94%B6%E9%9B%86%E5%B0%81%E8%A3%85/">
+          
+          
+            
+          
+          AOP原理-AOP是如何收集切面类并封装的承接着上一章的思路，这一章咱主要研究两个大问题：
+
+Advisor 是什么，它是怎么构建的
+TargetSource 是什么，SpringFramework 的 AOP 为什么要代理它而不是原始对象
+
+1. Advisor与切面类的收集在上一章中，咱有看到一个 shouldSkip 的跳过动作：
+1234567891011// AspectJAwareAd
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-17 09:21" pubdate>
+              2022-04-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/04/16/10-AOP%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E6%A0%B8%E5%BF%83%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8/">10-AOP原理-底层核心后置处理器</a>
       </h1>
 
@@ -392,194 +535,11 @@ Spring provides simple and powerful ways of writing cus
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/04-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EXML%E7%9A%84AOP/">04-AOP基础-基于XML的AOP</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/04-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EXML%E7%9A%84AOP/">
-          
-          
-            
-          
-          AOP基础-基于xml的aspect实现AOP为了接下来的演示更具有通用性，咱这里造一个 Service 层的接口，一个接口的实现类，一个普通的 Service 类，以及一个切面类 Logger ：
-OrderService ：
-12345678910public interface OrderService &#123;        void createOrder();        voi
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 19:20" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
-            
-              <a href="/tags/AOP/">AOP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/03-AOP%E5%9F%BA%E7%A1%80-%E6%A6%82%E8%BF%B0%E5%92%8C%E6%9C%AF%E8%AF%AD/">03-AOP基础-概述和术语</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/03-AOP%E5%9F%BA%E7%A1%80-%E6%A6%82%E8%BF%B0%E5%92%8C%E6%9C%AF%E8%AF%AD/">
-          
-          
-            
-          
-          AOP基础-AOP概述与术语概述在 SpringFramework 的官方文档中，有专门的一章来介绍 Spring 的 AOP ：
-docs.spring.io/spring-fram…
-
-Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) by providing another way 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 15:49" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
-            
-              <a href="/tags/AOP/">AOP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/02-AOP%E5%9F%BA%E7%A1%80-%E5%8E%9F%E7%94%9F%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">02-AOP基础-原生动态代理和Cglib动态代理</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/02-AOP%E5%9F%BA%E7%A1%80-%E5%8E%9F%E7%94%9F%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
-          
-          
-            
-          
-          AOP基础-原生动态代理与Cglib动态代理回顾关于动态代理，网络上有无数多的例子和场景，小册这里选用 【游戏陪玩】 的故事来演绎动态代理。
-应该是 2017 年左右吧，网络上涌上了一批游戏陪玩的平台和服务，游戏玩家可以通过在平台上付费邀请 “小姐姐” 来一起组队玩游戏。
-这种游戏陪玩平台的兴起，既满足了部门游戏玩家不能找到一起组排的队友的问题，也为一些游戏玩的不错 / 声音气质等很讨喜的玩家提供
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 15:01" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
-            
-              <a href="/tags/AOP/">AOP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/01-AOP%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">01-AOP是怎么来的</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/01-AOP%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">
-          
-          
-            
-          
-          AOP是怎么来的场景介绍继 BeanFactory 抽取完成之后，你负责的项目最终是稳定的在客户的服务器上运行，客户给予了你高度的赞赏，一期的项目也就告一段落了。项目运行了大半年之后，有一天客户突然给你打来了电话：
-
-靓仔啦，我们这边不知道咋回事，系统里出现了好多异常数据的啦，你有时间来帮我们看一下的啦 ~
-
-本来这会你也不忙，就开了远程软件连上服务器看了一下，果不其然，在这个系统的积分模块里，有
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 13:51" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
-            
-              <a href="/tags/AOP/">AOP</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   

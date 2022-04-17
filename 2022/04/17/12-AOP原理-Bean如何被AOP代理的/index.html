@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>12-AOP原理-Bean如何被AOP代理的 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="12-AOP原理-Bean如何被AOP代理的">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-17 09:26" pubdate>
+        2022年4月17日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      51
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">12-AOP原理-Bean如何被AOP代理的</h1>
+            
+            <div class="markdown-body">
+              <h1 id="AOP原理-Bean是如何被AOP代理的"><a href="#AOP原理-Bean是如何被AOP代理的" class="headerlink" title="AOP原理-Bean是如何被AOP代理的"></a>AOP原理-Bean是如何被AOP代理的</h1><p>前面咱已经知道，最终 bean 的初始化会被 <code>BeanPostProcessor</code> 的 <code>postProcessAfterInitialization</code> 处理，进入到 <code>AnnotationAwareAspectJAutoProxyCreator</code> 的 <code>postProcessAfterInitialization</code> 方法中，它又要调用 <code>wrapIfNecessary</code> 方法来尝试创建代理，咱深入方法内部来研究。</p>
+<h2 id="1-wrapIfNecessary"><a href="#1-wrapIfNecessary" class="headerlink" title="1. wrapIfNecessary"></a>1. wrapIfNecessary</h2><p>源码咱在第 48 章已经见过一次了，咱再拿出来提一下印象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> Object <span class="hljs-title">wrapIfNecessary</span><span class="hljs-params">(Object bean, String beanName, Object cacheKey)</span> </span>&#123;<br>    <span class="hljs-comment">// 判断决定是否是不会被增强的 bean</span><br>    <span class="hljs-keyword">if</span> (StringUtils.hasLength(beanName) &amp;&amp; <span class="hljs-keyword">this</span>.targetSourcedBeans.contains(beanName)) &#123;<br>        <span class="hljs-keyword">return</span> bean;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (Boolean.FALSE.equals(<span class="hljs-keyword">this</span>.advisedBeans.get(cacheKey))) &#123;<br>        <span class="hljs-keyword">return</span> bean;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (isInfrastructureClass(bean.getClass()) || shouldSkip(bean.getClass(), beanName)) &#123;<br>        <span class="hljs-keyword">this</span>.advisedBeans.put(cacheKey, Boolean.FALSE);<br>        <span class="hljs-keyword">return</span> bean;<br>    &#125;<br><br>    <span class="hljs-comment">// Create proxy if we have advice.</span><br>    <span class="hljs-comment">// 如果上面的判断都没有成立，则决定是否需要进行代理对象的创建</span><br>    Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, <span class="hljs-keyword">null</span>);<br>    <span class="hljs-keyword">if</span> (specificInterceptors != DO_NOT_PROXY) &#123;<br>        <span class="hljs-keyword">this</span>.advisedBeans.put(cacheKey, Boolean.TRUE);<br>        <span class="hljs-comment">// 创建代理对象的动作</span><br>        <span class="hljs-comment">// 注意此处它创建了一个SingletonTargetSource，将bean包装起来了</span><br>        Object proxy = createProxy(<br>                bean.getClass(), beanName, specificInterceptors, <span class="hljs-keyword">new</span> SingletonTargetSource(bean));<br>        <span class="hljs-keyword">this</span>.proxyTypes.put(cacheKey, proxy.getClass());<br>        <span class="hljs-keyword">return</span> proxy;<br>    &#125;<br><br>    <span class="hljs-keyword">this</span>.advisedBeans.put(cacheKey, Boolean.FALSE);<br>    <span class="hljs-keyword">return</span> bean;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里前面的筛选过滤懂还是蛮简单的，咱就不关注了，重点是关注一下中间的获取增强器，以及下面的创建代理对象，两个动作。</p>
+<h3 id="1-1-getAdvicesAndAdvisorsForBean"><a href="#1-1-getAdvicesAndAdvisorsForBean" class="headerlink" title="1.1 getAdvicesAndAdvisorsForBean"></a>1.1 getAdvicesAndAdvisorsForBean</h3><p>这个方法很明显是根据当前正在初始化的 bean ，去匹配获取能切入的增强器，它的源码看上去不复杂：（当然也仅仅是看上去）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">protected</span> Object[] getAdvicesAndAdvisorsForBean(<br>        Class&lt;?&gt; beanClass, String beanName, <span class="hljs-meta">@Nullable</span> TargetSource targetSource) &#123;<br><br>    List&lt;Advisor&gt; advisors = findEligibleAdvisors(beanClass, beanName);<br>    <span class="hljs-keyword">if</span> (advisors.isEmpty()) &#123;<br>        <span class="hljs-keyword">return</span> DO_NOT_PROXY;<br>    &#125;<br>    <span class="hljs-keyword">return</span> advisors.toArray();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>毫无疑问，核心逻辑是 <code>findEligibleAdvisors</code> 方法咯，继续往里走：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> List&lt;Advisor&gt; <span class="hljs-title">findEligibleAdvisors</span><span class="hljs-params">(Class&lt;?&gt; beanClass, String beanName)</span> </span>&#123;<br>    <span class="hljs-comment">// 获取所有增强器</span><br>    List&lt;Advisor&gt; candidateAdvisors = findCandidateAdvisors();<br>    <span class="hljs-comment">// 筛选出可以切入当前bean的增强器</span><br>    List&lt;Advisor&gt; eligibleAdvisors = findAdvisorsThatCanApply(candidateAdvisors, beanClass, beanName);<br>    <span class="hljs-comment">// 添加额外的增强器</span><br>    extendAdvisors(eligibleAdvisors);<br>    <span class="hljs-keyword">if</span> (!eligibleAdvisors.isEmpty()) &#123;<br>        <span class="hljs-comment">// 增强器排序</span><br>        eligibleAdvisors = sortAdvisors(eligibleAdvisors);<br>    &#125;<br>    <span class="hljs-keyword">return</span> eligibleAdvisors;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个方法就很复杂了，尽管只有几行，但都是封装好的方法，咱一个一个的展开来看。</p>
+<h4 id="1-1-1-findCandidateAdvisors"><a href="#1-1-1-findCandidateAdvisors" class="headerlink" title="1.1.1 findCandidateAdvisors"></a>1.1.1 findCandidateAdvisors</h4><p>又回到 <code>AnnotationAwareAspectJAutoProxyCreator</code> 了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> List&lt;Advisor&gt; <span class="hljs-title">findCandidateAdvisors</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// Add all the Spring advisors found according to superclass rules.</span><br>    List&lt;Advisor&gt; advisors = <span class="hljs-keyword">super</span>.findCandidateAdvisors();<br>    <span class="hljs-comment">// Build Advisors for all AspectJ aspects in the bean factory.</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.aspectJAdvisorsBuilder != <span class="hljs-keyword">null</span>) &#123;<br>        advisors.addAll(<span class="hljs-keyword">this</span>.aspectJAdvisorsBuilder.buildAspectJAdvisors());<br>    &#125;<br>    <span class="hljs-keyword">return</span> advisors;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可以发现，这个方法只是把 SpringFramework 原生的 AOP 增强器，以及 AspectJ 形式封装的增强器都拿出来，仅此而已。</p>
+<h4 id="1-1-2-findAdvisorsThatCanApply"><a href="#1-1-2-findAdvisorsThatCanApply" class="headerlink" title="1.1.2 findAdvisorsThatCanApply"></a>1.1.2 findAdvisorsThatCanApply</h4><p>所有的增强器获取到之后，下面要去匹配可以切入到当前 bean 的增强器了，咱进入到 <code>findAdvisorsThatCanApply</code> 方法中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> List&lt;Advisor&gt; <span class="hljs-title">findAdvisorsThatCanApply</span><span class="hljs-params">(</span></span><br><span class="hljs-function"><span class="hljs-params">        List&lt;Advisor&gt; candidateAdvisors, Class&lt;?&gt; beanClass, String beanName)</span> </span>&#123;<br>    ProxyCreationContext.setCurrentProxiedBeanName(beanName);<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">return</span> AopUtils.findAdvisorsThatCanApply(candidateAdvisors, beanClass);<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        ProxyCreationContext.setCurrentProxiedBeanName(<span class="hljs-keyword">null</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个方法又交给 <code>AopUtils</code> 执行了，咱继续往里看：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;Advisor&gt; <span class="hljs-title">findAdvisorsThatCanApply</span><span class="hljs-params">(List&lt;Advisor&gt; candidateAdvisors, Class&lt;?&gt; clazz)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (candidateAdvisors.isEmpty()) &#123;<br>        <span class="hljs-keyword">return</span> candidateAdvisors;<br>    &#125;<br>    List&lt;Advisor&gt; eligibleAdvisors = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>    <span class="hljs-comment">// 先匹配引介增强器</span><br>    <span class="hljs-keyword">for</span> (Advisor candidate : candidateAdvisors) &#123;<br>        <span class="hljs-keyword">if</span> (candidate <span class="hljs-keyword">instanceof</span> IntroductionAdvisor &amp;&amp; canApply(candidate, clazz)) &#123;<br>            eligibleAdvisors.add(candidate);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">boolean</span> hasIntroductions = !eligibleAdvisors.isEmpty();<br>    <span class="hljs-comment">// 再匹配普通方法增强器</span><br>    <span class="hljs-keyword">for</span> (Advisor candidate : candidateAdvisors) &#123;<br>        <span class="hljs-keyword">if</span> (candidate <span class="hljs-keyword">instanceof</span> IntroductionAdvisor) &#123;<br>            <span class="hljs-comment">// already processed</span><br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (canApply(candidate, clazz, hasIntroductions)) &#123;<br>            eligibleAdvisors.add(candidate);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> eligibleAdvisors;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可以发现，整体逻辑分为两个部分，前面是针对引介通知的增强器作筛选，后面是普通的方法通知封装的增强器。</p>
+<p>上面的引介增强器的匹配咱就不多研究了，本来平时就用得少，咱主要还是来看对于方法的增强器，它是如何去做匹配的。进入到下面的 <code>canApply</code> 方法中：（留意源码中标注的注释）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">canApply</span><span class="hljs-params">(Advisor advisor, Class&lt;?&gt; targetClass, <span class="hljs-keyword">boolean</span> hasIntroductions)</span> </span>&#123;<br>    <span class="hljs-comment">// 对于引介增强器，它会直接强转，使用类级别的过滤器去匹配</span><br>    <span class="hljs-keyword">if</span> (advisor <span class="hljs-keyword">instanceof</span> IntroductionAdvisor) &#123;<br>        <span class="hljs-keyword">return</span> ((IntroductionAdvisor) advisor).getClassFilter().matches(targetClass);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (advisor <span class="hljs-keyword">instanceof</span> PointcutAdvisor) &#123;<br>        <span class="hljs-comment">// 方法切入点的增强器匹配逻辑</span><br>        PointcutAdvisor pca = (PointcutAdvisor) advisor;<br>        <span class="hljs-keyword">return</span> canApply(pca.getPointcut(), targetClass, hasIntroductions);<br>    &#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// It doesn&#x27;t have a pointcut so we assume it applies.</span><br>        <span class="hljs-comment">// SpringFramework也不知道咋搞了，于是就直接让它可以匹配</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>从这个逻辑中就可以看出，底层针对不同种的增强器，分别会有不同的判断逻辑。对于方法增强器的判断，它又调用了下面的重载方法：（篇幅略长，小伙伴们只需要关心有注释的部分即可）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">canApply</span><span class="hljs-params">(Pointcut pc, Class&lt;?&gt; targetClass, <span class="hljs-keyword">boolean</span> hasIntroductions)</span> </span>&#123;<br>    Assert.notNull(pc, <span class="hljs-string">&quot;Pointcut must not be null&quot;</span>);<br>    <span class="hljs-comment">// 连类都切入不进去，那干脆没必要往下走了</span><br>    <span class="hljs-keyword">if</span> (!pc.getClassFilter().matches(targetClass)) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    &#125;<br><br>    MethodMatcher methodMatcher = pc.getMethodMatcher();<br>    <span class="hljs-keyword">if</span> (methodMatcher == MethodMatcher.TRUE) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 针对引介通知的匹配</span><br>    IntroductionAwareMethodMatcher introductionAwareMethodMatcher = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">if</span> (methodMatcher <span class="hljs-keyword">instanceof</span> IntroductionAwareMethodMatcher) &#123;<br>        introductionAwareMethodMatcher = (IntroductionAwareMethodMatcher) methodMatcher;<br>    &#125;<br><br>    Set&lt;Class&lt;?&gt;&gt; classes = <span class="hljs-keyword">new</span> LinkedHashSet&lt;&gt;();<br>    <span class="hljs-keyword">if</span> (!Proxy.isProxyClass(targetClass)) &#123;<br>        classes.add(ClassUtils.getUserClass(targetClass));<br>    &#125;<br>    classes.addAll(ClassUtils.getAllInterfacesForClassAsSet(targetClass));<br><br>    <span class="hljs-keyword">for</span> (Class&lt;?&gt; clazz : classes) &#123;<br>        <span class="hljs-comment">// 逐个判断每个方法是否能被当前切入点表达式切入，切入则立即返回true</span><br>        Method[] methods = ReflectionUtils.getAllDeclaredMethods(clazz);<br>        <span class="hljs-keyword">for</span> (Method method : methods) &#123;<br>            <span class="hljs-keyword">if</span> (introductionAwareMethodMatcher != <span class="hljs-keyword">null</span> ?<br>                    introductionAwareMethodMatcher.matches(method, targetClass, hasIntroductions) :<br>                    methodMatcher.matches(method, targetClass)) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>整体思路还是很清晰的吧，我们要理解的核心部分，是下面的这个双重循环，以此就能判断出来切入点表达式是否能对当前 bean 进行增强了。</p>
+<p>Debug 下来，最终发现可以给 <code>OrderService</code> 匹配到的增强器一共有 2 个：（ <code>FinanceService</code> 就不看了，因为咱一开始学习的时候，就是拿它举的例子，所有的通知方法都切入它了）</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a87a9fe41e9b449c95f14a209fc118c3~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<h4 id="1-1-3-extendAdvisors"><a href="#1-1-3-extendAdvisors" class="headerlink" title="1.1.3 extendAdvisors"></a>1.1.3 extendAdvisors</h4><p>这个方法看上去蛮不起眼的，不过小伙伴们有自己 Debug 的话，过了这个方法会发现 <code>eligibleAdvisors</code> 集合中多了一个增强器：</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4216759584e4627b3ff1cfc8523bd02~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<p>诶？它自己还有偷偷添加增强器啊，那咱看看它干了些啥：</p>
+<h5 id="1-1-3-1-extendAdvisors方法的小动作"><a href="#1-1-3-1-extendAdvisors方法的小动作" class="headerlink" title="1.1.3.1 extendAdvisors方法的小动作"></a>1.1.3.1 extendAdvisors方法的小动作</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">extendAdvisors</span><span class="hljs-params">(List&lt;Advisor&gt; candidateAdvisors)</span> </span>&#123;<br>    AspectJProxyUtils.makeAdvisorChainAspectJCapableIfNecessary(candidateAdvisors);<br>&#125;<br><br><span class="hljs-comment">// AspectJProxyUtils</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">makeAdvisorChainAspectJCapableIfNecessary</span><span class="hljs-params">(List&lt;Advisor&gt; advisors)</span> </span>&#123;<br>    <span class="hljs-comment">// Don&#x27;t add advisors to an empty list; may indicate that proxying is just not required</span><br>    <span class="hljs-keyword">if</span> (!advisors.isEmpty()) &#123;<br>        <span class="hljs-keyword">boolean</span> foundAspectJAdvice = <span class="hljs-keyword">false</span>;<br>        <span class="hljs-keyword">for</span> (Advisor advisor : advisors) &#123;<br>            <span class="hljs-comment">// Be careful not to get the Advice without a guard, as this might eagerly</span><br>            <span class="hljs-comment">// instantiate a non-singleton AspectJ aspect...</span><br>            <span class="hljs-keyword">if</span> (isAspectJAdvice(advisor)) &#123;<br>                foundAspectJAdvice = <span class="hljs-keyword">true</span>;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">// 发现有AspectJ包装的增强器，则添加一个ExposeInvocationInterceptor</span><br>        <span class="hljs-keyword">if</span> (foundAspectJAdvice &amp;&amp; !advisors.contains(ExposeInvocationInterceptor.ADVISOR)) &#123;<br>            advisors.add(<span class="hljs-number">0</span>, ExposeInvocationInterceptor.ADVISOR);<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>逻辑不算复杂，它这个方法的关键是，判断当前可用的增强器中有没有 AspectJ 类型的，如果有的话，那就在整个增强器的列表的最前面，添加一个 <code>ExposeInvocationInterceptor.ADVISOR</code> 。</p>
+<h5 id="1-1-3-2-ADVISOR是个啥？"><a href="#1-1-3-2-ADVISOR是个啥？" class="headerlink" title="1.1.3.2 ADVISOR是个啥？"></a>1.1.3.2 ADVISOR是个啥？</h5><p>那这个 <code>ADVISOR</code> 又是个啥子？咱继续往里走：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ExposeInvocationInterceptor INSTANCE = <span class="hljs-keyword">new</span> ExposeInvocationInterceptor();<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Advisor ADVISOR = <span class="hljs-keyword">new</span> DefaultPointcutAdvisor(INSTANCE) &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> ExposeInvocationInterceptor.class.getName() +<span class="hljs-string">&quot;.ADVISOR&quot;</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>哦？合着它是个对所有 bean 都生效的增强器呗？传入的这个 <code>INSTANCE</code> 很明显是单例的设计，那到头来核心还是这个 <code>ExposeInvocationInterceptor</code> 本身。</p>
+<h5 id="1-1-3-3-ExposeInvocationInterceptor又是个啥？"><a href="#1-1-3-3-ExposeInvocationInterceptor又是个啥？" class="headerlink" title="1.1.3.3 ExposeInvocationInterceptor又是个啥？"></a>1.1.3.3 ExposeInvocationInterceptor又是个啥？</h5><p>那新的问题就来了：<code>ExposeInvocationInterceptor</code> 这玩意的作用是什么呢？</p>
+<p>翻开源码的核心 invoke 方法，发现它在向当前线程的 <code>ThreadLocal</code> 中放入了当前正在执行的代理对象的方法执行包装：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;MethodInvocation&gt; invocation =<br>			<span class="hljs-keyword">new</span> NamedThreadLocal&lt;&gt;(<span class="hljs-string">&quot;Current AOP method invocation&quot;</span>);<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(MethodInvocation mi)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>    MethodInvocation oldInvocation = invocation.get();<br>    invocation.set(mi);<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">return</span> mi.proceed();<br>    &#125;<br>    <span class="hljs-keyword">finally</span> &#123;<br>        invocation.set(oldInvocation);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>每次都在增强器链的第一个执行，并且放入 <code>ThreadLocal</code> 变量中，那这意图就很明显了：它可以让后面的增强器都拿到当前正在执行的 <code>MethodInvocation</code> 。至于哪里会用到 <code>MethodInvocation</code> ，咱目前还没有遇到，后面如果遇到了咱再留意。</p>
+<p>或许会有小伙伴产生一个小小的疑惑：那你放就放呗，<code> MethodInvocation oldInvocation = invocation.get();</code> 这个操作是啥意思？原本就没有，你 <code>get</code> 个什么劲呢？？？</p>
+<p>哎？真的没有吗？如果是一个 AOP 代理对象，调用了另外一个 AOP 代理对象的话，这个过程是在一个线程中执行的呀，那第二个代理对象的方法被调用时，是不是也会经过 <code>ExposeInvocationInterceptor</code> 呢？那是不是从 <code>ThreadLocal</code> 中就可以取出 <code>MethodInvocation</code> 了呢？所以小伙伴们一定要多想一层呀，多实践多思考才会更进步 ~</p>
+<h3 id="1-2-createProxy"><a href="#1-2-createProxy" class="headerlink" title="1.2 createProxy"></a>1.2 createProxy</h3><p>上面结束之后，所有的增强器也就都准备好了，接下来就是创建代理对象的部分了，咱进入 <code>createProxy</code> 中：（方法略长，咱只关心关键部分的源码和注释即可）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> Object <span class="hljs-title">createProxy</span><span class="hljs-params">(Class&lt;?&gt; beanClass, <span class="hljs-meta">@Nullable</span> String beanName,</span></span><br><span class="hljs-function"><span class="hljs-params">        <span class="hljs-meta">@Nullable</span> Object[] specificInterceptors, TargetSource targetSource)</span> </span>&#123;<br>    <span class="hljs-comment">// 记录被代理bean的原始类型</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.beanFactory <span class="hljs-keyword">instanceof</span> ConfigurableListableBeanFactory) &#123;<br>        AutoProxyUtils.exposeTargetClass((ConfigurableListableBeanFactory) <span class="hljs-keyword">this</span>.beanFactory, beanName, beanClass);<br>    &#125;<br><br>    <span class="hljs-comment">// 代理工厂的初始化</span><br>    ProxyFactory proxyFactory = <span class="hljs-keyword">new</span> ProxyFactory();<br>    proxyFactory.copyFrom(<span class="hljs-keyword">this</span>);<br><br>    <span class="hljs-comment">// 根据AOP的设计，决定是否强制使用Cglib</span><br>    <span class="hljs-keyword">if</span> (!proxyFactory.isProxyTargetClass()) &#123;<br>        <span class="hljs-keyword">if</span> (shouldProxyTargetClass(beanClass, beanName)) &#123;<br>            <span class="hljs-comment">// Cglib动态代理直接记录被代理bean的所属类即可</span><br>            proxyFactory.setProxyTargetClass(<span class="hljs-keyword">true</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">// 解析被代理bean所属类的所有实现的接口</span><br>            evaluateProxyInterfaces(beanClass, proxyFactory);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 1.2.1 构造整合所有增强器</span><br>    Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);<br>    proxyFactory.addAdvisors(advisors);<br>    proxyFactory.setTargetSource(targetSource);<br>    customizeProxyFactory(proxyFactory);<br><br>    proxyFactory.setFrozen(<span class="hljs-keyword">this</span>.freezeProxy);<br>    <span class="hljs-keyword">if</span> (advisorsPreFiltered()) &#123;<br>        proxyFactory.setPreFiltered(<span class="hljs-keyword">true</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 1.2.2 创建代理对象</span><br>    <span class="hljs-keyword">return</span> proxyFactory.getProxy(getProxyClassLoader());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>到了这里，咱就可以发现，这里面的逻辑已经基本上处理的差不多了，核心的动作就两个：<strong>收集整理要织入到目标对象的通知增强器</strong>，以及<strong>创建代理对象</strong>。前面的那些小细节小伙伴们可以自行研究，相对都是蛮简单的，小册带小伙伴们关注的是这两部分的核心逻辑。</p>
+<h4 id="1-2-1-buildAdvisors"><a href="#1-2-1-buildAdvisors" class="headerlink" title="1.2.1 buildAdvisors"></a>1.2.1 buildAdvisors</h4><p>源码不算长，里面有一段日志的部分，小册在这里删掉了，咱只关心核心逻辑：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">protected</span> Advisor[] buildAdvisors(<span class="hljs-meta">@Nullable</span> String beanName, <span class="hljs-meta">@Nullable</span> Object[] specificInterceptors) &#123;<br>    <span class="hljs-comment">// Handle prototypes correctly...</span><br>    <span class="hljs-comment">// 这个地方是适配Spring原生AOP的MethodInterceptor，感兴趣的小伙伴可自行研究</span><br>    Advisor[] commonInterceptors = resolveInterceptorNames();<br><br>    List&lt;Object&gt; allInterceptors = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>    <span class="hljs-keyword">if</span> (specificInterceptors != <span class="hljs-keyword">null</span>) &#123;<br>        allInterceptors.addAll(Arrays.asList(specificInterceptors));<br>        <span class="hljs-comment">// 组合原生的方法拦截器，共同作为AOP的通知织入</span><br>        <span class="hljs-keyword">if</span> (commonInterceptors.length &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.applyCommonInterceptorsFirst) &#123;<br>                allInterceptors.addAll(<span class="hljs-number">0</span>, Arrays.asList(commonInterceptors));<br>            &#125;<br>            <span class="hljs-keyword">else</span> &#123;<br>                allInterceptors.addAll(Arrays.asList(commonInterceptors));<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// logger ......</span><br><br>    Advisor[] advisors = <span class="hljs-keyword">new</span> Advisor[allInterceptors.size()];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; allInterceptors.size(); i++) &#123;<br>        <span class="hljs-comment">// 此处有一个原生AOP的适配动作</span><br>        advisors[i] = <span class="hljs-keyword">this</span>.advisorAdapterRegistry.wrap(allInterceptors.get(i));<br>    &#125;<br>    <span class="hljs-keyword">return</span> advisors;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上面整合 SpringFramework 原生 AOP 的内容咱小册就不提及了，毕竟是很久之前用的东西了，咱现在都是 AspectJ 的。在最下面，它有一个 <code>advisorAdapterRegistry.wrap</code> 的方法调用，它是干嘛的呢？咱可以去瞅一眼：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Advisor <span class="hljs-title">wrap</span><span class="hljs-params">(Object adviceObject)</span> <span class="hljs-keyword">throws</span> UnknownAdviceTypeException </span>&#123;<br>    <span class="hljs-comment">// Advisor增强器可以直接返回</span><br>    <span class="hljs-keyword">if</span> (adviceObject <span class="hljs-keyword">instanceof</span> Advisor) &#123;<br>        <span class="hljs-keyword">return</span> (Advisor) adviceObject;<br>    &#125;<br>    <span class="hljs-comment">// 不支持非Advice的类型</span><br>    <span class="hljs-keyword">if</span> (!(adviceObject <span class="hljs-keyword">instanceof</span> Advice)) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnknownAdviceTypeException(adviceObject);<br>    &#125;<br>    Advice advice = (Advice) adviceObject;<br>    <span class="hljs-comment">// MethodInterceptor的支持</span><br>    <span class="hljs-keyword">if</span> (advice <span class="hljs-keyword">instanceof</span> MethodInterceptor) &#123;<br>        <span class="hljs-comment">// So well-known it doesn&#x27;t even need an adapter.</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DefaultPointcutAdvisor(advice);<br>    &#125;<br>    <span class="hljs-comment">// AdvisorAdapter的支持</span><br>    <span class="hljs-keyword">for</span> (AdvisorAdapter adapter : <span class="hljs-keyword">this</span>.adapters) &#123;<br>        <span class="hljs-comment">// Check that it is supported.</span><br>        <span class="hljs-keyword">if</span> (adapter.supportsAdvice(advice)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DefaultPointcutAdvisor(advice);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnknownAdviceTypeException(advice);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意这个方法的参数和返回值：它可以是任意类型的入参，但返回的一定是 <code>Advisor</code> ，这也就呼应了 <code>wrap</code> 方法的含义：<strong>将可以支持转换 / 包装为 <code>Advisor</code> 类型的对象适配成 <code>Advisor</code></strong> 。至于它可以适配的类型，内置的只有 <code>MethodInterceptor</code> 和几种原生的 <code>Advice</code> （前面 Spring 原生 AOP 中提到的），不过它提供了一个 <code>AdvisorAdapter</code> 的接口，供我们扩展使用，以此来支持自定义的 <code>Advice</code> 类型。不过我们几乎都没有这么做的，所以这部分小伙伴们知道一下就可以了，没必要深究。</p>
+<h4 id="1-2-2-proxyFactory-getProxy"><a href="#1-2-2-proxyFactory-getProxy" class="headerlink" title="1.2.2 proxyFactory.getProxy"></a>1.2.2 proxyFactory.getProxy</h4><p>下面就是真正创建代理对象的逻辑了，这个方法又分为两个部分：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">getProxy</span><span class="hljs-params">(<span class="hljs-meta">@Nullable</span> ClassLoader classLoader)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> createAopProxy().getProxy(classLoader);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>咱一一来看。</p>
+<h5 id="1-2-2-1-createAopProxy"><a href="#1-2-2-1-createAopProxy" class="headerlink" title="1.2.2.1 createAopProxy"></a>1.2.2.1 createAopProxy</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">synchronized</span> AopProxy <span class="hljs-title">createAopProxy</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.active) &#123;<br>        activate();<br>    &#125;<br>    <span class="hljs-keyword">return</span> getAopProxyFactory().createAopProxy(<span class="hljs-keyword">this</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">activate</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>.active = <span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">for</span> (AdvisedSupportListener listener : <span class="hljs-keyword">this</span>.listeners) &#123;<br>        listener.activated(<span class="hljs-keyword">this</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上面有一个监听器的通知动作，由于这个动作涉及到的监听器 <code>AdvisedSupportListener</code> 只在 <code>ProxyCreatorSupport</code> 这个类中使用，咱们开发也基本不会碰这些东西，所以这个咱可以跳过了，关键的还是下面 <code>getAopProxyFactory().createAopProxy(this);</code> 的执行。</p>
+<p><code>getAopProxyFactory</code> 方法返回的是当前 <code>ProxyCreatorSupport</code> 的成员 <code>aopProxyFactory</code>，借助 Debug 可以发现它的类型是 <code>DefaultAopProxyFactory</code> 。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a099480498f74ec19e5d3fbd7739c0ba~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<p>进入到它的 <code>createAopProxy</code> 方法中，终于发现了咱熟悉的 jdk 、Cglib 动态代理的字眼了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> AopProxy <span class="hljs-title">createAopProxy</span><span class="hljs-params">(AdvisedSupport config)</span> <span class="hljs-keyword">throws</span> AopConfigException </span>&#123;<br>    <span class="hljs-keyword">if</span> (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) &#123;<br>        Class&lt;?&gt; targetClass = config.getTargetClass();<br>        <span class="hljs-keyword">if</span> (targetClass == <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> AopConfigException(<span class="hljs-string">&quot;TargetSource cannot determine target class: &quot;</span> +<br>                    <span class="hljs-string">&quot;Either an interface or a target is required for proxy creation.&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 如果要代理的本身就是接口，或者已经是被jdk动态代理了的代理对象</span><br>        <span class="hljs-comment">// 则使用jdk动态代理</span><br>        <span class="hljs-keyword">if</span> (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> JdkDynamicAopProxy(config);<br>        &#125;<br>        <span class="hljs-comment">// 否则使用Cglib动态代理</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ObjenesisCglibAopProxy(config);<br>    &#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> JdkDynamicAopProxy(config);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>至此，咱就知道，使用 jdk 动态代理，还是 Cglib 动态代理，底层的选择是在这里决定的。</p>
+<h5 id="1-2-2-2-AopProxy-getProxy"><a href="#1-2-2-2-AopProxy-getProxy" class="headerlink" title="1.2.2.2 AopProxy#getProxy"></a>1.2.2.2 AopProxy#getProxy</h5><p>创建完 <code>AopProxy</code> 后，下面就是创建代理对象的动作了，咱以 <code>JdkDynamicAopProxy</code> 为例进去看一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">getProxy</span><span class="hljs-params">(<span class="hljs-meta">@Nullable</span> ClassLoader classLoader)</span> </span>&#123;<br>    <span class="hljs-comment">// logger ......</span><br>    Class&lt;?&gt;[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(<span class="hljs-keyword">this</span>.advised, <span class="hljs-keyword">true</span>);<br>    findDefinedEqualsAndHashCodeMethods(proxiedInterfaces);<br>    <span class="hljs-comment">// jdk动态代理的API</span><br>    <span class="hljs-keyword">return</span> Proxy.newProxyInstance(classLoader, proxiedInterfaces, <span class="hljs-keyword">this</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>看，最底下，咱最最熟悉的 <code>Proxy.newProxyInstance</code> 方法出现了！！！所以由此咱就可以体会到，代理对象的底层创建还是依赖 jdk 动态代理，或者 Cglib 动态代理的核心 API 呀！</p>
+<p>至于 Cglib 动态代理的创建，咱就不特别深入了，咱注意一下中间的核心部分即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// ......</span><br><span class="hljs-comment">// Configure CGLIB Enhancer...</span><br>Enhancer enhancer = createEnhancer();<br><span class="hljs-keyword">if</span> (classLoader != <span class="hljs-keyword">null</span>) &#123;<br>    enhancer.setClassLoader(classLoader);<br>    <span class="hljs-keyword">if</span> (classLoader <span class="hljs-keyword">instanceof</span> SmartClassLoader &amp;&amp;<br>            ((SmartClassLoader) classLoader).isClassReloadable(proxySuperClass)) &#123;<br>        enhancer.setUseCache(<span class="hljs-keyword">false</span>);<br>    &#125;<br>&#125;<br>enhancer.setSuperclass(proxySuperClass);<br>enhancer.setInterfaces(AopProxyUtils.completeProxiedInterfaces(<span class="hljs-keyword">this</span>.advised));<br>enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);<br>enhancer.setStrategy(<span class="hljs-keyword">new</span> ClassLoaderAwareGeneratorStrategy(classLoader));<br><br>Callback[] callbacks = getCallbacks(rootClass);<br>Class&lt;?&gt;[] types = <span class="hljs-keyword">new</span> Class&lt;?&gt;[callbacks.length];<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>; x &lt; types.length; x++) &#123;<br>    types[x] = callbacks[x].getClass();<br>&#125;<br><span class="hljs-comment">// fixedInterceptorMap only populated at this point, after getCallbacks call above</span><br>enhancer.setCallbackFilter(<span class="hljs-keyword">new</span> ProxyCallbackFilter(<br>        <span class="hljs-keyword">this</span>.advised.getConfigurationOnlyCopy(), <span class="hljs-keyword">this</span>.fixedInterceptorMap, <span class="hljs-keyword">this</span>.fixedInterceptorOffset));<br>enhancer.setCallbackTypes(types);<br><br><span class="hljs-comment">// Generate the proxy class and create a proxy instance.</span><br><span class="hljs-keyword">return</span> createProxyClassAndInstance(enhancer, callbacks);<br><span class="hljs-comment">// ......</span><br></code></pre></td></tr></table></figure>
+<p>可以看到，这也是对 Cglib 中的 <code>Enhancer</code> 进行操作，核心的思路是不变的，只是框架比咱考虑的更多罢了。</p>
+<p>OK ，到此为止，代理对象也就成功创建了，整个 AOP 通知织入的流程也就结束了。</p>
+<p>【 AOP 原理的最后一章，咱来看看实际的代理对象方法执行时，通知都是怎么执行的，它内部的调用链是如何设计的、如何调用执行的】</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/17/13-AOP%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1%E5%BA%95%E5%B1%82%E6%89%A7%E8%A1%8C%E9%80%BB%E8%BE%91/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">13-AOP原理-代理对象底层执行逻辑</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/17/11-AOP%E5%8E%9F%E7%90%86-%E5%88%87%E9%9D%A2%E7%B1%BB%E6%94%B6%E9%9B%86%E5%B0%81%E8%A3%85/">
+                        <span class="hidden-mobile">11-AOP原理-切面类收集封装</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/17/12-AOP%E5%8E%9F%E7%90%86-Bean%E5%A6%82%E4%BD%95%E8%A2%ABAOP%E4%BB%A3%E7%90%86%E7%9A%84/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
