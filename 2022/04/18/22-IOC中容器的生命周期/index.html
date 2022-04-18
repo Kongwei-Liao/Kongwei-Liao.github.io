@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>22-IOC中容器的生命周期 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="22-IOC中容器的生命周期">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-18 13:11" pubdate>
+        2022年4月18日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      63
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">22-IOC中容器的生命周期</h1>
+            
+            <div class="markdown-body">
+              <h1 id="IOC-容器的生命周期概述"><a href="#IOC-容器的生命周期概述" class="headerlink" title="IOC 容器的生命周期概述"></a>IOC 容器的生命周期概述</h1><p>前面大篇幅，研究了 Bean 的完整生命周期，在此期间我们也对整个 IOC 容器的生命周期了解了部分流程。</p>
+<p>本章咱来完整的看一下 IOC 容器的一个刷新动作中，会有哪些动作的触发，以及从这些流程中，我们能梳理出哪些可以切入进 SpringFramework 内部流程的扩展点。</p>
+<p>本章主要涉及的原理部分：</p>
+<ul>
+<li><code>ApplicationContext#refresh</code> 方法整体概述</li>
+<li><code>refresh</code> 方法中可以切入的扩展点</li>
+</ul>
+<p>前面我们已经<strong>反复多次提到 <code>ApplicationContext</code> 的 <code>refresh</code> 方法是整个 IOC 容器初始化的核心</strong>，它一共分为 13 步：</p>
+<h2 id="1-AbstractApplicationContext-refresh"><a href="#1-AbstractApplicationContext-refresh" class="headerlink" title="1. AbstractApplicationContext#refresh"></a>1. AbstractApplicationContext#refresh</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">refresh</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> BeansException, IllegalStateException </span>&#123;<br>    <span class="hljs-keyword">synchronized</span> (<span class="hljs-keyword">this</span>.startupShutdownMonitor) &#123;<br>        <span class="hljs-comment">// Prepare this context for refreshing.</span><br>        <span class="hljs-comment">// 1. 初始化前的预处理</span><br>        prepareRefresh();<br><br>        <span class="hljs-comment">// Tell the subclass to refresh the internal bean factory.</span><br>        <span class="hljs-comment">// 2. 获取BeanFactory，加载所有bean的定义信息（未实例化）</span><br>        ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();<br><br>        <span class="hljs-comment">// Prepare the bean factory for use in this context.</span><br>        <span class="hljs-comment">// 3. BeanFactory的预处理配置</span><br>        prepareBeanFactory(beanFactory);<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// Allows post-processing of the bean factory in context subclasses.</span><br>            <span class="hljs-comment">// 4. 准备BeanFactory完成后进行的后置处理</span><br>            postProcessBeanFactory(beanFactory);<br><br>            <span class="hljs-comment">// Invoke factory processors registered as beans in the context.</span><br>            <span class="hljs-comment">// 5. 执行BeanFactory创建后的后置处理器</span><br>            invokeBeanFactoryPostProcessors(beanFactory);<br><br>            <span class="hljs-comment">// Register bean processors that intercept bean creation.</span><br>            <span class="hljs-comment">// 6. 注册Bean的后置处理器</span><br>            registerBeanPostProcessors(beanFactory);<br><br>            <span class="hljs-comment">// Initialize message source for this context.</span><br>            <span class="hljs-comment">// 7. 初始化MessageSource</span><br>            initMessageSource();<br><br>            <span class="hljs-comment">// Initialize event multicaster for this context.</span><br>            <span class="hljs-comment">// 8. 初始化事件派发器</span><br>            initApplicationEventMulticaster();<br><br>            <span class="hljs-comment">// Initialize other special beans in specific context subclasses.</span><br>            <span class="hljs-comment">// 9. 子类的多态onRefresh</span><br>            onRefresh();<br><br>            <span class="hljs-comment">// Check for listener beans and register them.</span><br>            <span class="hljs-comment">// 10. 注册监听器</span><br>            registerListeners();<br>          <br>            <span class="hljs-comment">//到此为止，BeanFactory已创建完成</span><br><br>            <span class="hljs-comment">// Instantiate all remaining (non-lazy-init) singletons.</span><br>            <span class="hljs-comment">// 11. 初始化所有剩下的单例Bean</span><br>            finishBeanFactoryInitialization(beanFactory);<br><br>            <span class="hljs-comment">// Last step: publish corresponding event.</span><br>            <span class="hljs-comment">// 12. 完成容器的创建工作</span><br>            finishRefresh();<br>        &#125; <span class="hljs-comment">// catch ......</span><br><br>        <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-comment">// Reset common introspection caches in Spring&#x27;s core, since we</span><br>            <span class="hljs-comment">// might not ever need metadata for singleton beans anymore...</span><br>            <span class="hljs-comment">// 13. 清除缓存</span><br>            resetCommonCaches();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="1-1-prepareRefresh-初始化前的预处理"><a href="#1-1-prepareRefresh-初始化前的预处理" class="headerlink" title="1.1 prepareRefresh - 初始化前的预处理"></a>1.1 prepareRefresh - 初始化前的预处理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">prepareRefresh</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 此处会记录启动时间，切换IOC容器的状态</span><br>    <span class="hljs-keyword">this</span>.startupDate = System.currentTimeMillis();<br>    <span class="hljs-keyword">this</span>.closed.set(<span class="hljs-keyword">false</span>);<br>    <span class="hljs-keyword">this</span>.active.set(<span class="hljs-keyword">true</span>);<br><br>    <span class="hljs-comment">// logger ......</span><br><br>    <span class="hljs-comment">// 初始化属性配置</span><br>    initPropertySources();<br><br>    <span class="hljs-comment">// 属性校验</span><br>    getEnvironment().validateRequiredProperties();<br><br>    <span class="hljs-comment">// 省略源码 - 初始化早期事件</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这一步中，大多数的动作都是前置性的准备，而且基本上这些准备的动作在我们现阶段学习的内容中几乎都用不到，小伙伴们可以暂且忽略即可。</p>
+<blockquote>
+<p><code>initPropertySources</code> 方法在基于 web 环境的 <code>ApplicationContext</code> 子类中有重写，在 boot 小册的第 11 章中有提及到，感兴趣的小伙伴们可以先去看一看。</p>
+<p>关于早期事件的概念，可能现阶段解释起来比较复杂，后续再考虑补充。</p>
+</blockquote>
+<h3 id="1-2-obtainFreshBeanFactory-初始化BeanFactory"><a href="#1-2-obtainFreshBeanFactory-初始化BeanFactory" class="headerlink" title="1.2 obtainFreshBeanFactory - 初始化BeanFactory"></a>1.2 obtainFreshBeanFactory - 初始化BeanFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> ConfigurableListableBeanFactory <span class="hljs-title">obtainFreshBeanFactory</span><span class="hljs-params">()</span> </span>&#123;<br>    refreshBeanFactory();<br>    <span class="hljs-keyword">return</span> getBeanFactory();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>基于 xml 配置文件的 <code>ApplicationContext</code> 中，在该步骤会解析 xml 配置文件，封装 <code>BeanDefinition</code> 。</p>
+<p>但是，基于注解配置类的 <code>ApplicationContext</code> 就不太一样了，上一章中我们看到，<code>GenericApplicationContext</code> 的 <code>refreshBeanFactory</code> 方法中，有一个 CAS 判断的动作，它控制着 <code>GenericApplicationContext</code> 不能反复刷新。</p>
+<p>所以从这一步我们能知道的，是<strong>基于 xml 配置文件的 <code>ApplicationContext</code> 可以反复刷新，基于注解配置类的 <code>ApplicationContext</code> 只能刷新一次</strong>。</p>
+<h3 id="1-3-prepareBeanFactory-BeanFactory的预处理动作"><a href="#1-3-prepareBeanFactory-BeanFactory的预处理动作" class="headerlink" title="1.3 prepareBeanFactory - BeanFactory的预处理动作"></a>1.3 prepareBeanFactory - BeanFactory的预处理动作</h3><p>这个方法比较长，但仔细观察可以发现源码是非常有条理的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">prepareBeanFactory</span><span class="hljs-params">(ConfigurableListableBeanFactory beanFactory)</span> </span>&#123;<br>    <span class="hljs-comment">// 给BeanFactory中设置类加载器、表达式解析器</span><br>    beanFactory.setBeanClassLoader(getClassLoader());<br>    beanFactory.setBeanExpressionResolver(<span class="hljs-keyword">new</span> StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));<br>    beanFactory.addPropertyEditorRegistrar(<span class="hljs-keyword">new</span> ResourceEditorRegistrar(<span class="hljs-keyword">this</span>, getEnvironment()));<br><br>    <span class="hljs-comment">// 1.3.1 编码注册ApplicationContextAwareProcessor</span><br>    beanFactory.addBeanPostProcessor(<span class="hljs-keyword">new</span> ApplicationContextAwareProcessor(<span class="hljs-keyword">this</span>));<br>    <span class="hljs-comment">// 1.3.2 以下几个Aware接口的回调注入不由BeanFactory负责</span><br>    beanFactory.ignoreDependencyInterface(EnvironmentAware.class);<br>    beanFactory.ignoreDependencyInterface(EmbeddedValueResolverAware.class);<br>    beanFactory.ignoreDependencyInterface(ResourceLoaderAware.class);<br>    beanFactory.ignoreDependencyInterface(ApplicationEventPublisherAware.class);<br>    beanFactory.ignoreDependencyInterface(MessageSourceAware.class);<br>    beanFactory.ignoreDependencyInterface(ApplicationContextAware.class);<br><br>    <span class="hljs-comment">// 1.3.3 以下几个类型的自动注入会直接绑定</span><br>    beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);<br>    beanFactory.registerResolvableDependency(ResourceLoader.class, <span class="hljs-keyword">this</span>);<br>    beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, <span class="hljs-keyword">this</span>);<br>    beanFactory.registerResolvableDependency(ApplicationContext.class, <span class="hljs-keyword">this</span>);<br><br>    <span class="hljs-comment">// 又编码注册监听器钩子</span><br>    beanFactory.addBeanPostProcessor(<span class="hljs-keyword">new</span> ApplicationListenerDetector(<span class="hljs-keyword">this</span>));<br><br>    <span class="hljs-comment">// 又是Load Time Weaver相关的部分，AOP再解释</span><br>    <span class="hljs-keyword">if</span> (beanFactory.containsBean(LOAD_TIME_WEAVER_BEAN_NAME)) &#123;<br>        beanFactory.addBeanPostProcessor(<span class="hljs-keyword">new</span> LoadTimeWeaverAwareProcessor(beanFactory));<br>        <span class="hljs-comment">// Set a temporary ClassLoader for type matching.</span><br>        beanFactory.setTempClassLoader(<span class="hljs-keyword">new</span> ContextTypeMatchClassLoader(beanFactory.getBeanClassLoader()));<br>    &#125;<br><br>    <span class="hljs-comment">// 注册默认的运行时环境Environment</span><br>    <span class="hljs-keyword">if</span> (!beanFactory.containsLocalBean(ENVIRONMENT_BEAN_NAME)) &#123;<br>        beanFactory.registerSingleton(ENVIRONMENT_BEAN_NAME, getEnvironment());<br>    &#125;<br>    <span class="hljs-keyword">if</span> (!beanFactory.containsLocalBean(SYSTEM_PROPERTIES_BEAN_NAME)) &#123;<br>        beanFactory.registerSingleton(SYSTEM_PROPERTIES_BEAN_NAME, getEnvironment().getSystemProperties());<br>    &#125;<br>    <span class="hljs-keyword">if</span> (!beanFactory.containsLocalBean(SYSTEM_ENVIRONMENT_BEAN_NAME)) &#123;<br>        beanFactory.registerSingleton(SYSTEM_ENVIRONMENT_BEAN_NAME, getEnvironment().getSystemEnvironment());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h4 id="1-3-1-ApplicationContextAwareProcessor-的注册"><a href="#1-3-1-ApplicationContextAwareProcessor-的注册" class="headerlink" title="1.3.1 ApplicationContextAwareProcessor 的注册"></a>1.3.1 ApplicationContextAwareProcessor 的注册</h4><p> <code>Aware</code> 接口注入的后置处理器中，那个起核心作用的 <code>ApplicationContextAwareProcessor</code> 是在此处注册的，而且它（ACAP）负责注入的 6 个 <code>Aware</code> 接口，恰好就是上面源码中忽略的 6 个接口，由此证实了 <code>ApplicationContextAwareProcessor</code> 接管 <code>BeanFactory</code> 自动注入这一设计。</p>
+<blockquote>
+<p>如何理解这一设计：<code>BeanFactory</code> 来自 <code>spring-beans</code> 包，而 <code>ApplicationContext</code> 来自 <code>spring-context</code> 包。</p>
+<p>由于 <code>context</code> 依赖 <code>beans</code> ，而 <code>beans</code> 本身可以单独存在。在没有 <code>context</code> 包的环境下，<code>BeanFactory</code> 本身也可以作为一个普通的 IOC 容器来处理依赖查找和自动类型注入，而引入 <code>context</code> 包后，出现了更多的内部组件，注入的要求也就更复杂。</p>
+<p>本着<strong>单一职责</strong>与<strong>职责分离</strong>的原则，<code>BeanFactory</code> 还是干原来的事情，扩展的 <code>Aware</code> 回调注入则交给 <code>context</code> 包中的 <code>ApplicationContextAwareProcessor</code> 搞定。</p>
+</blockquote>
+<h4 id="1-3-2-ignoreDependencyInterface-的设计"><a href="#1-3-2-ignoreDependencyInterface-的设计" class="headerlink" title="1.3.2 ignoreDependencyInterface 的设计"></a>1.3.2 ignoreDependencyInterface 的设计</h4><p>既然有 6 个 <code>Aware</code> 回调接口的工作被 <code>ApplicationContextAwareProcessor</code> 接管了，那 <code>BeanFactory</code> 本身就不再需要考虑这 6 个接口的注入了。</p>
+<p>这 6 个接口最终会存储到 <code>AbstractAutowireCapableBeanFactory</code> 的 <code>ignoredDependencyInterfaces</code> 变量中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Set&lt;Class&lt;?&gt;&gt; ignoredDependencyInterfaces = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();<br></code></pre></td></tr></table></figure>
+<p>而它被利用的时机，是在 bean 生命周期中的属性赋值 <code>populateBean</code> 阶段：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java">    <span class="hljs-comment">// ......</span><br>    <span class="hljs-keyword">if</span> (needsDepCheck) &#123;<br>        <span class="hljs-keyword">if</span> (filteredPds == <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-comment">// 此处ignoreDependencyInterface会被利用</span><br>            filteredPds = filterPropertyDescriptorsForDependencyCheck(bw, mbd.allowCaching);<br>        &#125;<br>        checkDependencies(beanName, mbd, filteredPds, pvs);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (pvs != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-comment">// 将PropertyValues应用给bean</span><br>        applyPropertyValues(beanName, mbd, bw, pvs);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>前面我们讲解 <code>applyPropertyValues</code> 方法，就是截取了这一小段，而上面露头的 <code>filterPropertyDescriptorsForDependencyCheck</code> 方法，内部就使用了 <code>ignoredDependencyInterfaces</code> 这个集合检查那些依赖的 <code>Aware</code> 接口。</p>
+<p>这里多说一嘴 <code>Aware</code> 接口在没有被 <code>BeanFactory</code> 忽略掉的执行原则吧：</p>
+<p>通常来讲，<code>Aware</code> 接口都会定义一个 <code>setXXX</code> 的方法（如 <code>BeanFactoryAware</code> 接口的 <code>setBeanFactory</code> 方法），同时实现了 <code>Aware</code> 接口的方法通常都会在成员属性中定义一个与回调注入类型相同的属性变量（如实现了 <code>BeanFactoryAware</code> 接口的类，通常都会定义一个 <code>private BeanFactory beanFactory;</code> ）。</p>
+<p>如果是按照这种设计编写的代码，<code>BeanFactory</code> 会认定这个属性可以受自动注入的支持（ <code>autowire-mode</code> ），并对这个属性进行依赖注入。</p>
+<p>简单的讲，<code>BeanFactory</code> 可以支持的自动注入（autowire-mode）的属性必须带有 setter 方法，而 <code>Aware</code> 接口的方法定义风格刚好是 setter 的风格，所以只需要求实现了 <code>Aware</code> 接口的类，定义属性时，属性名与 setter 方法对应的名称一致即可（ setPerson → person ）。</p>
+<h4 id="1-3-3-registerResolvableDependency-的设计"><a href="#1-3-3-registerResolvableDependency-的设计" class="headerlink" title="1.3.3 registerResolvableDependency 的设计"></a>1.3.3 registerResolvableDependency 的设计</h4><p>这个 <code>registerResolvableDependency</code> 方法，可能小伙伴们看了源码之后会更容易理解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Map from dependency type to corresponding autowired value.</span><br><span class="hljs-comment">// 从依赖属性的类型映射到相应的自动装配值</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;Class&lt;?&gt;, Object&gt; resolvableDependencies = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;(<span class="hljs-number">16</span>);<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">registerResolvableDependency</span><span class="hljs-params">(Class&lt;?&gt; dependencyType, <span class="hljs-meta">@Nullable</span> Object autowiredValue)</span> </span>&#123;<br>    Assert.notNull(dependencyType, <span class="hljs-string">&quot;Dependency type must not be null&quot;</span>);<br>    <span class="hljs-keyword">if</span> (autowiredValue != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-comment">// check throw ex ......</span><br>        <span class="hljs-keyword">this</span>.resolvableDependencies.put(dependencyType, autowiredValue);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>是不是一下子就看明白了，调用这个方法后，在 <code>BeanFactory</code> 再遇到特定类型的属性注入时，会直接从这个 <code>resolvableDependencies</code> 的 <code>Map</code> 中找出对应的值，直接注入进去（相当于预先指定好了哪个类型注入哪个值，不需要额外考虑）。</p>
+<h3 id="1-4-postProcessBeanFactory-BeanFactory-的后置处理"><a href="#1-4-postProcessBeanFactory-BeanFactory-的后置处理" class="headerlink" title="1.4 postProcessBeanFactory - BeanFactory 的后置处理"></a>1.4 postProcessBeanFactory - BeanFactory 的后置处理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanFactory</span><span class="hljs-params">(ConfigurableListableBeanFactory beanFactory)</span> </span>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个方法在 <code>AbstractApplicationContext</code> 中是一个模板方法，它的重写在基于 web 环境的 ApplicationContext 子类中有实现，回头我们学到 WebMvc 章节中再来看它。</p>
+<h3 id="1-5-invokeBeanFactoryPostProcessors-执行BeanFactoryPostProcessor"><a href="#1-5-invokeBeanFactoryPostProcessors-执行BeanFactoryPostProcessor" class="headerlink" title="1.5 invokeBeanFactoryPostProcessors - 执行BeanFactoryPostProcessor"></a>1.5 invokeBeanFactoryPostProcessors - 执行BeanFactoryPostProcessor</h3><p>这个方法我们前面已经看过了，它会执行所有的 <code>BeanDefinitionRegistryPostProcessor</code> 和 <code>BeanFactoryPostProcessor</code> ，主要工作是包扫描、解析配置类等，不再赘述。</p>
+<h3 id="1-6-registerBeanPostProcessors-初始化BeanPostProcessor"><a href="#1-6-registerBeanPostProcessors-初始化BeanPostProcessor" class="headerlink" title="1.6 registerBeanPostProcessors - 初始化BeanPostProcessor"></a>1.6 registerBeanPostProcessors - 初始化BeanPostProcessor</h3><p>这个方法我们前面也看过了，它会把所有的 <code>BeanPostProcessor</code> 都注册到位，这里面的处理逻辑与上面的 <code>invokeBeanFactoryPostProcessors</code> 类似，忘记的小伙伴们记得看前面第 34 章哦。</p>
+<h3 id="1-7-initMessageSource-初始化国际化组件"><a href="#1-7-initMessageSource-初始化国际化组件" class="headerlink" title="1.7 initMessageSource - 初始化国际化组件"></a>1.7 initMessageSource - 初始化国际化组件</h3><p>这个方法的源码小册不在此处贴出，它涉及到<strong>国际化</strong>的知识。早在第 15 章我们就说过，国际化的内容小册会放到 <strong>WebMvc</strong> 章节中讲解，so 此处先留下一个坑，回头到了 WebMvc 中再填。</p>
+<h3 id="1-8-initApplicationEventMulticaster-初始化事件广播器"><a href="#1-8-initApplicationEventMulticaster-初始化事件广播器" class="headerlink" title="1.8 initApplicationEventMulticaster - 初始化事件广播器"></a>1.8 initApplicationEventMulticaster - 初始化事件广播器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initApplicationEventMulticaster</span><span class="hljs-params">()</span> </span>&#123;<br>    ConfigurableListableBeanFactory beanFactory = getBeanFactory();<br>    <span class="hljs-keyword">if</span> (beanFactory.containsLocalBean(APPLICATION_EVENT_MULTICASTER_BEAN_NAME)) &#123;<br>        <span class="hljs-keyword">this</span>.applicationEventMulticaster =<br>                beanFactory.getBean(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, ApplicationEventMulticaster.class);<br>        <span class="hljs-comment">// logger ......</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">this</span>.applicationEventMulticaster = <span class="hljs-keyword">new</span> SimpleApplicationEventMulticaster(beanFactory);<br>        beanFactory.registerSingleton(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, <span class="hljs-keyword">this</span>.applicationEventMulticaster);<br>        <span class="hljs-comment">// logger ......</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这部分的内容非常简单了，它会构造一个 <code>SimpleApplicationEventMulticaster</code> ，并注册进 <code>BeanFactory</code> 中，仅此而已。</p>
+<h3 id="1-9-onRefresh-子类扩展的刷新动作"><a href="#1-9-onRefresh-子类扩展的刷新动作" class="headerlink" title="1.9 onRefresh - 子类扩展的刷新动作"></a>1.9 onRefresh - 子类扩展的刷新动作</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onRefresh</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    <span class="hljs-comment">// For subclasses: do nothing by default.</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>该部分又是一个模板方法，而它的扩展在纯 Spring 环境下是找不到的，不过在 SpringBoot 中，有子类对这个方法的重写，感兴趣的小伙伴可以移步 <a target="_blank" rel="noopener" href="https://juejin.cn/book/6844733814560784397/section/6844733814619504648">boot 小册第 16 章</a>学习。</p>
+<h3 id="1-10-registerListeners-注册监听器"><a href="#1-10-registerListeners-注册监听器" class="headerlink" title="1.10 registerListeners - 注册监听器"></a>1.10 registerListeners - 注册监听器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">registerListeners</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 注册所有已经被创建出来的ApplicationListener，绑定到ApplicationEventMulticaster中</span><br>    <span class="hljs-keyword">for</span> (ApplicationListener&lt;?&gt; listener : getApplicationListeners()) &#123;<br>        getApplicationEventMulticaster().addApplicationListener(listener);<br>    &#125;<br><br>    <span class="hljs-comment">// Do not initialize FactoryBeans here: We need to leave all regular beans</span><br>    <span class="hljs-comment">// uninitialized to let post-processors apply to them!</span><br>    <span class="hljs-comment">// 此处不会实例化ApplicationListener，而是只绑定name</span><br>    String[] listenerBeanNames = getBeanNamesForType(ApplicationListener.class, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">false</span>);<br>    <span class="hljs-keyword">for</span> (String listenerBeanName : listenerBeanNames) &#123;<br>        getApplicationEventMulticaster().addApplicationListenerBean(listenerBeanName);<br>    &#125;<br><br>    <span class="hljs-comment">// 广播早期事件（后续再解释）</span><br>    Set&lt;ApplicationEvent&gt; earlyEventsToProcess = <span class="hljs-keyword">this</span>.earlyApplicationEvents;<br>    <span class="hljs-keyword">this</span>.earlyApplicationEvents = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">if</span> (!CollectionUtils.isEmpty(earlyEventsToProcess)) &#123;<br>        <span class="hljs-keyword">for</span> (ApplicationEvent earlyEvent : earlyEventsToProcess) &#123;<br>            getApplicationEventMulticaster().multicastEvent(earlyEvent);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个方法共分为三个小段，条理也非常清晰。</p>
+<p>不过要注意一点，此处那些没有初始化的 <code>ApplicationListener</code> 并没有被实例化，而是会等到下一步 <code>finishBeanFactoryInitialization</code> 方法中才会被创建出来（注释中也说了，不要在此处创建，因为框架希望让那些后置处理器去干预它们）。</p>
+<h3 id="1-11-finishBeanFactoryInitialization-初始化剩余的单实例bean"><a href="#1-11-finishBeanFactoryInitialization-初始化剩余的单实例bean" class="headerlink" title="1.11 finishBeanFactoryInitialization - 初始化剩余的单实例bean"></a>1.11 finishBeanFactoryInitialization - 初始化剩余的单实例bean</h3><p>这个方法就是一个一个的循环初始化那些非延迟加载的单实例 bean 。</p>
+<h3 id="1-12-finishRefresh-刷新后的动作"><a href="#1-12-finishRefresh-刷新后的动作" class="headerlink" title="1.12 finishRefresh - 刷新后的动作"></a>1.12 finishRefresh - 刷新后的动作</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">finishRefresh</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// Clear context-level resource caches (such as ASM metadata from scanning).</span><br>    <span class="hljs-comment">// 清除上下文级别的资源缓存</span><br>    clearResourceCaches();<br><br>    <span class="hljs-comment">// Initialize lifecycle processor for this context.</span><br>    <span class="hljs-comment">// 为当前 ApplicationContext 初始化一个生命周期处理器</span><br>    initLifecycleProcessor();<br><br>    <span class="hljs-comment">// Propagate refresh to lifecycle processor first.</span><br>    <span class="hljs-comment">// 将 refresh 的动作传播到生命周期处理器</span><br>    getLifecycleProcessor().onRefresh();<br><br>    <span class="hljs-comment">// Publish the final event.</span><br>    <span class="hljs-comment">// 广播事件</span><br>    publishEvent(<span class="hljs-keyword">new</span> ContextRefreshedEvent(<span class="hljs-keyword">this</span>));<br><br>    <span class="hljs-comment">// Participate in LiveBeansView MBean, if active.</span><br>    LiveBeansView.registerApplicationContext(<span class="hljs-keyword">this</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>它主要是初始化 <code>LifecycleProcessor</code> 、广播刷新完成的事件，整体也没什么难的。</p>
+<h3 id="1-13-resetCommonCaches-清除缓存"><a href="#1-13-resetCommonCaches-清除缓存" class="headerlink" title="1.13 resetCommonCaches - 清除缓存"></a>1.13 resetCommonCaches - 清除缓存</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">resetCommonCaches</span><span class="hljs-params">()</span> </span>&#123;<br>    ReflectionUtils.clearCache();<br>    AnnotationUtils.clearCache();<br>    ResolvableType.clearCache();<br>    CachedIntrospectionResults.clearClassLoader(getClassLoader());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这就没啥好说的了吧，这些乱七八糟的缓存都可以干掉了（品种还不少呢），因为准备工作都完成了。</p>
+<h3 id="1-14-小结"><a href="#1-14-小结" class="headerlink" title="1.14 小结"></a>1.14 小结</h3><p>纵观整个 <code>refresh</code> 方法，每个动作的职责都很清晰，而且非常的有条理性。</p>
+<p>这个过程中，有对 <code>BeanFactory</code> 的处理，有对 <code>ApplicationContext</code> 的处理，有处理 <code>BeanPostProcessor</code> 的逻辑，有准备 <code>ApplicationListener</code> 的逻辑，最后它会初始化那些非延迟加载的单实例 bean 。</p>
+<p>整个 <code>refresh</code> 方法走下来，<code>ApplicationContext</code> 也就全部初始化完毕了。</p>
+<h2 id="2-ApplicationContext-初始化中的扩展点"><a href="#2-ApplicationContext-初始化中的扩展点" class="headerlink" title="2. ApplicationContext 初始化中的扩展点"></a>2. ApplicationContext 初始化中的扩展点</h2><p>看了上面的整个逻辑，想必小伙伴们也比较清楚的理解 <code>ApplicationContext</code> 中的初始化逻辑了。</p>
+<p>IOC 原理的最后一个部分，我们来梳理一下，整个 <code>ApplicationContext</code> 的初始化逻辑中，都有哪些扩展点可供我们切入利用。</p>
+<p>清楚地理解这些扩展点，可以让我们在后续扩展 Spring 时更加容易和游刃有余。</p>
+<blockquote>
+<p>一般情况下，我们不会在 <code>ApplicationContext</code> 的初始化和 <code>refresh</code> 动作之间作太多的处理，主要还是从 <code>refresh</code> 方法本身出发考虑，故以下梳理的扩展点都来自于 <code>refresh</code> 方法开始触发时。</p>
+</blockquote>
+<h3 id="2-1-invokeBeanFactoryPostProcessors"><a href="#2-1-invokeBeanFactoryPostProcessors" class="headerlink" title="2.1 invokeBeanFactoryPostProcessors"></a>2.1 invokeBeanFactoryPostProcessors</h3><p>前步骤中，在普通的  <code>ApplicationContext</code> 下都无法切入，所以只能在第 5 步 <code>invokeBeanFactoryPostProcessors</code> 方法中切入了。而这个方法中可供切入的点实在是太多了，咱一一来数。</p>
+<h4 id="2-1-1-ImportSelector-amp-ImportBeanDefinitionRegistrar"><a href="#2-1-1-ImportSelector-amp-ImportBeanDefinitionRegistrar" class="headerlink" title="2.1.1 ImportSelector &amp; ImportBeanDefinitionRegistrar"></a>2.1.1 ImportSelector &amp; ImportBeanDefinitionRegistrar</h4><p>第一个切入点不是 <code>BeanFactoryPostProcessor</code> 或者<code>BeanDefinitionRegistryPostProcessor</code> ，原因是它们的执行时机通常都在 <code>ConfigurationClassPostProcessor</code> 之后，而 <code>ConfigurationClassPostProcessor</code> 的执行过程中，会解析 <code>@Import</code> 注解，取出里面的 <code>ImportBeanDefinitionRegistrar</code> 并执行，所以第一个扩展点是 <code>ImportSelector</code> 和 <code>ImportBeanDefinitionRegistrar</code> 了。</p>
+<ol>
+<li><p><code>ImportSelector</code> 在该阶段只能拿到当前 <code>@Import</code> 标注的注解配置类的信息（如下面代码中 <code>BarImportSelector</code> 只能拿到 <code>BarConfiguration</code> 的信息）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Import(BarImportSelector.class)</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BarConfiguration</span> </span>&#123; ... &#125;<br></code></pre></td></tr></table></figure></li>
+<li><p><code>ImportBeanDefinitionRegistrar</code> 在该阶段除了可以获取到当前 <code>@Import</code> 标注的注解配置类的信息之外，更重要的是能拿到 <code>BeanDefinitionRegistry</code> ，由此可供扩展的动作主要是给 <code>BeanDefinitionRegistry</code> 中注册新的 <code>BeanDefinition</code> 。</p>
+</li>
+</ol>
+<blockquote>
+<p>不过小伙伴如果把 <code>BeanDefinitionRegistry</code> 看做 <code>DefaultListableBeanFactory</code> 也不是不行，只是说考虑到依赖倒转的设计，此处还是拿接口比较合适。</p>
+</blockquote>
+<h4 id="2-1-2-BeanDefinitionRegistryPostProcessor"><a href="#2-1-2-BeanDefinitionRegistryPostProcessor" class="headerlink" title="2.1.2 BeanDefinitionRegistryPostProcessor"></a>2.1.2 BeanDefinitionRegistryPostProcessor</h4><p>这个切入算是比较简单明了的吧，前面我们也已经学过了，使用 <code>BeanDefinitionRegistryPostProcessor</code> 可以拿到 <code>BeanDefinitionRegistry</code> 的 API ，直接向 IOC 容器中注册新的 <code>BeanDefinition</code> 。</p>
+<p>不过这里面有一点要注意，刚才上面也提到了，一般情况下，自定义的 <code>BeanDefinitionRegistryPostProcessor</code> 执行时机比内置的 <code>ConfigurationClassPostProcessor</code> 要晚，这也是 SpringFramework 最开始的设计（ <code>ConfigurationClassPostProcessor</code> 实现了 <code>PriorityOrdered</code> 接口，这个接口的优先级最高）。</p>
+<blockquote>
+<p>注意上面的话说的是 “一般情况下” 哦，说明小册有留台阶的：</p>
+<p>如果小伙伴们非要让自己写的 <code>BeanDefinitionRegistryPostProcessor</code> 执行时机比 <code>ConfigurationClassPostProcessor</code> 早，可以让后置处理器实现 <code>PriorityOrdered</code> 接口，声明较高执行优先级（不能是 <code>Ordered.LOWEST_PRECEDENCE</code> ，否则排序规则会变成字母表顺序）。</p>
+<p>经过这样的设计之后，自定义的 <code>BeanDefinitionRegistryPostProcessor</code> 就可以在 <code>ConfigurationClassPostProcessor</code> 之前执行了。</p>
+</blockquote>
+<h4 id="2-1-3-BeanFactoryPostProcessor"><a href="#2-1-3-BeanFactoryPostProcessor" class="headerlink" title="2.1.3 BeanFactoryPostProcessor"></a>2.1.3 BeanFactoryPostProcessor</h4><p><code>BeanFactoryPostProcessor</code> 的切入时机紧随 <code>BeanDefinitionRegistryPostProcessor</code> 之后，本来它没什么好说的了，小伙伴们只需要注意一下，在 <code>BeanFactoryPostProcessor</code> 的切入回调中，可以拿到的参数是 <code>ConfigurableListableBeanFactory</code> ，拿到它就意味着，我们在这个阶段按理来讲不应该再向 <code>BeanFactory</code> 中注册新的 <code>BeanDefinition</code> 了，只能获取和修改现有的 <code>BeanDefinition</code> 。</p>
+<p>另外，还要注意一点，javadoc 中有说，<code>BeanFactoryPostProcessor</code> 的处理阶段是可以提早初始化 bean 对象的，因为这个阶段下只有 <code>ApplicationContextAwareProcessor</code> 注册到了 <code>BeanFactory</code> 中，没有其余关键的 <code>BeanPostProcessor</code> ，所以这个阶段初始化的 bean 有一个共同的特点：能使用 <code>Aware</code> 回调注入，但无法使用 <code>@Autowired</code> 等自动注入的注解进行依赖注入，且不会产生任何代理对象。</p>
+<h3 id="2-2-registerBeanPostProcessors"><a href="#2-2-registerBeanPostProcessors" class="headerlink" title="2.2 registerBeanPostProcessors"></a>2.2 registerBeanPostProcessors</h3><p>所有 <code>BeanFactoryPostProcessor</code> 和 <code>BeanDefinitionRegistryPostProcessor</code> 都处理完之后，下一步是初始化 <code>BeanPostProcessor</code> 。</p>
+<p>这个逻辑我们之前也都看过了，但这个阶段没有可以切入影响该阶段的时机，所以该阶段跳过。</p>
+<h3 id="2-3-finishBeanFactoryInitialization"><a href="#2-3-finishBeanFactoryInitialization" class="headerlink" title="2.3 finishBeanFactoryInitialization"></a>2.3 finishBeanFactoryInitialization</h3><p>一下子就来到最复杂的初始化 bean 的这一步了。这里面的切入时机才多呢，前面看 bean 的实例化和初始化过程中，有非常多可供切入的时机，我们逐个来看。</p>
+<h4 id="2-3-1-InstantiationAwareBeanPostProcessor-postProcessBeforeInstantiation"><a href="#2-3-1-InstantiationAwareBeanPostProcessor-postProcessBeforeInstantiation" class="headerlink" title="2.3.1 InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation"></a>2.3.1 InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation</h4><p>从 bean 的创建阶段之前，就有 <code>InstantiationAwareBeanPostProcessor</code> 来拦截创建了，每个 bean 在创建之前都会尝试着使用 <code>InstantiationAwareBeanPostProcessor</code> 来代替创建，如果没有任何 <code>InstantiationAwareBeanPostProcessor</code> 可以拦截创建，则会走真正的 bean 对象实例化流程。</p>
+<p>在 <code>InstantiationAwareBeanPostProcessor</code> 的 <code>postProcessBeforeInstantiation</code> 方法中，只能拿到 bean 对应的 Class 类型，以及 bean 的名称（当然啦，本来就是凭空造，有 Class 类型就够了），如果方法没有返回值，则代表 <code>InstantiationAwareBeanPostProcessor</code> 不参与 bean 创建的动作。</p>
+<h4 id="2-3-2-SmartInstantiationAwareBeanPostProcessor-determineCandidateConstructors"><a href="#2-3-2-SmartInstantiationAwareBeanPostProcessor-determineCandidateConstructors" class="headerlink" title="2.3.2 SmartInstantiationAwareBeanPostProcessor#determineCandidateConstructors"></a>2.3.2 SmartInstantiationAwareBeanPostProcessor#determineCandidateConstructors</h4><p>如果在实例化 bean 之前，<code>InstantiationAwareBeanPostProcessor</code> 没有起到作用，就会通过构造器创建对象。如果一个 bean 有多个构造器，如何选择合适的构造器去创建对象就是很重要的一步。</p>
+<p>前面章节，筛选构造器的核心方法是 <code>determineConstructorsFromBeanPostProcessors</code> ，它会在底层寻找所有 <code>SmartInstantiationAwareBeanPostProcessor</code> ，回调 <code>determineCandidateConstructors</code> 方法获取可选择的构造器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">protected</span> Constructor&lt;?&gt;[] determineConstructorsFromBeanPostProcessors(<span class="hljs-meta">@Nullable</span> Class&lt;?&gt; beanClass, String beanName)<br>        <span class="hljs-keyword">throws</span> BeansException &#123;<br>    <span class="hljs-keyword">if</span> (beanClass != <span class="hljs-keyword">null</span> &amp;&amp; hasInstantiationAwareBeanPostProcessors()) &#123;<br>        <span class="hljs-keyword">for</span> (BeanPostProcessor bp : getBeanPostProcessors()) &#123;<br>            <span class="hljs-keyword">if</span> (bp <span class="hljs-keyword">instanceof</span> SmartInstantiationAwareBeanPostProcessor) &#123;<br>                SmartInstantiationAwareBeanPostProcessor ibp = (SmartInstantiationAwareBeanPostProcessor) bp;<br>                Constructor&lt;?&gt;[] ctors = ibp.determineCandidateConstructors(beanClass, beanName);<br>                <span class="hljs-keyword">if</span> (ctors != <span class="hljs-keyword">null</span>) &#123;<br>                    <span class="hljs-keyword">return</span> ctors;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在前面章结中我们就说过这个 <code>SmartInstantiationAwareBeanPostProcessor</code> 的使用了，如果在这里打入 Debug 断点时，程序代码运行时可以停在断点，但不会有任何返回，这个现象的产因是：默认情况下 <code>ConfigurationClassPostProcessor</code> 会向 IOC 容器注册一个 <code>ImportAwareBeanPostProcessor</code> ，但它又没有重写 <code>determineCandidateConstructors</code> 方法，就造成了这个现象。</p>
+<p>所以一般情况下，<code>SmartInstantiationAwareBeanPostProcessor</code> 在 SpringFramework 内部是用不到的，我们平时开发不是特殊场景也用不上，这个小伙伴们知道一下就可以了。</p>
+<h4 id="2-3-3-MergedBeanDefinitionPostProcessor-postProcessMergedBeanDefinition"><a href="#2-3-3-MergedBeanDefinitionPostProcessor-postProcessMergedBeanDefinition" class="headerlink" title="2.3.3 MergedBeanDefinitionPostProcessor#postProcessMergedBeanDefinition"></a>2.3.3 MergedBeanDefinitionPostProcessor#postProcessMergedBeanDefinition</h4><p>在 <code>createBeanInstance</code> 方法执行完毕之后，此时 bean 对象已经创建出来了，只是没有任何属性值的注入而已。此时 <code>doCreateBean</code> 方法会走到 <code>applyMergedBeanDefinitionPostProcessors</code> 方法，让这些 <code>MergedBeanDefinitionPostProcessor</code> 去收集 bean 所属的 Class 中的注解信息。</p>
+<p>在第 35 章中小册有列出三个关键的 <code>MergedBeanDefinitionPostProcessor</code> ，它们分别是 ：</p>
+<ol>
+<li><code>InitDestroyAnnotationBeanPostProcessor</code> （收集 <code>@PostConstruct</code> 与 <code>@PreDestroy</code> 注解）、</li>
+<li><code>CommonAnnotationBeanPostProcessor</code> （收集 JSR 250 的其它注解）、</li>
+<li><code>AutowiredAnnotationBeanPostProcessor</code> （收集自动注入相关的注解）。</li>
+</ol>
+<p>在此处切入扩展，意味着可以对 bean 对象所属的 Class 作一些处理或者收集的动作（当然也可以进行属性赋值等动作，但考虑到职责分离，该步骤还是不要瞎搞为好 ~ ~）。</p>
+<h4 id="2-3-4-InstantiationAwareBeanPostProcessor-postProcessAfterInstantiation"><a href="#2-3-4-InstantiationAwareBeanPostProcessor-postProcessAfterInstantiation" class="headerlink" title="2.3.4 InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation"></a>2.3.4 InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation</h4><p>等这些 <code>MergedBeanDefinitionPostProcessor</code> 都工作完毕后，此时 bean 对象所属的 Class 中的信息都收集完毕了，接下来还得让 <code>InstantiationAwareBeanPostProcessor</code> 出场，它要负责控制是否继续走接下来的 <code>populateBean</code> 和 <code>initializeBean</code> 方法初始化 bean 。</p>
+<p>所以如果在这里切入扩展的话，只能做到流程控制的作用。</p>
+<h4 id="2-3-5-InstantiationAwareBeanPostProcessor-postProcessProperties"><a href="#2-3-5-InstantiationAwareBeanPostProcessor-postProcessProperties" class="headerlink" title="2.3.5 InstantiationAwareBeanPostProcessor#postProcessProperties"></a>2.3.5 InstantiationAwareBeanPostProcessor#postProcessProperties</h4><p>又又又又又是它！不过这次它调用的是 <code>postProcessProperties</code> 方法，这个步骤会将 bean 对象对应的 <code>PropertyValues</code> 中封装赋值和注入的数据应用给 bean 实例。通常情况下，在该阶段 SpringFramework 内部起作用的后置处理器是 <code>AutowiredAnnotationBeanPostProcessor</code> ，它会搜集 bean 所属的 Class 中标注了 <code>@Autowired</code> 、<code>@Value</code> 、<code>@Resource</code> 等注解的属性和方法，并反射赋值 / 调用。</p>
+<p>在此处扩展逻辑的话，相当于扩展了后置处理器的属性赋值 + 依赖注入的自定义逻辑。当这个动作执行完毕之后，就不会再有属性赋值和组件注入的回调了。</p>
+<h4 id="2-3-6-BeanPostProcessor"><a href="#2-3-6-BeanPostProcessor" class="headerlink" title="2.3.6 BeanPostProcessor"></a>2.3.6 BeanPostProcessor</h4><p>接下来的两个动作就发生在 <code>initializeBean</code> 方法中了，它就是 <code>BeanPostProcessor</code> 的前后两个执行动作 <code>postProcessBeforeInitialization</code> 和 <code>postProcessAfterInitialization</code> 。进入到 <code>initializeBean</code> 方法后，bean 的生命周期已经到了初始化逻辑回调的阶段，此时 bean 中应该注入的属性均已完备，<code>BeanPostProcessor</code> 的切入也只是给 bean 添加一些额外的属性的赋值、回调等等，以及生成代理对象。</p>
+<p>所以，在此处切入扩展逻辑，相当于针对一个接近完善的 bean 去扩展 / 包装。当后置处理器执行完 <code>postProcessAfterInitialization</code> 方法后，基本上就代表 bean 的初始化结束了。</p>
+<h4 id="2-3-7-SmartInitializingSingleton"><a href="#2-3-7-SmartInitializingSingleton" class="headerlink" title="2.3.7 SmartInitializingSingleton"></a>2.3.7 SmartInitializingSingleton</h4><p>这个扩展在第 35 章我们有说过，它来自 SpringFramework 4.1 ，它是在所有非延迟加载的单实例 bean 全部初始化完成后才回调的。这个阶段底层会取出所有实现了 <code>SmartInitializingSingleton</code> 接口的 bean ，去回调 <code>afterSingletonsInstantiated</code> 方法。而且当时小册还说了，这个设计只是为了让 <code>BeanFactory</code> 也能插一脚初始化的后处理，仅此而已。</p>
+<p>这个扩展是针对单个 bean 的， 不是切入所有 bean 的，所以严格意义上讲它属于 bean 初始化的扩展点。不过话又说回来，它是在 <code>BeanFactory</code> 把单实例 bean 都初始化完成后统一回调的，又属于一个整体动作，所以小册也就把它拿出来了。</p>
+<h2 id="小结与思考"><a href="#小结与思考" class="headerlink" title="小结与思考"></a>小结与思考</h2><ol>
+<li><code>ApplicationContext</code> 的初始化逻辑大致包含哪几个步骤？</li>
+<li>在 <code>ApplicationContext</code> 的初始化过程中，都有哪些扩展点供我们开发者切入？分别针对的点又是什么？</li>
+</ol>
+<p>【至此，小册的 IOC 部分就算是全部完成了，最后一章我们来对整个 IOC 部分作一个总结，对整个 IOC 部分的知识有一个总体的回顾】</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Spring/">Spring</a>
+                    
+                      <a class="hover-with-bg" href="/tags/IOC/">IOC</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AE%B9%E5%99%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">容器生命周期</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/18/21-IOC%E4%B8%ADBean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+                        <span class="hidden-mobile">21-IOC中Bean的生命周期</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/18/22-IOC%E4%B8%AD%E5%AE%B9%E5%99%A8%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
