@@ -181,20 +181,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/09/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">设计模式-创建型模式</a>
+        <a href="/2022/04/15/MySQL%E5%85%A8%E5%B1%80%E9%94%81%E5%92%8C%E8%A1%A8%E9%94%81/">MySQL全局锁和表锁</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/09/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+        <a href="/2022/04/15/MySQL%E5%85%A8%E5%B1%80%E9%94%81%E5%92%8C%E8%A1%A8%E9%94%81/">
           
           
             
           
-          创建型模式创建型模式提供了创建对象的机制，能够提升已有代码的灵活性和可复用性。
-工厂方法 FactoryMethod在父类中提供一个创建对象的接口以允许子类决定实例化对象的类型。
-又称：虚拟构造函数、Virtual Constructor、 Factory Method
-问题提出假设你正在开发一款物流管理应用。 最初版本只能处理卡车运输， 因此大部分代码都在位于名为 卡车的类中。
-一段时间后， 这
+          全局锁和表锁 ：给表加个字段怎么有这么多阻碍？数据库锁设计的初衷是处理并发问题。作为多用户共享的资 源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用 来实现这些访 问规则的重要数据结构。
+根据加锁的范围， MySQL里面的锁大致可以分成全局锁、表级锁和行锁三类 。今天这篇文 章，我会和你分享全局锁和表级锁。
+这里需要说明的是，锁的设计比较复杂，这两篇文章不会涉及锁的具体实现
         </a>
       </p>
 
@@ -202,12 +200,28 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-12 20:40" pubdate>
-              2021-09-12
+            <time datetime="2022-04-15 10:33" pubdate>
+              2022-04-15
             </time>
           </div>
         
         
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+            
+          </div>
         
       </div>
     </article>
@@ -219,19 +233,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/09/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E6%80%A7%E6%A8%A1%E5%BC%8F/">设计模式-结构性模式</a>
+        <a href="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/">MySQL索引深入浅出(下)</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/09/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%93%E6%9E%84%E6%80%A7%E6%A8%A1%E5%BC%8F/">
+        <a href="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/">
           
           
             
           
-          结构型模式介绍如何将对象和类组装成较大的结构，并同时保持结构的灵活和高效
-适配器 Adapter让接口不兼容的对象能够相互合作
-亦称：封装器模式、Wapper、Adapter
-问题提出倘若你正在开发一款股票市场检测程序，它会从不同来源下载XML格式的股票数据，然后向用户呈现出美观的图表。在开发过程中，你决定在程序中整合使用一个第三方的智能分析函数库。但是现在遇到一个问题，那就是这个第三方的分析函数
+          深入浅出索引（下）上一篇文章中，我和你介绍了InnoDB索引的数据结构模型，今天我们再继续聊聊跟MySQL索 引有关的概念。
+我们先来看一下这个问题：
+在下面这个表T中，如果我执行 select * from T where k between 3 and 5，需要执行几次树的搜索操作，会扫描多少行？ 下面是这个表的初始化语句。
+12345678mysql&gt; create table T (
         </a>
       </p>
 
@@ -239,12 +253,28 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-12 10:29" pubdate>
-              2021-09-12
+            <time datetime="2022-04-14 00:18" pubdate>
+              2022-04-14
             </time>
           </div>
         
         
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+            
+          </div>
         
       </div>
     </article>
@@ -256,21 +286,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/09/05/Java%E5%90%8E%E7%AB%AF%E9%9D%A2%E8%AF%95-%E9%94%99%E9%A2%98%E6%9C%AC/">Java后端面试-错题本</a>
+        <a href="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8A/">MySQL索引深入浅出(上)</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/09/05/Java%E5%90%8E%E7%AB%AF%E9%9D%A2%E8%AF%95-%E9%94%99%E9%A2%98%E6%9C%AC/">
+        <a href="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8A/">
           
           
             
           
-          
-https://www.nowcoder.com/test/question/done?tid=47461352&amp;qid=326198#summary
-
-https://www.nowcoder.com/test/question/done?tid=47461352&amp;qid=2298#summary
-
-https://www.nowcoder.com/test/question/
+          深入浅出索引（上）提到数据库索引，我想你并不陌生，在日常工作中会经常接触到。比如某一个SQL查询比较慢， 分析完原因之后，你可能就会说“给某个字段加个索引吧”之类的解决方案。但到底什么是索引， 索引又是如何工作的呢？
+索引是数据库系统里面最重要的概念之一， 所以我希望你能够耐心看完。在后面的实战文章中，我也会经常引用这两篇文章中提到的知识 点，加深你对数据库索引的理解。
+索引的出现其实就是为了提高
         </a>
       </p>
 
@@ -278,12 +305,28 @@ https://www.nowcoder.com/test/question/
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-05 22:40" pubdate>
-              2021-09-05
+            <time datetime="2022-04-14 00:18" pubdate>
+              2022-04-14
             </time>
           </div>
         
         
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+            
+          </div>
         
       </div>
     </article>
@@ -295,22 +338,17 @@ https://www.nowcoder.com/test/question/
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/09/05/Java%E5%90%8E%E7%AB%AF%E9%9D%A2%E8%AF%95-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">Java后端面试-基础语法</a>
+        <a href="/2022/04/13/MySQL%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E6%94%B9%E4%BA%86%E6%88%91%E8%BF%98%E7%9C%8B%E4%B8%8D%E8%A7%81/">MySQL事务隔离：为什么你改了我还看不见</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/09/05/Java%E5%90%8E%E7%AB%AF%E9%9D%A2%E8%AF%95-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">
+        <a href="/2022/04/13/MySQL%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E6%94%B9%E4%BA%86%E6%88%91%E8%BF%98%E7%9C%8B%E4%B8%8D%E8%A7%81/">
           
           
             
           
-          基础语法一、基本数据结构Java 的基本数据类型有 8 种，包括 6 种数字类型、1 种字符类型和 1 种布尔类型。
-基本数据类型总览
-数字类型：包括 4 种整数类型和 2 种浮点数类型，4 种整数类型是 byte、short、int 和 long，2 种浮点数类型是 float 和 double。
-
-字符类型：是 char，用于表示单个字符。Java 使用统一码对字符进行编码。
-
-布尔类型：是 
+          事务隔离：为什么你改了我还看不见？提到事务，你肯定不陌生，和数据库打交道的时候，我们总是会用到事务。最经典的例子就是转 账，你要给朋友小王转100块钱，而此时你的银行卡只有100块钱。
+转账过程具体到程序里会有一系列的操作，比如查询余额、做加减法、更新余额等，这些操作必 须保证是一体的，不然等程序查完之后，还没做减法之前，你这100块钱，完全可以借着这个时 间差再查一次，然后再给另外一个朋友转账，
         </a>
       </p>
 
@@ -318,8 +356,170 @@ https://www.nowcoder.com/test/question/
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-05 21:51" pubdate>
-              2021-09-05
+            <time datetime="2022-04-13 22:24" pubdate>
+              2022-04-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/13/MySQL%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84-%E6%9B%B4%E6%96%B0%E6%93%8D%E4%BD%9C%E7%9A%84%E6%89%A7%E8%A1%8C/">MySQL基础架构:更新操作的执行</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/13/MySQL%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84-%E6%9B%B4%E6%96%B0%E6%93%8D%E4%BD%9C%E7%9A%84%E6%89%A7%E8%A1%8C/">
+          
+          
+            
+          
+          日志系统：一条SQL更新语句是如何执行的？一条查询语句的执行过程一般是经过连接器、分析器、优化器、执行器等功能模块，最后 到达存储引擎。那么，一条更新语句的执行流程又是怎样的呢？
+之前你可能经常听DBA同事说，MySQL可以恢复到半个月内任意一秒的状态，惊叹的同时，你 是不是心中也会不免会好奇，这是怎样做到的呢？
+我们还是从一个表的一条更新语句说起，下面是这个表的创建语句，这个表有一个主键ID和一
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-13 21:52" pubdate>
+              2022-04-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/13/MySQL%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84-%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%89%A7%E8%A1%8C/">MySQL基础架构:查询的执行</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/13/MySQL%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84-%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%89%A7%E8%A1%8C/">
+          
+          
+            
+          
+          基础架构：一条SQL查询语句是如何执行的？有个最简 单的表，表里只有一个ID字段，在执行下面这个查询语句时：
+1mysql&gt; select * from T where ID=10；
+我们看到的只是输入一条语句，返回一个结果，却不知道这条语句在MySQL内部的执行过程。
+所以今天我想和你一起把MySQL拆解一下，看看里面都有哪些“零件”，希望借由这个拆解过程， 让你对MySQL有更深入的理解
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-13 15:19" pubdate>
+              2022-04-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/13/I-O%E6%A8%A1%E5%9E%8B/">I/O模型</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/13/I-O%E6%A8%A1%E5%9E%8B/">
+          
+          
+            
+          
+          I/O何为 I/O?即Input输入/Output输出，我们先从计算机结构的角度来解读一下 I/O。
+根据冯.诺依曼结构，计算机结构分为 5 大部分：运算器、控制器、存储器、输入设备、输出设备。
+
+输入设备（比如键盘）和输出设备（比如显示器）都属于外部设备。
+网卡、硬盘这种既可以属于输入设备，也可以属于输出设备。
+
+
+从计算机结构的视角来看的话， I/O 描述了计算机系统与外部设备之间通信的过程。
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-13 11:16" pubdate>
+              2022-04-13
             </time>
           </div>
         
@@ -328,7 +528,7 @@ https://www.nowcoder.com/test/question/
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/java/">java</a>
+              <a href="/tags/I-O/">I/O</a>
             
           </div>
         
@@ -342,16 +542,24 @@ https://www.nowcoder.com/test/question/
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/06/MySql%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">MySql执行计划</a>
+        <a href="/2021/10/07/DDD-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/">DDD-领域驱动设计</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/06/06/MySql%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92/">
+        <a href="/2021/10/07/DDD-%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/">
           
           
             
           
-          MySql 执行计划在日常工作中，我们会有时会开慢查询去记录一些执行时间比较久的SQL语句，找出这些SQL语句并不意味着完事了，些时我们常常用到explain这个命令来查看一个这些SQL语句的执行计划，查看该SQL语句有没有使用上了索引，有没有做全表扫描，这都可以通过explain命令来查看。所以我们深入了解MySQL的基于开销的优化器，还可以获得很多可能被优化器考虑到的访问策略的细节，以及当运行
+          DDD-领域驱动设计互联网大厂的未来架构之道：DDD-领域驱动设计
+用于：
+1、提升代码质量，优化系统结构；
+2、体系化提升架构思维；
+3、用DDD来提升自己的软实力；
+4、架构师成长之道。
+什么是DDD书：领域驱动设计-软件核心复杂性应对之道
+话：成功的想目有一个共同的特征，那就是都有一个丰富的领域模型，这个模型在迭代设计过程中不断演变，而且成为项目不可分割的一部分。
+思潮：技术主动理解业务，业
         </a>
       </p>
 
@@ -359,12 +567,23 @@ https://www.nowcoder.com/test/question/
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-06 18:22" pubdate>
-              2021-06-06
+            <time datetime="2021-10-07 20:34" pubdate>
+              2021-10-07
             </time>
           </div>
         
         
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/DDD/">DDD</a>
+            
+              <a href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/">领域驱动设计</a>
+            
+              <a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">架构设计</a>
+            
+          </div>
         
       </div>
     </article>
@@ -376,19 +595,30 @@ https://www.nowcoder.com/test/question/
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/19/Thread-Concurrent/">Thread-Concurrent</a>
+        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">SQL性能问题:慢SQL问题分析</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/19/Thread-Concurrent/">
+        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">
           
           
             
           
-          线程同步当多个线程同时运行时，线程的调度由操作系统决定，程序本身无法决定。因此，任何一个线程都有可能在任何指令处被操作系统暂停，然后在某个时间段后继续执行。
-这个时候，有个单线程模型下不存在的问题就来了：如果多个线程同时读写共享变量，会出现数据不一致的问题。
-我们来看一个例子：
-123456789101112131415161718192021222324252627public class Ma
+          慢SQL问题分析今天和大家聊一个常见的问题：慢SQL。
+通过本文你将了解到以下内容：
+
+慢SQL的危害
+SQL语句的执行过程
+存储引擎和索引的那些事儿
+慢SQL解决之道
+
+后续均以MySQL默认存储引擎InnoDB为例进行展开，话不多说，开搞！
+
+一、慢SQL 的危害今天和大家聊一个常见的问题：慢SQL。通过本文你将了解到以下内容：
+
+慢SQL的危害
+SQL语句的执行过程
+存储引擎和索引的那些事儿
         </a>
       </p>
 
@@ -396,12 +626,23 @@ https://www.nowcoder.com/test/question/
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-19 00:11" pubdate>
-              2021-05-19
+            <time datetime="2021-09-28 22:44" pubdate>
+              2021-09-28
             </time>
           </div>
         
         
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/SQL/">SQL</a>
+            
+              <a href="/tags/%E6%85%A2SQL/">慢SQL</a>
+            
+              <a href="/tags/SQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">SQL性能优化</a>
+            
+          </div>
         
       </div>
     </article>
@@ -413,19 +654,18 @@ https://www.nowcoder.com/test/question/
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/19/Thread-Deamon/">Thread-Deamon</a>
+        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%AF%BC%E8%87%B4%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/">SQL性能问题:隐式转换导致索引失效</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/19/Thread-Deamon/">
+        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%AF%BC%E8%87%B4%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/">
           
           
             
           
-          守护线程Java程序入口就是由JVM启动main线程，main线程又可以启动其他线程。当所有线程都运行结束时，JVM退出，进程结束。
-如果有一个线程没有退出，JVM进程就不会退出。所以，必须保证所有线程都能及时结束。
-但是有一种线程的目的就是无限循环，例如，一个定时触发任务的线程：
-12345678910111213class TimerThread extends Thread &#123;  
+          隐式转换导致索引失效在排查系统页面响应时间长的问题时，考虑是否存在隐式转换导致索引失效的问题。这类问题解决后，响应速度会成百上千倍的提升。
+问题提出示例：
+12345select count(0) from 	c_zdgl_info czi 		-- 38000 条记录left join 	c_staff_cbspdeptinfo csdon czi.resp_office = csd.org_n
         </a>
       </p>
 
@@ -433,124 +673,23 @@ https://www.nowcoder.com/test/question/
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-19 00:08" pubdate>
-              2021-05-19
+            <time datetime="2021-09-28 16:29" pubdate>
+              2021-09-28
             </time>
           </div>
         
         
         
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/18/Thread-Interrupt/">Thread-Interrupt</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/18/Thread-Interrupt/">
-          
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
             
-          
-          中断线程如果线程需要执行一个长时间任务，就可能需要能中断线程。中断线程就是其他线程给该线程发一个信号，该线程收到信号后结束执行run()方法，使得自身线程能立刻结束运行。
-我们举个栗子：假设从网络下载一个100M的文件，如果网速很慢，用户等得不耐烦，就可能在下载过程中点“取消”，这时，程序就需要中断下载线程的执行。
-中断一个线程非常简单，只需要在其他线程中对目标线程调用interrupt()方法，
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-18 00:29" pubdate>
-              2021-05-18
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/18/Thread-Status/">Thread-Status</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/18/Thread-Status/">
-          
-          
+              <a href="/tags/SQL/">SQL</a>
             
-          
-          线程的状态在Java程序中，一个线程对象只能调用一次start()方法启动新线程，并在新线程中执行run()方法。一旦run()方法执行完毕，线程就结束了。因此，Java线程的状态有以下几种：
-
-New：新创建的线程，尚未执行；
-Runnable：运行中的线程，正在执行run()方法的Java代码；
-Blocked：运行中的线程，因为某些操作被阻塞而挂起；
-Waiting：运行中的线程，因为某些操
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-18 00:24" pubdate>
-              2021-05-18
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/17/Thread-Intro/">Thread-Intro</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/17/Thread-Intro/">
-          
-          
+              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
             
-          
-          多线程介绍任务现代操作系统（Windows，macOS，Linux）都可以执行多任务。多任务就是同时运行多个任务，例如：
-
-CPU执行代码都是一条一条顺序执行的，但是，即使是单核cpu，也可以同时运行多个任务。因为操作系统执行多任务实际上就是让CPU对多个任务轮流交替执行。
-例如，假设我们有语文、数学、英语3门作业要做，每个作业需要30分钟。我们把这3门作业看成是3个任务，可以做1分钟语文作业，再
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-17 23:51" pubdate>
-              2021-05-17
-            </time>
+              <a href="/tags/%E4%BC%98%E5%8C%96/">优化</a>
+            
           </div>
-        
-        
         
       </div>
     </article>
@@ -560,7 +699,7 @@ CPU执行代码都是一条一条顺序执行的，但是，即使是单核cpu�
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   

@@ -1,0 +1,601 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>07-IOC的事件监听机制 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="07-IOC的事件监听机制">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-18 10:06" pubdate>
+        2022年4月18日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      33
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">07-IOC的事件监听机制</h1>
+            
+            <div class="markdown-body">
+              <h1 id="事件机制-amp-监听器"><a href="#事件机制-amp-监听器" class="headerlink" title="事件机制&amp;监听器"></a>事件机制&amp;监听器</h1><p>事件和监听器，最先想到的估计就是观察者模式了吧。下面咱先快速回顾一下观察者模式。</p>
+<h2 id="1-观察者模式【回顾】"><a href="#1-观察者模式【回顾】" class="headerlink" title="1. 观察者模式【回顾】"></a>1. 观察者模式【回顾】</h2><p><strong>观察者模式</strong>，也被称为<strong>发布订阅模式</strong>，也有的人叫它“监听器模式”，它是 GoF23 设计模式中行为型模式的其中之一。</p>
+<p>观察者模式关注的点是某一个对象被修改 / 做出某些反应 / 发布一个信息等，会自动通知依赖它的对象（订阅者）。</p>
+<p>观察者模式的三大核心是：<strong>观察者、被观察主题、订阅者</strong>。观察者（ Observer ）需要绑定要通知的订阅者（ Subscriber ），并且要观察指定的主题（ Subject ）。</p>
+<h2 id="2-SpringFramework中设计的观察者模式【掌握】"><a href="#2-SpringFramework中设计的观察者模式【掌握】" class="headerlink" title="2. SpringFramework中设计的观察者模式【掌握】"></a>2. SpringFramework中设计的观察者模式【掌握】</h2><p>SpringFramework 中，体现观察者模式的特性就是事件驱动和监听器。</p>
+<ul>
+<li><strong>监听器</strong>充当<strong>订阅者</strong>，监听特定的事件；</li>
+<li><strong>事件源</strong>充当<strong>被观察的主题</strong>，用来发布事件；</li>
+<li><strong>IOC 容器</strong>本身也是事件广播器，可以理解成<strong>观察者</strong>。</li>
+</ul>
+<p>不过我个人比较喜欢把 SpringFramework 的事件驱动核心概念划分为 4 个：<strong>事件源、事件、广播器、监听器</strong>。</p>
+<ul>
+<li><strong>事件源：发布事件的对象</strong></li>
+<li><strong>事件：事件源发布的信息 / 作出的动作</strong></li>
+<li>广播器：事件真正广播给监听器的对象【即<code>ApplicationContext</code>】<ul>
+<li><code>ApplicationContext</code> 接口有实现 <code>ApplicationEventPublisher</code> 接口，具备<strong>事件广播器的发布事件的能力</strong></li>
+<li><code>ApplicationEventMulticaster</code> 组合了所有的监听器，具备<strong>事件广播器的广播事件的能力</strong></li>
+</ul>
+</li>
+<li><strong>监听器：监听事件的对象</strong></li>
+</ul>
+<p>也许这样理解起来会更容易一些：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d2d55f5256e448248c39e00482fa4396~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<h2 id="3-快速体会事件与监听器【掌握】"><a href="#3-快速体会事件与监听器【掌握】" class="headerlink" title="3. 快速体会事件与监听器【掌握】"></a>3. 快速体会事件与监听器【掌握】</h2><p>下面咱先通过一个最简单的实例来体会 SpringFramework 中监听器的使用。</p>
+<h3 id="3-1-编写监听器"><a href="#3-1-编写监听器" class="headerlink" title="3.1 编写监听器"></a>3.1 编写监听器</h3><p>SpringFramework 中内置的监听器接口是 <code>ApplicationListener</code> ，它还带了一个泛型，代表要监听的具体事件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ApplicationListener</span>&lt;<span class="hljs-title">E</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ApplicationEvent</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">EventListener</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(E event)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们要自定义监听器，只需要实现这个 <code>ApplicationListener</code> 接口即可。</p>
+<p>为快速体会事件和监听器的功能，下面咱先介绍两个事件：<code>ContextRefreshedEvent</code> 和 <code>ContextClosedEvent</code> ，它们分别代表<strong>容器刷新完毕</strong>和<strong>即将关闭</strong>。</p>
+<p>下面咱编写一个监听器，来监听 <code>ContextRefreshedEvent</code> 事件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ContextRefreshedApplicationListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ApplicationListener</span>&lt;<span class="hljs-title">ContextRefreshedEvent</span>&gt; </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(ContextRefreshedEvent event)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;ContextRefreshedApplicationListener监听到ContextRefreshedEvent事件！&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>记得用 <code>@Component</code> 注解标注监听器哦，一会要进行包扫描的。监听器必须要注册到 SpringFramework 的 IOC 容器才可以生效。</p>
+<h3 id="3-2-编写启动类"><a href="#3-2-编写启动类" class="headerlink" title="3.2 编写启动类"></a>3.2 编写启动类</h3><p>写好监听器，就可以编写启动类，驱动 IOC 容器来测试效果了。这个时候可能有小伙伴有点懵：我去，我思想工作还没建设好呢，这就完事了？然而真的就是这么回事，下面代码一写你就恍然大悟了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QuickstartListenerApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;准备初始化IOC容器。。。&quot;</span>);<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(<br>                <span class="hljs-string">&quot;com.example.spring.event.a_quickstart&quot;</span>);<br>        System.out.println(<span class="hljs-string">&quot;IOC容器初始化完成。。。&quot;</span>);<br>        ctx.close();<br>        System.out.println(<span class="hljs-string">&quot;IOC容器关闭。。。&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>哈哈，不会真的有小伙伴忘了 <code>AnnotationConfigApplicationContext</code> 可以直接传包扫描路径吧，不会吧不会吧！（狗头保命）</p>
+<p>运行 <code>main</code> 方法，控制台会根据流程依次打印如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">准备初始化IOC容器。。。<br>ContextRefreshedApplicationListener监听到ContextRefreshedEvent事件！<br>IOC容器初始化完成。。。<br>IOC容器关闭。。。<br></code></pre></td></tr></table></figure>
+<h3 id="3-3-注解式监听器"><a href="#3-3-注解式监听器" class="headerlink" title="3.3 注解式监听器"></a>3.3 注解式监听器</h3><p>除了实现 <code>ApplicationListener</code> 接口之外，还可以使用注解的形式注册监听器。</p>
+<p>使用注解式监听器，组件不再需要实现任何接口，而是直接在需要作出事件反应的方法上标注 <code>@EventListener</code> 注解即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ContextClosedApplicationListener</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onContextClosedEvent</span><span class="hljs-params">(ContextClosedEvent event)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;ContextClosedApplicationListener监听到ContextClosedEvent事件！&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>重新运行 <code>QuickstartListenerApplication</code> 的 <code>main</code> 方法，控制台可以打印出 <code>ContextClosedApplicationListener</code> 监听事件的反应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">准备初始化IOC容器。。。<br>ContextRefreshedApplicationListener监听到ContextRefreshedEvent事件！<br>IOC容器初始化完成。。。<br>ContextClosedApplicationListener监听到ContextClosedEvent事件！<br>IOC容器关闭。。。<br></code></pre></td></tr></table></figure>
+<p>由这两种监听器的 Demo ，可以得出几个结论：</p>
+<ul>
+<li><code>ApplicationListener</code> 会在容器初始化阶段就准备好，在容器销毁时一起销毁；</li>
+<li><code>ApplicationListener</code> 也是 IOC 容器中的普通 Bean ；</li>
+<li>IOC 容器中有内置的一些事件供我们监听。</li>
+</ul>
+<h2 id="4-SpringFramework中的内置事件【熟悉】"><a href="#4-SpringFramework中的内置事件【熟悉】" class="headerlink" title="4. SpringFramework中的内置事件【熟悉】"></a>4. SpringFramework中的内置事件【熟悉】</h2><p>在 SpringFramework 中，已经有事件的默认抽象，以及 4 个默认的内置事件了，下面咱了解一下它们。</p>
+<h3 id="4-1-ApplicationEvent"><a href="#4-1-ApplicationEvent" class="headerlink" title="4.1 ApplicationEvent"></a>4.1 ApplicationEvent</h3><p>很明显，它是事件模型的抽象，它是一个抽象类，里面也没有定义什么东西，只有事件发生时的时间戳。值得关注的是，它是继承自 jdk 原生的观察者模式的事件模型，并且把它声明为抽象类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApplicationEvent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">EventObject</span></span><br></code></pre></td></tr></table></figure>
+<p>关于这个设计，它的文档注释就已经说明了：</p>
+<blockquote>
+<p>Class to be extended by all application events. Abstract as it doesn’t make sense for generic events to be published directly.</p>
+<p>由所有应用程序事件扩展的类。它被设计为抽象的，因为<strong>直接发布一般事件没有意义</strong>。</p>
+</blockquote>
+<p>如果说只是有这么一个派生，那看上去没什么太大的意义，所以 SpringFramework 中又给这个 ApplicationEvent 进行了一次扩展。</p>
+<h3 id="4-2-ApplicationContextEvent"><a href="#4-2-ApplicationContextEvent" class="headerlink" title="4.2 ApplicationContextEvent"></a>4.2 ApplicationContextEvent</h3><p>先看一眼源码，从这里面或许就能意识到什么：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApplicationContextEvent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ApplicationEvent</span> </span>&#123;<br>    <br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ApplicationContextEvent</span><span class="hljs-params">(ApplicationContext source)</span> </span>&#123;<br>		<span class="hljs-keyword">super</span>(source);<br>	&#125;<br>    <br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> ApplicationContext <span class="hljs-title">getApplicationContext</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-keyword">return</span> (ApplicationContext) getSource();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>它在构造时，会把 IOC 容器一起传进去，这意味着事件发生时，可以<strong>通过监听器直接取到 <code>ApplicationContext</code> 而不需要做额外的操作</strong>，这才是 SpringFramework 中事件模型扩展最值得的地方。下面列举的几个内置的事件，都是基于这个 <code>ApplicationContextEvent</code> 扩展的。</p>
+<h3 id="4-3-ContextRefreshedEvent-amp-ContextClosedEvent"><a href="#4-3-ContextRefreshedEvent-amp-ContextClosedEvent" class="headerlink" title="4.3 ContextRefreshedEvent &amp; ContextClosedEvent"></a>4.3 ContextRefreshedEvent &amp; ContextClosedEvent</h3><p>这两个是一对，分别对应着 <strong>IOC 容器刷新完毕但尚未启动</strong>，以及 <strong>IOC 容器已经关闭但尚未销毁所有 Bean</strong> 。这个时机可能记起来有点小困难，小伙伴们可以不用记很多，只通过字面意思能知道就 OK ，至于这些事件触发的真正时机，在我的 SpringBoot 源码小册第 16 章中有提到，感兴趣的小伙伴可以去看一看。在后面的 IOC 原理篇中，这部分也会略有涉及。</p>
+<h3 id="4-4-ContextStartedEvent-amp-ContextStoppedEvent"><a href="#4-4-ContextStartedEvent-amp-ContextStoppedEvent" class="headerlink" title="4.4 ContextStartedEvent &amp; ContextStoppedEvent"></a>4.4 ContextStartedEvent &amp; ContextStoppedEvent</h3><p><code>ContextRefreshedEvent</code> 事件的触发是所有<strong>单实例 Bean 刚创建完成后</strong>，就发布的事件，此时那些实现了 <code>Lifecycle</code> 接口的 Bean 还没有被回调 <code>start</code> 方法。</p>
+<p>当这些 <code>start</code> 方法被调用后，<code>ContextStartedEvent</code> 才会被触发。同样的，<code>ContextStoppedEvent</code> 事件也是在 <code>ContextClosedEvent</code> 触发之后才会触发，此时单实例 Bean 还没有被销毁，要先把它们都停掉才可以释放资源，销毁 Bean 。</p>
+<h2 id="5-自定义事件开发【熟悉】"><a href="#5-自定义事件开发【熟悉】" class="headerlink" title="5. 自定义事件开发【熟悉】"></a>5. 自定义事件开发【熟悉】</h2><p>上面咱了解了 SpringFramework 中内置的事件，如果我们想自己在合适的时机发布一些事件，让指定的监听器来以此作出反应，执行特定的逻辑，那就需要自定义事件了。下面咱模拟一个场景，来体会自定义事件的开发过程。</p>
+<p>本节可能会使人产生不适感，请做好心理准备再继续往下阅读 <strong>-.-</strong></p>
+<h3 id="5-1-场景概述"><a href="#5-1-场景概述" class="headerlink" title="5.1 场景概述"></a>5.1 场景概述</h3><p>论坛应用，当新用户注册成功后，会同时发送短信、邮件、站内信，通知用户注册成功，并且发放积分。</p>
+<p>在这个场景中，用户注册成功后，广播一个“用户注册成功”的事件，将用户信息带入事件广播出去，发送短信、邮件、站内信的监听器监听到注册成功的事件后，会分别执行不同形式的通知动作。</p>
+<h3 id="5-2-自定义用户注册成功事件"><a href="#5-2-自定义用户注册成功事件" class="headerlink" title="5.2 自定义用户注册成功事件"></a>5.2 自定义用户注册成功事件</h3><p>SpringFramework 中的自定义事件的方式就是通过继承 <code>ApplicationEvent</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 注册成功的事件</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RegisterSuccessEvent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ApplicationEvent</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RegisterSuccessEvent</span><span class="hljs-params">(Object source)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>(source);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="5-3-编写监听器"><a href="#5-3-编写监听器" class="headerlink" title="5.3 编写监听器"></a>5.3 编写监听器</h3><p>使用上述的两种方式，分别编写发送短信、发送邮件，和发送站内信的监听器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SmsSenderListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ApplicationListener</span>&lt;<span class="hljs-title">RegisterSuccessEvent</span>&gt; </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(RegisterSuccessEvent event)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;监听到用户注册成功，发送短信。。。&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EmailSenderListener</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onRegisterSuccess</span><span class="hljs-params">(RegisterSuccessEvent event)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;监听到用户注册成功！发送邮件中。。。&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MessageSenderListener</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onRegisterSuccess</span><span class="hljs-params">(RegisterSuccessEvent event)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;监听到用户注册成功，发送站内信。。。&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="5-4-编写注册逻辑业务层"><a href="#5-4-编写注册逻辑业务层" class="headerlink" title="5.4 编写注册逻辑业务层"></a>5.4 编写注册逻辑业务层</h3><p>只有事件和监听器还不够，还需要有一个事件源来持有事件发布器，在应用上下文中发布事件。</p>
+<p>Service 层中，需要注入 <code>ApplicationEventPublisher</code> 来发布事件，此处选择使用回调注入的方式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RegisterService</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ApplicationEventPublisherAware</span> </span>&#123;<br>    <br>    ApplicationEventPublisher publisher;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">register</span><span class="hljs-params">(String username)</span> </span>&#123;<br>        <span class="hljs-comment">// 用户注册的动作。。。</span><br>        System.out.println(username + <span class="hljs-string">&quot;注册成功。。。&quot;</span>);<br>        <span class="hljs-comment">// 发布事件</span><br>        publisher.publishEvent(<span class="hljs-keyword">new</span> RegisterSuccessEvent(username));<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setApplicationEventPublisher</span><span class="hljs-params">(ApplicationEventPublisher publisher)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.publisher = publisher;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="5-5-编写测试启动类"><a href="#5-5-编写测试启动类" class="headerlink" title="5.5 编写测试启动类"></a>5.5 编写测试启动类</h3><p>测试代码都准备好了，下面咱就来写一把启动类，模拟一次用户注册。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RegisterEventApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(<br>                <span class="hljs-string">&quot;com.example.spring.event.b_registerevent&quot;</span>);<br>        RegisterService registerService = ctx.getBean(RegisterService.class);<br>        registerService.register(<span class="hljs-string">&quot;张大三&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台打印出注册动作，以及监听器的触发反应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">张大三注册成功。。。<br>监听到用户注册成功，发送邮件中。。。<br>监听到用户注册成功，发送站内信。。。<br>监听到用户注册成功，发送短信。。。<br></code></pre></td></tr></table></figure>
+<p>由此又得出来另外一个结论：<strong>注解式监听器的触发时机比接口式监听器早</strong>。</p>
+<h3 id="5-6-调整监听器的触发顺序"><a href="#5-6-调整监听器的触发顺序" class="headerlink" title="5.6 调整监听器的触发顺序"></a>5.6 调整监听器的触发顺序</h3><p>如果业务需要调整，需要先发送站内信，后发送邮件，这个时候就需要配合另外一个注解了：**<code>@Order</code>** 。标注上这个注解后，默认的排序值为 <strong><code>Integer.MAX_VALUE</code></strong> ，代表<strong>最靠后</strong>。</p>
+<p>按照这个规则，那咱在 <code>MessageSenderListener</code> 的 <code>onRegisterSuccess</code> 方法上标注 <code>@Order(0)</code> ，重新运行启动类的 <code>main</code> 方法，观察控制台的打印：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">张大三注册成功。。。<br>监听到用户注册成功，发送站内信。。。<br>监听到用户注册成功，发送邮件中。。。<br>监听到用户注册成功，发送短信。。。<br></code></pre></td></tr></table></figure>
+<p>需求得以解决。不过这个时候我们再思考一个问题：如果不标注 <code>@Order</code> 注解，默认的顺序是多少呢？</p>
+<p>尝试着把刚才的 <code>@Order</code> 注解中，<code>value</code> 改为 <code>Integer.MAX_VALUE - 1</code> ，重新运行，发现运行结果还是像上面那样打印，证明<strong>默认的排序值是 <code>Integer.MAX_VALUE</code></strong> 。</p>
+<h3 id="5-7-理性看待自定义事件"><a href="#5-7-理性看待自定义事件" class="headerlink" title="5.7 理性看待自定义事件"></a>5.7 理性看待自定义事件</h3><p>到这里，估计部分小伙伴快看不下去了，这有点多此一举呀！</p>
+<p>我完全可以用一个监听器搞三个方法一块写就完了呀！甚至，完全可以把发送信息、邮件的动作，整合在注册的逻辑中。那这自定义事件到底有什么刚需吗？</p>
+<p>讲道理，<strong>真的非常少</strong>。很多场景下，使用自定义事件可以处理的逻辑，完全可以通过一些其它的方案来替代，这样真的会显得自定义事件很鸡肋。</p>
+<p>所以，一定要理性看待自定义事件的使用，千万不要一学到点东西，就疯狂输出哦 (￣▽￣)／。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Spring/">Spring</a>
+                    
+                      <a class="hover-with-bg" href="/tags/IOC/">IOC</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Event/">Event</a>
+                    
+                      <a class="hover-with-bg" href="/tags/EventListener/">EventListener</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/18/08-IOC%E7%9A%84%E6%A8%A1%E5%9D%97%E8%A3%85%E9%85%8D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">08-IOC的模块装配</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/18/06-IOC%E7%9A%84ApplicationContext/">
+                        <span class="hidden-mobile">06-IOC的ApplicationContext</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/18/07-IOC%E7%9A%84%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E6%9C%BA%E5%88%B6/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -181,18 +181,17 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/17/01-IOC%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">01-IOC是怎么来的</a>
+        <a href="/2022/04/18/13-IOC%E4%B8%AD%E9%85%8D%E7%BD%AE%E6%BA%90%E4%B8%8E%E9%85%8D%E7%BD%AE%E5%85%83%E6%A6%82%E5%BF%B5%E5%8C%BA%E5%88%AB/">13-IOC中配置源与配置元概念区别</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/17/01-IOC%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">
+        <a href="/2022/04/18/13-IOC%E4%B8%AD%E9%85%8D%E7%BD%AE%E6%BA%90%E4%B8%8E%E9%85%8D%E7%BD%AE%E5%85%83%E6%A6%82%E5%BF%B5%E5%8C%BA%E5%88%AB/">
           
           
             
           
-          Way IoC ?一、前菜-原生Servlet的三层架构搭建一个在原生 Servlet 时代的 MVC 三层架构的工程，以此为背景板
-1.1 构建基于Maven的原生Servlet工程使用 Maven 构建项目那是最基本的能力了，咱使用 IDEA 快速搭建一个原生的 Servlet 工程。
-pom 依赖中，只需要引入 Servlet 的 api 即可：（此处我使用了 Servlet3.1 ，这个倒
+          配置源&amp;配置元信息从这一章开始，咱开始进入到难度更高的 IOC 高级部分了。对于要深入学习 SpringFramework 中 IOC 的高级特性或者深入原理部分的小伙伴们来讲，这部分真的很重要呀，一定要好好学习哦。
+本章介绍 SpringFramework 中的配置源和配置元信息。说到配置源，可能有部分小伙伴的第一反应是：数据源？不是还没到 jdbc 吗？那当然没到啦，配置源是针对 Sp
         </a>
       </p>
 
@@ -200,18 +199,11 @@ pom 依赖中，只需要引入 Servlet 的 api 即可：（此处我使用了 S
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-17 11:45" pubdate>
-              2022-04-17
+            <time datetime="2022-04-18 10:22" pubdate>
+              2022-04-18
             </time>
           </div>
         
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Spring/">Spring</a>
-            
-          </div>
         
         
           <div class="post-meta">
@@ -233,17 +225,18 @@ pom 依赖中，只需要引入 Servlet 的 api 即可：（此处我使用了 S
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/17/14-AOP%E6%80%BB%E7%BB%93-%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/">14-AOP总结-面试整理</a>
+        <a href="/2022/04/18/12-IOC%E7%9A%84%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD/">12-IOC的资源加载</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/17/14-AOP%E6%80%BB%E7%BB%93-%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/">
+        <a href="/2022/04/18/12-IOC%E7%9A%84%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD/">
           
           
             
           
-          1. AOP概念与基础与 IOC 一样，咱先回顾一下 AOP 中涉及到的概念。
-1.1 AOP概述AOP 面向切面编程，全称 Aspect Oriented Programming ，它是 OOP 的补充。OOP 关注的核心是对象，AOP 的核心是切面（Aspect）。AOP 可以在不修改功能代码本身的前提下，使用运行时动态代理的技术对已有代码逻辑增强。AOP 可以实现组件化、可插拔式的功能扩展，
+          @PropertySource的使用承接上一章的内容，本章介绍一个重要的资源加载注解：@PropertySource 。
+1. @PropertySource引入properties文件1.1 声明properties文件在 resources 目录下新建一个 propertysource 文件夹，此处存放本章声明的所有资源文件。
+新建一个 jdbc.properties 文件，用来代表声明一个 
         </a>
       </p>
 
@@ -251,13 +244,353 @@ pom 依赖中，只需要引入 Servlet 的 api 即可：（此处我使用了 S
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-17 09:32" pubdate>
+            <time datetime="2022-04-18 10:19" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD/">资源加载</a>
+            
+              <a href="/tags/PropertySource/">PropertySource</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/18/11-IOC%E7%9A%84%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">11-IOC的资源管理</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/18/11-IOC%E7%9A%84%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">
+          
+          
+            
+          
+          资源管理 ApplicationContext 中，有看到 ClassPathXmlApplicationContext的直接父类 AbstractXmlApplicationContext 中组合了一个 XmlBeanDefinitionReader组件来解析 xml 配置文件。
+其中，XmlBeanDefinitionReader 接收的 xml 配置文件是一组 Resource ：
+1234
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-18 10:16" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">资源管理</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/18/10-IOC%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F/">10-IOC组件扫描</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/18/10-IOC%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F/">
+          
+          
+            
+          
+          组件扫描前面在第 7 章中，咱介绍了最基础的注解驱动 IOC ，以及组件扫描的最基本使用方式。然而，组件扫描本身可是大有文章的，深入了解组件扫描中的各个细节，对了解这部分内容很有帮助。本章咱就来学习组件扫描中的一些高级使用和底层实现原理。
+1. 包扫描的路径【掌握】第 7 章中咱有讲过，@ComponentScan 注解可以指定包扫描的路径（而且还可以声明不止一个），它的写法是使用 @Compon
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-18 10:14" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F/">组件扫描</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/18/09-IOC%E7%9A%84%E6%9D%A1%E4%BB%B6%E8%A3%85%E9%85%8D/">09-IOC的条件装配</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/18/09-IOC%E7%9A%84%E6%9D%A1%E4%BB%B6%E8%A3%85%E9%85%8D/">
+          
+          
+            
+          
+          条件装配上一章咱完整的学习了模块装配的核心使用方法，通过模块装配，咱可以通过一个注解，一次性导入指定场景中需要的组件和配置。那么只靠模块装配的内容，就可以把这些装配都考虑到位吗？
+1. 模块装配考虑不到的地方还是拿上一章的酒馆为例。如果这套代码模拟的环境放到一片荒野，那这个时候可能吧台还在，老板还在，但是调酒师肯定就不干活了（荒郊野外哪来那些闲情雅致的人去喝酒呢），所以这个时候调酒师就不应该注册到
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-18 10:12" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/%E6%9D%A1%E4%BB%B6%E8%A3%85%E9%85%8D/">条件装配</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/18/08-IOC%E7%9A%84%E6%A8%A1%E5%9D%97%E8%A3%85%E9%85%8D/">08-IOC的模块装配</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/18/08-IOC%E7%9A%84%E6%A8%A1%E5%9D%97%E8%A3%85%E9%85%8D/">
+          
+          
+            
+          
+          模块装配-EnableXxx模块装配与条件装配的使用，这一部分相当重要，对于以后学习 SpringBoot 的核心自动装配有巨大的帮助（ SpringBoot 的自动装配，基础就是模块装配 + 条件装配），小伙伴们一定要好好学习这两章呀。
+
+如果小伙伴之前有学习或接触过 SSH 或者 SSM 的框架整合，应该还记得那些配置文件有多烦吧，又多又不好记真的很让人头大。在处理配置文件的同时，小伙伴是否有
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-18 10:10" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/%E6%A8%A1%E5%9D%97%E8%A3%85%E9%85%8D/">模块装配</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/18/07-IOC%E7%9A%84%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E6%9C%BA%E5%88%B6/">07-IOC的事件监听机制</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/18/07-IOC%E7%9A%84%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E6%9C%BA%E5%88%B6/">
+          
+          
+            
+          
+          事件机制&amp;监听器事件和监听器，最先想到的估计就是观察者模式了吧。下面咱先快速回顾一下观察者模式。
+1. 观察者模式【回顾】观察者模式，也被称为发布订阅模式，也有的人叫它“监听器模式”，它是 GoF23 设计模式中行为型模式的其中之一。
+观察者模式关注的点是某一个对象被修改 / 做出某些反应 / 发布一个信息等，会自动通知依赖它的对象（订阅者）。
+观察者模式的三大核心是：观察者、被观察主题、
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-18 10:06" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/Event/">Event</a>
+            
+              <a href="/tags/EventListener/">EventListener</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/18/06-IOC%E7%9A%84ApplicationContext/">06-IOC的ApplicationContext</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/18/06-IOC%E7%9A%84ApplicationContext/">
+          
+          
+            
+          
+          IOC进阶-IOC容器的详细对比-ApplicationContext推荐使用 ApplicationContext 而不是 BeanFactory ，因为 ApplicationContext相比较 BeanFactory 扩展的实在是太多了：
+
+
+
+Feature
+BeanFactory
+ApplicationContext
+
+
+
+Bean instantiation/wiring —— Be
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-18 09:53" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/17/05-IOC%E7%9A%84BeanFactory/">05-IOC的BeanFactory</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/17/05-IOC%E7%9A%84BeanFactory/">
+          
+          
+            
+          
+          IOC容器的详细对比-BeanFactory进入 SpringFramework 更深层次的部分，来更透彻的了解 SpringFramework ，从而更好地驾驭它。
+SpringFramework 中的容器最核心的是 BeanFactory 与 ApplicationContext ，但它们还有好多的子接口、抽象类和具体实现类，接下来的两章咱就把这些重要的子接口、实现类都研究个明明白白。
+1. 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-17 19:38" pubdate>
               2022-04-17
             </time>
           </div>
         
         
         
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/BeanFactory/">BeanFactory</a>
+            
+          </div>
+        
       </div>
     </article>
   </div>
@@ -268,16 +601,28 @@ pom 依赖中，只需要引入 Servlet 的 api 即可：（此处我使用了 S
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/17/13-AOP%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1%E5%BA%95%E5%B1%82%E6%89%A7%E8%A1%8C%E9%80%BB%E8%BE%91/">13-AOP原理-代理对象底层执行逻辑</a>
+        <a href="/2022/04/17/04-IOC%E4%B8%ADDL-DI%E7%9A%84%E5%8C%BA%E5%88%AB/">04-IOC中DL/DI的区别</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/17/13-AOP%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1%E5%BA%95%E5%B1%82%E6%89%A7%E8%A1%8C%E9%80%BB%E8%BE%91/">
+        <a href="/2022/04/17/04-IOC%E4%B8%ADDL-DI%E7%9A%84%E5%8C%BA%E5%88%AB/">
           
           
             
           
-          AOP原理-代理对象的底层执行逻辑代理对象已经创建好了，接下来就到了正常的业务代码执行了。经过 AOP 的增强后，获取到目标对象的代理对象执行方法时，就会先执行 AOP 增强中的增强器逻辑。下面咱继续以 com.linkedbear.spring.aop.b_aspectj.AnnotationAspectJApplication 中的代码来测试，执行 financeService.addMone
+          
+作用目标不同
+依赖注入的作用目标通常是类成员
+依赖查找的作用目标可以是方法体内，也可以是方法体外
+
+
+实现方式不同
+依赖注入通常借助一个上下文被动的接收
+依赖查找通常主动使用上下文搜索
+
+
+
+
         </a>
       </p>
 
@@ -285,266 +630,25 @@ pom 依赖中，只需要引入 Servlet 的 api 即可：（此处我使用了 S
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-17 09:29" pubdate>
+            <time datetime="2022-04-17 19:12" pubdate>
               2022-04-17
             </time>
           </div>
         
         
         
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/17/12-AOP%E5%8E%9F%E7%90%86-Bean%E5%A6%82%E4%BD%95%E8%A2%ABAOP%E4%BB%A3%E7%90%86%E7%9A%84/">12-AOP原理-Bean如何被AOP代理的</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/17/12-AOP%E5%8E%9F%E7%90%86-Bean%E5%A6%82%E4%BD%95%E8%A2%ABAOP%E4%BB%A3%E7%90%86%E7%9A%84/">
-          
-          
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
             
-          
-          AOP原理-Bean是如何被AOP代理的前面咱已经知道，最终 bean 的初始化会被 BeanPostProcessor 的 postProcessAfterInitialization 处理，进入到 AnnotationAwareAspectJAutoProxyCreator 的 postProcessAfterInitialization 方法中，它又要调用 wrapIfNecessary 方
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-17 09:26" pubdate>
-              2022-04-17
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/17/11-AOP%E5%8E%9F%E7%90%86-%E5%88%87%E9%9D%A2%E7%B1%BB%E6%94%B6%E9%9B%86%E5%B0%81%E8%A3%85/">11-AOP原理-切面类收集封装</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/17/11-AOP%E5%8E%9F%E7%90%86-%E5%88%87%E9%9D%A2%E7%B1%BB%E6%94%B6%E9%9B%86%E5%B0%81%E8%A3%85/">
-          
-          
+              <a href="/tags/Spring/">Spring</a>
             
-          
-          AOP原理-AOP是如何收集切面类并封装的承接着上一章的思路，这一章咱主要研究两个大问题：
-
-Advisor 是什么，它是怎么构建的
-TargetSource 是什么，SpringFramework 的 AOP 为什么要代理它而不是原始对象
-
-1. Advisor与切面类的收集在上一章中，咱有看到一个 shouldSkip 的跳过动作：
-1234567891011// AspectJAwareAd
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-17 09:21" pubdate>
-              2022-04-17
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/10-AOP%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E6%A0%B8%E5%BF%83%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8/">10-AOP原理-底层核心后置处理器</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/10-AOP%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E6%A0%B8%E5%BF%83%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8/">
-          
-          
+              <a href="/tags/IOC/">IOC</a>
             
-          
-          AOP原理-AOP代理的底层核心后置处理器1. @EnableAspectJAutoProxy的作用翻开 @EnableAspectJAutoProxy 注解的源码，可以发现它 @Import 了一个注册器：
-12345@Import(AspectJAutoProxyRegistrar.class)public @interface EnableAspectJAutoProxy &#123;   
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 22:45" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/09-AOP%E9%AB%98%E7%BA%A7-%E5%B0%9D%E8%AF%95%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0AOP/">09-AOP高级-尝试自己实现AOP</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/09-AOP%E9%AB%98%E7%BA%A7-%E5%B0%9D%E8%AF%95%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0AOP/">
-          
-          
+              <a href="/tags/DL/">DL</a>
             
-          
-          AOP高级-如果我们自己实现一个AOP？前面学习 IOC 高级的 BeanPostProcessor 中，咱就了解到 BeanPostProcessor 的 postProcessAfterInitialization 方法可以用于创建代理对象，那 Spring AOP 是如何实现的呢？
-1. 前期分析先分析一下，一个完整的 AOP 机制需要的 支撑组件 和 它们的作用 分别都是什么。
-1.1 生
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 22:30" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/08-AOP%E9%AB%98%E7%BA%A7-%E5%85%B6%E4%BB%96AOP%E6%89%A9%E5%B1%95/">08-AOP高级-其他AOP扩展</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/08-AOP%E9%AB%98%E7%BA%A7-%E5%85%B6%E4%BB%96AOP%E6%89%A9%E5%B1%95/">
-          
-          
+              <a href="/tags/DI/">DI</a>
             
-          
-          AOP高级-AOP的其他扩展知识1. AOP的引介【了解】在学习 AOP 的术语时，就说过了引介只是了解即可，现在用的实在是太少了。不过还是会有对此感兴趣的小伙伴。
-
-考虑到整体的难度和使用情况来看，这里只介绍基于 AspectJ 的引介，对于 SpringFramework 原生的这里小册不作介绍，感兴趣的小伙伴自己查资料去。
-
-1.1 引介的作用和目标引介的作用是给目标对象所在的类，动态的添加
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 21:57" pubdate>
-              2022-04-16
-            </time>
           </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/07-AOP%E8%BF%9B%E9%98%B6-%E5%AE%9E%E6%88%98AOP%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6/">07-AOP进阶-实战AOP事务控制</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/07-AOP%E8%BF%9B%E9%98%B6-%E5%AE%9E%E6%88%98AOP%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6/">
-          
-          
-            
-          
-          AOP进阶-实战：AOP实现事务控制1. 代码准备咱先把基本的环境搭建一下哈，分为以下几个步骤。
-1.1 导入MySQL的依赖前面在 IOC 的工程中咱已经导入过一次 MySQL 的依赖了，不多赘述，直接导入即可：
-12345&lt;dependency&gt;    &lt;groupId&gt;mysql&lt;/groupId&gt;    &lt;artifactId&gt;mysql-c
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 21:45" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/06-AOP%E8%BF%9B%E9%98%B6-%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86%E5%92%8C%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8/">06-AOP进阶-延伸知识和进阶使用</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/06-AOP%E8%BF%9B%E9%98%B6-%E5%BB%B6%E4%BC%B8%E7%9F%A5%E8%AF%86%E5%92%8C%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8/">
-          
-          
-            
-          
-          AOP进阶-AOP的延伸知识和进阶使用1. AOP联盟【了解】在 SpringFramework 2.0 之前，它还没有整合 AspectJ ，当时的 SpringFramework 还有一套相对低层级的实现，它也是 SpringFramework 原生的实现，而我们要了解它，首先要先了解一个组织：AOP 联盟。
-早在很久之前，AOP 的概念就被提出来了。同之前的 EJB 一样，作为一个概念、思想
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 20:24" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
         
       </div>
     </article>
@@ -554,7 +658,7 @@ TargetSource 是什么，SpringFramework 的 AOP 为什么要代理它而不是�
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   

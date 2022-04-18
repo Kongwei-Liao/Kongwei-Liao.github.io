@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>11-IOC的资源管理 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="11-IOC的资源管理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-18 10:16" pubdate>
+        2022年4月18日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">11-IOC的资源管理</h1>
+            
+            <div class="markdown-body">
+              <h1 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a>资源管理</h1><p> <code>ApplicationContext</code> 中，有看到 <code>ClassPathXmlApplicationContext</code>的直接父类 <code>AbstractXmlApplicationContext</code> 中组合了一个 <code>XmlBeanDefinitionReader</code>组件来解析 xml 配置文件。</p>
+<p>其中，<code>XmlBeanDefinitionReader</code> 接收的 xml 配置文件是一组 <strong><code>Resource</code></strong> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loadBeanDefinitions</span><span class="hljs-params">(XmlBeanDefinitionReader reader)</span> <span class="hljs-keyword">throws</span> BeansException, IOException </span>&#123;<br>    Resource[] configResources = getConfigResources();<br>    <span class="hljs-keyword">if</span> (configResources != <span class="hljs-keyword">null</span>) &#123;<br>        reader.loadBeanDefinitions(configResources);<br>    &#125;<br>    <span class="hljs-comment">// ......</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个 <strong><code>Resource</code></strong> 就是 SpringFramework 中定义的资源模型。</p>
+<h2 id="1-Spring框架为什么要自己设计资源模型"><a href="#1-Spring框架为什么要自己设计资源模型" class="headerlink" title="1. Spring框架为什么要自己设计资源模型"></a>1. Spring框架为什么要自己设计资源模型</h2><p>一看到资源管理，或许会有小伙伴立马想到 <code>ClassLoader</code> 的 <code>getResource</code> 和 <code>getResourceAsStream</code> 方法，它们本身就是 jdk 内置的加载资源文件的方式。</p>
+<p>然而 SpringFramework 中并没有直接拿它的这一套，而是自己重新造了一套比原生 JDK 更强大的资源管理。既然是造了，那就肯定有原因（人家的挺好你为啥不用呢，肯定是你觉得它不好），而这个原因，咱们可以翻看 SpringFramework 的官方文档：</p>
+<p><a href="https://link.juejin.cn/?target=https://docs.spring.io/spring/docs/5.2.x/spring-framework-reference/core.html%23resources-introduction">docs.spring.io/spring/docs…</a></p>
+<p>概述一下就是说，JDK 原生的 URL 那一套资源加载方式，对于加载 classpath 或者 <code>ServletContext</code> 中的资源来说<u>没有标准的处理手段</u>，而且即便是实现起来也很麻烦，倒不如我自己写一套。（大佬就是强啊）</p>
+<p>如果对比原生 JDK 和 SpringFramework 中的资源管理，可能 SpringFramework 的资源管理真的要更强大吧（问题时这里没有具体说强在哪里？待理解补充），下面咱来了解下 SpringFramework 中定义的资源模型都有什么结构，分别负责哪些功能。</p>
+<h2 id="2-Spring框架中的资源模型【了解】"><a href="#2-Spring框架中的资源模型【了解】" class="headerlink" title="2. Spring框架中的资源模型【了解】"></a>2. Spring框架中的资源模型【了解】</h2><p>先来一张图概览一下吧：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dcf8b03d274f4de1a52bbc2c02706277~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<p>可以发现，SpringFramework 中资源模型最顶级的其实不是 <code>Resource</code> ，而是一个叫 <code>InputStreamSource</code> 的接口：</p>
+<h4 id="2-1-InputStreamSource"><a href="#2-1-InputStreamSource" class="headerlink" title="2.1 InputStreamSource"></a>2.1 InputStreamSource</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">InputStreamSource</span> </span>&#123;<br>	<span class="hljs-function">InputStream <span class="hljs-title">getInputStream</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个接口只有一个 <code>getInputStream</code> 方法，很明显它表达了一件事情：实现了 <code>InputStreamSource</code> 接口的实现类，都可以从中取到资源的输入流。</p>
+<h4 id="2-2-Resource"><a href="#2-2-Resource" class="headerlink" title="2.2 Resource"></a>2.2 Resource</h4><p>然后就是 <code>InputStreamSource</code> 的子接口 <code>Resource</code> 了，它的文档注释中有写到这么一句话：</p>
+<blockquote>
+<p>Interface for a resource descriptor that abstracts from the actual type of underlying resource, such as a file or class path resource.  它是资源描述符的接口，它可以从基础资源的实际类型中抽象出来，例如文件或类路径资源。</p>
+</blockquote>
+<p>这个翻译看起来很生硬，不过咱只需要关注到一个点：<strong>文件 或 类路径的资源</strong>，仅凭这一个点，Resource 确实更适合 SpringFramework 做资源加载（配置文件通常都放到类路径下）。</p>
+<h4 id="2-3-EncodedResource"><a href="#2-3-EncodedResource" class="headerlink" title="2.3 EncodedResource"></a>2.3 EncodedResource</h4><p>在 <code>Resource</code> 的旁边，有一个 <code>EncodedResource</code> 直接实现了 <code>InputStreamSource</code> 接口，从类名上也能看得出来<u>它抽象的是<strong>编码后</strong>的资源</u>。通过源码，发现它内部组合了一个 <code>Resource</code> ，说明它本身并不是直接加载资源的，资源还是由 Resource 来加载的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EncodedResource</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">InputStreamSource</span> </span>&#123;<br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Resource resource;<br>    <span class="hljs-comment">// ......</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-4-WritableResource"><a href="#2-4-WritableResource" class="headerlink" title="2.4 WritableResource"></a>2.4 WritableResource</h4><p>自 SpringFramework 3.1 之后，<code>Resource</code> 新的子接口：<code>WritableResource</code> ，它代表着“可写的资源”，那 <code>Resource</code> 就可以理解为“可读的资源”；</p>
+<p>Spring中有很多类似的命名，比如 <code>BeanFactory</code> 与 <code>ConfigurableBeanFactory</code> 前者就是可读的容器，后者是可以配置的容器。</p>
+<h4 id="2-5-ContextResource"><a href="#2-5-ContextResource" class="headerlink" title="2.5 ContextResource"></a>2.5 ContextResource</h4><p>跟 <code>WritableResource</code> 并列的还有一个 <code>ContextResource</code> ，看到类名是不是突然一阵狂喜？它肯定是跟 <code>ApplicationContext</code> 有关系吧！打开源码，看一眼文档注释：</p>
+<blockquote>
+<p>Extended interface for a resource that is loaded from an enclosing ‘context’, e.g. from a javax.servlet.ServletContext but also from plain classpath paths or relative file system paths (specified without an explicit prefix, hence applying relative to the local ResourceLoader’s context).</p>
+</blockquote>
+<p>Emmm？它是跟 <code>ServletContext</code> 有关的？那跟 <code>ApplicationContext</code> 没关系咯。。。是的，它强调的是从一个<strong>封闭的 “上下文” 中加载</strong>，这其实就是说像 <code>ServletContext</code> 这种域（当然文档也说了只是举个例子）。（没有理解，先搁置后面补充）</p>
+<p>以上就是 SpringFramework 中设计的资源模型，不过平时咱用的只有 <code>Resource</code> 接口而已。</p>
+<h2 id="3-Spring-框架中的资源模型实现"><a href="#3-Spring-框架中的资源模型实现" class="headerlink" title="3. Spring 框架中的资源模型实现"></a>3. Spring 框架中的资源模型实现</h2><p>说完了接口，下面说说实现类。不过在说实现类之前，咱先说另外一件事，就是 Java 原生的资源加载方式。</p>
+<h3 id="3-1-Java原生资源加载方式"><a href="#3-1-Java原生资源加载方式" class="headerlink" title="3.1 Java原生资源加载方式"></a>3.1 Java原生资源加载方式</h3><p>Java 原生能加载到哪些地方的资源？大致上分 3 种：</p>
+<ul>
+<li>借助 ClassLoader 加载类路径下的资源</li>
+<li>借助 File 加载文件系统中的资源</li>
+<li>借助 URL 和不同的协议加载本地 / 网络上的资源</li>
+</ul>
+<p>这里为什么要提它呢？那是因为，SpringFramework 中的资源模型实现，就是这三种的体现。</p>
+<h3 id="3-2-Spring框架的实现"><a href="#3-2-Spring框架的实现" class="headerlink" title="3.2 Spring框架的实现"></a>3.2 Spring框架的实现</h3><p>SpringFramework 分别对上面提到的这三种情况提供了三种不同的<strong>（Resource的）实现</strong>：</p>
+<ul>
+<li>ClassLoader → <code>ClassPathResource</code> [ classpath:/ ]</li>
+<li>File → <code>FileSystemResource</code> [ file:/ ]</li>
+<li>URL → <code>UrlResource</code> [ xxx:/ ]</li>
+</ul>
+<p>注意每一行最后的方括号，它代表的是资源路径的前缀：</p>
+<ul>
+<li>如果是 <strong>classpath</strong> 开头的资源路径，SpringFramework 解析到后会自动去类路径下找；</li>
+<li>如果是 <strong>file</strong> 开头的资源路径，则会去文件系统中找；</li>
+<li>如果是 <strong>URL</strong> 支持的协议开头，则底层会使用对应的协议，去尝试获取相应的资源文件。</li>
+</ul>
+<p>除了这三种实现，还有对应于 <code>ContextResource</code> 的实现：<code>ServletContextResource</code> ，它意味着资源是去 <code>ServletContext</code> 域中寻找。</p>
+<h2 id="4-Spring-框架加载资源的方式"><a href="#4-Spring-框架加载资源的方式" class="headerlink" title="4. Spring 框架加载资源的方式"></a>4. Spring 框架加载资源的方式</h2><p>关于 SpringFramework 的资源加载，此前提到过一个 <code>ResourcePatternResolver</code> ，它的父接口 <code>ResourceLoader</code> 才是那个真正负责加载资源的角色。另外也提过在 <code>AbstractApplicationContext</code> 中，通过类继承关系可以得知它继承了 <code>DefaultResourceLoader</code> ，也就是说，<code>ApplicationContext</code> 也通过继承获得了加载资源的能力。</p>
+<p>下面咱简单了解一下 <code>DefaultResourceLoader</code> 是如何根据一个路径，加载到相应的资源的。这段源码的篇幅稍微有点长，咱分开几个部分来看：</p>
+<h3 id="4-1-DefaultResourceLoader"><a href="#4-1-DefaultResourceLoader" class="headerlink" title="4.1 DefaultResourceLoader"></a>4.1 DefaultResourceLoader</h3><p>DefaultResourceLoader 中组合了一堆 ProtocolResolver</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Set&lt;ProtocolResolver&gt; protocolResolvers = <span class="hljs-keyword">new</span> LinkedHashSet&lt;&gt;(<span class="hljs-number">4</span>);<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> Resource <span class="hljs-title">getResource</span><span class="hljs-params">(String location)</span> </span>&#123;<br>    Assert.notNull(location, <span class="hljs-string">&quot;Location must not be null&quot;</span>);<br><br>  	<span class="hljs-comment">// 类似策略模式（多个协议解析器，找到能够解析 location 的解析器并解析加载资源）</span><br>    <span class="hljs-keyword">for</span> (ProtocolResolver protocolResolver : getProtocolResolvers()) &#123;<br>        Resource resource = protocolResolver.resolve(location, <span class="hljs-keyword">this</span>);<br>        <span class="hljs-keyword">if</span> (resource != <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> resource;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// ......</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这一段，它会先取它内部组合的几个 <code>ProtocolResolver</code> 来尝试着加载资源，而这个 <code>ProtocolResolver</code> 的设计也是跟 <code>ResourceLoader</code> 有关。</p>
+<h4 id="4-1-1-ProtocolResolver介绍"><a href="#4-1-1-ProtocolResolver介绍" class="headerlink" title="4.1.1 ProtocolResolver介绍"></a>4.1.1 ProtocolResolver介绍</h4><p>它的设计倒是蛮简单了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// @since 4.3</span><br><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ProtocolResolver</span> </span>&#123;<br>	<span class="hljs-function">Resource <span class="hljs-title">resolve</span><span class="hljs-params">(String location, ResourceLoader resourceLoader)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>它只有一个接口，而且是在 SpringFramework 4.3 版本才出现的：</p>
+<ol>
+<li>它本身可以搭配 <code>ResourceLoader</code> ，在 <code>ApplicationContext</code> 中实现自定义协议的资源加载；</li>
+<li>还可以脱离 <code>ApplicationContext</code> ，直接跟 <code>ResourceLoader</code> 搭配即可。</li>
+</ol>
+<p>这个特性蛮有趣的，咱可以稍微写点代码演示一下效果。</p>
+<h4 id="4-1-2-实现-ProtocolResolver-进行自定义协议资源加载"><a href="#4-1-2-实现-ProtocolResolver-进行自定义协议资源加载" class="headerlink" title="4.1.2 实现 ProtocolResolver 进行自定义协议资源加载"></a>4.1.2 实现 ProtocolResolver 进行自定义协议资源加载</h4><p>在工程的 <code>resources</code> 目录下新建一个 <code>Dog.txt</code> 文件（随便放哪儿都行，只要能找得到），然后写一个 <code>DogProtocolResolver</code> ，实现 <code>ProtocolResolver</code> 接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DogProtocolResolver</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ProtocolResolver</span> </span>&#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String DOG_PATH_PREFIX = <span class="hljs-string">&quot;dog:&quot;</span>;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Resource <span class="hljs-title">resolve</span><span class="hljs-params">(String location, ResourceLoader resourceLoader)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (!location.startsWith(DOG_PATH_PREFIX)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-comment">// 把自定义前缀去掉</span><br>        String realpath = location.substring(DOG_PATH_PREFIX.length());<br>        String classpathLocation = <span class="hljs-string">&quot;classpath:resource/&quot;</span> + realpath;<br>        <span class="hljs-keyword">return</span> resourceLoader.getResource(classpathLocation);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后，编写启动类，分别实例化 <code>DefaultResourceLoader</code> 与 <code>DogProtocolResolver</code> ，并将 <code>DogProtocolResolver</code> 加入到 <code>ResourceLoader</code> 中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProtocolResolverApplication</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        DefaultResourceLoader resourceLoader = <span class="hljs-keyword">new</span> DefaultResourceLoader();<br>        DogProtocolResolver dogProtocolResolver = <span class="hljs-keyword">new</span> DogProtocolResolver();<br>        resourceLoader.addProtocolResolver(dogProtocolResolver);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>然后，用 <code>ResourceLoader</code> 获取刚编写好的 <code>Dog.txt</code> ，并用缓冲流读取：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>    DefaultResourceLoader resourceLoader = <span class="hljs-keyword">new</span> DefaultResourceLoader();<br>    DogProtocolResolver dogProtocolResolver = <span class="hljs-keyword">new</span> DogProtocolResolver();<br>    resourceLoader.addProtocolResolver(dogProtocolResolver);<br><br>    Resource resource = resourceLoader.getResource(<span class="hljs-string">&quot;dog:Dog.txt&quot;</span>);<br>    InputStream inputStream = resource.getInputStream();<br>    InputStreamReader reader = <span class="hljs-keyword">new</span> InputStreamReader(inputStream, StandardCharsets.UTF_8);<br>    BufferedReader br = <span class="hljs-keyword">new</span> BufferedReader(reader);<br>    String readLine;<br>    <span class="hljs-keyword">while</span> ((readLine = br.readLine()) != <span class="hljs-keyword">null</span>) &#123;<br>        System.out.println(readLine);<br>    &#125;<br>    br.close();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台打印出 <code>Dog.txt</code> 的内容，证明 <code>DogProtocolResolver</code> 已经起到了作用：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">wangwangwang</span><br></code></pre></td></tr></table></figure>
+<h3 id="4-2-DRL-可自行加载类路径下的资源"><a href="#4-2-DRL-可自行加载类路径下的资源" class="headerlink" title="4.2 DRL 可自行加载类路径下的资源"></a>4.2 DRL 可自行加载类路径下的资源</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Resource <span class="hljs-title">getResource</span><span class="hljs-params">(String location)</span> </span>&#123;<br>  <br>  	<span class="hljs-comment">//Assert.notNull(location, &quot;Location must not be null&quot;);</span><br><br>  	<span class="hljs-comment">// 类似策略模式（多个协议解析器，找到能够解析 location 的解析器并解析加载资源）</span><br>    <span class="hljs-comment">//for (ProtocolResolver protocolResolver : getProtocolResolvers()) &#123;</span><br>    <span class="hljs-comment">//    Resource resource = protocolResolver.resolve(location, this);</span><br>    <span class="hljs-comment">//    if (resource != null) &#123;</span><br>    <span class="hljs-comment">//        return resource;</span><br>    <span class="hljs-comment">//    &#125;</span><br>    <span class="hljs-comment">//&#125;</span><br>  <br>  <br>    <span class="hljs-comment">// ......</span><br>    <span class="hljs-keyword">if</span> (location.startsWith(<span class="hljs-string">&quot;/&quot;</span>)) &#123;<br>        <span class="hljs-keyword">return</span> getResourceByPath(location);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (location.startsWith(CLASSPATH_URL_PREFIX)) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ClassPathResource(location.substring(CLASSPATH_URL_PREFIX.length()), getClassLoader());<br>    &#125;<br>    <span class="hljs-comment">// ......</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这部分，且不看上面的 <code>startsWith</code> ，只看中间的 else if 部分返回的类型，就知道它能解析类路径下的资源了，而上面的 <code>getResourceByPath</code> 方法，点进去发现默认还是加载类路径下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> Resource <span class="hljs-title">getResourceByPath</span><span class="hljs-params">(String path)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ClassPathContextResource(path, getClassLoader());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>不过这个不是绝对的，如果小伙伴现在手头的工程还有引入 <code>spring-web</code> 模块的 pom 依赖，会发现 <code>DefaultResourceLoader</code> 的几个 Web 级子类中有重写这个方法，以 <code>GenericWebApplicationContext</code> 为例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> Resource <span class="hljs-title">getResourceByPath</span><span class="hljs-params">(String path)</span> </span>&#123;<br>    Assert.state(<span class="hljs-keyword">this</span>.servletContext != <span class="hljs-keyword">null</span>, <span class="hljs-string">&quot;No ServletContext available&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ServletContextResource(<span class="hljs-keyword">this</span>.servletContext, path);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可以发现这里创建的不再是类路径下了，Web 环境下 SpringFramework 更倾向于从 <code>ServletContext</code> 中加载。</p>
+<h3 id="4-3-DRL-可支持特定协议"><a href="#4-3-DRL-可支持特定协议" class="headerlink" title="4.3 DRL 可支持特定协议"></a>4.3 DRL 可支持特定协议</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Resource <span class="hljs-title">getResource</span><span class="hljs-params">(String location)</span> </span>&#123;<br>    <span class="hljs-comment">// ......</span><br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// Try to parse the location as a URL...</span><br>            URL url = <span class="hljs-keyword">new</span> URL(location);<br>          	<span class="hljs-comment">// 对应 File 和 URL 这两种</span><br>            <span class="hljs-keyword">return</span> (ResourceUtils.isFileURL(url) ? <span class="hljs-keyword">new</span> FileUrlResource(url) : <span class="hljs-keyword">new</span> UrlResource(url));<br>        &#125;<br>        <span class="hljs-keyword">catch</span> (MalformedURLException ex) &#123;<br>            <span class="hljs-comment">// No URL -&gt; resolve as resource path.</span><br>            <span class="hljs-keyword">return</span> getResourceByPath(location);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果上面它不能处理类路径的文件，就会尝试通过 URL 的方式加载，这里面包含文件系统的资源，和特殊协议的资源。</p>
+<p>这里面就不进一步深入了，小伙伴们了解 <code>DefaultResourceLoader</code> 能加载的资源类型和大体的流程即可。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Spring/">Spring</a>
+                    
+                      <a class="hover-with-bg" href="/tags/IOC/">IOC</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">资源管理</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/18/12-IOC%E7%9A%84%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">12-IOC的资源加载</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/18/10-IOC%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F/">
+                        <span class="hidden-mobile">10-IOC组件扫描</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/18/11-IOC%E7%9A%84%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

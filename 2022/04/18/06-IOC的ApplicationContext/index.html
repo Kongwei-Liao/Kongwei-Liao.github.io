@@ -1,0 +1,803 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>06-IOC的ApplicationContext - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="06-IOC的ApplicationContext">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-18 09:53" pubdate>
+        2022年4月18日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      115
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">06-IOC的ApplicationContext</h1>
+            
+            <div class="markdown-body">
+              <h1 id="IOC进阶-IOC容器的详细对比-ApplicationContext"><a href="#IOC进阶-IOC容器的详细对比-ApplicationContext" class="headerlink" title="IOC进阶-IOC容器的详细对比-ApplicationContext"></a>IOC进阶-IOC容器的详细对比-ApplicationContext</h1><p>推荐使用 <code>ApplicationContext</code> 而不是 <code>BeanFactory</code> ，因为 <code>ApplicationContext</code>相比较 <code>BeanFactory</code> 扩展的实在是太多了：</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>BeanFactory</code></th>
+<th><code>ApplicationContext</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bean instantiation/wiring —— Bean的实例化和属性注入</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Integrated lifecycle management —— <strong>生命周期管理</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Automatic <code>BeanPostProcessor</code> registration —— <strong>Bean后置处理器的支持</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Automatic <code>BeanFactoryPostProcessor</code> registration —— <strong>BeanFactory后置处理器的支持</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Convenient <code>MessageSource</code> access (for internalization) —— <strong>消息转换服务（国际化）</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Built-in <code>ApplicationEvent</code> publication mechanism —— <strong>事件发布机制（事件驱动）</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<p>那既然是这样，咱就一定要更深入的了解 <code>ApplicationContext</code> 才是。</p>
+<h2 id="1-ApplicationContext和它的上下辈们"><a href="#1-ApplicationContext和它的上下辈们" class="headerlink" title="1. ApplicationContext和它的上下辈们"></a>1. ApplicationContext和它的上下辈们</h2><p>还是跟上一章一样，咱先把关系图摆出来看看：</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b31a2ee5069f4234abd048c893126ed0~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<p>可以发现 <code>ApplicationContext</code> 不仅继承了 <code>BeanFactory</code> 的两个扩展接口，还继承了其它几个接口，咱都一并来讲解。</p>
+<h3 id="1-1-ApplicationContext【掌握】"><a href="#1-1-ApplicationContext【掌握】" class="headerlink" title="1.1 ApplicationContext【掌握】"></a>1.1 ApplicationContext【掌握】</h3><p>这是主角之一，但它的文档注释却不是很长，咱一起来读一下。</p>
+<h4 id="1-1-1-ApplicationContext是最核心接口"><a href="#1-1-1-ApplicationContext是最核心接口" class="headerlink" title="1.1.1 ApplicationContext是最核心接口"></a>1.1.1 ApplicationContext是最核心接口</h4><blockquote>
+<p>Central interface to provide configuration for an application. This is read-only while the application is running, but may be reloaded if the implementation supports this.</p>
+<p>它是为应用程序提供配置的中央接口。在应用程序运行时，它是只读的，但是如果受支持的话，它可以重新加载。</p>
+</blockquote>
+<p>很言简意赅，<code>ApplicationContext</code> 就是中央接口，它就是 SpringFramework 的最最核心。</p>
+<p>另外它多提了一个概念：<strong>重新加载</strong>，这个概念很关键，咱会在后面介绍 <code>ApplicationContext</code> 的抽象实现中着重介绍它。</p>
+<h4 id="1-1-2-ApplicationContext组合多个功能接口"><a href="#1-1-2-ApplicationContext组合多个功能接口" class="headerlink" title="1.1.2 ApplicationContext组合多个功能接口"></a>1.1.2 ApplicationContext组合多个功能接口</h4><blockquote>
+<p>An ApplicationContext provides:</p>
+<ul>
+<li>Bean factory methods for accessing application components. Inherited from ListableBeanFactory.</li>
+<li>The ability to load file resources in a generic fashion. Inherited from the ResourceLoader interface.</li>
+<li>The ability to publish events to registered listeners. Inherited from the ApplicationEventPublisher interface.</li>
+<li>The ability to resolve messages, supporting internationalization. Inherited from the MessageSource interface.</li>
+<li>Inheritance from a parent context. Definitions in a descendant context will always take priority. This means, for example, that a single parent context can be used by an entire web application, while each servlet has its own child context that is independent of that of any other servlet.</li>
+</ul>
+<p><code>ApplicationContext</code> 提供：</p>
+<ul>
+<li>用于访问应用程序组件的 Bean 工厂方法。继承自 <code>ListableBeanFactory</code> 。</li>
+<li>以通用方式加载文件资源的能力。继承自 <code>ResourceLoader</code> 接口。</li>
+<li>能够将事件发布给注册的监听器。继承自 <code>ApplicationEventPublisher</code> 接口。</li>
+<li>解析消息的能力，支持国际化。继承自 <code>MessageSource</code> 接口。</li>
+<li>从父上下文继承。在子容器中的定义将始终优先。例如，这意味着整个 Web 应用程序都可以使用单个父上下文，而每个 servlet 都有其自己的子上下文，该子上下文独立于任何其他 servlet 的子上下文。</li>
+</ul>
+</blockquote>
+<p>这一段它列出了 <code>ApplicationContext</code> 的核心功能，注意这里面与上面表里面列举的内容有所不同，这里主要介绍的是功能和来源的接口。</p>
+<p>这里面有一点需要注意，<code>ApplicationContext</code> 也是支持层级结构的，但这里它的描述是<strong>父子上下文</strong>，这个概念要区分理解。<strong>上下文中包含容器，但又不仅仅是容器。容器只负责管理 Bean ，但上下文中还包括动态增强、资源加载、事件监听机制等多方面扩展功能。</strong></p>
+<h4 id="1-1-3-ApplicationContext负责部分回调注入"><a href="#1-1-3-ApplicationContext负责部分回调注入" class="headerlink" title="1.1.3 ApplicationContext负责部分回调注入"></a>1.1.3 ApplicationContext负责部分回调注入</h4><blockquote>
+<p>In addition to standard BeanFactory lifecycle capabilities, ApplicationContext implementations detect and invoke ApplicationContextAware beans as well as ResourceLoaderAware , ApplicationEventPublisherAware and MessageSourceAware beans.</p>
+<p>除了标准的 <code>BeanFactory</code> 生命周期功能外，<code>ApplicationContext</code> 实现还检测并调用 <code>ApplicationContextAware</code> bean 以及 <code>ResourceLoaderAware</code> bean， <code>ApplicationEventPublisherAware</code> 和 <code>MessageSourceAware</code> bean。</p>
+</blockquote>
+<p>看到这个，可能小伙伴们会有些惊讶，这里面有些 Aware 接口没见过啊，它们也能注入吗？先别着急，往上看看 <code>ApplicationContext</code> 继承的接口们：</p>
+<ul>
+<li><code>ResourceLoader</code> → <code>ResourceLoaderAware</code></li>
+<li><code>ApplicationEventPublisher</code> → <code>ApplicationEventPublisherAware</code></li>
+<li><code>MessageSource</code> → <code>MessageSourceAware</code></li>
+</ul>
+<p>是不是突然明白了什么？这些 Aware 注入的最终结果还是 <strong><code>ApplicationContext</code></strong> 本身啊！</p>
+<h3 id="1-2-ConfigurableApplicationContext【掌握】"><a href="#1-2-ConfigurableApplicationContext【掌握】" class="headerlink" title="1.2 ConfigurableApplicationContext【掌握】"></a>1.2 ConfigurableApplicationContext【掌握】</h3><p>与上一章的 <code>ConfigurableBeanFactory</code> 类似，它也给 <code>ApplicationContext</code> 提供了 <strong>“可写”</strong>的功能，实现了该接口的实现类可以被客户端代码修改内部的某些配置。下面还是看看文档注释的描述：</p>
+<h4 id="1-2-1-ConfigurableApplicationContext提供了可配置的可能"><a href="#1-2-1-ConfigurableApplicationContext提供了可配置的可能" class="headerlink" title="1.2.1 ConfigurableApplicationContext提供了可配置的可能"></a>1.2.1 ConfigurableApplicationContext提供了可配置的可能</h4><blockquote>
+<p>SPI interface to be implemented by most if not all application contexts. Provides facilities to configure an application context in addition to the application context client methods in the ApplicationContext interface.</p>
+<p>它是一个支持 SPI 的接口，它会被大多数（如果不是全部）应用程序上下文的落地实现。除了 <code>ApplicationContext</code> 接口中的应用程序上下文客户端方法外，还提供了用于配置应用程序上下文的功能。</p>
+</blockquote>
+<p>这里又提到 SPI 了，咱回头讲到模块装配时再解释这个概念。后面它又提了，<code>ConfigurableApplicationContext</code> 给 <code>ApplicationContext</code> 添加了用于配置的功能，这个说法可以从接口方法中得以体现。<code>ConfigurableApplicationContext</code> 中扩展了 <code>setParent</code> 、<code>setEnvironment</code> 、<code>addBeanFactoryPostProcessor</code>、<code>addApplicationListener</code> 等方法，都是可以改变 <code>ApplicationContext</code> 本身的方法。</p>
+<h4 id="1-2-2-ConfigurableApplicationContext只希望被调用启动和关闭"><a href="#1-2-2-ConfigurableApplicationContext只希望被调用启动和关闭" class="headerlink" title="1.2.2 ConfigurableApplicationContext只希望被调用启动和关闭"></a>1.2.2 ConfigurableApplicationContext只希望被调用启动和关闭</h4><blockquote>
+<p>Configuration and lifecycle methods are encapsulated here to avoid making them obvious to ApplicationContext client code. The present methods should only be used by startup and shutdown code.</p>
+<p>配置和与生命周期相关的方法都封装在这里，以避免暴露给 <code>ApplicationContext</code> 的调用者。本接口的方法仅应由启动和关闭代码使用。</p>
+</blockquote>
+<p>由这段话也能明白，<code>ConfigurableApplicationContext</code> 本身扩展了一些方法，但是它一般情况下不希望让咱开发者调用，而是只调用启动（refresh）和关闭（close）方法。注意这个一般情况是在程序运行期间的业务代码中，但如果是为了定制化 <code>ApplicationContext</code> 或者对其进行扩展，<code>ConfigurableApplicationContext</code> 的扩展则会成为切入的主目标。</p>
+<p>好了，对于 <code>ApplicationContext</code> 的子接口就这一个，但它还实现了几个其他的接口，咱也一起来看看。</p>
+<h3 id="1-3-EnvironmentCapable【熟悉】"><a href="#1-3-EnvironmentCapable【熟悉】" class="headerlink" title="1.3 EnvironmentCapable【熟悉】"></a>1.3 EnvironmentCapable【熟悉】</h3><p><strong>capable</strong> 本意为“有能力的”，在这里解释为 <strong>“携带/组合”</strong> 更为合适。</p>
+<p><strong>在 SpringFramework 中，以 Capable 结尾的接口，通常意味着可以通过这个接口的某个特定的方法（通常是 <code>getXXX()</code> ）拿到特定的组件。</strong></p>
+<p>按照这个概念说法，这个 <code>EnvironmentCapable</code> 接口中就应该通过一个 <code>getEnvironment()</code>方法拿到 <strong><code>Environment</code></strong> ，事实上也确实如此：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">EnvironmentCapable</span> </span>&#123;<br>	<span class="hljs-function">Environment <span class="hljs-title">getEnvironment</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>下面咱还是看看官方是如何解释这个接口的。</p>
+<h4 id="1-3-1-ApplicationContext都具有EnvironmentCapable的功能"><a href="#1-3-1-ApplicationContext都具有EnvironmentCapable的功能" class="headerlink" title="1.3.1 ApplicationContext都具有EnvironmentCapable的功能"></a>1.3.1 ApplicationContext都具有EnvironmentCapable的功能</h4><blockquote>
+<p>Interface indicating a component that contains and exposes an Environment reference.</p>
+<p>All Spring application contexts are EnvironmentCapable, and the interface is used primarily for performing instanceof checks in framework methods that accept BeanFactory instances that may or may not actually be ApplicationContext instances in order to interact with the environment if indeed it is available.</p>
+<p>它是具有获取并公开 <code>Environment</code> 引用的接口。</p>
+<p>所有 Spring 的 <code>ApplicationContext</code> 都具有 <code>EnvironmentCapable</code> 功能，并且该接口主要用于在接受 <code>BeanFactory</code> 实例的框架方法中执行 <strong>instanceof</strong> 检查，以便可以与环境进行交互（如果实际上是 <code>ApplicationContext</code> 实例）。</p>
+</blockquote>
+<p>从这部分可以知道，<code>ApplicationContext</code> 都实现了这个 <code>EnvironmentCapable</code> 接口，也就代表着所有的 <code>ApplicationContext</code> 的实现类都可以取到 <code>Environment</code> 抽象。至于 <code>Environment</code> 是什么，咱后面 IOC 高级部分会解释，这里简单解释一下。</p>
+<p><code>Environment</code> 是 SpringFramework 中抽象出来的类似于<strong>运行环境</strong>的<strong>独立抽象</strong>，它内部存放着应用程序运行的一些配置。</p>
+<p>现阶段小伙伴可以这么理解：基于 SpringFramework 的工程，在运行时包含两部分：<strong>应用程序本身、应用程序的运行时环境</strong>。</p>
+<h4 id="1-3-2-ConfigurableApplicationContext可以获取ConfigurableEnvironment"><a href="#1-3-2-ConfigurableApplicationContext可以获取ConfigurableEnvironment" class="headerlink" title="1.3.2 ConfigurableApplicationContext可以获取ConfigurableEnvironment"></a>1.3.2 ConfigurableApplicationContext可以获取ConfigurableEnvironment</h4><blockquote>
+<p>As mentioned, ApplicationContext extends EnvironmentCapable, and thus exposes a getEnvironment() method; however, ConfigurableApplicationContext redefines getEnvironment() and narrows the signature to return a ConfigurableEnvironment. The effect is that an Environment object is ‘read-only’ until it is being accessed from a ConfigurableApplicationContext, at which point it too may be configured.</p>
+<p>如上面所述，<code>ApplicationContext</code> 扩展了 <code>EnvironmentCapable</code> ，因此公开了 <code>getEnvironment()</code> 方法；但是，<code>ConfigurableApplicationContext</code> 重新定义了 <code>getEnvironment()</code> 并缩小了签名范围，以返回 <code>ConfigurableEnvironment</code> 。结果是环境对象是 “只读的” ，直到从 <code>ConfigurableApplicationContext</code> 访问它为止，此时也可以对其进行配置。</p>
+</blockquote>
+<p>这里又看到 <strong>Configurable</strong> 的概念了，对于<strong>可配置的</strong> <code>ApplicationContext</code> ，就可以获取到<strong>可配置的</strong> <code>Environment</code> 抽象，这个也不难理解吧。</p>
+<h3 id="1-4-MessageSource【熟悉】"><a href="#1-4-MessageSource【熟悉】" class="headerlink" title="1.4 MessageSource【熟悉】"></a>1.4 MessageSource【熟悉】</h3><p>上面咱也看到了，它是支持国际化的组件。关于国际化的内容，小册计划放到 SpringWebMvc 部分来一起讲解，这里先简单了解下即可。</p>
+<p><strong>国际化，是针对不同地区、不同国家的访问，可以提供对应的符合用户阅读习惯（语言）的页面和数据。</strong>对于不同地区、使用不同语言的用户，需要分别提供对应语言环境的表述。</p>
+<p>对于国际化的概念，目前先了解即可。下面看看 SpringFramework 中是如何设计国际化的：</p>
+<blockquote>
+<p>Strategy interface for resolving messages, with support for the parameterization and internationalization of such messages. Spring provides two out-of-the-box implementations for production:</p>
+<ul>
+<li>org.springframework.context.support.ResourceBundleMessageSource: built on top of the standard java.util.ResourceBundle, sharing its limitations.</li>
+<li>org.springframework.context.support.ReloadableResourceBundleMessageSource: highly configurable, in particular with respect to reloading message definitions.</li>
+</ul>
+<p>用于解析消息的策略接口，并支持消息的参数化和国际化。SpringFramework 为生产提供了两种现有的实现：</p>
+<ul>
+<li><code>ResourceBundleMessageSource</code>：建立在标准 <code>java.util.ResourceBundle</code> 之上，共享其局限性。</li>
+<li><code>ReloadableResourceBundleMessageSource</code>：高度可配置，尤其是在重新加载消息定义方面。</li>
+</ul>
+</blockquote>
+<p>这里它又提到了关于 Java 原生的国际化，咱都放一放，现阶段只知道 SpringFramework 支持国际化就 OK 。</p>
+<h3 id="1-5-ApplicationEventPublisher【熟悉】"><a href="#1-5-ApplicationEventPublisher【熟悉】" class="headerlink" title="1.5 ApplicationEventPublisher【熟悉】"></a>1.5 ApplicationEventPublisher【熟悉】</h3><p>类名可以理解为，它是<strong>事件的发布器</strong>。SpringFramework 内部支持很强大的事件监听机制，而 ApplicationContext 作为容器的最顶级，自然也要实现观察者模式中<strong>广播器</strong>的角色。文档注释中对于它的描述也是异常的简单：</p>
+<blockquote>
+<p>Interface that encapsulates event publication functionality. Serves as a super-interface for ApplicationContext.</p>
+<p>封装事件发布功能的接口，它作为 <code>ApplicationContext</code> 的父接口。</p>
+</blockquote>
+<p>所以它就是一个很简单的事件发布/广播器而已，后续在 IOC 进阶部分学习事件驱动机制时会讲解它。</p>
+<h3 id="1-6-ResourcePatternResolver【熟悉】"><a href="#1-6-ResourcePatternResolver【熟悉】" class="headerlink" title="1.6 ResourcePatternResolver【熟悉】"></a>1.6 ResourcePatternResolver【熟悉】</h3><p>这个接口可能是这几个扩展里最复杂的一个，从类名理解可以解释为“<strong>资源模式解析器</strong>”，实际上它是<strong>根据特定的路径去解析资源文件</strong>的。从下面的文档注释中，咱就可以深刻的体会 <code>ResourcePatternResolver</code> 的作用和扩展。</p>
+<h4 id="1-6-1-ResourcePatternResolver是ResourceLoader的扩展"><a href="#1-6-1-ResourcePatternResolver是ResourceLoader的扩展" class="headerlink" title="1.6.1 ResourcePatternResolver是ResourceLoader的扩展"></a>1.6.1 ResourcePatternResolver是ResourceLoader的扩展</h4><blockquote>
+<p>Strategy interface for resolving a location pattern (for example, an Ant-style path pattern) into Resource objects. This is an extension to the ResourceLoader interface. A passed-in ResourceLoader (for example, an org.springframework.context.ApplicationContext passed in via org.springframework.context.ResourceLoaderAware when running in a context) can be checked whether it implements this extended interface too.</p>
+<p>它是一个策略接口，用于将位置模式（例如，Ant 样式的路径模式）解析为 <code>Resource</code>对象。 这是 <code>ResourceLoader</code> 接口的扩展。可以检查传入的 <code>ResourceLoader</code>（例如，在上下文中运行时通过 <code>ResourceLoaderAware</code> 传入的 <code>ApplicationContext</code> ）是否也实现了此扩展接口。</p>
+</blockquote>
+<p>可以发现，它本身还是 <code>ResourceLoader</code> 的扩展，<code>ResourceLoader</code> 实现最基本的解析，<code>ResourcePatternResolver</code> 可以支持 <strong>Ant</strong> 形式的带星号 ( * ) 的路径解析（ Ant 形式会在下面看到）。</p>
+<h4 id="1-6-2-ResourcePatternResolver的实现方式有多种"><a href="#1-6-2-ResourcePatternResolver的实现方式有多种" class="headerlink" title="1.6.2 ResourcePatternResolver的实现方式有多种"></a>1.6.2 ResourcePatternResolver的实现方式有多种</h4><blockquote>
+<p>PathMatchingResourcePatternResolver is a standalone implementation that is usable outside an ApplicationContext, also used by ResourceArrayPropertyEditor for populating Resource array bean properties.</p>
+<p><code>PathMatchingResourcePatternResolver</code> 是一个独立的实现，可在 <code>ApplicationContext</code> 外部使用，<code>ResourceArrayPropertyEditor</code> 使用它来填充 <code>Resource</code> 数组中 Bean 属性。</p>
+</blockquote>
+<p>这一段列出了一种 <code>ResourcePatternResolver</code> 的独立实现：<strong>基于路径匹配的解析器</strong>，这种扩展实现的特点是会<strong>根据特殊的路径来返回多个匹配到的资源文件</strong>。</p>
+<h4 id="1-6-3-ResourcePatternResolver支持的Ant路径模式匹配"><a href="#1-6-3-ResourcePatternResolver支持的Ant路径模式匹配" class="headerlink" title="1.6.3 ResourcePatternResolver支持的Ant路径模式匹配"></a>1.6.3 ResourcePatternResolver支持的Ant路径模式匹配</h4><blockquote>
+<p>Can be used with any sort of location pattern (e.g. “/WEB-INF/*-context.xml”): Input patterns have to match the strategy implementation. This interface just specifies the conversion method rather than a specific pattern format.</p>
+<p>可以与任何类型的位置模式一起使用（例如 <code>&quot;/WEB-INF/*-context.xml&quot;</code> ）：输入模式必须与策略实现相匹配。该接口仅指定转换方法，而不是特定的模式格式。</p>
+</blockquote>
+<p>根据前面的文档注释也知道，它支持的是 Ant 风格的匹配模式，这种模式可以有如下写法：</p>
+<ul>
+<li><code>/WEB-INF/*.xml</code> ：匹配 <code>/WEB-INF</code> 目录下的任意 xml 文件</li>
+<li><code>/WEB-INF/**/beans-*.xml</code> ：匹配 <code>/WEB-INF</code> 下面任意层级目录的 <code>beans-</code> 开头的 xml 文件</li>
+<li><code>/**/*.xml</code> ：匹配任意 xml 文件</li>
+</ul>
+<p>可以发现这种写法还是蛮灵活的，小伙伴们可以从网上搜索学习更多关于 Ant 风格的写法，不过常用的写法大概就上面几种，掌握写法即可。</p>
+<h4 id="1-6-4-ResourcePatternResolver可以匹配类路径下的文件"><a href="#1-6-4-ResourcePatternResolver可以匹配类路径下的文件" class="headerlink" title="1.6.4 ResourcePatternResolver可以匹配类路径下的文件"></a>1.6.4 ResourcePatternResolver可以匹配类路径下的文件</h4><blockquote>
+<p>This interface also suggests a new resource prefix “classpath*:” for all matching resources from the class path. Note that the resource location is expected to be a path without placeholders in this case (e.g. “/beans.xml”); JAR files or classes directories can contain multiple files of the same name.</p>
+<p>此接口还为类路径中的所有匹配资源建议一个新的资源前缀 <code>&quot;classpath*: &quot;</code>。请注意，在这种情况下，资源位置应该是没有占位符的路径（例如 <code>&quot;/beans.xml&quot;</code> ）； jar 文件或类目录可以包含多个相同名称的文件。</p>
+</blockquote>
+<p>文档注释中又提到了 <code>ResourcePatternResolver</code> 还可以匹配类路径下的资源文件，方式是在资源路径中加一个 <code>classpath*:</code> 的前缀。由此咱也可以知道，<code>ResourcePatternResolver</code>不仅可以匹配 Web 工程中 webapps 的文件，也可以匹配 classpath 下的文件了。</p>
+<hr>
+<p>到这里，关于 <code>ApplicationContext</code> 相关的接口咱就大概都了解了，下面是 <code>ApplicationContext</code> 的实现类们，这里面涉及的内容可能比较难记，小伙伴根据我标注的实现类的重要程度来理解和记录即可。</p>
+<h2 id="2-ApplicationContext的实现类们"><a href="#2-ApplicationContext的实现类们" class="headerlink" title="2. ApplicationContext的实现类们"></a>2. ApplicationContext的实现类们</h2><p>同样的，借助 IDEA 整理出一张继承关系图：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/001fe910c0344849aebe654534b49cca~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.image" srcset="/img/loading.gif" alt="img"></p>
+<p>这里面涉及到的实现类咱一个一个列出来看。</p>
+<h3 id="2-1-AbstractApplicationContext【掌握-】"><a href="#2-1-AbstractApplicationContext【掌握-】" class="headerlink" title="2.1 AbstractApplicationContext【掌握*】"></a>2.1 AbstractApplicationContext【掌握*】</h3><p>这个类是 <code>ApplicationContext</code> <strong>最最最最核心的实现类，没有之一</strong>。<code>AbstractApplicationContext</code> 中定义和实现了<strong>绝大部分应用上下文的特性和功能</strong>，一定要给它<strong>最大的重视</strong>。</p>
+<h4 id="2-1-1-AbstractApplicationContext只构建功能抽象"><a href="#2-1-1-AbstractApplicationContext只构建功能抽象" class="headerlink" title="2.1.1 AbstractApplicationContext只构建功能抽象"></a>2.1.1 AbstractApplicationContext只构建功能抽象</h4><blockquote>
+<p>Abstract implementation of the ApplicationContext interface. Doesn’t mandate the type of storage used for configuration; simply implements common context functionality. Uses the Template Method design pattern, requiring concrete subclasses to implement abstract methods.</p>
+<p><code>ApplicationContext</code> 接口的抽象实现。不强制用于配置的存储类型；简单地实现通用上下文功能。使用模板方法模式，需要具体的子类来实现抽象方法。</p>
+</blockquote>
+<p>一开始人家就解释了，<code>AbstractApplicationContext</code> 的抽象实现主要是规范功能（借助模板方法），实际的动作它不管，让子类自行去实现。</p>
+<h4 id="2-1-2-AbstractApplicationContext可以处理特殊类型的Bean"><a href="#2-1-2-AbstractApplicationContext可以处理特殊类型的Bean" class="headerlink" title="2.1.2 AbstractApplicationContext可以处理特殊类型的Bean"></a>2.1.2 AbstractApplicationContext可以处理特殊类型的Bean</h4><blockquote>
+<p>In contrast to a plain BeanFactory, an ApplicationContext is supposed to detect special beans defined in its internal bean factory: Therefore, this class automatically registers BeanFactoryPostProcessors, BeanPostProcessors, and ApplicationListeners which are defined as beans in the context.</p>
+<p>与普通的 <code>BeanFactory</code> 相比，<code>ApplicationContext</code> 应该能够检测在其内部 Bean 工厂中定义的特殊 bean ：因此，此类自动注册在上下文中定义为 bean 的 <code>BeanFactoryPostProcessors</code> ，<code>BeanPostProcessors</code> 和 <code>ApplicationListeners</code>。</p>
+</blockquote>
+<p>咱在第 6 章就知道，<code>ApplicationContext</code> 比 <code>BeanFactory</code> 强大的地方是支持更多的机制，这里面就包括了<strong>后置处理器、监听器</strong>等，而这些器，说白了也都是<strong>一个一个的 Bean</strong>，<code>BeanFactory</code> 不会把它们区别对待，但是 <code>ApplicationContext</code> 就可以区分出来，并且赋予他们发挥特殊能力的机会。</p>
+<h4 id="2-1-3-AbstractApplicationContext可以转换为多种类型"><a href="#2-1-3-AbstractApplicationContext可以转换为多种类型" class="headerlink" title="2.1.3 AbstractApplicationContext可以转换为多种类型"></a>2.1.3 AbstractApplicationContext可以转换为多种类型</h4><blockquote>
+<p>A MessageSource may also be supplied as a bean in the context, with the name “messageSource”; otherwise, message resolution is delegated to the parent context. Furthermore, a multicaster for application events can be supplied as an “applicationEventMulticaster” bean of type ApplicationEventMulticaster in the context; otherwise, a default multicaster of type SimpleApplicationEventMulticaster will be used.</p>
+<p>一个 <code>MessageSource</code> 也可以在上下文中作为一个普通的 bean 提供，名称为 <code>&quot;messageSource&quot;</code> 。否则，将消息解析委托给父上下文。此外，可以在上下文中将用于应用程序事件的广播器作为类型为 <code>ApplicationEventMulticaster</code> 的 <code>&quot;applicationEventMulticaster&quot;</code> bean 提供。否则，将使用类型为 <code>SimpleApplicationEventMulticaster</code> 的默认事件广播器。</p>
+</blockquote>
+<p>咱上面看到了，<code>ApplicationContext</code> 实现了国际化的接口 <code>MessageSource</code> 、事件广播器的接口 <code>ApplicationEventMulticaster</code> ，那作为容器，它也会<strong>把自己看成一个 Bean</strong> ，以支持不同类型的组件注入需要。</p>
+<h4 id="2-1-4-AbstractApplicationContext提供默认的加载资源文件策略"><a href="#2-1-4-AbstractApplicationContext提供默认的加载资源文件策略" class="headerlink" title="2.1.4 AbstractApplicationContext提供默认的加载资源文件策略"></a>2.1.4 AbstractApplicationContext提供默认的加载资源文件策略</h4><blockquote>
+<p>Implements resource loading by extending DefaultResourceLoader. Consequently treats non-URL resource paths as class path resources (supporting full class path resource names that include the package path, e.g. “mypackage/myresource.dat”), unless the getResourceByPath method is overridden in a subclass.</p>
+<p>通过扩展 <code>DefaultResourceLoader</code> 实现资源加载。因此，除非在子类中覆盖了 <code>getResourceByPath()</code> 方法，否则将非 URL 资源路径视为类路径资源（支持包含包路径的完整类路径资源名称，例如 <code>&quot;mypackage/myresource.dat&quot;</code> ）。</p>
+</blockquote>
+<p>默认情况下，<code>AbstractApplicationContext</code> 加载资源文件的策略是直接继承了 <code>DefaultResourceLoader</code> 的策略，从类路径下加载；但在 Web 项目中，可能策略就不一样了，它可以从 <code>ServletContext</code> 中加载（扩展的子类 <code>ServletContextResourceLoader</code>等）。</p>
+<p>看完了文档，小册在这个章节中多提一句：<code>AbstractApplicationContext</code> 中定义了一个特别特别重要的方法，它是控制 <code>ApplicationContext</code> 生命周期的核心方法：**<code>refresh</code>** 。下面是基本的方法定义，小伙伴们先对此有个印象即可，不需要深入进去看源码。对于源码的执行，小伙伴可以学完这些基础之后，参考《SpringBoot 源码解读与原理分析》的 11-15 章，学习 <code>refresh</code> 方法的核心执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">refresh</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> BeansException, IllegalStateException </span>&#123;<br>    <span class="hljs-keyword">synchronized</span> (<span class="hljs-keyword">this</span>.startupShutdownMonitor) &#123;<br>        <span class="hljs-comment">// Prepare this context for refreshing.</span><br>        <span class="hljs-comment">// 1. 初始化前的预处理</span><br>        prepareRefresh();<br><br>        <span class="hljs-comment">// Tell the subclass to refresh the internal bean factory.</span><br>        <span class="hljs-comment">// 2. 获取BeanFactory，加载所有xml配置文件中bean的定义信息（未实例化）</span><br>        ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();<br><br>        <span class="hljs-comment">// Prepare the bean factory for use in this context.</span><br>        <span class="hljs-comment">// 3. BeanFactory的预处理配置</span><br>        prepareBeanFactory(beanFactory);<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// Allows post-processing of the bean factory in context subclasses.</span><br>            <span class="hljs-comment">// 4. 准备BeanFactory完成后进行的后置处理</span><br>            postProcessBeanFactory(beanFactory);<br><br>            <span class="hljs-comment">// Invoke factory processors registered as beans in the context.</span><br>            <span class="hljs-comment">// 5. 执行BeanFactory创建后的后置处理器</span><br>            invokeBeanFactoryPostProcessors(beanFactory);<br><br>            <span class="hljs-comment">// Register bean processors that intercept bean creation.</span><br>            <span class="hljs-comment">// 6. 注册Bean的后置处理器</span><br>            registerBeanPostProcessors(beanFactory);<br><br>            <span class="hljs-comment">// Initialize message source for this context.</span><br>            <span class="hljs-comment">// 7. 初始化MessageSource</span><br>            initMessageSource();<br><br>            <span class="hljs-comment">// Initialize event multicaster for this context.</span><br>            <span class="hljs-comment">// 8. 初始化事件派发器</span><br>            initApplicationEventMulticaster();<br><br>            <span class="hljs-comment">// Initialize other special beans in specific context subclasses.</span><br>            <span class="hljs-comment">// 9. 子类的多态onRefresh</span><br>            onRefresh();<br><br>            <span class="hljs-comment">// Check for listener beans and register them.</span><br>            <span class="hljs-comment">// 10. 注册监听器</span><br>            registerListeners();<br>          <br>            <span class="hljs-comment">//到此为止，BeanFactory已创建完成</span><br><br>            <span class="hljs-comment">// Instantiate all remaining (non-lazy-init) singletons.</span><br>            <span class="hljs-comment">// 11. 初始化所有剩下的单例Bean</span><br>            finishBeanFactoryInitialization(beanFactory);<br><br>            <span class="hljs-comment">// Last step: publish corresponding event.</span><br>            <span class="hljs-comment">// 12. 完成容器的创建工作</span><br>            finishRefresh();<br>        &#125; <span class="hljs-comment">// catch ......</span><br><br>        <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-comment">// Reset common introspection caches in Spring&#x27;s core, since we</span><br>            <span class="hljs-comment">// might not ever need metadata for singleton beans anymore...</span><br>            <span class="hljs-comment">// 13. 清除缓存</span><br>            resetCommonCaches();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>有个印象即可哈，不要深入进去，不然出不来了就没法继续往下愉快的学习了~~~</p>
+<h3 id="2-2-GenericApplicationContext【熟悉】"><a href="#2-2-GenericApplicationContext【熟悉】" class="headerlink" title="2.2 GenericApplicationContext【熟悉】"></a>2.2 GenericApplicationContext【熟悉】</h3><p>咱先从注解驱动的 IOC 容器看起，<code>GenericApplicationContext</code> 已经是一个普通的类（非抽象类）了，它里面已经具备了 <code>ApplicationContext</code> 基本的所有能力了。咱来看看官方怎么描述它的。</p>
+<h4 id="2-2-1-GenericApplicationContext组合了BeanFactory"><a href="#2-2-1-GenericApplicationContext组合了BeanFactory" class="headerlink" title="2.2.1 GenericApplicationContext组合了BeanFactory"></a>2.2.1 GenericApplicationContext组合了BeanFactory</h4><blockquote>
+<p>Generic ApplicationContext implementation that holds a single internal DefaultListableBeanFactory instance and does not assume a specific bean definition format. Implements the BeanDefinitionRegistry interface in order to allow for applying any bean definition readers to it.</p>
+<p>通用 <code>ApplicationContext</code> 的实现，该实现拥有一个内部 <code>DefaultListableBeanFactory</code> 实例，并且不采用特定的 bean 定义格式。另外它实现 <code>BeanDefinitionRegistry</code> 接口，以便允许将任何 bean 定义读取器应用于该容器中。</p>
+</blockquote>
+<p>注意划重点：*<em><code>GenericApplicationContext</code> 中组合了一个 <code>DefaultListableBeanFactory</code>！！！*</em>由此可以得到一个非常非常重要的信息：**<code>ApplicationContext</code> 并不是继承了 <code>BeanFactory</code> 的容器，而是组合了 <code>BeanFactory</code> ！**</p>
+<p>然后后面它说了它还实现了 <code>BeanDefinitionRegistry</code> 接口，上一章咱简单说了它是 “Bean 定义的注册器”，它与 Bean 的定义信息有关，咱往后放一放。</p>
+<h4 id="2-2-2-GenericApplicationContext借助BeanDefinitionRegistry处理特殊Bean"><a href="#2-2-2-GenericApplicationContext借助BeanDefinitionRegistry处理特殊Bean" class="headerlink" title="2.2.2 GenericApplicationContext借助BeanDefinitionRegistry处理特殊Bean"></a>2.2.2 GenericApplicationContext借助BeanDefinitionRegistry处理特殊Bean</h4><blockquote>
+<p>Typical usage is to register a variety of bean definitions via the BeanDefinitionRegistry interface and then call refresh() to initialize those beans with application context semantics (handling org.springframework.context.ApplicationContextAware, auto-detecting BeanFactoryPostProcessors, etc).</p>
+<p>典型的用法是通过 <code>BeanDefinitionRegistry</code> 接口注册各种 Bean 的定义，然后调用 <code>refresh()</code> 以使用应用程序上下文语义来初始化这些 Bean（处理 <code>ApplicationContextAware</code> ，自动检测 <code>BeanFactoryPostProcessors</code> 等）。</p>
+</blockquote>
+<p>这里又看到了 <strong><code>BeanDefinitionRegistry</code></strong> 了，上一章咱也提了一嘴它叫 <strong>Bean 定义的注册器</strong>，<code>GenericApplicationContext</code> 实现了它，可以自定义注册一些 Bean 。然而在 <code>GenericApplicationContext</code> 中，它实现的定义注册方法 <code>registerBeanDefinition</code> ，在底层还是调用的 <code>DefaultListableBeanFactory</code> 执行 <code>registerBeanDefinition</code> 方法，说明它也没有对此做什么扩展。</p>
+<h4 id="2-2-3-GenericApplicationContext只能刷新一次"><a href="#2-2-3-GenericApplicationContext只能刷新一次" class="headerlink" title="2.2.3 GenericApplicationContext只能刷新一次"></a>2.2.3 GenericApplicationContext只能刷新一次</h4><blockquote>
+<p>In contrast to other ApplicationContext implementations that create a new internal BeanFactory instance for each refresh, the internal BeanFactory of this context is available right from the start, to be able to register bean definitions on it. refresh() may only be called once.</p>
+<p>与为每次刷新创建一个新的内部 <code>BeanFactory</code> 实例的其他 <code>ApplicationContext</code> 实现相反，此上下文的内部 <code>BeanFactory</code> 从一开始就可用，以便能够在其上注册 Bean 定义。 <code>refresh()</code> 只能被调用一次。</p>
+</blockquote>
+<p>这句话不是很好理解，小册换一种说法尝试着解释一下：由于 <code>GenericApplicationContext</code>中组合了一个 <code>DefaultListableBeanFactory</code> ，而这个 <code>BeanFactory</code> 是在 <code>GenericApplicationContext</code> 的<strong>构造方法中就已经初始化好</strong>了，那么初始化好的 <code>BeanFactory</code> 就<strong>不允许在运行期间被重复刷新了</strong>。下面是源码中的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">GenericApplicationContext</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 内置的beanFactory在GenericApplicationContext创建时就已经初始化好了</span><br>    <span class="hljs-keyword">this</span>.beanFactory = <span class="hljs-keyword">new</span> DefaultListableBeanFactory();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">refreshBeanFactory</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IllegalStateException </span>&#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.refreshed.compareAndSet(<span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>)) &#123;<br>        <span class="hljs-comment">// 利用CAS，保证只能设置一次true，如果出现第二次，就抛出重复刷新异常</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<br>                <span class="hljs-string">&quot;GenericApplicationContext does not support multiple refresh attempts: just call &#x27;refresh&#x27; once&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">this</span>.beanFactory.setSerializationId(getId());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可如果是这样的话，它的文档注释为什么不直接说就可以呢，还非得加一句“与…相反”，那是因为有另外一类 <code>ApplicationContext</code> 它的设计不是这样的，咱下面会讲到，它就是 <code>AbstractRefreshableApplicationContext</code> 。</p>
+<h4 id="2-2-4-GenericApplicationContext的替代方案是用xml"><a href="#2-2-4-GenericApplicationContext的替代方案是用xml" class="headerlink" title="2.2.4 GenericApplicationContext的替代方案是用xml"></a>2.2.4 GenericApplicationContext的替代方案是用xml</h4><blockquote>
+<p>For the typical case of XML bean definitions, simply use ClassPathXmlApplicationContext or FileSystemXmlApplicationContext, which are easier to set up - but less flexible, since you can just use standard resource locations for XML bean definitions, rather than mixing arbitrary bean definition formats. The equivalent in a web environment is org.springframework.web.context.support.XmlWebApplicationContext.</p>
+<p>对于 XML Bean 定义的典型情况，只需使用 <code>ClassPathXmlApplicationContext</code> 或 <code>FileSystemXmlApplicationContext</code> ，因为它们更易于设置（但灵活性较差，因为只能将从标准的资源配置文件中读取 XML Bean 定义，而不能混合使用任意 Bean 定义的格式）。在 Web 环境中，替代方案是 <code>XmlWebApplicationContext</code> 。</p>
+</blockquote>
+<p>这段注释它提到了 xml 的配置，咱之前也讲过，<strong>注解驱动的 IOC 容器可以导入 xml 配置文件</strong>，不过如果大多数都是 xml 配置的话，官方建议还是直接用 <code>ClassPathXmlApplicationContext</code> 或者 <code>FileSystemXmlApplicationContext</code> 就好。对比起灵活度来讲，咱也能清晰地认识到：注解驱动的方式在开发时很灵活，但如果需要修改配置时，可能需要重新编译配置类；xml 驱动的方式在修改配置时直接修改即可，不需要做任何额外的操作，但能配置的内容实在是有些有限。所以这也建议咱开发者在实际开发中，要权衡对比着使用。</p>
+<h4 id="2-2-5-GenericApplicationContext不支持特殊Bean定义的可刷新读取"><a href="#2-2-5-GenericApplicationContext不支持特殊Bean定义的可刷新读取" class="headerlink" title="2.2.5 GenericApplicationContext不支持特殊Bean定义的可刷新读取"></a>2.2.5 GenericApplicationContext不支持特殊Bean定义的可刷新读取</h4><blockquote>
+<p>For custom application context implementations that are supposed to read special bean definition formats in a refreshable manner, consider deriving from the AbstractRefreshableApplicationContext base class.</p>
+<p>对于应该以可刷新方式读取特殊bean定义格式的自定义应用程序上下文实现，请考虑从 <code>AbstractRefreshableApplicationContext</code> 基类派生。</p>
+</blockquote>
+<p>这个概念似乎很难理解，咱大可不必在意啦，它是解释怎么扩展自定义 <code>ApplicationContext</code> 实现的，咱目前也搞不了这些复杂的东西 ~ ~ ~</p>
+<p>不过注意一点，它提到小册在上面刚刚提到的扩展实现 <code>AbstractRefreshableApplicationContext</code> 了，可见它的确很重要了，咱下面就来看它。</p>
+<h3 id="2-3-AbstractRefreshableApplicationContext【熟悉】"><a href="#2-3-AbstractRefreshableApplicationContext【熟悉】" class="headerlink" title="2.3 AbstractRefreshableApplicationContext【熟悉】"></a>2.3 AbstractRefreshableApplicationContext【熟悉】</h3><p>类名直译为 “可刷新的 ApplicationContext ”，它跟上面 <code>GenericApplicationContext</code> 的最大区别之一就是它<strong>可以被重复刷新</strong>，那它里面的设计肯定也会不一样咯，咱赶紧来看一看吧！</p>
+<h4 id="2-3-1-AbstractRefreshableApplicationContext支持多次刷新"><a href="#2-3-1-AbstractRefreshableApplicationContext支持多次刷新" class="headerlink" title="2.3.1 AbstractRefreshableApplicationContext支持多次刷新"></a>2.3.1 AbstractRefreshableApplicationContext支持多次刷新</h4><blockquote>
+<p>Base class for ApplicationContext implementations which are supposed to support multiple calls to refresh(), creating a new internal bean factory instance every time. Typically (but not necessarily), such a context will be driven by a set of config locations to load bean definitions from.</p>
+<p>它是 <code>ApplicationContext</code> 接口实现的抽象父类，应该支持多次调用 <code>refresh()</code> 方法，每次都创建一个新的内部 <code>BeanFactory</code> 实例。通常（但不是必须）这样的上下文将由一组配置文件驱动，以从中加载 bean 的定义信息。</p>
+</blockquote>
+<p>注释中明确说明了：每次都<strong>会创建一个新的内部的 <code>BeanFactory</code> 实例</strong>（也就是 <code>DefaultListableBeanFactory</code> ），而整个 <code>ApplicationContext</code> 的初始化中不创建。通过源码来看，它的内部也是<strong>组合 <code>DefaultListableBeanFactory</code></strong> ，但构造方法中什么也没有干：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractRefreshableApplicationContext</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractApplicationContext</span> </span>&#123;<br>    <span class="hljs-meta">@Nullable</span><br>    <span class="hljs-keyword">private</span> DefaultListableBeanFactory beanFactory;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AbstractRefreshableApplicationContext</span><span class="hljs-params">()</span> </span>&#123;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>那它是怎么创建 <code>BeanFactory</code> 的呢？借助 IDEA 观察方法列表，其中就有一个方法叫 <code>creatBeanFactory</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> DefaultListableBeanFactory <span class="hljs-title">createBeanFactory</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DefaultListableBeanFactory(getInternalParentBeanFactory());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>很简单明了吧，小册就不多解释了。至于什么时候这个方法被触发了，咱放到后面 IOC 原理阶段再讲解。</p>
+<h4 id="2-3-2-AbstractRefreshableApplicationContext刷新的核心是加载Bean定义信息"><a href="#2-3-2-AbstractRefreshableApplicationContext刷新的核心是加载Bean定义信息" class="headerlink" title="2.3.2 AbstractRefreshableApplicationContext刷新的核心是加载Bean定义信息"></a>2.3.2 AbstractRefreshableApplicationContext刷新的核心是加载Bean定义信息</h4><blockquote>
+<p>The only method to be implemented by subclasses is loadBeanDefinitions, which gets invoked on each refresh. A concrete implementation is supposed to load bean definitions into the given DefaultListableBeanFactory, typically delegating to one or more specific bean definition readers. Note that there is a similar base class for WebApplicationContexts.</p>
+<p>子类唯一需要实现的方法是 <code>loadBeanDefinitions</code> ，它在每次刷新时都会被调用。一个具体的实现应该将 bean 的定义信息加载到给定的 <code>DefaultListableBeanFactory</code>中，通常委托给一个或多个特定的 bean 定义读取器。 注意，<code>WebApplicationContexts</code> 有一个类似的父类。</p>
+</blockquote>
+<p>这段话告诉我们，既然是可刷新的 <code>ApplicationContext</code> ，那它里面存放的 <strong>Bean 定义信息应该是可以被覆盖加载的</strong>。由于 <code>AbstractApplicationContext</code> 就已经实现了 <code>ConfigurableApplicationContext</code> 接口，容器本身可以重复刷新，那么每次刷新时就应该重新加载 Bean 的定义信息，以及初始化 Bean 实例。</p>
+<p>另外它还说，在 Web 环境下也有一个类似的父类，猜都能猜到肯定是名字里多了个 Web ：<code>AbstractRefreshableWebApplicationContext</code> ，它的特征与 <code>AbstractRefreshableApplicationContext</code> 基本一致，不重复解释。</p>
+<h4 id="2-3-3-AbstractRefreshableWebApplicationContext额外扩展了Web环境的功能"><a href="#2-3-3-AbstractRefreshableWebApplicationContext额外扩展了Web环境的功能" class="headerlink" title="2.3.3 AbstractRefreshableWebApplicationContext额外扩展了Web环境的功能"></a>2.3.3 AbstractRefreshableWebApplicationContext额外扩展了Web环境的功能</h4><blockquote>
+<p>org.springframework.web.context.support.AbstractRefreshableWebApplicationContext provides the same subclassing strategy, but additionally pre-implements all context functionality for web environments. There is also a pre-defined way to receive config locations for a web context.</p>
+<p><code>AbstractRefreshableWebApplicationContext</code> 提供了相同的子类化策略，但是还预先实现了 Web 环境的所有上下文功能。还有一种预定义的方式来接收 Web 上下文的配置位置。</p>
+</blockquote>
+<p>与普通的 <code>ApplicationContext</code> 相比，<code>WebApplicationContext</code> 额外扩展的是与 Servlet 相关的部分（ request 、<code>ServletContext</code>等），<code>AbstractRefreshableWebApplicationContext</code> 内部就组合了一个 <code>ServletContext</code>，并且支持给 Bean 注入 <code>ServletContext</code> 、<code>ServletConfig</code> 等 Servlet 中的组件。</p>
+<h4 id="2-3-4-几个重要的最终实现类"><a href="#2-3-4-几个重要的最终实现类" class="headerlink" title="2.3.4 几个重要的最终实现类"></a>2.3.4 几个重要的最终实现类</h4><blockquote>
+<p>Concrete standalone subclasses of this base class, reading in a specific bean definition format, are ClassPathXmlApplicationContext and FileSystemXmlApplicationContext, which both derive from the common AbstractXmlApplicationContext base class; org.springframework.context.annotation.AnnotationConfigApplicationContext supports @Configuration-annotated classes as a source of bean definitions.</p>
+<p>以特定的 bean 定义格式读取的该父类的具体独立子类是 <code>ClassPathXmlApplicationContext</code> 和 <code>FileSystemXmlApplicationContext</code> ，它们均从 <code>AbstractXmlApplicationContext</code> 基类扩展。 <code>AnnotationConfigApplicationContext</code> 支持 <code>@Configuration</code> 注解的类作为 <code>BeanDefinition</code> 的源。</p>
+</blockquote>
+<p>最后一段它提了几个内置的最终实现类，分别是基于 xml 配置的 <code>ClassPathXmlApplicationContext</code> 和 <code>FileSystemXmlApplicationContext</code> ，以及基于注解启动的 <code>AnnotationConfigApplicationContext</code> 。这些咱已经有了解了，下面也会展开来讲。</p>
+<h3 id="2-4-AbstractRefreshableConfigApplicationContext【了解】"><a href="#2-4-AbstractRefreshableConfigApplicationContext【了解】" class="headerlink" title="2.4 AbstractRefreshableConfigApplicationContext【了解】"></a>2.4 AbstractRefreshableConfigApplicationContext【了解】</h3><p>与上面的 <code>AbstractRefreshableApplicationContext</code> 相比较，只是多了一个 <strong>Config</strong> ，说明它有<strong>扩展跟配置相关的特性</strong>。翻看方法列表，可以看到有它自己定义的 <code>getConfigLocations</code> 方法，意为“<strong>获取配置源路径</strong>”，由此也就证明它确实有配置的意思了。</p>
+<p>它的文档注释就一段话，解释的内容恰好就是上面刚刚说的：</p>
+<blockquote>
+<p>AbstractRefreshableApplicationContext subclass that adds common handling of specified config locations. Serves as base class for XML-based application context implementations such as ClassPathXmlApplicationContext and FileSystemXmlApplicationContext, as well as org.springframework.web.context.support.XmlWebApplicationContext.</p>
+<p><code>AbstractRefreshableApplicationContext</code> 的子类，用于添加对指定配置位置的通用处理。作为基于 XML 的 <code>ApplicationContext</code> 实现（例如<code>ClassPathXmlApplicationContext</code> 、 <code>FileSystemXmlApplicationContext</code> 以及 <code>XmlWebApplicationContext</code> ）的父类。</p>
+</blockquote>
+<p>通篇就抽出来一句话：用于添加对指定配置位置的通用处理。由于它是基于 xml 配置的 <code>ApplicationContext</code> 的父类，所以肯定需要传入配置源路径，那这个配置的动作就封装在这个 <code>AbstractRefreshableConfigApplicationContext</code> 中了。</p>
+<h3 id="2-5-AbstractXmlApplicationContext【掌握】"><a href="#2-5-AbstractXmlApplicationContext【掌握】" class="headerlink" title="2.5 AbstractXmlApplicationContext【掌握】"></a>2.5 AbstractXmlApplicationContext【掌握】</h3><p>到这里，xml 终于浮出水面了，它就是最终 <code>ClassPathXmlApplicationContext</code> 和 <code>FileSystemXmlApplicationContext</code> 的直接父类了。</p>
+<p>跟前面一样，先看一眼文档注释，这段注释也不算很长：</p>
+<h4 id="2-5-1-AbstractXmlApplicationContext已具备基本全部功能"><a href="#2-5-1-AbstractXmlApplicationContext已具备基本全部功能" class="headerlink" title="2.5.1 AbstractXmlApplicationContext已具备基本全部功能"></a>2.5.1 AbstractXmlApplicationContext已具备基本全部功能</h4><blockquote>
+<p>Convenient base class for ApplicationContext implementations, drawing configuration from XML documents containing bean definitions understood by an XmlBeanDefinitionReader. Subclasses just have to implement the getConfigResources and/or the getConfigLocations method. Furthermore, they might override the getResourceByPath hook to interpret relative paths in an environment-specific fashion, and/or getResourcePatternResolver for extended pattern resolution.</p>
+<p>方便的 <code>ApplicationContext</code> 父类，从包含 <code>XmlBeanDefinitionReader</code> 解析的 <code>BeanDefinition</code> 的 XML 文档中提取配置。</p>
+<p>子类只需要实现 <code>getConfigResources</code> 和/或 <code>getConfigLocations</code> 方法。此外，它们可能会覆盖 <code>getResourceByPath</code> 的钩子回调，以特定于环境的方式解析相对路径，和/或 <code>getResourcePatternResolver</code> 来扩展模式解析。</p>
+</blockquote>
+<p>看上去有点难懂，小册大概解释一下意思哈。</p>
+<p>由于 <code>AbstractXmlApplicationContext</code> 已经接近于最终的 xml 驱动 IOC 容器的实现了，所以它应该有基本上所有的功能。又根据子类的两种不同的配置文件加载方式，说明<strong>加载配置文件的策略是不一样的</strong>，所以文档注释中有说子类只需要实现 <code>getConfigLocations</code> 这样的方法就好。</p>
+<p>对于 <code>AbstractXmlApplicationContext</code> ，还有一个非常关键的部分需要咱知道，那就是加载到配置文件后如何处理。</p>
+<h4 id="2-5-2-AbstractXmlApplicationContext中有loadBeanDefinitions的实现"><a href="#2-5-2-AbstractXmlApplicationContext中有loadBeanDefinitions的实现" class="headerlink" title="2.5.2 AbstractXmlApplicationContext中有loadBeanDefinitions的实现"></a>2.5.2 AbstractXmlApplicationContext中有loadBeanDefinitions的实现</h4><p>定位到源码中，可以在 <code>AbstractXmlApplicationContext</code> 中找到 <code>loadBeanDefinitions</code>的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loadBeanDefinitions</span><span class="hljs-params">(DefaultListableBeanFactory beanFactory)</span> <span class="hljs-keyword">throws</span> BeansException, IOException </span>&#123;<br>    <span class="hljs-comment">// Create a new XmlBeanDefinitionReader for the given BeanFactory.</span><br>    <span class="hljs-comment">// 借助XmlBeanDefinitionReader解析xml配置文件</span><br>    XmlBeanDefinitionReader beanDefinitionReader = <span class="hljs-keyword">new</span> XmlBeanDefinitionReader(beanFactory);<br><br>    <span class="hljs-comment">// Configure the bean definition reader with this context&#x27;s</span><br>    <span class="hljs-comment">// resource loading environment.</span><br>    beanDefinitionReader.setEnvironment(<span class="hljs-keyword">this</span>.getEnvironment());<br>    beanDefinitionReader.setResourceLoader(<span class="hljs-keyword">this</span>);<br>    beanDefinitionReader.setEntityResolver(<span class="hljs-keyword">new</span> ResourceEntityResolver(<span class="hljs-keyword">this</span>));<br><br>    <span class="hljs-comment">// Allow a subclass to provide custom initialization of the reader,</span><br>    <span class="hljs-comment">// then proceed with actually loading the bean definitions.</span><br>    <span class="hljs-comment">// 初始化BeanDefinitionReader，后加载BeanDefinition</span><br>    initBeanDefinitionReader(beanDefinitionReader);<br>    loadBeanDefinitions(beanDefinitionReader);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可以看到，它解析 xml 配置文件不是自己干活，是<strong>组合了一个 <code>XmlBeanDefinitionReader</code></strong> ，让它去解析。而实际解析配置文件的动作，就很好理解了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loadBeanDefinitions</span><span class="hljs-params">(XmlBeanDefinitionReader reader)</span> <span class="hljs-keyword">throws</span> BeansException, IOException </span>&#123;<br>    Resource[] configResources = getConfigResources();<br>    <span class="hljs-keyword">if</span> (configResources != <span class="hljs-keyword">null</span>) &#123;<br>        reader.loadBeanDefinitions(configResources);<br>    &#125;<br>    String[] configLocations = getConfigLocations();<br>    <span class="hljs-keyword">if</span> (configLocations != <span class="hljs-keyword">null</span>) &#123;<br>        reader.loadBeanDefinitions(configLocations);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可以看到就是调用上面文档注释中提到的 <code>getConfigResources</code> 和 <code>getConfigLocations</code> 方法，取到配置文件的路径 / 资源类，交给 <code>BeanDefinitionReader</code> 解析。</p>
+<h3 id="2-6-ClassPathXmlApplicationContext【掌握】"><a href="#2-6-ClassPathXmlApplicationContext【掌握】" class="headerlink" title="2.6 ClassPathXmlApplicationContext【掌握】"></a>2.6 ClassPathXmlApplicationContext【掌握】</h3><p>终于到了一个咱非常熟悉的 <code>ApplicationContext</code> 了，咱已经很清楚它是从 classpath 下加载 xml 配置文件的 <code>ApplicationContext</code> 了，不过文档注释中也描述了一些内容和建议，咱还是要看一看的。</p>
+<h4 id="2-6-1-ClassPathXmlApplicationContext是一个最终落地实现"><a href="#2-6-1-ClassPathXmlApplicationContext是一个最终落地实现" class="headerlink" title="2.6.1 ClassPathXmlApplicationContext是一个最终落地实现"></a>2.6.1 ClassPathXmlApplicationContext是一个最终落地实现</h4><blockquote>
+<p>Standalone XML application context, taking the context definition files from the class path, interpreting plain paths as class path resource names that include the package path (e.g. “mypackage/myresource.txt”). Useful for test harnesses as well as for application contexts embedded within JARs.</p>
+<p>独立的基于 XML 的 <code>ApplicationContext</code> ，它从 classpath 中获取配置文件，将纯路径解释为包含包路径的 classpath 资源名称（例如 <code>mypackage / myresource.txt</code>）。对于测试工具以及 jar 包中嵌入的 <code>ApplicationContext</code> 很有用。</p>
+</blockquote>
+<p>这段话写的很明白，它支持的配置文件加载位置都是 classpath 下取，这种方式的一个好处是：如果工程中依赖了一些其他的 jar 包，而工程启动时需要同时传入这些 jar 包中的配置文件，那 <code>ClassPathXmlApplicationContext</code> 就可以加载它们。</p>
+<h4 id="2-6-2-ClassPathXmlApplicationContext使用Ant模式声明配置文件路径"><a href="#2-6-2-ClassPathXmlApplicationContext使用Ant模式声明配置文件路径" class="headerlink" title="2.6.2 ClassPathXmlApplicationContext使用Ant模式声明配置文件路径"></a>2.6.2 ClassPathXmlApplicationContext使用Ant模式声明配置文件路径</h4><blockquote>
+<p>The config location defaults can be overridden via getConfigLocations, Config locations can either denote concrete files like “/myfiles/context.xml” or Ant-style patterns like “/myfiles/*-context.xml” (see the org.springframework.util.AntPathMatcher javadoc for pattern details).</p>
+<p>可以通过 <code>getConfigLocations</code> 方法覆盖配置文件位置的默认值，配置位置可以表示具体的文件，例如 <code>/myfiles/context.xml</code> ，也可以表示Ant样式的模式，例如 <code>/myfiles/*-context.xml</code>（请参见 <code>AntPathMatcher</code> 的 javadoc 以获取模式详细信息）。</p>
+</blockquote>
+<p>上面 <code>AbstractXmlApplicationContext</code> 中就说了，可以重写 <code>getConfigLocations</code> 方法来调整配置文件的默认读取位置，它这里又重复了一遍。除此之外它还提到了，加载配置文件的方式可以<strong>使用 Ant 模式匹配</strong>（比较经典的写法当属 web.xml 中声明的 <code>application-*.xml</code>）。</p>
+<h4 id="2-6-3-ClassPathXmlApplicationContext解析的配置文件有先后之分"><a href="#2-6-3-ClassPathXmlApplicationContext解析的配置文件有先后之分" class="headerlink" title="2.6.3 ClassPathXmlApplicationContext解析的配置文件有先后之分"></a>2.6.3 ClassPathXmlApplicationContext解析的配置文件有先后之分</h4><blockquote>
+<p>Note: In case of multiple config locations, later bean definitions will override ones defined in earlier loaded files. This can be leveraged to deliberately override certain bean definitions via an extra XML file.</p>
+<p>注意：如果有多个配置位置，则较新的 <code>BeanDefinition</code> 会覆盖较早加载的文件中的 <code>BeanDefinition</code> ，可以利用它来通过一个额外的 XML 文件有意覆盖某些 <code>BeanDefinition</code> 。</p>
+</blockquote>
+<p>这一点是配合第一点的多配置文件读取来的。通常情况下，如果在一个 jar 包的 xml 配置文件中声明了一个 Bean ，并且又在工程的 resources 目录下又声明了同样的 Bean ，则 jar 包中声明的 Bean 会被覆盖，这也就是配置文件加载优先级的设定。</p>
+<h4 id="2-6-4-ApplicationContext可组合灵活使用"><a href="#2-6-4-ApplicationContext可组合灵活使用" class="headerlink" title="2.6.4 ApplicationContext可组合灵活使用"></a>2.6.4 ApplicationContext可组合灵活使用</h4><blockquote>
+<p>This is a simple, one-stop shop convenience ApplicationContext. Consider using the GenericApplicationContext class in combination with an org.springframework.beans.factory.xml.XmlBeanDefinitionReader for more flexible context setup.</p>
+<p>这是一个简单的一站式便利 <code>ApplicationContext</code> 。可以考虑将 <code>GenericApplicationContext</code> 类与 <code>XmlBeanDefinitionReader</code> 结合使用，以实现更灵活的上下文配置。</p>
+</blockquote>
+<p>最后文档中并没有非常强调 <code>ClassPathXmlApplicationContext</code> 的作用，而是提了另外一个建议：由于 <code>ClassPathXmlApplicationContext</code> 继承了 <code>AbstractXmlApplicationContext</code>，而 <code>AbstractXmlApplicationContext</code> 实际上是内部组合了一个 <code>XmlBeanDefinitionReader</code> ，所以就可以有一种组合的使用方式：利用 <code>GenericApplicationContext</code> 或者子类 <code>AnnotationConfigApplicationContext</code> ，配合 <code>XmlBeanDefinitionReader</code> ，就可以做到注解驱动和 xml 通吃了。</p>
+<h3 id="2-7-AnnotationConfigApplicationContext【掌握】"><a href="#2-7-AnnotationConfigApplicationContext【掌握】" class="headerlink" title="2.7 AnnotationConfigApplicationContext【掌握】"></a>2.7 AnnotationConfigApplicationContext【掌握】</h3><p>最后一个，咱介绍一个也用过很多次的了，就是注解驱动的 IOC 容器。它本身继承了 <code>GenericApplicationContext</code> ，那自然它也只能刷新一次。同样是最终的落地实现，它自然也应该跟 <code>ClassPathXmlApplicationContext</code> 类似的有一些特征，下面咱来看看。</p>
+<h4 id="2-7-1-AnnotationConfigApplicationContext是一个最终落地实现"><a href="#2-7-1-AnnotationConfigApplicationContext是一个最终落地实现" class="headerlink" title="2.7.1 AnnotationConfigApplicationContext是一个最终落地实现"></a>2.7.1 AnnotationConfigApplicationContext是一个最终落地实现</h4><blockquote>
+<p>Standalone application context, accepting component classes as input — in particular @Configuration-annotated classes, but also plain @Component types and JSR-330 compliant classes using javax.inject annotations.</p>
+<p>独立的注解驱动的 <code>ApplicationContext</code> ，接受组件类作为输入，特别是使用 <code>@Configuration</code> 注解的类，还可以使用普通的 <code>@Component</code> 类型和符合 JSR-330 规范（使用 <code>javax.inject</code> 包的注解）的类。</p>
+</blockquote>
+<p>注解驱动，除了 <code>@Component</code> 及其衍生出来的几个注解，更重要的是 <code>@Configuration</code> 注解，一个被 <code>@Configuration</code> 标注的类相当于一个 xml 文件。至于下面还提到的关于 JSR-330 的东西，它没有类似于 <code>@Component</code> 的东西（它只是定义了依赖注入的标准，与组件注册无关），它只是说如果一个组件 Bean 里面有 JSR-330 的注解，那它能给解析而已。</p>
+<h4 id="2-7-2-AnnotationConfigApplicationContext解析的配置类也有先后之分"><a href="#2-7-2-AnnotationConfigApplicationContext解析的配置类也有先后之分" class="headerlink" title="2.7.2 AnnotationConfigApplicationContext解析的配置类也有先后之分"></a>2.7.2 AnnotationConfigApplicationContext解析的配置类也有先后之分</h4><blockquote>
+<p>Allows for registering classes one by one using register(Class…) as well as for classpath scanning using scan(String…). In case of multiple @Configuration classes, @Bean methods defined in later classes will override those defined in earlier classes. This can be leveraged to deliberately override certain bean definitions via an extra @Configuration class.</p>
+<p>允许使用 <code>register(Class ...)</code> 一对一注册类，以及使用 <code>scan(String ...)</code> 进行类路径的包扫描。 如果有多个 <code>@Configuration</code> 类，则在以后的类中定义的 <code>@Bean</code>方法将覆盖在先前的类中定义的方法。这可以通过一个额外的 <code>@Configuration</code> 类来故意覆盖某些 <code>BeanDefinition</code> 。</p>
+</blockquote>
+<p>这个操作就跟上面 <code>ClassPathXmlApplicationContext</code> 如出一辙了，它也有配置覆盖的概念。除此之外，它上面还说了初始化的两种方式：要么注册配置类，要么直接进行包扫描。由于注解驱动开发中可能没有一个主配置类，都是一上来就一堆 <code>@Component</code> ，这个时候完全可以直接声明根扫描包，进行组件扫描。</p>
+<p>有关 <code>FileSystemXmlApplicationContext</code> ，以及 Web 环境下扩展的 <code>ApplicationContext</code>，本章不作更多的解析，小伙伴们可以举一反三，根据现有已经了解的知识，对比学习其它的一些 IOC 容器的实现。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/18/07-IOC%E7%9A%84%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E6%9C%BA%E5%88%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">07-IOC的事件监听机制</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/17/05-IOC%E7%9A%84BeanFactory/">
+                        <span class="hidden-mobile">05-IOC的BeanFactory</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/18/06-IOC%E7%9A%84ApplicationContext/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -181,19 +181,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/16/05-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EAspectJ%E7%9A%84AOP/">05-AOP基础-基于AspectJ的AOP</a>
+        <a href="/2022/04/17/03-IOC%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5DI/">03-IOC依赖注入DI</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/16/05-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EAspectJ%E7%9A%84AOP/">
+        <a href="/2022/04/17/03-IOC%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5DI/">
           
           
             
           
-          AOP基础-基于AspectJ实现AOP1. Spring AOP与AspectJ【了解】在 SpringFramework 的官方文档中，AOP 的介绍下面有一个段落，它说明了 Spring AOP 与 AspectJ 的关系：
-docs.spring.io/spring-fram…
-
-Spring provides simple and powerful ways of writing cus
+          依赖注入(DependencyInject)02-IOC依赖查找DL：创建的 Bean 都是不带属性的，如果我要创建的 Bean 需要一些预设的属性，那该怎么办呢？
+那就涉及到 IOC 的另外一种实现 依赖注入。延续 IOC 的思想，不要自己去找并Set，而是交给 IOC 容器，让容器帮我们查找并赋值。
+场景如下：声明两个类：Person 与 Cat ，形成 “猫需要依赖饲主” 的场景：
+1234
         </a>
       </p>
 
@@ -201,44 +201,8 @@ Spring provides simple and powerful ways of writing cus
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 19:46" pubdate>
-              2022-04-16
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/16/04-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EXML%E7%9A%84AOP/">04-AOP基础-基于XML的AOP</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/16/04-AOP%E5%9F%BA%E7%A1%80-%E5%9F%BA%E4%BA%8EXML%E7%9A%84AOP/">
-          
-          
-            
-          
-          AOP基础-基于xml的aspect实现AOP为了接下来的演示更具有通用性，咱这里造一个 Service 层的接口，一个接口的实现类，一个普通的 Service 类，以及一个切面类 Logger ：
-OrderService ：
-12345678910public interface OrderService &#123;        void createOrder();        voi
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 19:20" pubdate>
-              2022-04-16
+            <time datetime="2022-04-17 18:56" pubdate>
+              2022-04-17
             </time>
           </div>
         
@@ -249,7 +213,9 @@ OrderService ：
             
               <a href="/tags/Spring/">Spring</a>
             
-              <a href="/tags/AOP/">AOP</a>
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/DI/">DI</a>
             
           </div>
         
@@ -263,19 +229,17 @@ OrderService ：
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/16/03-AOP%E5%9F%BA%E7%A1%80-%E6%A6%82%E8%BF%B0%E5%92%8C%E6%9C%AF%E8%AF%AD/">03-AOP基础-概述和术语</a>
+        <a href="/2022/04/17/02-IOC%E4%BE%9D%E8%B5%96%E6%9F%A5%E6%89%BEDL/">02-IOC依赖查找DL</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/16/03-AOP%E5%9F%BA%E7%A1%80-%E6%A6%82%E8%BF%B0%E5%92%8C%E6%9C%AF%E8%AF%AD/">
+        <a href="/2022/04/17/02-IOC%E4%BE%9D%E8%B5%96%E6%9F%A5%E6%89%BEDL/">
           
           
             
           
-          AOP基础-AOP概述与术语概述在 SpringFramework 的官方文档中，有专门的一章来介绍 Spring 的 AOP ：
-docs.spring.io/spring-fram…
-
-Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) by providing another way 
+          依赖查找(DependencyLookup)方式一、通过Bean的名称查找 byName只需要引入一个依赖即可：spring-context 
+12345&lt;dependency&gt;    &lt;groupId&gt;org.springframework&lt;/groupId&gt;    &lt;artifactId&gt;spring-context&lt;/artifactId
         </a>
       </p>
 
@@ -283,8 +247,8 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 15:49" pubdate>
-              2022-04-16
+            <time datetime="2022-04-17 18:56" pubdate>
+              2022-04-17
             </time>
           </div>
         
@@ -295,7 +259,9 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
             
               <a href="/tags/Spring/">Spring</a>
             
-              <a href="/tags/AOP/">AOP</a>
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/DL/">DL</a>
             
           </div>
         
@@ -309,18 +275,18 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/16/02-AOP%E5%9F%BA%E7%A1%80-%E5%8E%9F%E7%94%9F%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">02-AOP基础-原生动态代理和Cglib动态代理</a>
+        <a href="/2022/04/17/01-IOC%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">01-IOC是怎么来的</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/16/02-AOP%E5%9F%BA%E7%A1%80-%E5%8E%9F%E7%94%9F%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
+        <a href="/2022/04/17/01-IOC%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">
           
           
             
           
-          AOP基础-原生动态代理与Cglib动态代理回顾关于动态代理，网络上有无数多的例子和场景，小册这里选用 【游戏陪玩】 的故事来演绎动态代理。
-应该是 2017 年左右吧，网络上涌上了一批游戏陪玩的平台和服务，游戏玩家可以通过在平台上付费邀请 “小姐姐” 来一起组队玩游戏。
-这种游戏陪玩平台的兴起，既满足了部门游戏玩家不能找到一起组排的队友的问题，也为一些游戏玩的不错 / 声音气质等很讨喜的玩家提供
+          Way IoC ?一、前菜-原生Servlet的三层架构搭建一个在原生 Servlet 时代的 MVC 三层架构的工程，以此为背景板
+1.1 构建基于Maven的原生Servlet工程使用 Maven 构建项目那是最基本的能力了，咱使用 IDEA 快速搭建一个原生的 Servlet 工程。
+pom 依赖中，只需要引入 Servlet 的 api 即可：（此处我使用了 Servlet3.1 ，这个倒
         </a>
       </p>
 
@@ -328,11 +294,18 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 15:01" pubdate>
-              2022-04-16
+            <time datetime="2022-04-17 11:45" pubdate>
+              2022-04-17
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Spring/">Spring</a>
+            
+          </div>
         
         
           <div class="post-meta">
@@ -340,7 +313,7 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
             
               <a href="/tags/Spring/">Spring</a>
             
-              <a href="/tags/AOP/">AOP</a>
+              <a href="/tags/IOC/">IOC</a>
             
           </div>
         
@@ -354,20 +327,17 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/16/01-AOP%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">01-AOP是怎么来的</a>
+        <a href="/2022/04/17/14-AOP%E6%80%BB%E7%BB%93-%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/">14-AOP总结-面试整理</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/16/01-AOP%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84/">
+        <a href="/2022/04/17/14-AOP%E6%80%BB%E7%BB%93-%E9%9D%A2%E8%AF%95%E6%95%B4%E7%90%86/">
           
           
             
           
-          AOP是怎么来的场景介绍继 BeanFactory 抽取完成之后，你负责的项目最终是稳定的在客户的服务器上运行，客户给予了你高度的赞赏，一期的项目也就告一段落了。项目运行了大半年之后，有一天客户突然给你打来了电话：
-
-靓仔啦，我们这边不知道咋回事，系统里出现了好多异常数据的啦，你有时间来帮我们看一下的啦 ~
-
-本来这会你也不忙，就开了远程软件连上服务器看了一下，果不其然，在这个系统的积分模块里，有
+          1. AOP概念与基础与 IOC 一样，咱先回顾一下 AOP 中涉及到的概念。
+1.1 AOP概述AOP 面向切面编程，全称 Aspect Oriented Programming ，它是 OOP 的补充。OOP 关注的核心是对象，AOP 的核心是切面（Aspect）。AOP 可以在不修改功能代码本身的前提下，使用运行时动态代理的技术对已有代码逻辑增强。AOP 可以实现组件化、可插拔式的功能扩展，
         </a>
       </p>
 
@@ -375,22 +345,156 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 13:51" pubdate>
+            <time datetime="2022-04-17 09:32" pubdate>
+              2022-04-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/17/13-AOP%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1%E5%BA%95%E5%B1%82%E6%89%A7%E8%A1%8C%E9%80%BB%E8%BE%91/">13-AOP原理-代理对象底层执行逻辑</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/17/13-AOP%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1%E5%BA%95%E5%B1%82%E6%89%A7%E8%A1%8C%E9%80%BB%E8%BE%91/">
+          
+          
+            
+          
+          AOP原理-代理对象的底层执行逻辑代理对象已经创建好了，接下来就到了正常的业务代码执行了。经过 AOP 的增强后，获取到目标对象的代理对象执行方法时，就会先执行 AOP 增强中的增强器逻辑。下面咱继续以 com.linkedbear.spring.aop.b_aspectj.AnnotationAspectJApplication 中的代码来测试，执行 financeService.addMone
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-17 09:29" pubdate>
+              2022-04-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/17/12-AOP%E5%8E%9F%E7%90%86-Bean%E5%A6%82%E4%BD%95%E8%A2%ABAOP%E4%BB%A3%E7%90%86%E7%9A%84/">12-AOP原理-Bean如何被AOP代理的</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/17/12-AOP%E5%8E%9F%E7%90%86-Bean%E5%A6%82%E4%BD%95%E8%A2%ABAOP%E4%BB%A3%E7%90%86%E7%9A%84/">
+          
+          
+            
+          
+          AOP原理-Bean是如何被AOP代理的前面咱已经知道，最终 bean 的初始化会被 BeanPostProcessor 的 postProcessAfterInitialization 处理，进入到 AnnotationAwareAspectJAutoProxyCreator 的 postProcessAfterInitialization 方法中，它又要调用 wrapIfNecessary 方
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-17 09:26" pubdate>
+              2022-04-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/17/11-AOP%E5%8E%9F%E7%90%86-%E5%88%87%E9%9D%A2%E7%B1%BB%E6%94%B6%E9%9B%86%E5%B0%81%E8%A3%85/">11-AOP原理-切面类收集封装</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/17/11-AOP%E5%8E%9F%E7%90%86-%E5%88%87%E9%9D%A2%E7%B1%BB%E6%94%B6%E9%9B%86%E5%B0%81%E8%A3%85/">
+          
+          
+            
+          
+          AOP原理-AOP是如何收集切面类并封装的承接着上一章的思路，这一章咱主要研究两个大问题：
+
+Advisor 是什么，它是怎么构建的
+TargetSource 是什么，SpringFramework 的 AOP 为什么要代理它而不是原始对象
+
+1. Advisor与切面类的收集在上一章中，咱有看到一个 shouldSkip 的跳过动作：
+1234567891011// AspectJAwareAd
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-17 09:21" pubdate>
+              2022-04-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/16/10-AOP%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E6%A0%B8%E5%BF%83%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8/">10-AOP原理-底层核心后置处理器</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/16/10-AOP%E5%8E%9F%E7%90%86-%E5%BA%95%E5%B1%82%E6%A0%B8%E5%BF%83%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8/">
+          
+          
+            
+          
+          AOP原理-AOP代理的底层核心后置处理器1. @EnableAspectJAutoProxy的作用翻开 @EnableAspectJAutoProxy 注解的源码，可以发现它 @Import 了一个注册器：
+12345@Import(AspectJAutoProxyRegistrar.class)public @interface EnableAspectJAutoProxy &#123;   
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-16 22:45" pubdate>
               2022-04-16
             </time>
           </div>
         
         
         
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
-            
-              <a href="/tags/AOP/">AOP</a>
-            
-          </div>
-        
       </div>
     </article>
   </div>
@@ -401,18 +505,18 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/16/MySQL%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95%E5%92%8C%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%9A%84%E9%80%89%E6%8B%A9/">MySQL普通索引和唯一索引的选择</a>
+        <a href="/2022/04/16/09-AOP%E9%AB%98%E7%BA%A7-%E5%B0%9D%E8%AF%95%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0AOP/">09-AOP高级-尝试自己实现AOP</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/16/MySQL%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95%E5%92%8C%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E7%9A%84%E9%80%89%E6%8B%A9/">
+        <a href="/2022/04/16/09-AOP%E9%AB%98%E7%BA%A7-%E5%B0%9D%E8%AF%95%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0AOP/">
           
           
             
           
-          普通索引和唯一索引，应该怎么选择？在前面的基础篇文章中，我给你介绍过索引的基本概念，相信你已经了解了唯一索引和普通索引 的区别。今天我们就继续来谈谈，在不同的业务场景下，应该选择普通索引，还是唯一索引？
-假设你在维护一个市民系统，每个人都有一个唯一的身份证号，而且业务代码已经保证了不会写 入两个重复的身份证号。如果市民系统需要按照身份证号查姓名，就会执行类似这样的SQL语 句：
-1select n
+          AOP高级-如果我们自己实现一个AOP？前面学习 IOC 高级的 BeanPostProcessor 中，咱就了解到 BeanPostProcessor 的 postProcessAfterInitialization 方法可以用于创建代理对象，那 Spring AOP 是如何实现的呢？
+1. 前期分析先分析一下，一个完整的 AOP 机制需要的 支撑组件 和 它们的作用 分别都是什么。
+1.1 生
         </a>
       </p>
 
@@ -420,28 +524,12 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-16 10:12" pubdate>
+            <time datetime="2022-04-16 22:30" pubdate>
               2022-04-16
             </time>
           </div>
         
         
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/MySQL/">MySQL</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/MySQL/">MySQL</a>
-            
-              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
-            
-          </div>
         
       </div>
     </article>
@@ -453,17 +541,20 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/15/MySQL%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB-%E4%BA%8B%E5%8A%A1%E5%88%B0%E5%BA%95%E6%98%AF%E4%B8%8D%E6%98%AF%E9%9A%94%E7%A6%BB%E7%9A%84/">MySQL事务隔离:事务到底是不是隔离的</a>
+        <a href="/2022/04/16/08-AOP%E9%AB%98%E7%BA%A7-%E5%85%B6%E4%BB%96AOP%E6%89%A9%E5%B1%95/">08-AOP高级-其他AOP扩展</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/15/MySQL%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB-%E4%BA%8B%E5%8A%A1%E5%88%B0%E5%BA%95%E6%98%AF%E4%B8%8D%E6%98%AF%E9%9A%94%E7%A6%BB%E7%9A%84/">
+        <a href="/2022/04/16/08-AOP%E9%AB%98%E7%BA%A7-%E5%85%B6%E4%BB%96AOP%E6%89%A9%E5%B1%95/">
           
           
             
           
-          事务到底是隔离的还是不隔离的？讲事务隔离级别的时候提到过，如果是可重复读隔离级别，事务T启动的时候会创建一个视图read-view，之后事务T执行期间，即使有其他事务修改了数据，事务T看到的仍然跟在启动时看到的一样。也就是说，一个在可重复读隔离级别下执行的事务，好像与世无争，不受外界影响。
-但是，我在上一篇文章中，和你分享行锁的时候又提到，一个事务要更新一行，如果刚好有另外 一个事务拥有这一行的行
+          AOP高级-AOP的其他扩展知识1. AOP的引介【了解】在学习 AOP 的术语时，就说过了引介只是了解即可，现在用的实在是太少了。不过还是会有对此感兴趣的小伙伴。
+
+考虑到整体的难度和使用情况来看，这里只介绍基于 AspectJ 的引介，对于 SpringFramework 原生的这里小册不作介绍，感兴趣的小伙伴自己查资料去。
+
+1.1 引介的作用和目标引介的作用是给目标对象所在的类，动态的添加
         </a>
       </p>
 
@@ -471,185 +562,12 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-15 18:46" pubdate>
-              2022-04-15
+            <time datetime="2022-04-16 21:57" pubdate>
+              2022-04-16
             </time>
           </div>
         
         
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/MySQL/">MySQL</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/MySQL/">MySQL</a>
-            
-              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/">MySQL行锁功过</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/">
-          
-          
-            
-          
-          行锁功过：怎么减少行锁对性能的影响？MySQL的行锁是在引擎层由各个引擎自己实现的。但并不是所有的引擎都支持行锁，比如 MyISAM引擎就不支持行锁。
-不支持行锁意味着并发控制只能使用表锁，对于这种引擎的表，同一张表上任何时刻只能有一个更新在执行，这就会影响到业务并发度。InnoDB是支持行锁的， 这也是MyISAM被InnoDB替代的重要原因之一。 
-我们今天就主要来聊聊InnoDB的行锁，以及
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-15 16:42" pubdate>
-              2022-04-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/MySQL/">MySQL</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/MySQL/">MySQL</a>
-            
-              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/15/MySQL%E5%85%A8%E5%B1%80%E9%94%81%E5%92%8C%E8%A1%A8%E9%94%81/">MySQL全局锁和表锁</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/15/MySQL%E5%85%A8%E5%B1%80%E9%94%81%E5%92%8C%E8%A1%A8%E9%94%81/">
-          
-          
-            
-          
-          全局锁和表锁 ：给表加个字段怎么有这么多阻碍？数据库锁设计的初衷是处理并发问题。作为多用户共享的资 源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用 来实现这些访 问规则的重要数据结构。
-根据加锁的范围， MySQL里面的锁大致可以分成全局锁、表级锁和行锁三类 。今天这篇文 章，我会和你分享全局锁和表级锁。
-这里需要说明的是，锁的设计比较复杂，这两篇文章不会涉及锁的具体实现
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-15 10:33" pubdate>
-              2022-04-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/MySQL/">MySQL</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/MySQL/">MySQL</a>
-            
-              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/">MySQL索引深入浅出(下)</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/14/MySQL%E7%B4%A2%E5%BC%95%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-%E4%B8%8B/">
-          
-          
-            
-          
-          深入浅出索引（下）上一篇文章中，我和你介绍了InnoDB索引的数据结构模型，今天我们再继续聊聊跟MySQL索 引有关的概念。
-我们先来看一下这个问题：
-在下面这个表T中，如果我执行 select * from T where k between 3 and 5，需要执行几次树的搜索操作，会扫描多少行？ 下面是这个表的初始化语句。
-12345678mysql&gt; create table T (
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-14 00:18" pubdate>
-              2022-04-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/MySQL/">MySQL</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/MySQL/">MySQL</a>
-            
-              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
-            
-          </div>
         
       </div>
     </article>
@@ -659,7 +577,7 @@ Aspect-oriented Programming (AOP) complements Object-oriented Programming (OOP) 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
