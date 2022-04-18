@@ -181,6 +181,92 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/04/18/15-IOC%E4%B8%ADBeanDefinition%E6%A6%82%E5%BF%B5/">15-IOC中BeanDefinition概念</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/18/15-IOC%E4%B8%ADBeanDefinition%E6%A6%82%E5%BF%B5/">
+          
+          
+            
+          
+          Bean与BeanDefinition前面，我们了解了 Environment 抽象，以及元信息的概念。在元信息中小册提到了那个拖了好久的概念：BeanDefinition ，现在终于到了要解答它的时候了！这个概念相当重要，理解 BeanDefinition 有助于我们更深入的进入 SpringFramework 的核心原理内部探索。
+1. BeanDefinition概述【熟悉】前面我们已经知道
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-18 10:50" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+              <a href="/tags/IOC/">IOC</a>
+            
+              <a href="/tags/BeanDefinition/">BeanDefinition</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/18/14-IOC%E4%B8%ADEnvironment%E7%9A%84%E6%8A%BD%E8%B1%A1/"></a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/18/14-IOC%E4%B8%ADEnvironment%E7%9A%84%E6%8A%BD%E8%B1%A1/">
+          
+          
+            
+          
+          Environment抽象根据上节内容这里提出了几个问题：
+
+加载的 properties 资源配置，以及 ApplicationContext 内部的一些默认配置属性，都放在哪里了？
+组件 Bean 又是怎么把配置值注入进去到对象的属性中的？
+
+1. Environment概述【理解】Environment 是从 SpringFramework 3.1 开始引入的一个抽象模型。
+1.1 第一直觉
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-18 10:43" pubdate>
+              2022-04-18
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/04/18/13-IOC%E4%B8%AD%E9%85%8D%E7%BD%AE%E6%BA%90%E4%B8%8E%E9%85%8D%E7%BD%AE%E5%85%83%E6%A6%82%E5%BF%B5%E5%8C%BA%E5%88%AB/">13-IOC中配置源与配置元概念区别</a>
       </h1>
 
@@ -543,112 +629,6 @@ Bean instantiation/wiring —— Be
           </div>
         
         
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/17/05-IOC%E7%9A%84BeanFactory/">05-IOC的BeanFactory</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/17/05-IOC%E7%9A%84BeanFactory/">
-          
-          
-            
-          
-          IOC容器的详细对比-BeanFactory进入 SpringFramework 更深层次的部分，来更透彻的了解 SpringFramework ，从而更好地驾驭它。
-SpringFramework 中的容器最核心的是 BeanFactory 与 ApplicationContext ，但它们还有好多的子接口、抽象类和具体实现类，接下来的两章咱就把这些重要的子接口、实现类都研究个明明白白。
-1. 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-17 19:38" pubdate>
-              2022-04-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
-            
-              <a href="/tags/IOC/">IOC</a>
-            
-              <a href="/tags/BeanFactory/">BeanFactory</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/17/04-IOC%E4%B8%ADDL-DI%E7%9A%84%E5%8C%BA%E5%88%AB/">04-IOC中DL/DI的区别</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/17/04-IOC%E4%B8%ADDL-DI%E7%9A%84%E5%8C%BA%E5%88%AB/">
-          
-          
-            
-          
-          
-作用目标不同
-依赖注入的作用目标通常是类成员
-依赖查找的作用目标可以是方法体内，也可以是方法体外
-
-
-实现方式不同
-依赖注入通常借助一个上下文被动的接收
-依赖查找通常主动使用上下文搜索
-
-
-
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-17 19:12" pubdate>
-              2022-04-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
-            
-              <a href="/tags/IOC/">IOC</a>
-            
-              <a href="/tags/DL/">DL</a>
-            
-              <a href="/tags/DI/">DI</a>
-            
-          </div>
         
       </div>
     </article>

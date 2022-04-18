@@ -181,6 +181,112 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">SQL性能问题:慢SQL问题分析</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">
+          
+          
+            
+          
+          慢SQL问题分析今天和大家聊一个常见的问题：慢SQL。
+通过本文你将了解到以下内容：
+
+慢SQL的危害
+SQL语句的执行过程
+存储引擎和索引的那些事儿
+慢SQL解决之道
+
+后续均以MySQL默认存储引擎InnoDB为例进行展开，话不多说，开搞！
+
+一、慢SQL 的危害今天和大家聊一个常见的问题：慢SQL。通过本文你将了解到以下内容：
+
+慢SQL的危害
+SQL语句的执行过程
+存储引擎和索引的那些事儿
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-28 22:44" pubdate>
+              2021-09-28
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/SQL/">SQL</a>
+            
+              <a href="/tags/%E6%85%A2SQL/">慢SQL</a>
+            
+              <a href="/tags/SQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">SQL性能优化</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%AF%BC%E8%87%B4%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/">SQL性能问题:隐式转换导致索引失效</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%AF%BC%E8%87%B4%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/">
+          
+          
+            
+          
+          隐式转换导致索引失效在排查系统页面响应时间长的问题时，考虑是否存在隐式转换导致索引失效的问题。这类问题解决后，响应速度会成百上千倍的提升。
+问题提出示例：
+12345select count(0) from 	c_zdgl_info czi 		-- 38000 条记录left join 	c_staff_cbspdeptinfo csdon czi.resp_office = csd.org_n
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-28 16:29" pubdate>
+              2021-09-28
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/SQL/">SQL</a>
+            
+              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
+            
+              <a href="/tags/%E4%BC%98%E5%8C%96/">优化</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/09/27/Java%E9%A1%B9%E7%9B%AEjar%E5%8C%85%E4%BE%9D%E8%B5%96%E5%86%B2%E7%AA%81%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">Java项目jar包依赖冲突及解决方案</a>
       </h1>
 
@@ -485,79 +591,6 @@ https://www.nowcoder.com/test/question/
             <i class="iconfont icon-date"></i>
             <time datetime="2021-05-19 00:11" pubdate>
               2021-05-19
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/19/Thread-Deamon/">Thread-Deamon</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/19/Thread-Deamon/">
-          
-          
-            
-          
-          守护线程Java程序入口就是由JVM启动main线程，main线程又可以启动其他线程。当所有线程都运行结束时，JVM退出，进程结束。
-如果有一个线程没有退出，JVM进程就不会退出。所以，必须保证所有线程都能及时结束。
-但是有一种线程的目的就是无限循环，例如，一个定时触发任务的线程：
-12345678910111213class TimerThread extends Thread &#123;  
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-19 00:08" pubdate>
-              2021-05-19
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/18/Thread-Interrupt/">Thread-Interrupt</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/18/Thread-Interrupt/">
-          
-          
-            
-          
-          中断线程如果线程需要执行一个长时间任务，就可能需要能中断线程。中断线程就是其他线程给该线程发一个信号，该线程收到信号后结束执行run()方法，使得自身线程能立刻结束运行。
-我们举个栗子：假设从网络下载一个100M的文件，如果网速很慢，用户等得不耐烦，就可能在下载过程中点“取消”，这时，程序就需要中断下载线程的执行。
-中断一个线程非常简单，只需要在其他线程中对目标线程调用interrupt()方法，
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-18 00:29" pubdate>
-              2021-05-18
             </time>
           </div>
         

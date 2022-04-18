@@ -1,0 +1,661 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>15-IOC中BeanDefinition概念 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="15-IOC中BeanDefinition概念">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-18 10:50" pubdate>
+        2022年4月18日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      62
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">15-IOC中BeanDefinition概念</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Bean与BeanDefinition"><a href="#Bean与BeanDefinition" class="headerlink" title="Bean与BeanDefinition"></a>Bean与BeanDefinition</h1><p>前面，我们了解了 <code>Environment</code> 抽象，以及元信息的概念。在元信息中小册提到了那个拖了好久的概念：<code>BeanDefinition</code> ，现在终于到了要解答它的时候了！这个概念相当重要，理解 <code>BeanDefinition</code> 有助于我们更深入的进入 SpringFramework 的核心原理内部探索。</p>
+<h2 id="1-BeanDefinition概述【熟悉】"><a href="#1-BeanDefinition概述【熟悉】" class="headerlink" title="1. BeanDefinition概述【熟悉】"></a>1. BeanDefinition概述【熟悉】</h2><p>前面我们已经知道，<code>BeanDefinition</code> 也是一种<strong>配置元信息</strong>，它描述了 <strong>Bean 的定义信息</strong>。下面咱还是通过多个途径来试着了解 <code>BeanDefinition</code> 的概念。</p>
+<p>【以下内容可能比较啰里八嗦，想直接拿来面试的小伙伴请直接移步 1.4 节】</p>
+<h3 id="1-1-官方文档"><a href="#1-1-官方文档" class="headerlink" title="1.1 官方文档"></a>1.1 官方文档</h3><p>官方文档对于 <code>BeanDefinition</code> 的介绍并没有使用很大的篇幅，基本也只是概述一下就完事了：</p>
+<p><a href="https://link.juejin.cn/?target=https://docs.spring.io/spring/docs/5.2.x/spring-framework-reference/core.html%23beans-child-bean-definitions">docs.spring.io/spring/docs…</a></p>
+<blockquote>
+<p>A bean definition can contain a lot of configuration information, including constructor arguments, property values, and container-specific information, such as the initialization method, a static factory method name, and so on. A child bean definition inherits configuration data from a parent definition. The child definition can override some values or add others as needed. Using parent and child bean definitions can save a lot of typing. Effectively, this is a form of templating.</p>
+<p>bean 的定义信息可以包含许多配置信息，包括构造函数参数，属性值和特定于容器的信息，例如初始化方法，静态工厂方法名称等。子 bean 定义可以从父 bean 定义继承配置数据。子 bean 的定义信息可以覆盖某些值，或者可以根据需要添加其他值。使用父 bean 和子 bean 的定义可以节省很多输入（实际上，这是一种模板的设计形式）。</p>
+</blockquote>
+<p>文档已经解释的比较清楚了，bean 的定义就是包含了这个 bean 应该有的所有重要信息，并且它又提到了一个概念：bean 的定义信息也是有<strong>层次性</strong>的（联想 <code>BeanFactory</code> 的层次性），bean 的定义信息可以继承自某个已经有的定义信息，并覆盖父信息的一些配置值（而且文档最后也说了这相当于模板的设计）。</p>
+<h3 id="1-2-javadoc"><a href="#1-2-javadoc" class="headerlink" title="1.2 javadoc"></a>1.2 javadoc</h3><p>翻开 <code>BeanDefinition</code> 接口的 javadoc ，里面写的不多，不过也已经很精确的说明了 <code>BeanDefinition</code> 的基本作用：</p>
+<blockquote>
+<p>A BeanDefinition describes a bean instance, which has property values, constructor argument values, and further information supplied by concrete implementations. This is just a minimal interface: The main intention is to allow a BeanFactoryPostProcessor such as PropertyPlaceholderConfigurer to introspect and modify property values and other bean metadata.</p>
+<p><code>BeanDefinition</code> 描述了一个 bean 的实例，该实例具有属性值，构造函数参数值以及具体实现所提供的更多信息。 这只是一个最小的接口，它的主要目的是允许 <code>BeanFactoryPostProcessor</code>（例如 <code>PropertyPlaceholderConfigurer</code> ）内省和修改属性值和其他 bean 的元数据。</p>
+</blockquote>
+<p>对比起官方文档，javadoc 额外提了编码设计中 <code>BeanDefinition</code> 的使用：<code>BeanFactoryPostProcessor</code> 可以任意修改 <code>BeanDefinition</code> 中的信息。这里面又提到了一个 <code>BeanFactoryPostProcessor</code> 的概念，不要着急不要慌张，后面我们马上就学到后置处理器的部分，自然就都学到啦 ~</p>
+<h3 id="1-3-BeanDefinition接口的方法定义"><a href="#1-3-BeanDefinition接口的方法定义" class="headerlink" title="1.3 BeanDefinition接口的方法定义"></a>1.3 BeanDefinition接口的方法定义</h3><p>借助 IDE ，打开 <code>BeanDefinition</code> 的接口定义，从方法列表上看，<code>BeanDefinition</code> 整体包含以下几个部分：</p>
+<ul>
+<li>Bean 的类信息 - 全限定类名 ( beanClassName )</li>
+<li>Bean 的属性 - 作用域 ( scope ) 、是否默认 Bean ( primary ) 、描述信息 ( description ) 等</li>
+<li>Bean 的行为特征 - 是否延迟加载 ( lazy ) 、是否自动注入 ( autowireCandidate ) 、初始化 / 销毁方法 ( initMethod / destroyMethod ) 等</li>
+<li>Bean 与其他 Bean 的关系 - 父 Bean 名 ( parentName ) 、依赖的 Bean ( dependsOn ) 等</li>
+<li>Bean 的配置属性 - 构造器参数 ( constructorArgumentValues ) 、属性变量值 ( propertyValues ) 等</li>
+</ul>
+<p>由此可见，<code>BeanDefinition</code> 几乎把 bean 的所有信息都能收集并封装起来，可以说是很全面了。</p>
+<h3 id="1-4-【面试题】面试中如何概述BeanDefinition"><a href="#1-4-【面试题】面试中如何概述BeanDefinition" class="headerlink" title="1.4 【面试题】面试中如何概述BeanDefinition"></a>1.4 【面试题】面试中如何概述BeanDefinition</h3><p>以下答案仅供参考，可根据自己的理解调整回答内容：</p>
+<p><code>BeanDefinition</code> 描述了 SpringFramework 中 bean 的元信息，它包含 bean 的类信息、属性、行为、依赖关系、配置信息等。</p>
+<p><code>BeanDefinition</code> 具有层次性，并且可以在 IOC 容器初始化阶段被 <code>BeanDefinitionRegistryPostProcessor</code> 构造和注册，被 <code>BeanFactoryPostProcessor</code> 拦截修改等。</p>
+<blockquote>
+<p>这里贴出的是完整的回答，由于后置处理器的部分还没有学到，小伙伴们可以暂时把最后一句话理解为 “在 IOC 容器初始化阶段被拦截处理” 即可。</p>
+</blockquote>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">还是老套路，如果小伙伴想先了解并快速入门 <span class="hljs-keyword">BeanDefinition </span>，可以先跳过第 <span class="hljs-number">2</span> 章，待基本会使用后再回过头来看 <span class="hljs-keyword">BeanDefinition </span>的结构。<br></code></pre></td></tr></table></figure>
+<h2 id="2-BeanDefinition的结构【了解】"><a href="#2-BeanDefinition的结构【了解】" class="headerlink" title="2. BeanDefinition的结构【了解】"></a>2. BeanDefinition的结构【了解】</h2><p>跟上一章一样，搞明白了 <code>BeanDefinition</code> 是什么，下面咱来看看 <code>BeanDefinition</code> 在 SpringFramework 中是如何设计的：</p>
+<p>借助 IDEA ，可以形成如下的继承关系图：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3e4f5db098034b6385f9645092990679~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" alt="img"></p>
+<p>可以发现这里面涉及到的接口、抽象类和扩展居然如此之多，当然我们也不会全部都去探索，只挑其中重要的来看就好啦。</p>
+<h3 id="2-1-AttributeAccessor"><a href="#2-1-AttributeAccessor" class="headerlink" title="2.1 AttributeAccessor"></a>2.1 AttributeAccessor</h3><p>看类名就知道，它是<strong>属性的访问器</strong>，那它一定具有可以访问对象属性的功能咯？文档注释写的非常简单，就一句话：</p>
+<blockquote>
+<p>Interface defining a generic contract for attaching and accessing metadata to/from arbitrary objects.</p>
+<p>定义用于将元数据附加到任意对象，或从任意对象访问元数据的通用协定的接口。</p>
+</blockquote>
+<p>看上去，它很像是类中定义的 getter 和 setter 方法呀，不过实际上它与 getter 、setter 方法有所区别。</p>
+<h4 id="2-1-1-回顾元信息的概念"><a href="#2-1-1-回顾元信息的概念" class="headerlink" title="2.1.1 回顾元信息的概念"></a>2.1.1 回顾元信息的概念</h4><p>元信息的部分我们有说过，一个类中有什么属性、什么方法，是封装在 <strong><code>Class</code></strong> 类对象中的，通过<strong>反射</strong>可以获取类的属性、方法定义信息。</p>
+<p>比方说以下一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> String name;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>像这样的一个简单的类，如果用定义性质的语言描述，可以抽象成如下内容：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">className:</span> Person<br><span class="hljs-symbol">attributes:</span> [name]<br><span class="hljs-symbol">methods:</span> [getName, setName]<br></code></pre></td></tr></table></figure>
+<h4 id="2-1-2-AttributeAccessor的设计"><a href="#2-1-2-AttributeAccessor的设计" class="headerlink" title="2.1.2 AttributeAccessor的设计"></a>2.1.2 AttributeAccessor的设计</h4><p>翻看 <code>AttributeAccessor</code> 的接口方法，会发现它不只是简单的 getter 和 setter ，它还能移除属性信息（此处的属性就是 bean 的成员属性）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AttributeAccessor</span> </span>&#123;<br>    <span class="hljs-comment">// 设置bean中属性的值</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setAttribute</span><span class="hljs-params">(String name, <span class="hljs-meta">@Nullable</span> Object value)</span></span>;<br><br>    <span class="hljs-comment">// 获取bean中指定属性的值</span><br>    <span class="hljs-function">Object <span class="hljs-title">getAttribute</span><span class="hljs-params">(String name)</span></span>;<br><br>    <span class="hljs-comment">// 移除bean中的属性</span><br>    <span class="hljs-function">Object <span class="hljs-title">removeAttribute</span><span class="hljs-params">(String name)</span></span>;<br><br>    <span class="hljs-comment">// 判断bean中是否存在指定的属性</span><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">hasAttribute</span><span class="hljs-params">(String name)</span></span>;<br><br>    <span class="hljs-comment">// 获取bean的所有属性</span><br>    String[] attributeNames();<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>看这个设计，有木有联想到 <code>Map</code> 呢？（都有 <code>get</code> <code>set</code> <code>remove</code> <code>contains</code> <code>getAll</code> 之类的操作）</p>
+</blockquote>
+<p>由此，我们就可以总结出第一个 <code>BeanDefinition</code> 的特征：**<code>BeanDefinition</code> 继承了 <code>AttributeAccessor</code> 接口，具有配置 bean 属性的功能。**（注意此处的措辞，配置 bean 就包含了访问、修改、移除在内的操作）</p>
+<h3 id="2-2-BeanMetadataElement"><a href="#2-2-BeanMetadataElement" class="headerlink" title="2.2 BeanMetadataElement"></a>2.2 BeanMetadataElement</h3><p>看到 <strong>metadata</strong> ，是不是立马就回想起元信息的概念了？其实这个类名已经把它的功能都告诉我们了：它<strong>存放了 bean 的元信息</strong>。这个接口只有一个方法，是获取 bean 的资源来源：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BeanMetadataElement</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">default</span> Object <span class="hljs-title">getSource</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>资源来源，说白了，就是 bean 的文件 / url 路径。咱们前面写的所有示例，都是在本地磁盘上的 .class 文件加载进来的，所以对应的也就应该是 <code>FileSystemResource</code> （回想前面 20 章资源管理的 3.2 节），这个过会咱们到演示部分看一下就知道了。</p>
+<h3 id="2-3-AbstractBeanDefinition"><a href="#2-3-AbstractBeanDefinition" class="headerlink" title="2.3 AbstractBeanDefinition"></a>2.3 AbstractBeanDefinition</h3><p>到了 <code>BeanDefinition</code> 的第一个实现类了，作为 <code>BeanDefinition</code> 的抽象实现，它里面已经定义好了一些属性和功能（大部分都有了），大体包含以下内容：（只挑选部分重要属性）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// bean的全限定类名</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Object beanClass;<br><br><span class="hljs-comment">// 默认的作用域为单实例</span><br><span class="hljs-keyword">private</span> String scope = SCOPE_DEFAULT;<br><br><span class="hljs-comment">// 默认bean都不是抽象的</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> abstractFlag = <span class="hljs-keyword">false</span>;<br><br><span class="hljs-comment">// 是否延迟初始化</span><br><span class="hljs-keyword">private</span> Boolean lazyInit;<br><br><span class="hljs-comment">// 自动注入模式(默认不自动注入)</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> autowireMode = AUTOWIRE_NO;<br><br><span class="hljs-comment">// 是否参与IOC容器的自动注入(设置为false则它不会注入到其他bean，但其他bean可以注入到它本身)</span><br><span class="hljs-comment">// 可以这样理解：设置为false后，你们不要来找我，但我可以去找你们</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> autowireCandidate = <span class="hljs-keyword">true</span>;<br><br><span class="hljs-comment">// 同类型的首选bean</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> primary = <span class="hljs-keyword">false</span>;<br><br><span class="hljs-comment">// bean的构造器参数和参数值列表</span><br><span class="hljs-keyword">private</span> ConstructorArgumentValues constructorArgumentValues;<br><br><span class="hljs-comment">// bean的属性和属性值集合</span><br><span class="hljs-keyword">private</span> MutablePropertyValues propertyValues;<br><br><span class="hljs-comment">// bean的初始化方法</span><br><span class="hljs-keyword">private</span> String initMethodName;<br><br><span class="hljs-comment">// bean的销毁方法</span><br><span class="hljs-keyword">private</span> String destroyMethodName;<br><br><span class="hljs-comment">// bean的资源来源</span><br><span class="hljs-keyword">private</span> Resource resource;<br></code></pre></td></tr></table></figure>
+<p>可以发现，基本上前面提到的，这里都有了！那它干嘛还要抽象出来呢？看看文档注释怎么说：</p>
+<blockquote>
+<p>Base class for concrete, full-fledged BeanDefinition classes, factoring out common properties of GenericBeanDefinition, RootBeanDefinition, and ChildBeanDefinition. The autowire constants match the ones defined in the AutowireCapableBeanFactory interface.</p>
+<p>它是 <code>BeanDefinition</code> 接口的抽象实现类，其中排除了 <code>GenericBeanDefinition</code> ，<code>RootBeanDefinition</code> 和 <code>ChildBeanDefinition</code> 的常用属性。 自动装配常量与 <code>AutowireCapableBeanFactory</code> 接口中定义的常量匹配。</p>
+</blockquote>
+<p>哦，看样子它还不是最全的咯？针对不同的 <code>BeanDefinition</code> 落地实现，还有一些特殊的属性咯，所以还是需要抽象出一个父类才行哈。</p>
+<p>在继续往下走之前，这里有必要插入一点东西，就是这个 <code>autowireMode</code> 属性，我们之前在 bean 的依赖注入中没有讲到，这里补充一下。</p>
+<h4 id="2-3-1-补充-自动注入模式"><a href="#2-3-1-补充-自动注入模式" class="headerlink" title="2.3.1 补充 : 自动注入模式"></a>2.3.1 补充 : 自动注入模式</h4><p>其实这个自动注入模式，在前面就已经有提过一嘴了（ <code>default-autowire</code> ），不过它的作用小册没有提及，这里咱讲解一下。</p>
+<p>正常来讲，bean 中的组件依赖注入，是需要在 xml 配置文件，或者在属性 / 构造器 / setter 方法上标注注入的注解（ <code>@Autowired</code> / <code>@Resource</code> / <code>@Inject</code> 的。不过，SpringFramework 为我们提供了另外一种方式，<strong>如果组件中的类型 / 属性名与需要注入的 bean 的类型 / name 完全一致，可以不标注依赖注入的注解，也能实现依赖注入</strong>。</p>
+<p>一般情况下，自动注入只会在 xml 配置文件中出现，注解配置中 <code>@Bean</code> 注解的 <code>autowire</code> 属性在 SpringFramework 5.1 之后被标记为已过时，替代方案是使用 <code>@Autowired</code> 等注解。</p>
+<p>使用方式很简单，譬如前面的依赖注入章节中，<code>basic_di/inject-set.xml</code> 配置文件里面，cat 注入的 <code>Person</code> 完全可以不写，只需要在 <code>&lt;bean&gt;</code> 标签上声明自动注入模式为按名称注入即可，运行效果是完全一样的。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;cat&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.basic_di.a_quickstart_set.bean.Cat&quot;</span> <span class="hljs-attr">autowire</span>=<span class="hljs-string">&quot;byName&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;test-cat&quot;</span>/&gt;</span><br>    <span class="hljs-comment">&lt;!-- &lt;property name=&quot;master&quot; ref=&quot;person&quot;/&gt; 可以不写 --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>自动注入的模式有 5 种选择：</p>
+<ol>
+<li><code>AUTOWIRE_NO</code>（不自动注入）、</li>
+<li><code>AUTOWIRE_BY_NAME</code>（根据 bean 的名称注入）、</li>
+<li><code>AUTOWIRE_BY_TYPE</code>（根据 bean 的类型注入）、</li>
+<li><code>AUTOWIRE_CONSTRUCTOR</code>（根据 bean 的构造器注入）、</li>
+<li><code>AUTOWIRE_AUTODETECT</code>（借助内省决定如何注入，3.0 即弃用）。</li>
+</ol>
+<p><strong>默认是不开启的</strong>（所以才需要我们开发者对需要注入的属性标注注解，或者在 xml 配置文件中配置），不过讲道理这个配置真的很少用，我们知道一下就可以了。</p>
+<hr>
+<h3 id="2-4-GenericBeanDefinition"><a href="#2-4-GenericBeanDefinition" class="headerlink" title="2.4 GenericBeanDefinition"></a>2.4 GenericBeanDefinition</h3><p>又看到 <code>Generic</code> 了，它代表着通用、一般的，所以这种 <code>BeanDefinition</code> 也具有一般性。<code>GenericBeanDefinition</code> 的源码实现非常简单，仅仅是比 <code>AbstractBeanDefinition</code> 多了一个 <code>parentName</code> 属性而已。</p>
+<p>由这个设计，可以得出以下几个结论：</p>
+<ul>
+<li><code>AbstractBeanDefinition</code> 已经完全可以构成 <code>BeanDefinition</code> 的实现了</li>
+<li><code>GenericBeanDefinition</code> 就是 <code>AbstractBeanDefinition</code> 的非抽象扩展而已</li>
+<li><code>GenericBeanDefinition</code> 具有层次性（可从父 <code>BeanDefinition</code> 处继承一些属性信息）</li>
+</ul>
+<p>不过，相比较下面的而言，它的层次性体现的不是那么强烈，下面的这两种 <code>BeanDefinition</code> 就有非常强的层次性关系了。</p>
+<h3 id="2-5-RootBeanDefinition-与-ChildBeanDefinition"><a href="#2-5-RootBeanDefinition-与-ChildBeanDefinition" class="headerlink" title="2.5 RootBeanDefinition 与 ChildBeanDefinition"></a>2.5 RootBeanDefinition 与 ChildBeanDefinition</h3><p><strong>root</strong> 和 <strong>child</strong> ，很明显这是父子关系的意思了呀。对于 <code>ChildBeanDefinition</code> ，它的设计实现与 <code>GenericBeanDefinition</code> 如出一辙，都是集成一个 <code>parentName</code> 来作为父 <code>BeanDefinition</code> 的 “指向引用” 。不过有一点要注意， <code>ChildBeanDefinition</code> 没有默认的无参构造器，必须要传入 <code>parentName</code> 才可以，但 <code>GenericBeanDefinition</code> 则有两种不同的构造器。</p>
+<p><code>RootBeanDefinition</code> 有着 “根” 的概念在里面，它只能作为单体独立的 <code>BeanDefinition</code> ，或者父 <code>BeanDefinition</code> 出现（不能继承其他 <code>BeanDefinition</code> ）。它里面的设计也复杂得多，从源码的篇幅上就能看得出来（接近 500 行，而 <code>GenericBeanDefinition</code> 只有 100 行多一点）。不过这里我们不去挨个属性研究它的作用，只了解重要的组成部分就好啦。</p>
+<p>下面是 <code>RootBeanDefinition</code> 的一些重要的成员属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// BeanDefinition的引用持有，存放了Bean的别名</span><br><span class="hljs-keyword">private</span> BeanDefinitionHolder decoratedDefinition;<br><br><span class="hljs-comment">// Bean上面的注解信息</span><br><span class="hljs-keyword">private</span> AnnotatedElement qualifiedElement;<br><br><span class="hljs-comment">// Bean中的泛型</span><br><span class="hljs-keyword">volatile</span> ResolvableType targetType;<br><br><span class="hljs-comment">// BeanDefinition对应的真实的Bean</span><br><span class="hljs-keyword">volatile</span> Class&lt;?&gt; resolvedTargetType;<br><br><span class="hljs-comment">// 是否是FactoryBean</span><br><span class="hljs-keyword">volatile</span> Boolean isFactoryBean;<br><span class="hljs-comment">// 工厂Bean方法返回的类型</span><br><span class="hljs-keyword">volatile</span> ResolvableType factoryMethodReturnType;<br><span class="hljs-comment">// 工厂Bean对应的方法引用</span><br><span class="hljs-keyword">volatile</span> Method factoryMethodToIntrospect;<br></code></pre></td></tr></table></figure>
+<p>可以发现，<code>RootBeanDefinition</code> 在 <code>AbstractBeanDefinition</code> 的基础上，又扩展了这么些 Bean 的信息：</p>
+<ul>
+<li>Bean 的 id 和别名</li>
+<li>Bean 的注解信息</li>
+<li>Bean 的工厂相关信息（是否为工厂 Bean 、工厂类、工厂方法等）</li>
+</ul>
+<p>而且这里面直接把一些反射相关的元素都包含进来了，可见 <code>BeanDefinition</code> 在底层可是要在反射上 “大动干戈”了。</p>
+<h3 id="2-6-AnnotatedBeanDefinition"><a href="#2-6-AnnotatedBeanDefinition" class="headerlink" title="2.6 AnnotatedBeanDefinition"></a>2.6 AnnotatedBeanDefinition</h3><p>最后，提一下这个家伙。它并不是 <code>BeanDefinition</code> 的实现类，而是一个子接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AnnotatedBeanDefinition</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BeanDefinition</span> </span>&#123;<br>    <br>	<span class="hljs-function">AnnotationMetadata <span class="hljs-title">getMetadata</span><span class="hljs-params">()</span></span>;<br>    <br>	<span class="hljs-function">MethodMetadata <span class="hljs-title">getFactoryMethodMetadata</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>由这个接口定义的方法，大概就可以猜测到，它可以把 Bean 上的注解信息提供出来。借助 IDEA ，发现它的子类里，有一个 <code>AnnotatedGenericBeanDefinition</code> ，还有一个 <code>ScannedGenericBeanDefinition</code> ，它们都是基于注解驱动下的 Bean 的注册，封装的 <code>BeanDefinition</code> 。现在我们没有必要对这些 <code>BeanDefinition</code> 深入研究，到后面 IOC 原理中，遇到咱们会解释的。</p>
+<h2 id="3-体会BeanDefinition【熟悉】"><a href="#3-体会BeanDefinition【熟悉】" class="headerlink" title="3. 体会BeanDefinition【熟悉】"></a>3. 体会BeanDefinition【熟悉】</h2><p>下面使用一些简单的 Demo ，帮助小伙伴们体会 <code>BeanDefinition</code> 中的设计，以及封装的内容。本章只会了解 <code>BeanDefinition</code> 的设计部分，至于如何利用它们，咱们统一放到下一章讲解。</p>
+<blockquote>
+<p>本章源码均在 <code>com.example.spring.definition.a_quickstart</code></p>
+</blockquote>
+<h3 id="3-1-基于xml的BeanDefinition"><a href="#3-1-基于xml的BeanDefinition" class="headerlink" title="3.1 基于xml的BeanDefinition"></a>3.1 基于xml的BeanDefinition</h3><p>使用 xml 配置文件的方式，每定义一个 <code>&lt;bean&gt;</code> 标签，就相当于构建了一个 <code>BeanDefinition</code> ，下面咱来演示基于 xml 的 <code>BeanDefinition</code> 。</p>
+<h4 id="3-1-1-编写Bean与xml"><a href="#3-1-1-编写Bean与xml" class="headerlink" title="3.1.1 编写Bean与xml"></a>3.1.1 编写Bean与xml</h4><p>还是拿最最简单的 <code>Person</code> 举例吧，按照依赖注入的最简单示例编写 <code>Person</code> 与 xml 配置文件就好：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> String name;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br>&#125;<br><br>&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;<br>&lt;beans xmlns=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span><br>       xmlns:xsi=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br>       xsi:schemaLocation=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span><br><span class="hljs-string">        https://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;<br><br>    &lt;bean id=<span class="hljs-string">&quot;person&quot;</span> <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&quot;com.example.spring.definition.a_quickstart.bean.Person&quot;</span>&gt;<br>        &lt;property name=<span class="hljs-string">&quot;name&quot;</span> value=<span class="hljs-string">&quot;zhangsan&quot;</span>/&gt;<br>    &lt;/bean&gt;<br>&lt;/beans&gt;<br></code></pre></td></tr></table></figure>
+<h4 id="3-1-2-测试获取BeanDefinition"><a href="#3-1-2-测试获取BeanDefinition" class="headerlink" title="3.1.2 测试获取BeanDefinition"></a>3.1.2 测试获取BeanDefinition</h4><p>使用 xml 驱动 IOC 容器，并尝试获取 <code>BeanDefinition</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BeanDefinitionQuickstartXmlApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        ClassPathXmlApplicationContext ctx = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-string">&quot;definition/definition-beans.xml&quot;</span>);<br>        <span class="hljs-comment">// ？？？</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>到了这里，要写下一步的代码，发现 <code>ClassPathXmlApplicationContext</code> 里没有 <code>getBeanDefinition</code> 方法：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b9f51b142352461e9c8c17b6244e163c~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" alt="img"></p>
+<p>woc ？这可咋整？难不成我还要取出所有的 <code>BeanDefinition</code> ，再筛选出 person 吗？这显然不合理吧！既然能获取多个，那就肯定能获取一个！那这里到底是出了什么问题呢？</p>
+<p>别慌，回想前面学习的知识，<code>ApplicationContext</code> 中最终是组合了一个 <code>BeanFactory</code> 来存放 Bean 的，那 <code>ApplicationContext</code> 没有，<code>BeanFactory</code> 里有没有呢？</p>
+<p>打开 <code>DefaultListableBeanFactory</code> ，搜索 <code>getBeanDefintion</code> ，发现真的能找到了：</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d51bb08cccdc4c62a13f3081ccc9ca5f~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" alt="img"></p>
+<p>往上看这个方法的定义，发现它定义在 <code>ConfigurableListableBeanFactory</code> 中。虽说前面 14 章中没有介绍过 <code>ConfigurableListableBeanFactory</code> ，但它的特性应该也能猜得到吧：同时具备 <strong>“可配置”</strong> 和 <strong>“可列举”</strong> 的特性（当然人家也在此基础上又扩充了其他方法），更多的方法定义和用法，小伙伴们可以自行查看源码，小册不在此展开。</p>
+<p>回到正题，既然 <code>ClassPathXmlApplicationContext</code> 没有这个方法，那就由它获取到 <code>BeanFactory</code> 再调用吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BeanDefinitionQuickstartXmlApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        ClassPathXmlApplicationContext ctx = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-string">&quot;definition/definition-beans.xml&quot;</span>);<br>        BeanDefinition personBeanDefinition = ctx.getBeanFactory().getBeanDefinition(<span class="hljs-string">&quot;person&quot;</span>);<br>        System.out.println(personBeanDefinition);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台可以打印出 person 的 <code>BeanDefinition</code> 信息：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Generic bean: <br>    class [com.example.spring.definition.a_quickstart.bean.Person]; <br>    <span class="hljs-attribute">scope</span>=; <br>    <span class="hljs-attribute">abstract</span>=<span class="hljs-literal">false</span>; <br>    <span class="hljs-attribute">lazyInit</span>=<span class="hljs-literal">false</span>; <br>    <span class="hljs-attribute">autowireMode</span>=0; <br>    <span class="hljs-attribute">dependencyCheck</span>=0; <br>    <span class="hljs-attribute">autowireCandidate</span>=<span class="hljs-literal">true</span>; <br>    <span class="hljs-attribute">primary</span>=<span class="hljs-literal">false</span>; <br>    <span class="hljs-attribute">factoryBeanName</span>=<span class="hljs-literal">null</span>; <br>    <span class="hljs-attribute">factoryMethodName</span>=<span class="hljs-literal">null</span>; <br>    <span class="hljs-attribute">initMethodName</span>=<span class="hljs-literal">null</span>; <br>    <span class="hljs-attribute">destroyMethodName</span>=<span class="hljs-literal">null</span>; <br>defined <span class="hljs-keyword">in</span> class path<span class="hljs-built_in"> resource </span>[definition/definition-beans.xml]<br></code></pre></td></tr></table></figure>
+<p>由这个打印信息，可以获取到一个 bean 的所有基本信息了。值得注意的是，它是一个 <strong>Generic bean</strong> （打印 <code>personBeanDefinition</code> 的类型可得 <code>org.springframework.beans.factory.support.GenericBeanDefinition</code> ），这个信息比较重要哦。</p>
+<h3 id="3-2-基于-Component的BeanDefinition"><a href="#3-2-基于-Component的BeanDefinition" class="headerlink" title="3.2 基于@Component的BeanDefinition"></a>3.2 基于@Component的BeanDefinition</h3><p>给 <code>Person</code> 上打一个 <code>@Component</code> 注解，然后使用 <code>AnnotationConfigApplicationContext</code> 来驱动扫描 <code>Person</code> 类，其余的代码不变：</p>
+<p>（注意 <code>AnnotationConfigApplicationContext</code> 可以直接调用 <code>getBeanDefinition</code> 方法哦）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BeanDefinitionQuickstartComponentApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(<br>                <span class="hljs-string">&quot;com.example.spring.definition.a_quickstart.bean&quot;</span>);<br>        BeanDefinition personBeanDefinition = ctx.getBeanDefinition(<span class="hljs-string">&quot;person&quot;</span>);<br>        System.out.println(personBeanDefinition);<br>        System.out.println(personBeanDefinition.getClass().getName());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台打印出来的依然是一个 <strong>Generic bean</strong> ，但类型与上面的 xml <code>BeanDefinition</code> 不太一致：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Generic bean: class [com.example.spring.definition.a_quickstart.bean.Person]; <br>    <span class="hljs-attribute">scope</span>=singleton; <br>    <span class="hljs-attribute">abstract</span>=<span class="hljs-literal">false</span>; <br>    <span class="hljs-attribute">lazyInit</span>=<span class="hljs-literal">null</span>; <br>    <span class="hljs-attribute">autowireMode</span>=0; <br>    <span class="hljs-attribute">dependencyCheck</span>=0; <br>    <span class="hljs-attribute">autowireCandidate</span>=<span class="hljs-literal">true</span>; <br>    <span class="hljs-attribute">primary</span>=<span class="hljs-literal">false</span>; <br>    <span class="hljs-attribute">factoryBeanName</span>=<span class="hljs-literal">null</span>; <br>    <span class="hljs-attribute">factoryMethodName</span>=<span class="hljs-literal">null</span>; <br>    <span class="hljs-attribute">initMethodName</span>=<span class="hljs-literal">null</span>; <br>    <span class="hljs-attribute">destroyMethodName</span>=<span class="hljs-literal">null</span>; <br>defined <span class="hljs-keyword">in</span> file [E:\IDEA\spring-framework-projects\spring-01-ioc\target\classes\com\example\spring\definition\a_quickstart\bean\Person.class]<br>org.springframework.context.annotation.ScannedGenericBeanDefinition<br></code></pre></td></tr></table></figure>
+<p>可以发现，<code>BeanDefinition</code> 的打印信息里，最大的不同是<strong>加载来源</strong>：</p>
+<ul>
+<li>基于 xml 解析出来的 bean ，定义来源是 xml 配置文件；</li>
+<li>基于 <code>@Component</code> 注解解析出来的 bean ，定义来源是类的 .class 文件中。</li>
+</ul>
+<h3 id="3-3-基于-Bean的BeanDefinition"><a href="#3-3-基于-Bean的BeanDefinition" class="headerlink" title="3.3 基于@Bean的BeanDefinition"></a>3.3 基于@Bean的BeanDefinition</h3><p>编写一个配置类 <code>BeanDefinitionQuickstartConfiguration</code> ，使用 <code>@Bean</code> 注册一个 Person ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BeanDefinitionQuickstartConfiguration</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Person <span class="hljs-title">person</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Person();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>之后，使用这个配置类驱动 IOC 容器，并直接获取 <code>BeanDefinition</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BeanDefinitionQuickstartBeanApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(<br>                BeanDefinitionQuickstartConfiguration.class);<br>        BeanDefinition personBeanDefinition = ctx.getBeanDefinition(<span class="hljs-string">&quot;person&quot;</span>);<br>        System.out.println(personBeanDefinition);<br>        System.out.println(personBeanDefinition.getClass().getName());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，发现控制台打印的内容与前面相比有很大的区别：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Root bean: class [<span class="hljs-literal">null</span>]; <br>    <span class="hljs-attribute">scope</span>=; <br>    <span class="hljs-attribute">abstract</span>=<span class="hljs-literal">false</span>; <br>    <span class="hljs-attribute">lazyInit</span>=<span class="hljs-literal">null</span>; <br>    <span class="hljs-attribute">autowireMode</span>=3; <br>    <span class="hljs-attribute">dependencyCheck</span>=0; <br>    <span class="hljs-attribute">autowireCandidate</span>=<span class="hljs-literal">true</span>; <br>    <span class="hljs-attribute">primary</span>=<span class="hljs-literal">false</span>; <br>    <span class="hljs-attribute">factoryBeanName</span>=beanDefinitionQuickstartConfiguration; <br>    <span class="hljs-attribute">factoryMethodName</span>=person; <br>    <span class="hljs-attribute">initMethodName</span>=<span class="hljs-literal">null</span>; <br>    destroyMethodName=(inferred); <br>defined <span class="hljs-keyword">in</span> com.example.spring.definition.a_quickstart.config.BeanDefinitionQuickstartConfiguration<br>org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader<span class="hljs-variable">$ConfigurationClassBeanDefinition</span><br></code></pre></td></tr></table></figure>
+<p>具体区别可以发现有这么几个：</p>
+<ul>
+<li>Bean 的类型是 Root bean （ <code>ConfigurationClassBeanDefinition</code> 继承自 <code>RootBeanDefinition</code> ）</li>
+<li>Bean 的 className 不见了</li>
+<li>自动注入模式为 <code>AUTOWIRE_CONSTRUCTOR</code> （构造器自动注入）</li>
+<li>有 factoryBean 了：person 由 <code>beanDefinitionQuickstartConfiguration</code> 的 <code>person</code> 方法创建</li>
+</ul>
+<p>这一切的一切都是怎么搞得呢？下面咱解释这种现象与设计。</p>
+<h3 id="3-4-【原理】BeanDefinition是如何生成的（简易理解）"><a href="#3-4-【原理】BeanDefinition是如何生成的（简易理解）" class="headerlink" title="3.4 【原理】BeanDefinition是如何生成的（简易理解）"></a>3.4 【原理】BeanDefinition是如何生成的（简易理解）</h3><p>这个问题说实话如果想完全彻底的解释清楚，有点费劲，我们放到后面的 IOC 原理篇，<code>BeanDefinition</code> 的解析阶段解释，这里只是让小伙伴们有一个认识和印象即可。</p>
+<ol>
+<li>通过 xml 加载的 <code>BeanDefinition</code> ，它的读取工具是 <code>XmlBeanDefinitionReader</code> ，它会解析 xml 配置文件，最终来到 <code>DefaultBeanDefinitionDocumentReader</code> 的 <code>doRegisterBeanDefinitions</code> 方法，根据 xml 配置文件中的 bean 定义构造 <code>BeanDefinition</code> ，最底层创建 <code>BeanDefinition</code> 的位置在 <code>org.springframework.beans.factory.support.BeanDefinitionReaderUtils#createBeanDefinition</code> 。</li>
+<li>通过<strong>模式注解</strong> + <strong>组件扫描</strong>的方式构造的 <code>BeanDefinition</code> ，它的扫描工具是 <code>ClassPathBeanDefinitionScanner</code> ，它会扫描指定包路径下包含特定模式注解的类，核心工作方法是 <code>doScan</code> 方法，它会调用到父类 <code>ClassPathScanningCandidateComponentProvider</code> 的 <code>findCandidateComponents</code> 方法，创建 <code>ScannedGenericBeanDefinition</code> 并返回。</li>
+<li>通过<strong>配置类</strong> + <code>@Bean</code> 注解的方式构造的 <code>BeanDefinition</code> 最复杂，它涉及到配置类的解析。配置类的解析要追踪到 <code>ConfigurationClassPostProcessor</code> 的 <code>processConfigBeanDefinitions</code> 方法，它会处理配置类，并交给 <code>ConfigurationClassParser</code> 来解析配置类，取出所有标注了 <code>@Bean</code> 的方法。随后，这些方法又被 <code>ConfigurationClassBeanDefinitionReader</code> 解析，最终在底层创建 <code>ConfigurationClassBeanDefinition</code> 并返回。</li>
+</ol>
+<p>再啰嗦一边哈，小伙伴只需要对这些内容有一个最简单的了解就好了，至于里面的原理是什么样子，我们现在不要关心！不要关心！不要关心！</p>
+<p>好了，先对 <code>BeanDefinition</code> 了解这么多就好，主要是对 <code>BeanDefinition</code> 有一个总体的认识，能认识到这里面的设计，就已经 OK 了。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Spring/">Spring</a>
+                    
+                      <a class="hover-with-bg" href="/tags/IOC/">IOC</a>
+                    
+                      <a class="hover-with-bg" href="/tags/BeanDefinition/">BeanDefinition</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/18/14-IOC%E4%B8%ADEnvironment%E7%9A%84%E6%8A%BD%E8%B1%A1/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/18/15-IOC%E4%B8%ADBeanDefinition%E6%A6%82%E5%BF%B5/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

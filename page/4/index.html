@@ -181,6 +181,109 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/04/15/MySQL%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB-%E4%BA%8B%E5%8A%A1%E5%88%B0%E5%BA%95%E6%98%AF%E4%B8%8D%E6%98%AF%E9%9A%94%E7%A6%BB%E7%9A%84/">MySQL事务隔离:事务到底是不是隔离的</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/15/MySQL%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB-%E4%BA%8B%E5%8A%A1%E5%88%B0%E5%BA%95%E6%98%AF%E4%B8%8D%E6%98%AF%E9%9A%94%E7%A6%BB%E7%9A%84/">
+          
+          
+            
+          
+          事务到底是隔离的还是不隔离的？讲事务隔离级别的时候提到过，如果是可重复读隔离级别，事务T启动的时候会创建一个视图read-view，之后事务T执行期间，即使有其他事务修改了数据，事务T看到的仍然跟在启动时看到的一样。也就是说，一个在可重复读隔离级别下执行的事务，好像与世无争，不受外界影响。
+但是，我在上一篇文章中，和你分享行锁的时候又提到，一个事务要更新一行，如果刚好有另外 一个事务拥有这一行的行
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-15 18:46" pubdate>
+              2022-04-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/">MySQL行锁功过</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/04/15/MySQL%E8%A1%8C%E9%94%81%E5%8A%9F%E8%BF%87/">
+          
+          
+            
+          
+          行锁功过：怎么减少行锁对性能的影响？MySQL的行锁是在引擎层由各个引擎自己实现的。但并不是所有的引擎都支持行锁，比如 MyISAM引擎就不支持行锁。
+不支持行锁意味着并发控制只能使用表锁，对于这种引擎的表，同一张表上任何时刻只能有一个更新在执行，这就会影响到业务并发度。InnoDB是支持行锁的， 这也是MyISAM被InnoDB替代的重要原因之一。 
+我们今天就主要来聊聊InnoDB的行锁，以及
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-04-15 16:42" pubdate>
+              2022-04-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MySQL/">MySQL</a>
+            
+              <a href="/tags/%E5%AE%9E%E6%88%98/">实战</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/04/15/MySQL%E5%85%A8%E5%B1%80%E9%94%81%E5%92%8C%E8%A1%A8%E9%94%81/">MySQL全局锁和表锁</a>
       </h1>
 
@@ -582,112 +685,6 @@
               <a href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/">领域驱动设计</a>
             
               <a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">架构设计</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">SQL性能问题:慢SQL问题分析</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E6%85%A2SQL%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">
-          
-          
-            
-          
-          慢SQL问题分析今天和大家聊一个常见的问题：慢SQL。
-通过本文你将了解到以下内容：
-
-慢SQL的危害
-SQL语句的执行过程
-存储引擎和索引的那些事儿
-慢SQL解决之道
-
-后续均以MySQL默认存储引擎InnoDB为例进行展开，话不多说，开搞！
-
-一、慢SQL 的危害今天和大家聊一个常见的问题：慢SQL。通过本文你将了解到以下内容：
-
-慢SQL的危害
-SQL语句的执行过程
-存储引擎和索引的那些事儿
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-28 22:44" pubdate>
-              2021-09-28
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/SQL/">SQL</a>
-            
-              <a href="/tags/%E6%85%A2SQL/">慢SQL</a>
-            
-              <a href="/tags/SQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">SQL性能优化</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%AF%BC%E8%87%B4%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/">SQL性能问题:隐式转换导致索引失效</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/09/28/SQL%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%AF%BC%E8%87%B4%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88/">
-          
-          
-            
-          
-          隐式转换导致索引失效在排查系统页面响应时间长的问题时，考虑是否存在隐式转换导致索引失效的问题。这类问题解决后，响应速度会成百上千倍的提升。
-问题提出示例：
-12345select count(0) from 	c_zdgl_info czi 		-- 38000 条记录left join 	c_staff_cbspdeptinfo csdon czi.resp_office = csd.org_n
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-28 16:29" pubdate>
-              2021-09-28
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/SQL/">SQL</a>
-            
-              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
-            
-              <a href="/tags/%E4%BC%98%E5%8C%96/">优化</a>
             
           </div>
         
