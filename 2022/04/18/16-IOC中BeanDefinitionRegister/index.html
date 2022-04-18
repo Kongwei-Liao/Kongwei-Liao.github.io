@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>16-IOC中BeanDefinitionRegister - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="16-IOC中BeanDefinitionRegister">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-18 10:55" pubdate>
+        2022年4月18日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      56
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">16-IOC中BeanDefinitionRegister</h1>
+            
+            <div class="markdown-body">
+              <h1 id="BeanDefinition与BeanDefinitionRegistry"><a href="#BeanDefinition与BeanDefinitionRegistry" class="headerlink" title="BeanDefinition与BeanDefinitionRegistry"></a>BeanDefinition与BeanDefinitionRegistry</h1><p>上一章对 <code>BeanDefinition</code> 的整体设计，以及几种常见的类型有了一个认识。</p>
+<p>不过 <code>BeanDefinition</code> 不是凭空出现的，是要配合一个 API 才能完成注册的，IOC 容器中也才能有的，它就是前面留下的一个很重要的坑：**<code>BeanDefinitionRegistry</code>**。</p>
+<h2 id="1-BeanDefinitionRegistry概述【理解】"><a href="#1-BeanDefinitionRegistry概述【理解】" class="headerlink" title="1. BeanDefinitionRegistry概述【理解】"></a>1. BeanDefinitionRegistry概述【理解】</h2><p>还是那个老套路，先对 <code>BeanDefinitionRegistry</code> 有个整体的认识。由于官方文档中并没有提及 <code>BeanDefinitionRegistry</code> 的设计，故我们只尝试从 javadoc 中获取一些信息。</p>
+<blockquote>
+<p>Interface for registries that hold bean definitions, for example RootBeanDefinition and ChildBeanDefinition instances. Typically implemented by BeanFactories that internally work with the AbstractBeanDefinition hierarchy. This is the only interface in Spring’s bean factory packages that encapsulates registration of bean definitions. The standard BeanFactory interfaces only cover access to a fully configured factory instance. Spring’s bean definition readers expect to work on an implementation of this interface. Known implementors within the Spring core are DefaultListableBeanFactory and GenericApplicationContext.</p>
+<p>包含 bean 定义的注册表的接口（例如 <code>RootBeanDefinition</code> 和 <code>ChildBeanDefinition</code> 实例）。</p>
+<p>通常由内部与 <code>AbstractBeanDefinition</code> 层次结构一起工作的 <code>BeanFactorty</code> 实现。 这是 SpringFramework 的 bean 工厂包中唯一封装了 bean 的定义注册的接口。</p>
+<p>标准 <code>BeanFactory</code> 接口仅涵盖对完全配置的工厂实例的访问。 <code>BeanDefinition</code> 的解析器希望可以使用此接口的实现类来支撑逻辑处理。</p>
+<p>SpringFramework 中的已知实现者是 <code>DefaultListableBeanFactory</code> 和 <code>GenericApplicationContext</code> 。</p>
+</blockquote>
+<h3 id="1-1-BDR-中存放了所有-BD"><a href="#1-1-BDR-中存放了所有-BD" class="headerlink" title="1.1 BDR 中存放了所有 BD"></a>1.1 BDR 中存放了所有 BD</h3><p>Registry 有注册表的意思，联想下 Windows 的注册表，它存放了 Windows 系统中的应用和设置信息。如果按照这个设计理解，那 <code>BeanDefinitionRegistry</code> 中存放的就应该是 <code>BeanDefinition</code> 的设置信息。</p>
+<p>其实 SpringFramework 中的底层，对于 <code>BeanDefinition</code> 的注册表的设计，就是一个 <strong><code>Map</code></strong> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 源自DefaultListableBeanFactory</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;String, BeanDefinition&gt; beanDefinitionMap = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;(<span class="hljs-number">256</span>);<br></code></pre></td></tr></table></figure>
+<h3 id="1-2-BDR-中维护了-BD"><a href="#1-2-BDR-中维护了-BD" class="headerlink" title="1.2 BDR 中维护了 BD"></a>1.2 BDR 中维护了 BD</h3><p>另外，Registry 还有注册器的意思，既然 Map 有增删改查，那作为 <code>BeanDefinition</code> 的注册器，自然也会有 <code>BeanDefinition</code> 的注册功能咯。<code>BeanDefinitionRegistry</code> 中有 3 个方法，刚好对应了 <code>BeanDefinition</code> 的增、删、查：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">registerBeanDefinition</span><span class="hljs-params">(String beanName, BeanDefinition beanDefinition)</span></span><br><span class="hljs-function">            <span class="hljs-keyword">throws</span> BeanDefinitionStoreException</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">removeBeanDefinition</span><span class="hljs-params">(String beanName)</span> <span class="hljs-keyword">throws</span> NoSuchBeanDefinitionException</span>;<br><br><span class="hljs-function">BeanDefinition <span class="hljs-title">getBeanDefinition</span><span class="hljs-params">(String beanName)</span> <span class="hljs-keyword">throws</span> NoSuchBeanDefinitionException</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="1-3-BDR-支撑其它组件运行"><a href="#1-3-BDR-支撑其它组件运行" class="headerlink" title="1.3 BDR 支撑其它组件运行"></a>1.3 BDR 支撑其它组件运行</h3><blockquote>
+<p>Spring’s bean definition readers expect to work on an implementation of this interface.</p>
+<p><code>BeanDefinition</code> 的加载器希望可以使用此接口的实现类来支撑逻辑处理。</p>
+</blockquote>
+<p>这句话似乎不是那么好理解，尝试用一个例子来引导小伙伴理解 <code>BeanDefinitionRegistry</code> 的支撑作用。</p>
+<ol>
+<li>javadoc 中的 Reader 可以参照上一章提到了 <code>XmlBeanDefinitionReader</code> ，它是用来读取和加载 xml 配置文件的组件。加载 xml 配置文件的目的就是读取里面的配置，和定义好要注册到 IOC 容器的 bean 。</li>
+<li><code>XmlBeanDefinitionReader</code> 要在加载完 xml 配置文件后，将配置文件的流对象也好，文档对象也好，交给解析器来解析 xml 文件，解析器拿到 xml 文件后要解析其中定义的 bean ，并且封装为 <code>BeanDefinition</code> 注册到 IOC 容器，这个时候就需要 <code>BeanDefinitionRegistry</code> 了。</li>
+</ol>
+<p>所以在这个过程中，**<code>BeanDefinitionRegistry</code> 会支撑 <code>XmlBeanDefinitionReader</code> 完成它的工作**。</p>
+<p>当然<code>BeanDefinitionRegistry</code> 不止支撑了这一个，还记得之前学习模块装配时用到的 <code>ImportBeanDefinitionRegistrar</code> 吗？它的 <code>registerBeanDefinitions</code> 方法是不是也传入了一个 <code>BeanDefinitionRegistry</code> 呀？</p>
+<p>所以说这个 <code>BeanDefinitionRegistry</code> 用到的位置还是不少的，小伙伴们要予以重视哦。</p>
+<h3 id="1-4-BDR-的主要实现是-DefaultListableBeanFactory"><a href="#1-4-BDR-的主要实现是-DefaultListableBeanFactory" class="headerlink" title="1.4 BDR 的主要实现是 DefaultListableBeanFactory"></a>1.4 BDR 的主要实现是 DefaultListableBeanFactory</h3><p>注意这个地方我没说是唯一实现哦，是因为 <code>BeanDefinitionRegistry</code> 除了有最最常用的 <code>DefaultListableBeanFactory</code> 之外，还有一个不常用的 <code>SimpleBeanDefinitionRegistry</code> ，但这个 <code>SimpleBeanDefinitionRegistry</code> 基本不会去提它，是因为这个设计连内部的 IOC 容器都没有，仅仅是一个 <code>BeanDefinitionRegistry</code> 的表面实现而已，所以我们当然不会用它咯。</p>
+<p>可能有的小伙伴借助 IDE 发现很多 <code>ApplicationContext</code> 也实现了它，但我想请这部分小伙伴回想一下，<code>ApplicationContext</code> 本身管理 Bean 吗？</p>
+<p>不吧，<code>ApplicationContext</code> 不都是内部组合了一个 <code>DefaultListableBeanFactory</code> 来实现的嘛，所以我们说，唯一真正落地实现的是 <code>DefaultListableBeanFactory</code> 这话是正确合理的。</p>
+<h3 id="1-5-【面试题】面试中如何概述BeanDefinitionRegistry"><a href="#1-5-【面试题】面试中如何概述BeanDefinitionRegistry" class="headerlink" title="1.5 【面试题】面试中如何概述BeanDefinitionRegistry"></a>1.5 【面试题】面试中如何概述BeanDefinitionRegistry</h3><p>以下答案仅供参考，可根据自己的理解调整回答内容：</p>
+<ol>
+<li><code>BeanDefinitionRegistry</code> 是维护 <code>BeanDefinition</code> 的注册中心，它内部存放了 IOC 容器中 bean 的定义信息</li>
+<li>同时 <code>BeanDefinitionRegistry</code> 也是支撑其它组件和动态注册 Bean 的重要组件。</li>
+<li>在 SpringFramework 中，<code>BeanDefinitionRegistry</code> 的实现是 <code>DefaultListableBeanFactory</code> 。</li>
+</ol>
+<h2 id="2-BeanDefinitionRegistry-维护-BeanDefinition的使用【熟悉】"><a href="#2-BeanDefinitionRegistry-维护-BeanDefinition的使用【熟悉】" class="headerlink" title="2. BeanDefinitionRegistry 维护 BeanDefinition的使用【熟悉】"></a>2. BeanDefinitionRegistry 维护 BeanDefinition的使用【熟悉】</h2><p>对于 <code>BeanDefinitionRegistry</code> 内部的设计，倒是没什么好说的，主要还是研究它如何去维护 <code>BeanDefinition</code> 。</p>
+<h3 id="2-1-BeanDefinition-的注册"><a href="#2-1-BeanDefinition-的注册" class="headerlink" title="2.1 BeanDefinition 的注册"></a>2.1 BeanDefinition 的注册</h3><p>对于 <code>BeanDefinition</code> 的注册，目前我们接触到的方式是模块装配中使用的 <code>ImportBeanDefinitionRegistrar</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WaiterRegistrar</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ImportBeanDefinitionRegistrar</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">registerBeanDefinitions</span><span class="hljs-params">(AnnotationMetadata metadata, BeanDefinitionRegistry registry)</span> </span>&#123;<br>        registry.registerBeanDefinition(<span class="hljs-string">&quot;waiter&quot;</span>, <span class="hljs-keyword">new</span> RootBeanDefinition(Waiter.class));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>之前的这个例子中是直接  new 了一个 <code>RootBeanDefinition</code> 实例，其实 <code>BeanDefinition</code> 的构造可以借助<strong>建造器</strong>生成，下面我们再演示一个例子。</p>
+<h4 id="2-1-1-声明-Person-类"><a href="#2-1-1-声明-Person-类" class="headerlink" title="2.1.1 声明 Person 类"></a>2.1.1 声明 Person 类</h4><p>像往常一样，搞一个比较简单的 <code>Person</code> 就好啦，记得声明几个属性和 <code>toString</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> String name;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Person&#123;&quot;</span> + <span class="hljs-string">&quot;name=&#x27;&quot;</span> + name + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> + <span class="hljs-string">&#x27;&#125;&#x27;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-1-2-编写-ImportBeanDefinitionRegistrar-的实现类"><a href="#2-1-2-编写-ImportBeanDefinitionRegistrar-的实现类" class="headerlink" title="2.1.2 编写 ImportBeanDefinitionRegistrar 的实现类"></a>2.1.2 编写 ImportBeanDefinitionRegistrar 的实现类</h4><p>编写一个 <code>PersonRegister</code> ，让它实现 <code>ImportBeanDefinitionRegistrar</code> ，这样就可以拿到 <code>BeanDefinitionRegistry</code> 了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PersonRegister</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ImportBeanDefinitionRegistrar</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">registerBeanDefinitions</span><span class="hljs-params">(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry)</span> </span>&#123;<br>        registry.registerBeanDefinition(<span class="hljs-string">&quot;person&quot;</span>,<br>                BeanDefinitionBuilder.genericBeanDefinition(Person.class).addPropertyValue(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;zhangsan&quot;</span>)<br>                        .getBeanDefinition());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意这里面的写法，使用 <code>BeanDefinitionBuilder</code> ，是可以创建：</p>
+<ol>
+<li> <code>GenericBeanDefinition</code> 、</li>
+<li> <code>RootBeanDefinition</code> </li>
+<li> 和 <code>ChildBeanDefinition</code> 三种类型的</li>
+</ol>
+<p>此处小册使用 <code>GenericBeanDefinition</code> ，后续直接向 <code>BeanDefinition</code> 中添加 bean 中属性的值就好，整个构造过程一气呵成，非常的简单。</p>
+<h4 id="2-1-3-编写配置类导入PersonRegister"><a href="#2-1-3-编写配置类导入PersonRegister" class="headerlink" title="2.1.3 编写配置类导入PersonRegister"></a>2.1.3 编写配置类导入PersonRegister</h4><p>编写一个配置类，把上面刚写好的 <code>PersonRegister</code> 导入进去（这一步不要忘了哦）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@Import(PersonRegister.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BeanDefinitionRegistryConfiguration</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-1-4-测试获取Person"><a href="#2-1-4-测试获取Person" class="headerlink" title="2.1.4 测试获取Person"></a>2.1.4 测试获取Person</h4><p>万事俱备，下面编写测试启动类，使用 <code>BeanDefinitionRegistryConfiguration</code> 驱动 IOC 容器，并从容器中取出 <code>Person</code> 并打印：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BeanDefinitionRegistryApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(<br>                BeanDefinitionRegistryConfiguration.class);<br>        Person person = ctx.getBean(Person.class);<br>        System.out.println(person);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台中打印了 <code>Person</code> 的 name 属性是有值的，说明 SpringFramework 已经按照我们预先定义好的 <code>BeanDefinition</code> ，注册到 IOC 容器，并且生成了对应的 Bean 。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Person&#123;<span class="hljs-type">name</span>=<span class="hljs-string">&#x27;zhangsan&#x27;</span>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="2-2-BeanDefinition-的移除"><a href="#2-2-BeanDefinition-的移除" class="headerlink" title="2.2 BeanDefinition 的移除"></a>2.2 BeanDefinition 的移除</h3><p><code>BeanDefinitionRegistry</code> 除了能给 IOC 容器中添加 <code>BeanDefinition</code> ，还可以移除掉一些特定的 <code>BeanDefinition</code> 。这种操作可以在 Bean 的<strong>实例化之前去除</strong>，以阻止 IOC 容器创建。</p>
+<h4 id="2-2-1-声明Person"><a href="#2-2-1-声明Person" class="headerlink" title="2.2.1 声明Person"></a>2.2.1 声明Person</h4><p>这次声明的 <code>Person</code> 类要加一个特殊的属性：<strong>sex</strong> ，性别，它在后面会起到判断作用。声明好 getter 、setter 和 <code>toString</code> 方法即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> String sex;<br>    <br>    <span class="hljs-comment">// getter 、setter 、 toString</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-2-2-声明配置类"><a href="#2-2-2-声明配置类" class="headerlink" title="2.2.2 声明配置类"></a>2.2.2 声明配置类</h4><p>接下来要注册两个 <code>Person</code> ，分别注册一男一女。由上一章 <code>BeanDefinition</code> 的注册方式与实现类型，可知如果此处使用注解配置类的方式注册 Bean ( <code>@Bean</code> ) ，生成的 <code>BeanDefinition</code> 将无法取到 <code>beanClassName</code> （也无法取到 PropertyValues ），故此处选用 xml 方式注册 Bean 。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:context</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/context&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="hljs-tag"><span class="hljs-string">        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;aqiang&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.definition.c_removedefinition.bean.Person&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;阿强&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sex&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;male&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;azhen&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.definition.c_removedefinition.bean.Person&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;阿珍&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sex&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;female&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 注意此处要开启包扫描 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">&quot;com.example.spring.definition.c_removedefinition.config&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-2-3-编写剔除-BeanDefinition-的后置处理器"><a href="#2-2-3-编写剔除-BeanDefinition-的后置处理器" class="headerlink" title="2.2.3 编写剔除 BeanDefinition 的后置处理器"></a>2.2.3 编写剔除 BeanDefinition 的后置处理器</h4><p>要剔除 <code>BeanDefinition</code> ，需要实现 <code>BeanFactoryPostProcessor</code> 接口，并重写 <code>postProcessBeanFactory</code> 方法：（记得标注 <code>@Component</code> 注解哦）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RemoveBeanDefinitionPostProcessor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">BeanFactoryPostProcessor</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanFactory</span><span class="hljs-params">(ConfigurableListableBeanFactory beanFactory)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意方法的入参，它是一个 <code>ConfigurableListableBeanFactory</code> ，不用想，它的唯一实现一定是 <code>DefaultListableBeanFactory</code> 。</p>
+<p>又从前面了解到 <code>DefaultListableBeanFactory</code> 实现了 <code>BeanDefinitionRegistry</code> 接口，所以这里我们就可以直接将 <code>beanFactory</code> 强转为 <code>BeanDefinitionRegistry</code> 类型。</p>
+<p>于是，我们就可以编写如下的剔除逻辑：<strong>移除 IOC 容器中所有性别为 male 的 Person</strong> 。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanFactory</span><span class="hljs-params">(ConfigurableListableBeanFactory beanFactory)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;<br>    <span class="hljs-comment">// 获取IOC容器中的所有BeanDefinition</span><br>    <span class="hljs-keyword">for</span> (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) &#123;<br>        <span class="hljs-comment">// 判断BeanDefinition对应的Bean是否为Person类型</span><br>        BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanDefinitionName);<br>        <span class="hljs-keyword">if</span> (Person.class.getName().equals(beanDefinition.getBeanClassName())) &#123;<br>            <span class="hljs-comment">// 判断Person的性别是否为male</span><br>            <span class="hljs-comment">// 使用xml配置文件对bean进行属性注入，最终取到的类型为TypedStringValue，这一点不需要记住</span><br>            TypedStringValue sex = (TypedStringValue) beanDefinition.getPropertyValues().get(<span class="hljs-string">&quot;sex&quot;</span>);<br>            <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;male&quot;</span>.equals(sex.getValue())) &#123;<br>                <span class="hljs-comment">// 移除BeanDefinition</span><br>                registry.removeBeanDefinition(beanDefinitionName);<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-2-4-测试获取-“阿强”"><a href="#2-2-4-测试获取-“阿强”" class="headerlink" title="2.2.4 测试获取 “阿强”"></a>2.2.4 测试获取 “阿强”</h4><p>这一次我们又要用 <code>ClassPathXmlApplicationContext</code> 来加载配置文件驱动 IOC 容器了，写法很简单，直接从 IOC 容器中取 “aqiang” 就好：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RemoveBeanDefinitionApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        ClassPathXmlApplicationContext ctx = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-string">&quot;definition/remove-definitions.xml&quot;</span>);<br>        Person aqiang = (Person) ctx.getBean(<span class="hljs-string">&quot;aqiang&quot;</span>);<br>        System.out.println(aqiang);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台打印 <code>NoSuchBeanDefinitionException</code> 的异常，证明  “aqiang”  对应的 <code>BeanDefinition</code> 已经被移除了，无法创建 <code>Person</code> 实例。</p>
+<h2 id="3-BeanDefinition的合并【了解】"><a href="#3-BeanDefinition的合并【了解】" class="headerlink" title="3. BeanDefinition的合并【了解】"></a>3. BeanDefinition的合并【了解】</h2><p>了解完 <code>BeanDefinitionRegistry</code> ，来再学习一个 <code>BeanDefinition</code> 的特性：<strong>合并</strong>。</p>
+<h3 id="3-1-如何理解BeanDefinition的合并"><a href="#3-1-如何理解BeanDefinition的合并" class="headerlink" title="3.1 如何理解BeanDefinition的合并"></a>3.1 如何理解BeanDefinition的合并</h3><p>上一章我们知道，之前在 xml 配置文件中定义的那些 bean ，最终都转换为一个个的 <code>GenericBeanDefinition</code> ，它们都是相互独立的。比如这样：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.basic_dl.b_bytype.bean.Person&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.basic_dl.b_bytype.dao.impl.DemoDaoImpl&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>但其实，bean 也是可以存在<strong>父子关系</strong>的。与 Class 的抽象、继承一样，<code>&lt;bean&gt;</code> 标签中有 <strong>abstract</strong> 属性，有 <strong>parent</strong> 属性，由此就可以形成父子关系的 <code>BeanDefinition</code> 了。</p>
+<h3 id="3-2-BeanDefinition-合并的体现"><a href="#3-2-BeanDefinition-合并的体现" class="headerlink" title="3.2 BeanDefinition 合并的体现"></a>3.2 BeanDefinition 合并的体现</h3><p>先构建一个比较简单的场景吧：所有的<strong>动物</strong>都归<strong>人</strong>养，动物分很多种（猫啊 狗啊 猪啊 巴拉巴拉）。下面我们基于这个场景来编码演绎。</p>
+<h4 id="3-2-1-声明实体类"><a href="#3-2-1-声明实体类" class="headerlink" title="3.2.1 声明实体类"></a>3.2.1 声明实体类</h4><p>对于这几个实体类，前面已经写过很多次了，这里快速编写出来就 OK ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br>    <br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> Person person;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Person <span class="hljs-title">getPerson</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> person;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setPerson</span><span class="hljs-params">(Person person)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.person = person;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>Cat</code> 要继承自 <code>Animal</code> ，并且为了方便打印出 <code>person</code> ，这里就不直接使用 IDEA 的 <code>toString</code> 方法生成了，而是在此基础上改造一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Cat</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> String name;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Cat&#123;&quot;</span> + <span class="hljs-string">&quot;name=&quot;</span> + name + <span class="hljs-string">&quot;, person=&#x27;&quot;</span> + getPerson() + <span class="hljs-string">&#x27;\&#x27;&#x27;</span> + <span class="hljs-string">&quot;&#125;&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="3-2-2-编写xml配置文件"><a href="#3-2-2-编写xml配置文件" class="headerlink" title="3.2.2 编写xml配置文件"></a>3.2.2 编写xml配置文件</h4><p>要体现 <code>BeanDefinition</code> 的合并，要使用配置文件的形式，前面也说过了。那下面咱就来造一个配置文件，先把 <code>Person</code> 注册上去。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">       <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;person&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.definition.d_merge.bean.Person&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>接下来要注册 <code>Animal</code> 和 <code>Cat</code> 了。按照之前的写法，这里只需要注册 <code>Cat</code> 就可以了，像这样写就 OK ：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.definition.d_merge.bean.Cat&quot;</span> <span class="hljs-attr">parent</span>=<span class="hljs-string">&quot;abstract-animal&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;person&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;person&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;咪咪&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>但试想，如果要创建的猫猫狗狗猪猪太多的话，每个 bean 都要注入 property ，这样可不是好办法。由此，就可以使用 <code>BeanDefinition</code> 合并的特性来优化这个问题。</p>
+<p>我们直接在 xml 中注册一个 <code>Animal</code> ：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.definition.d_merge.bean.Animal&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>但这样写完之后，IDEA 会报红，给出这样的提示：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1811045a723f455baf9e49a8701fb0b1~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" alt="img"></p>
+<p>很明显嘛，抽象类怎么能靠一个 <code>&lt;bean&gt;</code> 标签构造出对象呢？所以，<code>&lt;bean&gt;</code> 标签里有一个属性，就是标注这个 bean 是否是抽象类：</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8296e2db237648098d16e8411c6230a2~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" alt="img"></p>
+<p>如此，咱就可以把这个 <code>Animal</code> 声明好了，由于是 <strong>abstract</strong> 类型的 bean ，那也就可以搞定注入的事了：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;abstract-animal&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.definition.d_merge.bean.Animal&quot;</span> <span class="hljs-attr">abstract</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;person&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;person&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>接下来要声明 <code>Cat</code> 了，有 <strong>abstract</strong> 就有 <strong>parent</strong> ，想必不用我多说小伙伴们也能猜到如何写了：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;cat&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.example.spring.definition.d_merge.bean.Cat&quot;</span> <span class="hljs-attr">parent</span>=<span class="hljs-string">&quot;abstract-animal&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;咪咪&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这里就不再需要声明 <code>person</code> 属性的注入了，因为继承了 <code>abstract-animal</code> ，相应的依赖注入也就都可以继承过来。这样 xml 配置文件就写完了。</p>
+<h4 id="3-2-3-测试运行"><a href="#3-2-3-测试运行" class="headerlink" title="3.2.3 测试运行"></a>3.2.3 测试运行</h4><p>编写启动类，使用 xml 配置文件驱动 IOC 容器，并从 <code>BeanFactory</code> 中取出 cat 的 <code>BeanDefinition</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MergeBeanDefinitionApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        ClassPathXmlApplicationContext ctx = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-string">&quot;definition/definition-merge.xml&quot;</span>);<br>        Cat cat = (Cat) ctx.getBean(<span class="hljs-string">&quot;cat&quot;</span>);<br>        System.out.println(cat);<br>        <br>        BeanDefinition catDefinition = ctx.getBeanFactory().getBeanDefinition(<span class="hljs-string">&quot;cat&quot;</span>);<br>        System.out.println(catDefinition);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，发现 <code>Cat</code> 里确实注入了 <code>person</code> 对象，可是获取出来的 <code>BeanDefinition</code> ，除了有了一个 <code>parentName</code> 之外，跟普通的 bean 没有任何不一样的地方。</p>
+<figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs roboconf">Cat&#123;<br>  <span class="hljs-attribute">name=咪咪, </span><br><span class="hljs-attribute">  person=&#x27;com.example.spring.definition.d_merge.bean.Person@31dc339b&#x27;</span><br><span class="hljs-attribute">&#125;</span><br><span class="hljs-attribute"></span><br><span class="hljs-attribute">Generic bean with parent &#x27;abstract-animal&#x27;</span>: class [com<span class="hljs-variable">.example</span><span class="hljs-variable">.spring</span><span class="hljs-variable">.definition</span><span class="hljs-variable">.d_merge</span><span class="hljs-variable">.bean</span><span class="hljs-variable">.Cat</span>]; <span class="hljs-attribute">scope=;   ......(太长省略)</span><br></code></pre></td></tr></table></figure>
+<p>可能会有小伙伴产生疑惑了：这就算是 <code>BeanDefinition</code> 的合并了吗？哪里有体现呢？要么我 Debug 看下结构？</p>
+<p>以 Debug 的形式重新运行 <code>main</code> 方法，发现获取到的 <code>catDefinition</code> 里并没有把 <code>person</code> 的依赖带进来：</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/173fbedcb5674458a6f6a21a33ff8357~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" alt="img"></p>
+<p>哦，合着并没有合并 <code>BeanDefinition</code> 呗？那这一套花里胡哨的搞蛇皮呢？等一下，先冷静冷静，会不会是我们的方法不对呢？既然是 <code>BeanDefinition</code> 的合并，那不加个 <strong>merge</strong> 的关键字，好意思说是合并吗？</p>
+<p>试着重新调一下方法，发现 <code>ConfigurableListableBeanFactory</code> 里竟然也有一个 <code>getMergedBeanDefinition</code> 方法！它来自 <code>ConfigurableBeanFactory</code> ，它就是用来<strong>将本身定义的 bean 定义信息，与继承的 bean 定义信息进行合并后返回</strong>的。</p>
+<h4 id="3-2-4-换用getMergedBeanDefinition"><a href="#3-2-4-换用getMergedBeanDefinition" class="headerlink" title="3.2.4 换用getMergedBeanDefinition"></a>3.2.4 换用getMergedBeanDefinition</h4><p>修改下测试运行，将 <code>getBeanDefinition</code> 换为 <code>getMergedBeanDefinition</code> ，重新运行 <code>main</code> 方法，发现控制台打印的 <code>BeanDefinition</code> 的类型变为了 <code>RootBeanDefinition</code> ，而且也没有 <code>parentName</code> 相关的信息了：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java">Root bean: class [com.example.spring.definition.d_merge.bean.Cat]; <br>    scope=singleton; <br>    <span class="hljs-keyword">abstract</span>=<span class="hljs-keyword">false</span>; <br>    lazyInit=<span class="hljs-keyword">false</span>; <br>    autowireMode=<span class="hljs-number">0</span>; <br>    dependencyCheck=<span class="hljs-number">0</span>; <br>    autowireCandidate=<span class="hljs-keyword">true</span>; <br>    primary=<span class="hljs-keyword">false</span>; <br>    factoryBeanName=<span class="hljs-keyword">null</span>; <br>    factoryMethodName=<span class="hljs-keyword">null</span>; <br>    initMethodName=<span class="hljs-keyword">null</span>; <br>    destroyMethodName=<span class="hljs-keyword">null</span>; <br>defined in class path resource [definition/definition-merge.xml]<br></code></pre></td></tr></table></figure>
+<p>以 Debug 方式运行，此时的 <code>propertyvalues</code> 中已经有两个属性键值对了：</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/be105a8a0d7f4c7c906783887d990d90~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" alt="img"></p>
+<p>到这里，<code>BeanDefinition</code> 的合并就算了解的差不多了。至于里面的原理，我们会到后面的 IOC 原理部分解析，这里就先不搞那么难的内容了。</p>
+<h2 id="4-设计-BeanDefinition-的意义【理解】"><a href="#4-设计-BeanDefinition-的意义【理解】" class="headerlink" title="4. 设计 BeanDefinition 的意义【理解】"></a>4. 设计 BeanDefinition 的意义【理解】</h2><p>看到这里，小伙伴们可能会有一个大大的问号，也有可能是大大的感叹号，那就是：<strong>SpringFramework 为什么会设计 <code>BeanDefinition</code> 呢？直接注册 Bean 不好吗？</strong></p>
+<p>这个问题的回答，在不同的阶段学习中，这个答案可能会不太一样。在刚学习完 <code>BeanDefinition</code> 的设计后，小册想先让小伙伴们理解这样的一个设计：<strong>定义信息 → 实例</strong>。</p>
+<p>其实这个设计，在前面的元定义章节就已经反复解释过了，这里小册想再解释一下，因为它真的太太太重要了！</p>
+<p>像我们平时编写 <strong>Class</strong> 再 <strong>new</strong> 出对象一样，SpringFramework 面对一个应用程序，它也需要对其中的 bean 进行定义抽取，只有抽取成可以统一类型 / 格式的模型，才能在后续的 bean 对象管理时，进行统一管理，也或者是对特定的 bean 进行特殊化的处理。而这一切的一切，最终落地到统一类型上，就是 <code>BeanDefinition</code> 这个抽象化的模型。</p>
+<p>这段解释中可能现在小伙伴们只能体会到部分的解释（如 SpringFramework 对 Bean 的作用域控制），没有关系不要慌，接下来的两章，学习完后置处理器，到时候小册再拿出这段话来，或许小伙伴们就更能理解这段话想表达的意思了。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Spring/">Spring</a>
+                    
+                      <a class="hover-with-bg" href="/tags/IOC/">IOC</a>
+                    
+                      <a class="hover-with-bg" href="/tags/BeanDefinition/">BeanDefinition</a>
+                    
+                      <a class="hover-with-bg" href="/tags/BeanDefinitionRegistry/">BeanDefinitionRegistry</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/18/17-IOC%E7%9A%84BeanPostProcessor%E4%BB%8B%E7%BB%8D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">17-IOC的BeanPostProcessor介绍</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/18/15-IOC%E4%B8%ADBeanDefinition%E6%A6%82%E5%BF%B5/">
+                        <span class="hidden-mobile">15-IOC中BeanDefinition概念</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/18/16-IOC%E4%B8%ADBeanDefinitionRegister/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

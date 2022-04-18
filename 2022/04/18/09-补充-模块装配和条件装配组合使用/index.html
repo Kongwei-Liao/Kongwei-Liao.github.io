@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.jpg">
+  <link rel="icon" type="image/png" href="/img/favicon.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="liaogangwei的个人主页">
+  <meta name="author" content="Kongwei_Liao">
+  <meta name="keywords" content="black, foolish, positive">
+  <title>09-补充-模块装配和条件装配组合使用 - Kongwei_Liao</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kongwei_Liao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="09-补充-模块装配和条件装配组合使用">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kongwei_Liao
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-18 11:32" pubdate>
+        2022年4月18日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      64
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">09-补充-模块装配和条件装配组合使用</h1>
+            
+            <div class="markdown-body">
+              <h1 id="模块装配-amp-条件装配综合使用"><a href="#模块装配-amp-条件装配综合使用" class="headerlink" title="模块装配&amp;条件装配综合使用"></a>模块装配&amp;条件装配综合使用</h1><p>上一章的最后，我们说本章要搞一个模块装配的 jdbc ，其实这个内容可以放到 Dao 编程篇再讲，不过趁热打铁吧，既然学了前面不少的知识，正好综合的使用一下。</p>
+<p>本章内容倾向于编码实战，当然也有新的知识点讲解，小伙伴要跟着小册好好练习哦。</p>
+<h2 id="1-需求与分析"><a href="#1-需求与分析" class="headerlink" title="1. 需求与分析"></a>1. 需求与分析</h2><p>先说一下需求吧：<strong>使用模块装配，通过标注一个 <code>@EnableJdbc</code> 的注解，能够根据当前工程中导入的数据库连接驱动，注册对应的数据源到 IOC 容器。</strong></p>
+<p>咱把这个需求分解一下，可以提取出来的点应该有这么几个：</p>
+<ul>
+<li>自定义注解与模块装配</li>
+<li>条件装配注册特定数据库驱动的数据库连接池（数据源）</li>
+<li>外部化配置数据源的连接信息</li>
+</ul>
+<p>还好，基本都是之前在进阶部分学过的内容了，那咱就开始写吧。</p>
+<h2 id="2-第一版写法"><a href="#2-第一版写法" class="headerlink" title="2. 第一版写法"></a>2. 第一版写法</h2><p>需求中提到了 jdbc 、数据源等有关数据库的依赖，所以首先我们要把缺少的依赖导入工程中。</p>
+<h3 id="2-1-添加pom依赖"><a href="#2-1-添加pom依赖" class="headerlink" title="2.1 添加pom依赖"></a>2.1 添加pom依赖</h3><p>我们先用 MySQL 来测试效果，此处导入 MySQL 的驱动、Druid 的数据库连接池、DBUtils 简化数据库访问的依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.1.47<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>druid<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.23<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>commons-dbutils<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>commons-dbutils<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.7<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-2-声明模块装配的注解"><a href="#2-2-声明模块装配的注解" class="headerlink" title="2.2 声明模块装配的注解"></a>2.2 声明模块装配的注解</h3><p>既然是模块装配打头，那注解是必然要有的，接下来我们把注解声明出来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Documented</span><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-meta">@Target(ElementType.TYPE)</span><br><span class="hljs-meta">@Import(JdbcConfiguration.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> EnableJdbc &#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>模块装配要配合 <code>@Import</code> 注解一起使用，此处我们可以使用 <code>@Import</code> 导入一个注册数据源的配置类，在配置类中完成注册数据源、加载连接池配置等工作。</p>
+<h3 id="2-3-编写配置类"><a href="#2-3-编写配置类" class="headerlink" title="2.3 编写配置类"></a>2.3 编写配置类</h3><p>配置类中，需要构造一个 <code>DataSource</code> 和 <code>QueryRunner</code> ，就像这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JdbcConfiguration</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">dataSource</span><span class="hljs-params">()</span> </span>&#123;<br>        DruidDataSource dataSource = <span class="hljs-keyword">new</span> DruidDataSource();<br>        dataSource.setDriverClassName(<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>);<br>        dataSource.setUrl(<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/test?characterEncoding=utf8&quot;</span>);<br>        dataSource.setUsername(<span class="hljs-string">&quot;root&quot;</span>);<br>        dataSource.setPassword(<span class="hljs-string">&quot;123456&quot;</span>);<br>        <span class="hljs-keyword">return</span> dataSource;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> QueryRunner <span class="hljs-title">queryRunner</span><span class="hljs-params">(DataSource dataSource)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> QueryRunner(dataSource);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个写法有够简单了吧，不过这样写仅仅是装配了 MySQL 的，如果要支持 Oracle 、H2 的数据库，就还需要创建另外两个 <code>DataSource</code> 。（另外两个 <code>DataSource</code> 的声明几乎完全一致，小册不在此列出）</p>
+<h3 id="2-4-加入条件装配"><a href="#2-4-加入条件装配" class="headerlink" title="2.4 加入条件装配"></a>2.4 加入条件装配</h3><p>如果是一次性把这三个 <code>DataSource</code> 都写到 <code>JdbcConfiguration</code> 中，那每次 IOC 容器初始化时，都会创建三个 <code>DataSource</code> ，这很明显不符合要求，我们要的是工程的 classpath 下有哪个数据库连接驱动，就装配哪个 <code>DataSource</code> ，很明显这里要用到条件装配了。</p>
+<p>又因为获取数据库连接驱动的方式无法通过 Profiles 决定，所以只能选用 Conditional 的方式。</p>
+<p>可问题是：怎么知道 classpath 下是不是有指定的数据库连接驱动呢？</p>
+<p>哎，很简单嘛，用类加载器加载一下，如果成功了，那就是有；如果报 <code>ClassNotFoundException</code> 了，那就代表没有。所以我们可以写一个类似于这样的简单判断：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Documented</span><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD&#125;)</span><br><span class="hljs-meta">@Conditional(OnClassNameConditional.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> ConditionalOnClassName &#123;<br>    <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span></span>;<br>&#125;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OnClassNameConditional</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Condition</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">matches</span><span class="hljs-params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> </span>&#123;<br>        String className = (String) metadata.getAnnotationAttributes(ConditionalOnClassName.class.getName()).get(<span class="hljs-string">&quot;value&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            Class.forName(className);<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException e) &#123;<br>        	<span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>一个自定义 Conditional 的注解，一个支撑注解的条件逻辑类，这样就可以搞定了。</p>
+<p>然后，在 <code>JdbcConfiguration</code> 中，给每个 <code>DataSource</code> 的注册上都标注上 <code>@ConditionalOnClassName</code> 注解，这样就可以搞定条件装配了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-meta">@ConditionalOnClassName(&quot;com.mysql.jdbc.Driver&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">mysqlDataSource</span><span class="hljs-params">()</span> </span>&#123;<br>    DruidDataSource dataSource = <span class="hljs-keyword">new</span> DruidDataSource();<br>    dataSource.setDriverClassName(<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>);<br>    dataSource.setUrl(<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/test?characterEncoding=utf8&quot;</span>);<br>    dataSource.setUsername(<span class="hljs-string">&quot;root&quot;</span>);<br>    dataSource.setPassword(<span class="hljs-string">&quot;123456&quot;</span>);<br>    <span class="hljs-keyword">return</span> dataSource;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="2-5-测试运行"><a href="#2-5-测试运行" class="headerlink" title="2.5 测试运行"></a>2.5 测试运行</h3><p>这次的测试启动类，我也拿它当配置类用了，其实这完全没问题的，只是之前的示例代码中我都没这么干而已：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableJdbc</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EnableJdbcApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(EnableJdbcApplication.class);<br>        DruidDataSource dataSource = ctx.getBean(DruidDataSource.class);<br>        System.out.println(dataSource.getUrl());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里的操作很简单，在测试启动类上标注 <code>@EnableJdbc</code> ，并用它自己驱动 IOC 容器，然后从容器中取出 <code>DataSource</code> ，打印它的 url 。</p>
+<p>运行 <code>main</code> 方法，控制台可以打印出 MySQL 的数据库连接地址：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">jdbc</span>:mysql://localhost:<span class="hljs-number">3306</span>/test?characterEncoding=utf<span class="hljs-number">8</span><br></code></pre></td></tr></table></figure>
+<p>将 <code>pom.xml</code> 中的数据库连接驱动换为 h2 的依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.h2database<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>h2<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.4.199<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>不改动任何程序代码，直接重新运行 <code>main</code> 方法，控制台也能立马切换为 h2 的数据库连接地址，至此第一版代码编写完成。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">jdbc</span>:h<span class="hljs-number">2</span>:~/test<br></code></pre></td></tr></table></figure>
+<h3 id="2-6-第一版代码的问题"><a href="#2-6-第一版代码的问题" class="headerlink" title="2.6 第一版代码的问题"></a>2.6 第一版代码的问题</h3><p>回过头来看一看，第一版代码有什么问题呢？</p>
+<ul>
+<li><strong>外部化配置</strong>呢？所有的配置都是写死在配置类的呀，这不大合理吧</li>
+<li>虽说把多个 <code>DataSource</code> 放在一个配置类中注册，但如果随后一些其它的组件也多起来，那这个 <code>JdbcConfiguration</code> 只会越来越庞大，最好能够<strong>把不同数据库的组件都分散到不同的配置类中</strong></li>
+</ul>
+<p>基于这两个问题，我们要对现在的代码改进。</p>
+<h2 id="3-第二版写法"><a href="#3-第二版写法" class="headerlink" title="3. 第二版写法"></a>3. 第二版写法</h2><p>先从外部化配置改起吧，要实现外部化配置的效果，我们也知道，是要把外置的配置文件引入到 IOC 容器的 <code>Environment</code> 中。下面咱就来搞定这个。</p>
+<blockquote>
+<p>本小节源码位置：<code>com.example.spring.configuration.e_enablejdbc</code></p>
+</blockquote>
+<h3 id="3-1-声明jdbc配置文件"><a href="#3-1-声明jdbc配置文件" class="headerlink" title="3.1 声明jdbc配置文件"></a>3.1 声明jdbc配置文件</h3><p>在工程的 <code>resources</code> 下新建一个 <code>enablejdbc</code> 包，随后创建一个 <code>jdbc.properties</code> 文件：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">jdbc.url</span>=<span class="hljs-string">jdbc:mysql://localhost:3306/test?characterEncoding=utf8</span><br><span class="hljs-meta">jdbc.username</span>=<span class="hljs-string">root</span><br><span class="hljs-meta">jdbc.password</span>=<span class="hljs-string">123456</span><br></code></pre></td></tr></table></figure>
+<p>哎，这里为啥没有 <code>jdbc.driverClassName</code> 呢？小伙伴们思考一下原因？</p>
+<p>看一眼上面的配置类，针对不同的条件装配中，<code>driverClassName</code> 已经被固定住了，所以我们也没必要再在配置文件中写了（突然感觉省了点事哈）。</p>
+<h3 id="3-2-配置类注入Environment"><a href="#3-2-配置类注入Environment" class="headerlink" title="3.2 配置类注入Environment"></a>3.2 配置类注入Environment</h3><p>用 <code>EnvironmentAware</code> 给 <code>JdbcConfiguration</code> 注入 <code>Environment</code> ，然后每个 <code>DataSource</code> 的创建就可以使用 <code>Environment</code> 的取值了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-meta">@ConditionalOnClassName(&quot;com.mysql.jdbc.Driver&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">mysqlDataSource</span><span class="hljs-params">()</span> </span>&#123;<br>    DruidDataSource dataSource = <span class="hljs-keyword">new</span> DruidDataSource();<br>    dataSource.setDriverClassName(<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>);<br>    dataSource.setUrl(environment.getProperty(<span class="hljs-string">&quot;jdbc.url&quot;</span>));<br>    dataSource.setUsername(environment.getProperty(<span class="hljs-string">&quot;jdbc.username&quot;</span>));<br>    dataSource.setPassword(environment.getProperty(<span class="hljs-string">&quot;jdbc.password&quot;</span>));<br>    <span class="hljs-keyword">return</span> dataSource;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果小伙伴是跟着小册一起写的话，有木有突然感觉到很奇怪很难受：MySQL 的数据源这么写，Oracle 和 H2 的也是一模一样的写法啊，这也太奇怪了吧，有木有更好地办法呢？这个问题先放一下，我们后面马上改进。</p>
+<h3 id="3-3-拆分配置类"><a href="#3-3-拆分配置类" class="headerlink" title="3.3 拆分配置类"></a>3.3 拆分配置类</h3><p>三个 <code>DataSource</code> 放在一起虽说可以，但终究还是拆开合适，于是我们就可以这样拆成三个配置类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ConditionalOnClassName(&quot;com.mysql.jdbc.Driver&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySQLJdbcConfiguration</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractJdbcConfiguration</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">dataSource</span><span class="hljs-params">()</span> </span>&#123;<br>        DruidDataSource dataSource = <span class="hljs-keyword">new</span> DruidDataSource();<br>        dataSource.setDriverClassName(<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>);<br>        dataSource.setUrl(environment.getProperty(<span class="hljs-string">&quot;jdbc.url&quot;</span>));<br>        dataSource.setUsername(environment.getProperty(<span class="hljs-string">&quot;jdbc.username&quot;</span>));<br>        dataSource.setPassword(environment.getProperty(<span class="hljs-string">&quot;jdbc.password&quot;</span>));<br>        <span class="hljs-keyword">return</span> dataSource;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：这里我把 <code>JdbcConfiguration</code> 类改名为 <code>AbstractJdbcConfiguration</code> 了，这样我只需要写一次 <code>Environment</code> 的注入就可以。</p>
+</blockquote>
+<p>拆开三个配置类后，下一步要考虑的是咋把这些配置类注册进 IOC 容器。</p>
+<p>最简单的办法是包扫描，但包扫描不见得是最好的办法：</p>
+<p>如果恰巧 Oracle 库出了点问题，这个类暂时不想装配进去了，使用包扫描的话只能把 <code>OracleJdbcConfiguration</code> 删掉或者改源码去掉 <code>@Configuration</code> 注解，才能停用 Oracle 的配置类装配。</p>
+<p><strong>有没有一种更好的方案，能针对某个模块的装配，利用外部化配置指定需要加载的配置类呢？</strong> 当然有（没有那我故弄玄虚干嘛），这个知识点非常重要，它就是 <strong>SPI</strong> 。</p>
+<h2 id="4-SPI【掌握】"><a href="#4-SPI【掌握】" class="headerlink" title="4. SPI【掌握】"></a>4. SPI【掌握】</h2><p>说到 SPI ，其实最早它的用法是来源于 jdk ，下面先介绍关于 SPI 的一些基础。</p>
+<h3 id="4-1-SPI概述与由来"><a href="#4-1-SPI概述与由来" class="headerlink" title="4.1 SPI概述与由来"></a>4.1 SPI概述与由来</h3><p>关于 SPI 的来源，得从面向对象的接口编程说起。依赖倒转原则中提到，<strong>应该依赖接口而不是实现类</strong>，但接口最终要有实现类落地。如果程序因为业务调整，需要替换某个接口的实现类，那就不得不改动实现类的创建，也就是得改源码了。SPI 的出现解决了这个问题，它通过一种“<strong>服务寻找</strong>”的机制，<strong>动态的加载接口 / 抽象类对应的具体实现类</strong>。</p>
+<p>是不是突然产生了一种 IOC 的感觉？对的，SPI 还真有点 IOC 的味，<strong>它把接口具体实现类的定义和声明权交给了外部化的配置文件中</strong>。</p>
+<p>可能有些小伙伴到这里还是有点迷，没有关系，表情包助你理解 SPI ：</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ea52816334e24114b362e16609b31352~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" srcset="/img/loading.gif" alt="img"></p>
+<p>是不是好理解多了？一个接口可以有多个实现类，通过 SPI 机制，可以将一个接口需要创建的实现类的对象都罗列在一个特殊的文件中，SPI 机制会将这些实现类都实例化出对象并返回。</p>
+<p>好了，下面解释下 SPI 的概念吧。SPI 全程叫 <strong>Service Provider Interface</strong> 服务提供接口，它可以通过一个指定的接口 / 抽象类，寻找到预先配置好的实现类（并创建实现类对象）。jdk1.6 中有 SPI 的具体实现，SpringFramework 3.2 也引入了 SPI 的实现，而且比 jdk 的实现更加强大，下面我们分别来讲解这两种 SPI 的实现。</p>
+<h3 id="4-2-jdk1-6中的SPI"><a href="#4-2-jdk1-6中的SPI" class="headerlink" title="4.2 jdk1.6中的SPI"></a>4.2 jdk1.6中的SPI</h3><p>对于原生 jdk 的 SPI ，我们只是了解下就好，因为它的使用范围实在是有点有限，只能通过<strong>接口 / 抽象类</strong>来加载具体的实现类，所以很多框架都没有直接用 jdk 的 SPI ，基本都是自己造了一套更强大的（ Spring 算一个，Dubbo 算一个，等等吧）。下面来一个最简单的示例来讲解 jdk 原生的 SPI 。</p>
+<blockquote>
+<p>本小节源码位置：<code>com.example.spring.configuration.z_spi</code></p>
+</blockquote>
+<h4 id="4-2-1-声明接口和实现类"><a href="#4-2-1-声明接口和实现类" class="headerlink" title="4.2.1 声明接口和实现类"></a>4.2.1 声明接口和实现类</h4><p>不整那么复杂的，一个接口两个实现类就好吧！这样，我们直接拿 IOC 一开始的 DemoDao 用吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">DemoDao</span> </span>&#123;<br>    <br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DemoMySQLDaoImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DemoDao</span> </span>&#123;<br>    <br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DemoOracleDaoImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DemoDao</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>方法都懒得定义了咯，只通过类名也能看出来区别就好吧。</p>
+</blockquote>
+<h4 id="4-2-2-声明SPI文件"><a href="#4-2-2-声明SPI文件" class="headerlink" title="4.2.2 声明SPI文件"></a>4.2.2 声明SPI文件</h4><p>JDK 的 SPI 是需要遵循规范的：<strong>所有定义的 SPI 文件都必须放在工程的 <code>META-INF/services</code> 目录下</strong>，且<strong>文件名必须命名为接口 / 抽象类的全限定名</strong>，<strong>文件内容为接口 / 抽象类的具体实现类的全限定名，如果出现多个具体实现类，则每行声明一个类的全限定名，没有分隔符</strong>。</p>
+<p>以下是针对上面 <code>DemoDao</code> 的定义：</p>
+<blockquote>
+<p>文件名：<strong>com.example.spring.configuration.z_spi.bean.DemoDao</strong></p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.configuration</span><span class="hljs-selector-class">.z_spi</span><span class="hljs-selector-class">.bean</span>.DemoMySQLDaoImpl<br>com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.configuration</span><span class="hljs-selector-class">.z_spi</span><span class="hljs-selector-class">.bean</span>.DemoOracleDaoImpl<br></code></pre></td></tr></table></figure>
+<p>是不是还挺简单的，没有想象中的那么难。（有些技术点就是这样，听着挺费劲，实际一写才知道原来简单的很，小伙伴们不要怂，冲就完事了）</p>
+<h4 id="4-2-3-测试获取"><a href="#4-2-3-测试获取" class="headerlink" title="4.2.3 测试获取"></a>4.2.3 测试获取</h4><p>编写测试启动类，使用 jdk 提供的一个 <code>ServiceLoader</code> 类来加载 SPI 文件中定义的实现类，并直接打印到控制台：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JdkSpiApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        ServiceLoader&lt;DemoDao&gt; serviceLoader = ServiceLoader.load(DemoDao.class);<br>        serviceLoader.iterator().forEachRemaining(dao -&gt; &#123;<br>            System.out.println(dao);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台可以打印出 <code>DemoDao</code> 的两个实现类的对象：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.configuration</span><span class="hljs-selector-class">.z_spi</span><span class="hljs-selector-class">.bean</span>.DemoMySQLDaoImpl@<span class="hljs-number">6</span>f496d9f<br>com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.configuration</span><span class="hljs-selector-class">.z_spi</span><span class="hljs-selector-class">.bean</span>.DemoOracleDaoImpl@<span class="hljs-number">723279</span>cf<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="4-3-SpringFramework3-2中的SPI"><a href="#4-3-SpringFramework3-2中的SPI" class="headerlink" title="4.3 SpringFramework3.2中的SPI"></a>4.3 SpringFramework3.2中的SPI</h3><p>SpringFramework 中的 SPI 相比较于 jdk 原生的，那可就高级多了，因为它不仅仅局限于接口 / 抽象类，它可以是<strong>任何一个类、接口、注解</strong>。</p>
+<p>也正是因为可以支持注解的 SPI ，这个特性在 SpringBoot 中被疯狂利用（大名鼎鼎的 <strong><code>@EnableAutoConfiguration</code></strong> ）。</p>
+<p>接口和实现类我们就不重复声明了，用上面的就 OK 。</p>
+<h4 id="4-3-1-声明SPI文件"><a href="#4-3-1-声明SPI文件" class="headerlink" title="4.3.1 声明SPI文件"></a>4.3.1 声明SPI文件</h4><p>SpringFramework 的 SPI 文件也是有规矩的，它需要放在工程的 <strong><code>META-INF</code></strong> 下，且文件名必须为 <strong><code>spring.factories</code></strong> 。而文件的内容，其实就是一个 <code>properties</code> ：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">com.example.spring.configuration.z_spi.bean.DemoDao</span>=<span class="hljs-string">\</span><br>  com.example.spring.configuration.z_spi.bean.DemoMySQLDaoImpl,\<br>  <span class="hljs-attr">com.example.spring.configuration.z_spi.bean.DemoOracleDaoImpl</span><br></code></pre></td></tr></table></figure>
+<h4 id="4-3-2-测试获取"><a href="#4-3-2-测试获取" class="headerlink" title="4.3.2 测试获取"></a>4.3.2 测试获取</h4><p>使用 SpringFramework 的 SPI ，加载 <code>spring.factories</code> 文件的 API 是 <strong><code>SpringFactoriesLoader</code></strong> ，它不仅可以加载声明的类的对象，而且可以直接把预先定义好的全限定名都取出来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringSpiApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        <span class="hljs-comment">// 加载并实例化</span><br>        List&lt;DemoDao&gt; demoDaos = SpringFactoriesLoader<br>                .loadFactories(DemoDao.class, SpringSpiApplication.class.getClassLoader());<br>        demoDaos.forEach(dao -&gt; &#123;<br>            System.out.println(dao);<br>        &#125;);<br>    <br>        System.out.println(<span class="hljs-string">&quot;------------------------------------------------&quot;</span>);<br>    <br>        <span class="hljs-comment">// 只加载全限定类名</span><br>        List&lt;String&gt; daoClassNames = SpringFactoriesLoader<br>                .loadFactoryNames(DemoDao.class, SpringSpiApplication.class.getClassLoader());<br>      <br>        daoClassNames.forEach(className -&gt; &#123;<br>            System.out.println(className);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台也可以正常打印对象与全限定名：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.configuration</span><span class="hljs-selector-class">.z_spi</span><span class="hljs-selector-class">.bean</span>.DemoMySQLDaoImpl@<span class="hljs-number">7506</span>e922<br>com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.configuration</span><span class="hljs-selector-class">.z_spi</span><span class="hljs-selector-class">.bean</span>.DemoOracleDaoImpl@<span class="hljs-number">4</span>ee285c6<br>------------------------------------------------<br>com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.configuration</span><span class="hljs-selector-class">.z_spi</span><span class="hljs-selector-class">.bean</span>.DemoMySQLDaoImpl<br>com<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.spring</span><span class="hljs-selector-class">.configuration</span><span class="hljs-selector-class">.z_spi</span><span class="hljs-selector-class">.bean</span>.DemoOracleDaoImpl<br></code></pre></td></tr></table></figure>
+<p>由于 SpringFramework 的 SPI 更为灵活，所以我们在这里就使用 SpringFramework 的 SPI 来加载配置类。</p>
+<hr>
+<p>回到刚才的第二版写法中，我们使用 SPI 来搞定配置类的加载。</p>
+<h3 id="3-4-SPI加载配置类"><a href="#3-4-SPI加载配置类" class="headerlink" title="3.4 SPI加载配置类"></a>3.4 SPI加载配置类</h3><p>先把几个配置类都声明到 <code>spring.factories</code> 中吧：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">com.example.spring.configuration.e_enablejdbc.config.EnableJdbc</span>=<span class="hljs-string">\</span><br>  com.example.spring.configuration.e_enablejdbc.config.MySQLJdbcConfiguration,\<br>  com.example.spring.configuration.e_enablejdbc.config.OracleJdbcConfiguration,\<br>  <span class="hljs-attr">com.example.spring.configuration.e_enablejdbc.config.H2JdbcConfiguration</span><br></code></pre></td></tr></table></figure>
+<p>注意这里我使用了注解作为 key ，这是完全可以的哦。</p>
+<p>然后就是加载它们了。由于<strong>配置类需要 SpringFramework 解析其中的 Bean 的定义，以及其他的配置</strong>，所以<strong>不适合直接创建对象</strong>，这里<strong>获取全限定名</strong>是合理的方式。</p>
+<p>再回想一下，如果是加载一组类的全限定名，并且都要注册到 IOC 容器中，那么用谁会比较合适呢？哎，是不是有个东西叫 <strong><code>ImportSelector</code></strong> 来着？它刚好就是要一组类的全限定名！那我们快点来写吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JdbcConfigSelector</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ImportSelector</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String[] selectImports(AnnotationMetadata importingClassMetadata) &#123;<br>        List&lt;String&gt; configClassNames = SpringFactoriesLoader<br>                .loadFactoryNames(EnableJdbc.class, <span class="hljs-keyword">this</span>.getClass().getClassLoader());<br>        <span class="hljs-keyword">return</span> configClassNames.toArray(<span class="hljs-keyword">new</span> String[<span class="hljs-number">0</span>]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>之后，在 <code>@EnableJdbc</code> 注解上，把这个 <code>JdbcConfigSelector</code> 导入进去：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Documented</span><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-meta">@Target(ElementType.TYPE)</span><br><span class="hljs-meta">@Import(JdbcConfigSelector.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> EnableJdbc &#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="3-5-测试运行"><a href="#3-5-测试运行" class="headerlink" title="3.5 测试运行"></a>3.5 测试运行</h3><p>第二版的测试运行类与前面几乎完全一致，只是不要忘记加载 <code>jdbc.properties</code> 的配置哦：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableJdbc</span><br><span class="hljs-meta">@PropertySource(&quot;enablejdbc/jdbc.properties&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EnableJdbcApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(EnableJdbcApplication.class);<br>        DruidDataSource dataSource = ctx.getBean(DruidDataSource.class);<br>        System.out.println(dataSource.getUrl());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，可以发现 MySQL 的驱动已经注册进去了：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">jdbc:mysql:<span class="hljs-comment">//localhost:3306/test?characterEncoding=utf8</span><br>com<span class="hljs-selector-class">.mysql</span><span class="hljs-selector-class">.jdbc</span>.Driver<br></code></pre></td></tr></table></figure>
+<p>切换 <code>pom.xml</code> 中的数据库驱动依赖，也能正常运行出来，说明编写一切都正确。</p>
+<h3 id="3-6-模块装配-amp-条件装配的使用总结"><a href="#3-6-模块装配-amp-条件装配的使用总结" class="headerlink" title="3.6 模块装配&amp;条件装配的使用总结"></a>3.6 模块装配&amp;条件装配的使用总结</h3><p>到这里，小伙伴会不会对整体的模块装配+条件装配有一个更清晰的认识呢？通过一个注解，把一个功能所需要的组件都装配进 IOC 容器中，并且合理利用 SPI 配合条件装配，可以满足不同环境、不同外部配置的需求。</p>
+<p>之所以讲这部分，是因为后续小伙伴在学习 SpringBoot 时，SpringBoot 就完全利用了这个套路来实现自动装配的。小伙伴可以先记住这个套路，到后面学习 SpringBoot 时，自然会 会心一笑 的。</p>
+<hr>
+<p>到这里，模块装配&amp;条件装配的内容就已经讲完了，不过小册要在这里加一个餐，把这个综合案例继续推演下去。</p>
+<h2 id="5-回归理性的第三版写法"><a href="#5-回归理性的第三版写法" class="headerlink" title="5. 回归理性的第三版写法"></a>5. 回归理性的第三版写法</h2><p>其实小伙伴在拆分配置类的时候，那种强烈的不适感有没有冲出头顶：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">dataSource</span><span class="hljs-params">()</span> </span>&#123;<br>    DruidDataSource dataSource = <span class="hljs-keyword">new</span> DruidDataSource();<br>    dataSource.setDriverClassName(<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>);<br>    dataSource.setUrl(environment.getProperty(<span class="hljs-string">&quot;jdbc.url&quot;</span>));<br>    dataSource.setUsername(environment.getProperty(<span class="hljs-string">&quot;jdbc.username&quot;</span>));<br>    dataSource.setPassword(environment.getProperty(<span class="hljs-string">&quot;jdbc.password&quot;</span>));<br>    <span class="hljs-keyword">return</span> dataSource;<br>&#125;<br><br><br><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> DataSource <span class="hljs-title">dataSource</span><span class="hljs-params">()</span> </span>&#123;<br>    DruidDataSource dataSource = <span class="hljs-keyword">new</span> DruidDataSource();<br>    dataSource.setDriverClassName(<span class="hljs-string">&quot;oracle.jdbc.driver.OracleDriver&quot;</span>);<br>    dataSource.setUrl(environment.getProperty(<span class="hljs-string">&quot;jdbc.url&quot;</span>));<br>    dataSource.setUsername(environment.getProperty(<span class="hljs-string">&quot;jdbc.username&quot;</span>));<br>    dataSource.setPassword(environment.getProperty(<span class="hljs-string">&quot;jdbc.password&quot;</span>));<br>    <span class="hljs-keyword">return</span> dataSource;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>试问，这两段代码，除了 <code>driverClassName</code> 不同，还有啥是不一样的吗？？？这很明显没必要这么写吧，<strong>徒增功耗！！</strong></p>
+<p>而且，根据之前学过的 <code>BeanDefinition</code> 与编程式驱动 IOC ，<strong>这几个配置是不是完全可以转换为构造一个 <code>BeanDefinition</code> 啊</strong>！好，有了这个思路，下面我们回归理性，用 <code>BeanDefinition</code> 的思维来重构这个案例。</p>
+<h3 id="5-1-编写BeanDefinitionRegistryPostProcessor"><a href="#5-1-编写BeanDefinitionRegistryPostProcessor" class="headerlink" title="5.1 编写BeanDefinitionRegistryPostProcessor"></a>5.1 编写BeanDefinitionRegistryPostProcessor</h3><p>既然可以通过编程式注入 <code>BeanDefinition</code> ，那我们完全可以借助 <code>BeanDefinitionRegistryPostProcessor</code> ，或者 <code>ImportBeanDefinitionRegistrar</code> ，向 <code>BeanFactory</code> 中注入 <code>BeanDefinition</code> ，此处我们选用 <code>BeanDefinitionRegistryPostProcessor</code> 吧。</p>
+<p>跟之前的 <code>@Bean</code> 声明一样的，是都需要 <strong><code>Environment</code></strong> ；不一样的，是构造 <code>BeanDefinition</code> 的方式，这里要用编程式了。还是老套路，要用 <code>EnvironmentAware</code> 的回调注入哦（<strong>直接 <code>@Autowired</code> 是不可行的，小伙伴们可以自行测试一下</strong>）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DataSourceRegisterPostProcessor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">BeanDefinitionRegistryPostProcessor</span>, <span class="hljs-title">EnvironmentAware</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> Environment environment;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanDefinitionRegistry</span><span class="hljs-params">(BeanDefinitionRegistry registry)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>        BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(DruidDataSource.class)<br>                .addPropertyValue(<span class="hljs-string">&quot;url&quot;</span>, environment.getProperty(<span class="hljs-string">&quot;jdbc.url&quot;</span>))<br>                .addPropertyValue(<span class="hljs-string">&quot;username&quot;</span>, environment.getProperty(<span class="hljs-string">&quot;jdbc.username&quot;</span>))<br>                .addPropertyValue(<span class="hljs-string">&quot;password&quot;</span>, environment.getProperty(<span class="hljs-string">&quot;jdbc.password&quot;</span>));<br>        <span class="hljs-comment">// 完善driverClassName，注册DataSource</span><br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanFactory</span><span class="hljs-params">(ConfigurableListableBeanFactory beanFactory)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setEnvironment</span><span class="hljs-params">(Environment environment)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.environment = environment;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>剩下的就是怎么搞定 <code>driverClassName</code> 了。既然上面的三个配置类中，已经预先拿到了 <code>Driver</code> 的实现类，那这里我们也可以把它们声明到 SPI 文件中：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">java.sql.Driver</span>=<span class="hljs-string">\</span><br>  com.mysql.jdbc.Driver,\<br>  oracle.jdbc.driver.OracleDriver,\<br>  <span class="hljs-attr">org.h2.Driver</span><br></code></pre></td></tr></table></figure>
+<p>然后借助 <code>SpringFactoriesLoader</code> ，就可以拿到这几个类的全限定名了。</p>
+<p>拿到之后再怎么干，这就不用我再多说了吧，小伙伴们已经大脑飞速运行了吧！那么我们赶紧趁势一口气写完吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanDefinitionRegistry</span><span class="hljs-params">(BeanDefinitionRegistry registry)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>    BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(DruidDataSource.class)<br>            .addPropertyValue(<span class="hljs-string">&quot;url&quot;</span>, environment.getProperty(<span class="hljs-string">&quot;jdbc.url&quot;</span>))<br>            .addPropertyValue(<span class="hljs-string">&quot;username&quot;</span>, environment.getProperty(<span class="hljs-string">&quot;jdbc.username&quot;</span>))<br>            .addPropertyValue(<span class="hljs-string">&quot;password&quot;</span>, environment.getProperty(<span class="hljs-string">&quot;jdbc.password&quot;</span>));<br>    <span class="hljs-comment">// 根据当前classpath下的数据库连接驱动添加driverClassName</span><br>    List&lt;String&gt; driverClassNames = SpringFactoriesLoader.loadFactoryNames(Driver.class, <span class="hljs-keyword">this</span>.getClass().getClassLoader());<br>  <br>    String driverClassName = <span class="hljs-keyword">null</span>;<br>  <br>    <span class="hljs-keyword">for</span> (String temp : driverClassNames) &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            Class.forName(temp);<br>            driverClassName = temp;<br>            <span class="hljs-keyword">break</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException ignored) &#123;<br>            <span class="hljs-comment">// 加载失败，classpath下无当前驱动，继续下一个</span><br>        &#125;<br>    &#125;<br>  <br>    <span class="hljs-comment">// 存在驱动，注册DataSource</span><br>    <span class="hljs-keyword">if</span> (driverClassName != <span class="hljs-keyword">null</span>) &#123;<br>        builder.addPropertyValue(<span class="hljs-string">&quot;driverClassName&quot;</span>, driverClassName);<br>        registry.registerBeanDefinition(<span class="hljs-string">&quot;dataSource&quot;</span>, builder.getBeanDefinition());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="5-2-编写配置类"><a href="#5-2-编写配置类" class="headerlink" title="5.2 编写配置类"></a>5.2 编写配置类</h3><p>配置类中，只需要定义 <code>QueryRunner</code> ，以及把刚写的 <code>DataSourceRegisterPostProcessor</code> 注册到 IOC 容器就可以了，非常的简单：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JdbcConfiguration</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> QueryRunner <span class="hljs-title">queryRunner</span><span class="hljs-params">(DataSource dataSource)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> QueryRunner(dataSource);<br>    &#125;<br>    <br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> DataSourceRegisterPostProcessor <span class="hljs-title">dataSourceRegisterPostProcessor</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DataSourceRegisterPostProcessor();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>另外，不要忘记给 <code>@EnableJdbc</code> 导入这个配置类哦：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Documented</span><br><span class="hljs-meta">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="hljs-meta">@Target(ElementType.TYPE)</span><br><span class="hljs-meta">@Import(JdbcConfiguration.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> EnableJdbc &#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="5-3-测试运行"><a href="#5-3-测试运行" class="headerlink" title="5.3 测试运行"></a>5.3 测试运行</h3><p>与上面的测试运行类一模一样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableJdbc</span><br><span class="hljs-meta">@PropertySource(&quot;enablejdbc/jdbc.properties&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EnableJdbcApplication</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        AnnotationConfigApplicationContext ctx = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext(EnableJdbcApplication.class);<br>        DruidDataSource dataSource = ctx.getBean(DruidDataSource.class);<br>        System.out.println(dataSource.getUrl());<br>        System.out.println(dataSource.getDriverClassName());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行 <code>main</code> 方法，控制台依然能正确打印 url 和 driverClassName ，证明重构成功。至此，本案例完结。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Spring/">Spring</a>
+                    
+                      <a class="hover-with-bg" href="/tags/IOC/">IOC</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A8%A1%E5%9D%97%E8%A3%85%E9%85%8D/">模块装配</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9D%A1%E4%BB%B6%E8%A3%85%E9%85%8D/">条件装配</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/18/21-IOC%E4%B8%ADBean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">21-IOC中Bean的生命周期</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/18/20-IOC%E7%9A%84%E7%BC%96%E7%A8%8B%E5%BC%8F%E9%A9%B1%E5%8A%A8/">
+                        <span class="hidden-mobile">20-IOC的编程式驱动</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="SOHUCS" sid='http://example.com/2022/04/18/09-%E8%A1%A5%E5%85%85-%E6%A8%A1%E5%9D%97%E8%A3%85%E9%85%8D%E5%92%8C%E6%9D%A1%E4%BB%B6%E8%A3%85%E9%85%8D%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8/'></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('SOHUCS', function() {
+      var appid = 'cyvjg8eoK';
+      var conf = '2085177cb8fe4ee04d95c509f52d4b8b';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+        window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+      } else {
+        Fluid.utils.createScript("https://changyan.sohu.com/upload/changyan.js", function() {
+          window.changyan.api.config({
+            appid: appid,
+            conf: conf
+          })
+        });
+      }
+    })
+  </script>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

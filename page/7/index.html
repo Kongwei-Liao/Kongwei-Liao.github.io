@@ -181,6 +181,282 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/05/17/Thread-Intro/">Thread-Intro</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/17/Thread-Intro/">
+          
+          
+            
+          
+          多线程介绍任务现代操作系统（Windows，macOS，Linux）都可以执行多任务。多任务就是同时运行多个任务，例如：
+
+CPU执行代码都是一条一条顺序执行的，但是，即使是单核cpu，也可以同时运行多个任务。因为操作系统执行多任务实际上就是让CPU对多个任务轮流交替执行。
+例如，假设我们有语文、数学、英语3门作业要做，每个作业需要30分钟。我们把这3门作业看成是3个任务，可以做1分钟语文作业，再
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-17 23:51" pubdate>
+              2021-05-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/17/Thread-AQS/">Thread-AQS</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/17/Thread-AQS/">
+          
+          
+            
+          
+          AQS 知道吗？Why - What - How。为什么会有这个东西？这个东西是什么？怎么做到的？
+任何技术的产生第一件事就是思考 Why？这个 AQS 的产生是为什么，大家平常用过 synchronized，可能觉得已经有锁了，还需要 AQS 吗?
+Why: synchronized 只解决了有和没有的问题，但是锁的场景和多样性方面还很欠缺，例如: 带超时时间的获取锁、获取锁非阻塞(尝试获取锁)
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-17 23:37" pubdate>
+              2021-05-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/05/Effective-Java-2-%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95/">Effective_Java_2_所有对象的通用方法</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/05/Effective-Java-2-%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95/">
+          
+          
+            
+          
+          对于所有对象都通用的方法尽管 Object 是一个具体类，但设计它主要是为了扩展。 它所有的非 final 方法（equals 、 hashCode 、 t oString 、 clone 和 finalize ）都有 明 确的通 用 约定（ general contract), 因为它们设计成是要被覆盖（ override ）的 。 任何一个类，它在覆盖这些方法的时·候，都有 责任遵守这些通用约
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-05 21:57" pubdate>
+              2021-05-05
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/05/Effective-Java-1-%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81%E5%AF%B9%E8%B1%A1/">Effective_Java_1_创建和销毁对象</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/05/Effective-Java-1-%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81%E5%AF%B9%E8%B1%A1/">
+          
+          
+            
+          
+          创建和销毁对象何时以及如何创建对象，何时以及如何避免创建对象， 如何确保它们能够适时地销毁，以及如何管理对象销毁之前必须进行的各种清理动作 。
+第一条 使用静态工厂方法代替构造函数（构造器Constructor）Static Factory Method   VS   Constructor
+对于类而言，为了让客户端获取它自身的一个实例，最传统的方法就是提供一个公有 的构造器。 还有一种方法，也应
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-05 17:32" pubdate>
+              2021-05-05
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/04/Effective-Java-5-%E8%8C%83%E5%9E%8B/">Effective_Java_5_范型</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/04/Effective-Java-5-%E8%8C%83%E5%9E%8B/">
+          
+          
+            
+          
+          28：列表优先于数组数组与泛型相比，有两个重要的不同点（奇怪为什么数组要与范型对比，两者在同一层次吗？个人理解应该是数组的类型和范型比较）：
+第一大区别：数组是协变的数组是协变（covariant）的：如果A是B的子类，A[]就是B[]的子类；
+相反
+范型是可变的（incovariant）的：：对于任意两个不同的类型 Type1 和 Type2, List&lt;Type1＞既不是 List&lt
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-04 23:19" pubdate>
+              2021-05-04
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/02/28/RabbitMQ%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">RabbitMQ使用手册</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/02/28/RabbitMQ%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
+          
+          
+            
+          
+          RabbitMQ使用手册1. 六种工作模式RabbitMQ提供了6种模式：简单模式、工作队列模式、发布与订阅模式、Routing路由模式、Topics主题模式、RPC远程调用模式（远程调用暂不作介绍）；
+官网对应模式介绍：https://www.rabbitmq.com/getstarted.html
+
+
+1.1. Hello World1.1.1. 实例代码1.1.1.1. 生产者代码12345
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-02-28 16:34" pubdate>
+              2021-02-28
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/RabbitMQ/">RabbitMQ</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/02/27/Java%E5%BC%80%E5%90%AF%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">Java开启定时任务</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/02/27/Java%E5%BC%80%E5%90%AF%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">
+          
+          
+            
+          
+          Java开启定时任务Java开启定时任务的方式主要有3种：
+使用 ScheduledExcecutorService 实现ScheduledExecutorService 是java.util.concurrent种的额一个累, 用于实现定时任务
+它可以: 
+
+通过线程池的方式执行任务
+设定第一次的延迟事件
+提供良好的约定, 设定时间间隔
+
+123456789101112@Testpublic v
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-02-27 19:48" pubdate>
+              2021-02-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java/">Java</a>
+            
+              <a href="/tags/Schedule/">Schedule</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/02/27/AMQP%E5%8D%8F%E8%AE%AE%E4%B8%8ERabbitMQ/">AMQP协议与RabbitMQ</a>
       </h1>
 
@@ -325,355 +601,11 @@ Rocket 没有 Docker 那些为企业用户提供集群系统,他仅仅是一个�
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/17/k8s%E7%9A%84Yaml%E7%BC%96%E5%86%99/">k8s的Yaml编写</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/17/k8s%E7%9A%84Yaml%E7%BC%96%E5%86%99/">
-          
-          
-            
-          
-          k8s的yaml编写指引Pod123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081apiVersion: v1             #指定ap
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-17 10:12" pubdate>
-              2021-02-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/kubernates/">kubernates</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/k8s/">k8s</a>
-            
-              <a href="/tags/docker/">docker</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/17/MacOS%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%80%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/">MacOS软件安装使用的一系列问题</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/17/MacOS%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%80%E7%B3%BB%E5%88%97%E9%97%AE%E9%A2%98/">
-          
-          
-            
-          
-          MacOS软件安装使用的一系列问题Mac打开软件提示”已损坏，无法打开。 您应该将它移到废纸篓”1、打开任何来源设置打开系统偏好设置 -&gt; 安全性与隐私 -&gt; 通用 -&gt; 任何来源。在终端执行如下命令，打开后如图所示
-sudo spctl --master-disable
-2、更改应用程序拓展属性如果您仍然坚持软件没有问题，在终端执行如下命令
-sudo xattr -r -d c
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-17 01:37" pubdate>
-              2021-02-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Mac/">Mac</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/02/16/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E5%BC%8F/" target="_self">
-          <img src="/imgs/index_img.png" srcset="/img/loading.gif" alt="循环不变式">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/16/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E5%BC%8F/">循环不变式</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/16/%E5%BE%AA%E7%8E%AF%E4%B8%8D%E5%8F%98%E5%BC%8F/">
-          
-          
-            
-          
-          循环不变式熟练掌握数学归纳法的思路对于程序员来说是相当重要的。例如，要在程序中编写循环处理(loop) 时数学归纳法是非常有用的。
-在编写循环时，找到让每次循环都成立的逻辑表达式很重要。这种逻辑表达式称为循环不变式（loop invariant）。循环不变式相当于用数学归纳法证明的“断言”。
-循环不变式用于证明程序的正确性。在编写循环时，思考一下“这个循环的循环不变式是什么”就能减少错误。
-数学归
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-16 16:23" pubdate>
-              2021-02-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
-            
-              <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95/">程序设计方法</a>
-            
-              <a href="/tags/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%B0%83%E8%AF%95%E5%8E%9F%E7%90%86%E6%8A%80%E6%9C%AF/">软件系统调试原理技术</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/16/Mac%E5%AE%89%E8%A3%85Wine-6-0/">Mac安装Wine-6.0</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/16/Mac%E5%AE%89%E8%A3%85Wine-6-0/">
-          
-          
-            
-          
-          Mac安装Wine-6.0官方网站为MacOS用户提供了二进制安装版本Wine-5.x：https://www.winehq.org/
-
-这个二进制安装包仅适用于仍支持32位应用的MacOS10.8-10.14，高版本MacOS不再为32应用提供支持不必尝试。https://support.apple.com/en-ca/HT208436
-下载源码解压https://dl.winehq.org/w
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-16 09:35" pubdate>
-              2021-02-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">软件安装</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Mac/">Mac</a>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a>
-            
-              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">软件安装</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/15/2021%E5%B9%B42%E6%9C%8811%E6%97%A5%E6%88%91%E5%9C%A8%E5%8C%97%E4%BA%AC%E8%BF%87%E5%A4%A7%E5%B9%B4/">2021年2月11日我在北京过大年</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/15/2021%E5%B9%B42%E6%9C%8811%E6%97%A5%E6%88%91%E5%9C%A8%E5%8C%97%E4%BA%AC%E8%BF%87%E5%A4%A7%E5%B9%B4/">
-          
-          
-            
-          
-          北京过大年20210211今年是我毕业来到北京参加工作的第一年，因为全国新冠疫情的反弹没能回到老家过年。疫情反弹，单位响应号召，全体软开中心人员原则上需留京过年，无特殊情况不允许离京。
-年货大扫荡还好我们三十前夕来超市大扫荡，不然这个年估计不太好过！
-
-除夕啦，吃年夜饭御用大厨们在做饭 😋，我们这儿第一次在北京过年，和老家不一样的是我们把年夜饭准备的很丰盛，老家的话三十晚饭就是一顿饺子汤圆。
-
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-15 21:18" pubdate>
-              2021-02-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%94%9F%E6%B4%BB%E7%90%90%E4%BA%8B/">生活琐事</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A/">心得体会</a>
-            
-              <a href="/tags/%E8%B6%A3%E4%BA%8B/">趣事</a>
-            
-              <a href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/15/Spring%20Security/"></a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/15/Spring%20Security/">
-          
-          
-            
-          
-          Spring SecuritySpring Security 是 Spring 社区的一个顶级项目，也是 Spring Boot 官方推荐使用的安全框架。除了常规的认证（Authentication）和授权（Authorization）之外，Spring Security还提供了诸如ACLs，LDAP，JAAS，CAS等高级特性以满足复杂场景下的安全需求。
-Spring Security 应用级别
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-15 19:45" pubdate>
-              2021-02-15
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/15/Shiro/"></a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/15/Shiro/">
-          
-          
-            
-          
-          Shiro安全框架Apache Shiro是一个强大且易用的Java安全框架，有身份验证、授权、密码学和会话管理。使用Shiro的易于理解的API，您可以快速、轻松地获得任何应用程序，从最小的移动应用程序到最大的网络和企业应用程序。
-
-Spring security是一个重量级的安全框架
-
-Apache Shiro是一个轻量级的安全框架
-
-
-
-Shiro 开发团队称 “ 应用程序的四大基石：身份验
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-15 19:45" pubdate>
-              2021-02-15
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/6/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
